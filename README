@@ -1,3 +1,40 @@
+OpenCamp
+
+An open source version of Basecamp© built in CakePHP.
+
+Help is welcomed with this project so please branch the code.
+
+We are phasing the development into the following sections:
+
+Phase One
+- Most of the functionality of BC
+- Design similar to BC
+- No file sharing
+- No email piping, emails only outgoing
+- Basic administration system
+- Basic API calls
+
+Phase Two
+- File sharing
+- Email piping into system for incoming email
+- API same as BC so other software can plug in easily
+- Full administration system
+- Templating
+
+Phase Three
+- Move functionality to extendable plugins
+- Extra features BC does not support
+
+Ideas and some project files at:
+https://docs.google.com/leaf?id=0B-rIg4LHA-zaZmUzZGQzYWQtYTdkYy00NWUyLWI0OGItMzdiY2JkZmNjNDAy&hl=en
+
+
+Basecamp© is copyright of 37signals, LLC
+
+
+
+--------------------------------------------
+
 CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Active Record, Association Data Mapping, Front Controller and MVC. Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.
 
 The Cake Software Foundation - promoting development related to CakePHP
