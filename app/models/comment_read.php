@@ -1,6 +1,7 @@
 <?php
-class CommentsRead extends AppModel {
+class CommentRead extends AppModel {
 	var $name = 'CommentRead';
+	var $useTable = 'comments_reads';
 	var $validate = array(
 		'person_id' => array(
 			'numeric' => array(
