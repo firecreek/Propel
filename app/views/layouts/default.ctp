@@ -19,12 +19,11 @@
 
     <div id="wrapper" class="install">
         <header>
-            <h1><?php __('OpenCamp'); ?></h1>
+            <h1><?php echo $html->link('OpenCamp','/'); ?></h1>
         </header>
 
         <div id="main">
         <?php
-            $session->flash();
             echo $content_for_layout;
         ?>
         </div>

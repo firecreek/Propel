@@ -1,27 +1,17 @@
 
 
 /**
- * Header
-header { width: auto; background-color: #222; padding: 15px 0px 15px 0px; color: #fff; margin: 0px 0px 0px 0px; height: 20px; }
-header .logo { font-weight: bold; }
-header a { color: #ccc; text-decoration: none; }
-header a:hover { text-decoration: underline; }
- */
-
-
-
-/**
  * Content boxes
  */
 .box { margin:10px 0px 0px 0px;  background: #fff; border: 1px solid #d4d5d0; }
-.box { -moz-box-shadow: rgba(10,10,10,0.5) 6px 6px 8px; -webkit-box-shadow: rgba(10,10,10,0.5) 6px 6px 8px; }
+.box { -webkit-box-shadow:#BBB 3px 3px 4px; -moz-box-shadow:#BBB 3px 3px 4px; }
 
 .box .banner {}
 .box .banner { border-bottom:1px solid #d4d5d0; margin-bottom:20px; }
 .box .banner h2 { background-color:#f0f1e9; margin:0; font-size:16px; padding:10px 20px 10px 20px; }
 
 .box .content { padding: 0px 20px 20px 20px; }
-
+.box .content h2 { margin:0; font-size:22px; font-weight:normal; padding:10px 0 10px 0; }
 .box .content p { margin:0 0 1em 0; }
 
 

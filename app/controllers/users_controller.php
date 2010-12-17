@@ -100,6 +100,15 @@
      */
     public function login()
     {
+      if(!empty($this->data) && $this->Authorization->login($this->data))
+      {
+        $this->redirect(array(
+          'controller'  => 'accounts',
+          'action'      => 'index',
+          'prefix'      => 'account',
+          'account'     => $this->Session->read('Auth.Account.slug')
+        ));
+      }
     }
     
     
