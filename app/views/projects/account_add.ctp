@@ -13,7 +13,7 @@
       
       echo $form->input('description',array('label'=>__('Description',true),'after'=>'<small>'.__('(Not required)',true).'</small>'));
       
-      echo $form->submit('Create project',array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('controller'=>'accounts','action'=>'index') ) ));
+      echo $form->submit(__('Create project',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('controller'=>'accounts','action'=>'index') ) ));
       
       echo $form->end();
     ?>

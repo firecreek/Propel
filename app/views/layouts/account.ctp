@@ -47,7 +47,7 @@
       
       <nav class="extra top tabs">
         <ul>
-          <li<?php if($active == 'People') { echo ' class="active"'; } ?>><?php echo $html->link(__('All People',true),array('controller'=>'people','action'=>'index')); ?></li>
+          <li<?php if($active == 'Companies') { echo ' class="active"'; } ?>><?php echo $html->link(__('All People',true),array('controller'=>'companies','action'=>'index')); ?></li>
           <li<?php if($active == 'Search') { echo ' class="active"'; } ?>><?php echo $html->link(__('Search',true),array('controller'=>'search','action'=>'index')); ?></li>
           <li<?php if($active == 'Settings') { echo ' class="active"'; } ?>><?php echo $html->link(__('Settings',true),array('controller'=>'settings','action'=>'index')); ?></li>
         </ul>

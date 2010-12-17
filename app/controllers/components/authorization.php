@@ -66,6 +66,19 @@
     
     
     /**
+     * Logout
+     *
+     * @access public
+     * @var object
+     */
+    public function logout()
+    {
+      $this->Session->delete('AuthAccount');
+      return parent::logout();
+    }
+    
+    
+    /**
      * Reload user details
      *
      * @access public

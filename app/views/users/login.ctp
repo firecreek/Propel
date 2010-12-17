@@ -7,6 +7,7 @@
   
   <div class="content">
     <?php
+      echo $session->flash();
       echo $session->flash('auth');
     
       echo $form->create('User',array('url'=>$this->here));

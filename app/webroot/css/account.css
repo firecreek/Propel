@@ -47,8 +47,10 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 /**
  * Box
  */
-.box .banner { border-bottom:none; }
-.box .banner h2 { background-color:#EDF3FE; font-size:14px; }
+.box .banner { border-bottom:none; position:relative; }
+.box .banner h2 { background-color:#EDF3FE; font-size:14px; padding:15px 20px; }
+
+.box .banner .button { position:absolute; right:20px; top:12px; }
 
 .area {}
 .area h3 { background-color:#EDF3FE; border-bottom:1px solid gainsboro; color:#333; font-size:13px; padding:6px 10px; margin:0 0 10px 0; }

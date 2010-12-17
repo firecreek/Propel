@@ -122,7 +122,7 @@
     {
       $this->Authorization->logout();
       
-      $this->Session->setFlash(__('You are now logged out'));
+      $this->Session->setFlash(__('You are now logged out', true), 'default', array('class'=>'success'));
       $this->redirect($this->Authorization->logoutRedirect);
     }
     

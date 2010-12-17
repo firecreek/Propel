@@ -34,6 +34,8 @@ form .submit a:hover { color:#FFF; background-color:#ff0000; text-decoration:non
 form .block label, form.block label { display:block; float:none; width:auto; margin-bottom:2px; }
 form .block small, form.block small { margin-left:0; }
 
+form .input.strong label { font-weight:bold; }
+
 /**
  * Buttons
  */
@@ -78,5 +80,6 @@ form .block small, form.block small { margin-left:0; }
 
 .button.action.large {
  font-size: 14px;
+ padding: 6px 19px 6px;
 }
 
