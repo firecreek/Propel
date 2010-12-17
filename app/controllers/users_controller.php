@@ -120,6 +120,10 @@
      */
     public function logout()
     {
+      $this->Authorization->logout();
+      
+      $this->Session->setFlash(__('You are now logged out'));
+      $this->redirect($this->Authorization->logoutRedirect);
     }
     
     
