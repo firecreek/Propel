@@ -6,7 +6,7 @@
         <p>
             Admin panel: <?php echo $html->link(Router::url('/admin', true), Router::url('/admin', true)); ?><br />
             Username: admin<br />
-            Password: password
+            Password: <?php echo $password; ?>
         </p>
         
         <p>

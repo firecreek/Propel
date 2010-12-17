@@ -7,10 +7,9 @@
         echo $html->css(array(
             'reset',
             '960',
+            'front',
             'type',
             'elements',
-            'admin',
-            '/install/css/install',
         ));
         echo $scripts_for_layout;
     ?>
@@ -24,12 +23,10 @@
         </header>
 
         <div id="main">
-            <div id="install">
-            <?php
-                $session->flash();
-                echo $content_for_layout;
-            ?>
-            </div>
+        <?php
+            $session->flash();
+            echo $content_for_layout;
+        ?>
         </div>
 
     </div>

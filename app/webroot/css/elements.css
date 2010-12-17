@@ -1,0 +1,75 @@
+
+
+/**
+ * Header
+ */
+header { width: auto; background-color: #222; padding: 15px 0px 15px 0px; color: #fff; margin: 0px 0px 0px 0px; height: 20px; }
+header .logo { font-weight: bold; }
+header a { color: #ccc; text-decoration: none; }
+header a:hover { text-decoration: underline; }
+
+
+
+/**
+ * Content boxes
+ */
+.box { margin:10px 0px 0px 0px;  background: #fff; border: 1px solid #d4d5d0; }
+.box { -moz-box-shadow: rgba(10,10,10,0.5) 6px 6px 8px; -webkit-box-shadow: rgba(10,10,10,0.5) 6px 6px 8px; }
+
+.box .banner {}
+.box .banner { border-bottom:1px solid #d4d5d0; margin-bottom:20px; }
+.box .banner h2 { background-color:#f0f1e9; margin:0; font-size:16px; padding:10px 20px 10px 20px; }
+
+.box .content { padding: 0px 20px 20px 20px; }
+
+.box .content p { margin:0 0 1em 0; }
+
+
+/**
+ * Forms
+ */
+form fieldset { margin-bottom:20px; }
+form legend { font-weight:bold; padding-bottom:10px; }
+form label { width:120px; float:left; font-size:12px; color:#222; margin-top:5px; }
+form input { font-size:16px; font-weight:bold; padding:3px; color:#000; }
+form small { font-size:10px; color:#999; display:block; margin-left:120px; padding-top:2px; }
+
+form div.input { margin-bottom:10px; }
+
+form .block label { display:block; float:none; width:auto; }
+form .block small { margin-left:0; }
+
+/**
+ * Buttons
+ */
+.button.large {
+ font-size: 16px;
+ padding: 8px 19px 9px;
+}
+
+.button {
+ -webkit-box-shadow: rgba(0, 0, 0, 0.246094) 0px 1px 3px;
+ background: #6f9e2c url(/img/overlay-button.png) repeat-x 0px 0px;
+ border:none;
+ border-bottom: 1px solid rgba(0, 0, 0, 0.246094);
+ border-bottom-left-radius: 5px 5px;
+ border-bottom-right-radius: 5px 5px;
+ border-top-left-radius: 5px 5px;
+ border-top-right-radius: 5px 5px;
+ color: white !important;
+ cursor: pointer;
+ display: inline-block;
+ font-size: 13px;
+ font-weight: bold;
+ line-height: 1;
+ overflow: visible;
+ padding: 5px 15px 6px;
+ position: relative;
+ text-decoration: none;
+ text-shadow: rgba(0, 0, 0, 0.246094) 0px -1px 1px;
+ width: auto;
+}
+
+.button:hover {
+ background-color: #8fb53c;
+}

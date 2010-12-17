@@ -12,7 +12,8 @@
      * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
      * @link     http://opencamp.firecreek.co.uk
      */
-    class InstallController extends InstallAppController {
+    class InstallController extends InstallAppController
+    {
     
         /**
          * Controller name
@@ -243,9 +244,13 @@
             }
 
             // set new password for admin, hashed according to new salt value
+            $password = rand(10000,99999);
+            
             $User = ClassRegistry::init('User');
             $User->id = $User->field('id', array('username' => 'admin'));
-            $User->saveField('password', Security::hash('password', null, $salt));
+            $User->saveField('password', Security::hash($password, null, $salt));
+            
+            $this->set(compact('password'));
         }
 
     }

@@ -2,6 +2,7 @@
 class Company extends AppModel {
 	var $name = 'Company';
 	var $displayField = 'name';
+	public $actsAs = array('Containable');
 	var $validate = array(
 		'account_id' => array(
 			'numeric' => array(

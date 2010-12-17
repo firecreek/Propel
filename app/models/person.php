@@ -22,6 +22,18 @@ class Person extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'first_name' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'allowEmpty' => false
+			),
+		),
+		'last_name' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'allowEmpty' => false
+			),
+		)
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 

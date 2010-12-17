@@ -29,7 +29,7 @@
             echo $form->input('Install.database', array('label' => 'Name', 'value' => 'opencamp'));
             echo $form->input('Install.port', array('label' => 'Port (leave blank if unknown)'));
             
-            echo $form->button('Next',array('class'=>'button large','type'=>'submit'));
+            echo $form->button('Next',array('class'=>'button','type'=>'submit'));
             echo $form->end();
         ?>
 

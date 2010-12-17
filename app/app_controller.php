@@ -1,9 +1,39 @@
 <?php
 
+  /**
+   * AppController
+   *
+   * @category Controller
+   * @package  OpenCamp
+   * @version  1.0
+   * @author   Darren Moore <darren.m@firecreek.co.uk>
+   * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+   * @link     http://opencamp.firecreek.co.uk
+   */
   class AppController extends Controller
   {
-  
-    public $components = array('DebugKit.Toolbar');
+    /**
+     * Components uses
+     *
+     * @access public
+     * @var array
+     */
+    public $components = array('Acl','Auth','AclFilter','DebugKit.Toolbar');
+    
+    
+    /**
+     * Before Filter
+     *
+     * @access public
+     * @return void
+     */
+    public function beforeFilter()
+    {
+      //Auth settings
+      $this->AclFilter->auth();
+      
+      parent::beforeFilter();
+    }
   
   }
 

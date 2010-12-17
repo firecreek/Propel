@@ -1,24 +1,6 @@
 /**
  * Basic
  */
-* { margin: 0;}
-html, body { font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; background-color: #f5f6f8; line-height:1.5; height: 100%; }
-
-a { color:#0066cc; }
-a:hover { color:#0099ff; }
-
-.error,
-.notice,
-.success,
-.message { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd; }
-.error { background: #FBE3E4; color: #D12F19; border-color: #FBC2C4; }
-.notice,
-.message { background: #FFF6BF; color: #817134; border-color: #FFD324; }
-.success { background: #E6EFC2; color: #529214; border-color: #C6D880; }
-.error a { color: #D12F19; }
-.notice a,
-.message a { color: #817134; }
-.success a { color: #529214; }
 
 #wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -50px; }
 
@@ -42,50 +24,6 @@ a:hover { color:#0099ff; }
  * Forms
  */
 
-
-/**
- * Buttons
- */
-.button.large {
- font-size: 16px;
- padding: 8px 19px 9px;
-}
-
-.button {
- -webkit-box-shadow: rgba(0, 0, 0, 0.246094) 0px 1px 3px;
- background: #6f9e2c url(/img/overlay-button.png) repeat-x 0px 0px;
- border:none;
- border-bottom: 1px solid rgba(0, 0, 0, 0.246094);
- border-bottom-left-radius: 5px 5px;
- border-bottom-right-radius: 5px 5px;
- border-top-left-radius: 5px 5px;
- border-top-right-radius: 5px 5px;
- color: white !important;
- cursor: pointer;
- display: inline-block;
- font-size: 13px;
- font-weight: bold;
- line-height: 1;
- overflow: visible;
- padding: 5px 15px 6px;
- position: relative;
- text-decoration: none;
- text-shadow: rgba(0, 0, 0, 0.246094) 0px -1px 1px;
- width: auto;
-}
-
-.button:hover {
- background-color: #8fb53c;
-}
-
-
-/**
- * Header
- */
-header { width: auto; background-color: #222; padding: 15px 0px 15px 0px; color: #fff; margin: 0px 0px 0px 0px; height: 20px; }
-header .logo { font-weight: bold; }
-header a { color: #ccc; text-decoration: none; }
-header a:hover { text-decoration: underline; }
 
 
 
