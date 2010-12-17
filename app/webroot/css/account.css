@@ -1,10 +1,26 @@
 
+/**
+ * Header
+ */
 #launchbar { width:100%; background-color:#222; color:#fff; height:25px; }
 #launchbar p { margin:0 0 0 30px; padding-top:4px; font-size:11px; font-family:arial; }
 
 header { height:80px; background-color:#195D00; color:#fff; position:relative; }
 header h1 { margin:0 0 0 30px; padding:10px 0 0 0; font-size:24px; font-weight:normal; font-family:arial; }
 
+
+/**
+ * Footer
+ */
+footer { padding:20px 0 30px 45px; clear:both; }
+footer p { font-size:9px; color:#999; }
+footer p a { color:#999; }
+footer p a:hover { background-color:#666; color:white; text-decoration:none; }
+
+
+/**
+ * Navigation
+ */
 header nav a, header nav li { color:#D1EEFF; font-size:10px; }
 header nav a:hover { background-color: #054700; color:white; text-decoration:none; }
 
@@ -12,11 +28,11 @@ nav#account ul { position:absolute; right:30px; top:0; }
 nav#account li { float:left; margin-left:15px; padding:6px 4px 6px 4px; }
 nav#account li a { padding:6px 4px 6px 4px; }
 
-nav#main { position:absolute; bottom:0px; left:30px; }
-nav#extra { position:absolute; bottom:0px; right:30px; }
+nav.main { position:absolute; bottom:0px; left:30px; }
+nav.extra { position:absolute; bottom:0px; right:30px; }
 
-nav.main ul {}
-nav.main li a { font-size:12px; padding:2px 9px 4px 9px; }
+nav.top ul {}
+nav.top li a { font-size:12px; padding:2px 9px 4px 9px; }
 
 nav.tabs {}
 nav.tabs ul {}
@@ -25,9 +41,42 @@ nav.tabs li a { background-color:#217A00; text-decoration:none; float:left; marg
 nav.tabs li a:hover { background-color:#054700; }
 nav.tabs li:last-child a { margin-right:0; }
 
-nav.tabs li.active a { color:#000; font-weight:bold;background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5)); }
+nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5)); }
 
 
-h2 { font-size:14px; margin-bottom:10px; }
+/**
+ * Box
+ */
+.box .banner { border-bottom:none; }
+.box .banner h2 { background-color:#EDF3FE; font-size:14px; }
 
-#main { margin: 0px auto; width:95%; padding: 20px 0px 0px 0px; }
+.area {}
+.area h3 { background-color:#EDF3FE; border-bottom:1px solid gainsboro; color:#333; font-size:13px; padding:6px 8px; margin:0 0 5px 0; }
+
+
+/**
+ * Main
+ */
+#main { margin:0px auto; margin:10px 30px 20px 30px; }
+
+#main .cols {}
+#main .cols .col {}
+#main .cols .col.left { width:70%; float:left; }
+#main .cols .col.right { width:28%; float:right; }
+
+#main .cols .col.right .button { margin-bottom:20px; }
+
+
+/**
+ * Project list
+ */
+.col.right .project-list {}
+.col.right .project-list li ul { margin:2px 0 10px 10px; }
+.col.right .project-list {}
+.col.right .project-list {}
+
+
+
+
+
+

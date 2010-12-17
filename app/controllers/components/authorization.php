@@ -110,8 +110,7 @@
           'Company' => array('id','name')
         )
       ));
-      
-      $this->Session->write('Account',$this->account);
+      $this->Session->write('AuthAccount.Account',$this->account['Account']);
       
       return $this->account ? true : false;
     }
@@ -125,7 +124,7 @@
      */
     public function loadPerson()
     {
-      $record = $this->controller->User->Person->find('first',array(
+      $this->person = $this->controller->User->Person->find('first',array(
         'conditions' => array(
           'Person.user_id' => parent::user('id'),
           'Company.account_id' => $this->account('id')
@@ -135,9 +134,9 @@
         )
       ));
       
-      $this->Session->write('Auth.Person',$record['Person']);
+      $this->Session->write('AuthAccount.Person',$this->person['Person']);
       
-      return true;
+      return $this->person ? true : false;
     }
     
     
@@ -150,8 +149,22 @@
      */
     public function account($path)
     {
-      if(strpos($path,'.') === false) { $path = 'Account.'.$path; }
-      return Set::extract($this->account,$path);
+      if(strpos($path,'.') === false) { $path = 'AuthAccount.Account.'.$path; }
+      return $this->Session->read($path);
+    }
+    
+    
+    /**
+     * Person details
+     *
+     * @param string $path Extract key
+     * @access public
+     * @return string
+     */
+    public function person($path)
+    {
+      if(strpos($path,'.') === false) { $path = 'AuthAccount.Person.'.$path; }
+      return $this->Session->read($path);
     }
     
   }

@@ -186,7 +186,7 @@ class Project extends AppModel {
 			'deleteQuery' => '',
 			'insertQuery' => ''
 		),
-		'Person' => array(
+		'People' => array(
 			'className' => 'Person',
 			'joinTable' => 'projects_people',
 			'foreignKey' => 'project_id',

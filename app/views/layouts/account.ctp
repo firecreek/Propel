@@ -17,7 +17,6 @@
 
 <body>
 
-  <div id="wrapper" class="install">
 
     <div id="launchbar">
       <p><?php __('OpenCamp'); ?></p>
@@ -28,7 +27,7 @@
       
       <nav id="account">
           <ul>
-              <li><?php echo $session->read('Auth.Person.first_name').' '.$session->read('Auth.Person.last_name'); ?></li>
+              <li><?php echo $session->read('AuthAccount.Person.first_name').' '.$session->read('AuthAccount.Person.last_name'); ?></li>
               <li><?php echo $html->link(__('My info',true),array('controller'=>'people','action'=>'edit',$session->read('Auth.Person.id'))); ?></li>
               <li><?php echo $html->link(__('Sign out',true),array('account'=>false,'controller'=>'users','action'=>'logout')); ?></li>
           </ul>
@@ -38,7 +37,7 @@
         $active = $this->name;
       ?>
       
-      <nav id="main" class="main tabs">
+      <nav class="main top tabs">
         <ul>
           <li<?php if($active == 'Accounts') { echo ' class="active"'; } ?>><?php echo $html->link(__('Dashboard',true),array('controller'=>'accounts','action'=>'index')); ?></li>
           <li<?php if($active == 'Todos') { echo ' class="active"'; } ?>><?php echo $html->link(__('To-Dos',true),array('controller'=>'todos','action'=>'index')); ?></li>
@@ -46,7 +45,7 @@
         </ul>
       </nav>
       
-      <nav id="extra" class="main tabs">
+      <nav class="extra top tabs">
         <ul>
           <li<?php if($active == 'People') { echo ' class="active"'; } ?>><?php echo $html->link(__('All People',true),array('controller'=>'people','action'=>'index')); ?></li>
           <li<?php if($active == 'Search') { echo ' class="active"'; } ?>><?php echo $html->link(__('Search',true),array('controller'=>'search','action'=>'index')); ?></li>
@@ -58,13 +57,15 @@
 
     <div id="main">
     <?php
-        $session->flash();
-        echo $content_for_layout;
+      $session->flash();
+      echo $content_for_layout;
     ?>
     </div>
-
-  </div>
-
+    
+    
+    <footer>
+      <p><?php __('Managed with'); ?> <?php echo $html->link('OpenBase','http://openbase.firecreek.co.uk?ref=accfoot'); ?>.</p>
+    </footer>
 
 </body>
 </html>

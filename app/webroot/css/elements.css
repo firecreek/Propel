@@ -3,7 +3,7 @@
 /**
  * Content boxes
  */
-.box { margin:10px 0px 0px 0px;  background: #fff; border: 1px solid #d4d5d0; }
+.box { margin:0px 0px 0px 0px;  background: #fff;  }
 .box { -webkit-box-shadow:#BBB 3px 3px 4px; -moz-box-shadow:#BBB 3px 3px 4px; }
 
 .box .banner {}
@@ -21,13 +21,18 @@
 form fieldset { margin-bottom:20px; }
 form legend { font-weight:bold; padding-bottom:10px; }
 form label { width:120px; float:left; font-size:12px; color:#222; margin-top:5px; }
-form input { font-size:16px; font-weight:bold; padding:3px; color:#000; }
+form .text input { font-size:16px; font-weight:bold; padding:3px; color:#000; }
 form small { font-size:10px; color:#999; display:block; margin-left:120px; padding-top:2px; }
 
-form div.input { margin-bottom:10px; }
+form .input { margin-bottom:10px; }
 
-form .block label { display:block; float:none; width:auto; }
-form .block small { margin-left:0; }
+form .submit { font-size:11px; }
+form .submit input { padding:3px 5px 3px 5px; margin-right:8px; }
+form .submit a { color:#ff0000; padding:0 1px; }
+form .submit a:hover { color:#FFF; background-color:#ff0000; text-decoration:none; }
+
+form .block label, form.block label { display:block; float:none; width:auto; margin-bottom:2px; }
+form .block small, form.block small { margin-left:0; }
 
 /**
  * Buttons
@@ -46,7 +51,7 @@ form .block small { margin-left:0; }
  border-bottom-right-radius: 5px 5px;
  border-top-left-radius: 5px 5px;
  border-top-right-radius: 5px 5px;
- color: white !important;
+ color: white;
  cursor: pointer;
  display: inline-block;
  font-size: 13px;
@@ -63,3 +68,15 @@ form .block small { margin-left:0; }
 .button:hover {
  background-color: #8fb53c;
 }
+
+.button.action {
+  background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5));
+  color:black;
+  text-shadow: rgba(255, 255, 255, 0.246094) 0px -1px 1px;
+  border-radius: 12px;
+}
+
+.button.action.large {
+ font-size: 14px;
+}
+
