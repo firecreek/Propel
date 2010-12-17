@@ -111,6 +111,7 @@
         )
       ));
       $this->Session->write('AuthAccount.Account',$this->account['Account']);
+      $this->Session->write('AuthAccount.Company',$this->account['Company']);
       
       return $this->account ? true : false;
     }
