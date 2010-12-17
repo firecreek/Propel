@@ -36,6 +36,28 @@
       
       parent::beforeFilter();
     }
+    
+    
+    /**
+     * Redirect
+     *
+     * @access public
+     * @return void
+     */
+    public function redirect($url, $status = null, $exit = true)
+    {
+      if(is_array($url))
+      { 
+        if(
+          isset($this->params['accountSlug']) &&
+          (!isset($url['account']) || (isset($url['account']) && $url['account'] !== false)))
+        {
+          $url['accountSlug'] = $this->params['accountSlug'];
+        }
+      } 
+      
+      return parent::redirect($url, $status, $exit);
+    }
   
   }
 
