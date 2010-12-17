@@ -76,7 +76,7 @@
       else
       {
         //Load account details
-        if(!$this->Authorization->loadAccount($this->controller->params['account']))
+        if(!$this->Authorization->loadAccount($this->controller->params['accountSlug']))
         {
           //No such account
           $this->cakeError('error404'); 
@@ -87,6 +87,10 @@
         {
           $this->_throwError(__('You do not have access to this account'));
         }
+        
+        //Load their Person data
+        $this->Authorization->loadPerson();
+        
         
         $this->controller->layout = 'account';
       }

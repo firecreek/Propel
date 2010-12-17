@@ -73,7 +73,7 @@
               'controller'  => 'accounts',
               'action'      => 'index',
               'prefix'      => 'account',
-              'account'     => $this->data['Account']['slug']
+              'accountSlug' => $this->data['Account']['slug']
             ));
 
           }
@@ -106,7 +106,7 @@
           'controller'  => 'accounts',
           'action'      => 'index',
           'prefix'      => 'account',
-          'account'     => $this->Session->read('Auth.Account.slug')
+          'accountSlug' => $this->Session->read('Auth.Account.slug')
         ));
       }
     }

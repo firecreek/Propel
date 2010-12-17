@@ -118,6 +118,30 @@
     
     
     /**
+     * Load this users `Person` data relevant to the account
+     *
+     * @access public
+     * @return boolean
+     */
+    public function loadPerson()
+    {
+      $record = $this->controller->User->Person->find('first',array(
+        'conditions' => array(
+          'Person.user_id' => parent::user('id'),
+          'Company.account_id' => $this->account('id')
+        ),
+        'contain' => array(
+          'Company'
+        )
+      ));
+      
+      $this->Session->write('Auth.Person',$record['Person']);
+      
+      return true;
+    }
+    
+    
+    /**
      * Account details
      *
      * @param string $path Extract key

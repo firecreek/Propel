@@ -2,10 +2,31 @@
 #launchbar { width:100%; background-color:#222; color:#fff; height:25px; }
 #launchbar p { margin:0 0 0 30px; padding-top:4px; font-size:11px; font-family:arial; }
 
-header { height:80px;  background-color:#195D00; color:#fff; }
+header { height:80px; background-color:#195D00; color:#fff; position:relative; }
 header h1 { margin:0 0 0 30px; padding:10px 0 0 0; font-size:24px; font-weight:normal; font-family:arial; }
 
-div#account {}
+header nav a, header nav li { color:#D1EEFF; font-size:10px; }
+header nav a:hover { background-color: #054700; color:white; text-decoration:none; }
+
+nav#account ul { position:absolute; right:30px; top:0; }
+nav#account li { float:left; margin-left:15px; padding:6px 4px 6px 4px; }
+nav#account li a { padding:6px 4px 6px 4px; }
+
+nav#main { position:absolute; bottom:0px; left:30px; }
+nav#extra { position:absolute; bottom:0px; right:30px; }
+
+nav.main ul {}
+nav.main li a { font-size:12px; padding:2px 9px 4px 9px; }
+
+nav.tabs {}
+nav.tabs ul {}
+nav.tabs li { display:inline; border:none; }
+nav.tabs li a { background-color:#217A00; text-decoration:none; float:left; margin-right:2px; }
+nav.tabs li a:hover { background-color:#054700; }
+nav.tabs li:last-child a { margin-right:0; }
+
+nav.tabs li.active a { color:#000; font-weight:bold;background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5)); }
+
 
 h2 { font-size:14px; margin-bottom:10px; }
 
