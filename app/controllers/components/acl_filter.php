@@ -54,8 +54,8 @@
       //Configure AuthComponent
       $this->Authorization->authorize = 'crud';
       $this->Authorization->autoRedirect = false;
-      $this->Authorization->loginAction = array('controller' => 'users', 'action' => 'login');
-      $this->Authorization->logoutRedirect = array('controller' => 'users', 'action' => 'login');
+      $this->Authorization->loginAction = array('account' => false, 'controller' => 'users', 'action' => 'login');
+      $this->Authorization->logoutRedirect = array('account' => false, 'controller' => 'users', 'action' => 'login');
       $this->Authorization->userScope = array('User.status' => 1);
       $this->Authorization->actionPath = 'controllers/';
       
@@ -70,7 +70,7 @@
       elseif(!$this->Authorization->user())
       {
         //Not logged in
-        $this->Session->setFlash(__('You must login'),'default',array('class'=>'error'));
+        $this->Session->setFlash(__('You must be logged in to do that action', true),'default',array('class'=>'error'));
         $this->controller->redirect($this->Authorization->loginAction);
       }
       else

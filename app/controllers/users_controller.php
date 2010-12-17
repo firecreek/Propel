@@ -45,6 +45,8 @@
      */
     public function register()
     {
+      $this->_checkUser();
+      
       if(!empty($this->data))
       {
         $this->User->saveAll($this->data, array('validate' => 'only'));
@@ -97,7 +99,10 @@
      * @return void
      */
     public function login()
-    {    
+    {
+      $this->_checkUser();
+    
+      //Attempting to login
       if(!empty($this->data) && $this->Authorization->login($this->data))
       {
         $this->redirect(array(
@@ -133,6 +138,29 @@
      */
     public function forgotten()
     {
+    }
+    
+    
+    /**
+     * Check if logged in already, if so then redirect
+     *
+     * @access private
+     * @return boolean
+     */
+    private function _checkUser()
+    {
+      //Already logged in
+      if($this->Authorization->user('id'))
+      {
+        $this->redirect(array(
+          'controller'  => 'accounts',
+          'action'      => 'index',
+          'prefix'      => 'account',
+          'accountSlug' => $this->Authorization->account('slug')
+        ));
+      }
+      
+      return false;
     }
   
   }
