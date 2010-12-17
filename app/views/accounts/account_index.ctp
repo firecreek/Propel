@@ -24,28 +24,28 @@
     
     <div class="area">
       <h3>Your projects</h3>
-      
-      <ul class="project-list">
-        <li>
-            <strong>Company Name</strong>
-            <ul>
-              <li><?php echo $html->link('Example project 1','#'); ?></li>
-              <li><?php echo $html->link('Example project 2','#'); ?></li>
-              <li><?php echo $html->link('Example project 3','#'); ?></li>
-              <li><?php echo $html->link('Example project 4','#'); ?></li>
-              <li><?php echo $html->link('Example project 5','#'); ?></li>
-            </ul>
-        </li>
-        <li>
-            <strong>Lipsum Company</strong>
-            <ul>
-              <li><?php echo $html->link('Example project 1','#'); ?></li>
-              <li><?php echo $html->link('Example project 2','#'); ?></li>
-              <li><?php echo $html->link('Example project 3','#'); ?></li>
-            </ul>
-        </li>
-      </ul>
-      
+      <div class="content">
+        <ul class="project-list">
+          <li>
+              <strong>Company Name</strong>
+              <ul>
+                <li><?php echo $html->link('Example project 1','#'); ?></li>
+                <li><?php echo $html->link('Example project 2','#'); ?></li>
+                <li><?php echo $html->link('Example project 3','#'); ?></li>
+                <li><?php echo $html->link('Example project 4','#'); ?></li>
+                <li><?php echo $html->link('Example project 5','#'); ?></li>
+              </ul>
+          </li>
+          <li>
+              <strong>Lipsum Company</strong>
+              <ul>
+                <li><?php echo $html->link('Example project 1','#'); ?></li>
+                <li><?php echo $html->link('Example project 2','#'); ?></li>
+                <li><?php echo $html->link('Example project 3','#'); ?></li>
+              </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   
   </div>
