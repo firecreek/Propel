@@ -26,7 +26,10 @@
      * @access public
      * @var array
      */
-    public $actsAs = array('Containable');
+    public $actsAs = array(
+      'Acl' => array('type' => 'requester'),
+      'Containable'
+    );
     
     /**
      * Validation
@@ -198,27 +201,12 @@
       ),
     );
     
+    
     /**
-     * Has Access
      *
-     * If this User.id is listed in People, which is associated with the main company of the account
-     *
-     * @param string $slug Account slug
-     * @param array $user User data array
-     * @access public
-     * @return boolean
      */
-    public function hasAccess($userId,$accountId)
+    public function parentNode()
     {
-      return $this->find('count',array(
-        'conditions' => array(
-          'Person.user_id' => $userId,
-          'Company.account_id' => $accountId
-        ),
-        'contain' => array(
-          'Company' => array('id')
-        )
-      ));
     }
 
   }

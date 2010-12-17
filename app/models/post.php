@@ -98,7 +98,7 @@ class Post extends AppModel {
 
 	var $hasAndBelongsToMany = array(
 		'People' => array(
-			'className' => 'People',
+			'className' => 'Person',
 			'joinTable' => 'posts_peoples',
 			'foreignKey' => 'post_id',
 			'associationForeignKey' => 'people_id',

@@ -26,7 +26,7 @@
      * @access public
      * @var object
      */
-    public $components = array('Authorization','Session');
+    public $components = array('Authorization','Acl','Session');
     
 
     /**
@@ -57,7 +57,7 @@
       $this->Authorization->loginAction = array('account' => false, 'controller' => 'users', 'action' => 'login');
       $this->Authorization->logoutRedirect = array('account' => false, 'controller' => 'users', 'action' => 'login');
       $this->Authorization->userScope = array('User.status' => 1);
-      $this->Authorization->actionPath = 'controllers/';
+      $this->Authorization->actionPath = 'openbase/';
       
       $prefix = isset($this->controller->params['prefix']) ? $this->controller->params['prefix'] : null;
       $userRoleId = $this->Authorization->user('role_id');
@@ -75,24 +75,63 @@
       }
       else
       {
-        //Load account details
-        if(!$this->Authorization->loadAccount($this->controller->params['accountSlug']))
-        {
-          //No such account
-          $this->cakeError('error404'); 
-        }
+        //Account
+        $this->controller->layout = 'account';
       
-        //Check they have access
-        if(!$this->controller->Person->hasAccess($this->Session->read('Auth.User.id'),$this->Authorization->account('id')))
+        //Load Person based on account slug and user id
+        $accountSlug = $this->controller->params['accountSlug'];
+        $userId = $this->Authorization->user('id');
+        
+        $record = $this->controller->User->Person->query("
+          SELECT *
+          FROM people as Person
+          INNER JOIN companies as Company ON (Company.account_id = Person.company_id)
+          INNER JOIN accounts as Account ON (Account.id = Company.account_id AND Account.slug = '".$accountSlug."')
+          WHERE Person.user_id = ".$userId."
+        ");
+        
+        $person = Set::extract($record,'0.Person');
+        $company = Set::extract($record,'0.Company');
+        $account = Set::extract($record,'0.Account');
+        
+        //Find Person aro
+        $aro = $this->Acl->Aro->find('first', array(
+            'conditions' => array(
+                'Aro.model' => 'Person',
+                'Aro.foreign_key' => $person['id'],
+            ),
+            'recursive' => -1,
+        ));
+        $aroId = $aro['Aro']['id'];
+        
+        //Find Account acos
+        $root = $this->Acl->Aco->node('accounts/'.$accountSlug);
+        $acoId = Set::extract($root,'0.Aco.id');
+        
+        //Get this Persons permissions for this account
+        $permission = $this->controller->Acl->Aco->Permission->find('first',array(
+          'conditions' => array(
+            'Permission.aro_id' => $aroId,
+            'Permission.aco_id' => $acoId,
+          ),
+          'fields' => array(
+            'Permission.*'
+          )
+        ));
+        $permission = Set::extract($permission,'Permission');
+        
+        if(!empty($permission))
+        {
+          $this->Authorization->set('Permissions',$permission);
+          $this->Authorization->set('Company',$company);
+          $this->Authorization->set('Account',$account);
+          $this->Authorization->set('Person',$person);
+        }
+        else
         {
           $this->_throwError(__('You do not have access to this account'));
         }
         
-        //Load their Person data
-        $this->Authorization->loadPerson();
-        
-        
-        $this->controller->layout = 'account';
       }
       
       $this->Authorization->allowedActions = array('*');

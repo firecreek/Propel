@@ -14,6 +14,12 @@ class Role extends AppModel {
 		),
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	
+    public $actsAs = array(
+        'Acl' => array(
+            'type' => 'requester',
+        ),
+    );
 
 	var $hasMany = array(
 		'User' => array(

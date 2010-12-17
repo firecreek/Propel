@@ -107,79 +107,18 @@
     
     
     /**
-     * Load Account
+     * Set data
      *
      * @param string $slug Account slug
      * @access public
-     * @return array
+     * @return void
      */
-    public function loadAccount($slug)
+    public function set($key,$data)
     {
-      $this->account = $this->controller->Account->find('first',array(
-        'conditions' => array(
-          'Account.slug' => $slug
-        ),
-        'contain' => array(
-          'CompanyOwner' => array('id','name')
-        )
-      ));
-      $this->Session->write('AuthAccount.Account',$this->account['Account']);
-      $this->Session->write('AuthAccount.Company',$this->account['CompanyOwner']);
-      
-      return $this->account ? true : false;
+      $this->Session->write('AuthAccount.'.$key,$data);
+      $this->access[$key] = $data;
     }
     
-    
-    /**
-     * Load this users `Person` data relevant to the account
-     *
-     * @access public
-     * @return boolean
-     */
-    public function loadPerson()
-    {
-      $this->person = $this->controller->User->Person->find('first',array(
-        'conditions' => array(
-          'Person.user_id' => parent::user('id'),
-          'Company.account_id' => $this->account('id')
-        ),
-        'contain' => array(
-          'Company'
-        )
-      ));
-      
-      $this->Session->write('AuthAccount.Person',$this->person['Person']);
-      
-      return $this->person ? true : false;
-    }
-    
-    
-    /**
-     * Account details
-     *
-     * @param string $path Extract key
-     * @access public
-     * @return string
-     */
-    public function account($path)
-    {
-      if(strpos($path,'.') === false) { $path = 'AuthAccount.Account.'.$path; }
-      return $this->Session->read($path);
-    }
-    
-    
-    /**
-     * Person details
-     *
-     * @param string $path Extract key
-     * @access public
-     * @return string
-     */
-    public function person($path)
-    {
-      if(strpos($path,'.') === false) { $path = 'AuthAccount.Person.'.$path; }
-      return $this->Session->read($path);
-    }
     
   }
   

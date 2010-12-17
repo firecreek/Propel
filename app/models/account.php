@@ -26,7 +26,9 @@
      * @access public
      * @var array
      */
-    public $actsAs = array('Containable');
+    public $actsAs = array(
+      'Containable'
+    );
     
     /**
      * Validation rules

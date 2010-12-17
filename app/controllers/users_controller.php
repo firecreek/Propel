@@ -45,7 +45,7 @@
      */
     public function register()
     {
-      $this->_checkUser();
+      //$this->_checkUser();
       
       if(!empty($this->data))
       {
@@ -55,7 +55,6 @@
         {
           //Account
           $this->data['Account']['slug'] = $this->User->Account->makeSlug($this->data['Company']['name']);
-          
           $this->data['Company']['account_owner'] = true;
           $this->data['Person']['company_owner'] = true;
         
@@ -63,10 +62,27 @@
           
           if($saved)
           {
+            //Update some fields that saveAll didn't save
             $this->User->Company->saveField('account_id',$this->User->Account->id);
             $this->User->Person->saveField('company_id',$this->User->Company->id);
             $this->User->Person->saveField('user_id',$this->User->id);
             
+            //Create ACO for this account
+            $root = $this->Acl->Aco->node('accounts');
+            $root = $root[0];
+            
+            $this->Acl->Aco->create(array(
+              'parent_id'       => $root['Aco']['id'],
+              'model'           => 'Account',
+              'foreign_key'     => $this->User->Account->id,
+              'alias'           => $this->data['Account']['slug']
+            ));
+            $this->Acl->Aco->save();
+            
+            //Give this person permission for this account
+            $this->Acl->allow($this->User->Person, 'accounts/'.$this->data['Account']['slug']);
+            
+            //Automatically login and redirect
             $this->Authorization->login($this->data);
             
             $this->redirect(array(

@@ -19,7 +19,10 @@
   <div class="col right">
   
     <?php
-      echo $html->link(__('Create a new project',true),array('controller'=>'projects','action'=>'add'),array('class'=>'button action add large'));
+      if($auth->canCreateProject())
+      {
+        echo $html->link(__('Create a new project',true),array('controller'=>'projects','action'=>'add'),array('class'=>'button action add large'));
+      }
     ?>
     
     <div class="area">

@@ -22,6 +22,8 @@
     
     public $uses = array('User','Account','Person');
     
+    public $helpers = array('Html','Form','Auth');
+    
     
     /**
      * Before Filter
