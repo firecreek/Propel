@@ -1,0 +1,12 @@
+
+#launchbar { width:100%; background-color:#222; color:#fff; height:25px; }
+#launchbar p { margin:0 0 0 30px; padding-top:4px; font-size:11px; font-family:arial; }
+
+header { height:80px;  background-color:#195D00; color:#fff; }
+header h1 { margin:0 0 0 30px; padding:10px 0 0 0; font-size:24px; font-weight:normal; font-family:arial; }
+
+div#account {}
+
+h2 { font-size:14px; margin-bottom:10px; }
+
+#main { margin: 0px auto; width:95%; padding: 20px 0px 0px 0px; }

@@ -2,11 +2,11 @@
 
 /**
  * Header
- */
 header { width: auto; background-color: #222; padding: 15px 0px 15px 0px; color: #fff; margin: 0px 0px 0px 0px; height: 20px; }
 header .logo { font-weight: bold; }
 header a { color: #ccc; text-decoration: none; }
 header a:hover { text-decoration: underline; }
+ */
 
 
 

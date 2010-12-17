@@ -1,52 +1,69 @@
 <?php
 
-  class Account extends AppModel {
-    var $name = 'Account';
-    var $validate = array(
+  /**
+   * Account Model
+   *
+   * @category Model
+   * @package  OpenCamp
+   * @version  1.0
+   * @author   Darren Moore <darren.m@firecreek.co.uk>
+   * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+   * @link     http://opencamp.firecreek.co.uk
+   */
+  class Account extends AppModel
+  {
+    /**
+     * Name of model
+     *
+     * @access public
+     * @var string
+     */
+    public $name = 'Account';
+    
+    /**
+     * Behaviors
+     *
+     * @access public
+     * @var array
+     */
+    public $actsAs = array('Containable');
+    
+    /**
+     * Validation rules
+     *
+     * @access public
+     * @var array
+     */
+    public $validate = array(
       'slug' => array(
         'notempty' => array(
-          'rule' => array('notempty'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('notempty')
         ),
       ),
       'project_count' => array(
         'numeric' => array(
-          'rule' => array('numeric'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('numeric')
         ),
       ),
       'person_id' => array(
         'numeric' => array(
-          'rule' => array('numeric'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('numeric')
         ),
       ),
       'user_id' => array(
         'numeric' => array(
-          'rule' => array('numeric'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('numeric')
         ),
       ),
     );
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
-
-    var $belongsTo = array(
+    
+    /**
+     * Belongs to
+     *
+     * @access public
+     * @var array
+     */
+    public $belongsTo = array(
       'Person' => array(
         'className' => 'Person',
         'foreignKey' => 'person_id',
@@ -60,10 +77,23 @@
         'conditions' => '',
         'fields' => '',
         'order' => ''
+      ),
+      'Company' => array(
+        'className' => 'Company',
+        'foreignKey' => 'company_id',
+        'conditions' => '',
+        'fields' => '',
+        'order' => ''
       )
     );
 
-    var $hasMany = array(
+    /**
+     * Has many
+     *
+     * @access public
+     * @var array
+     */
+    public $hasMany = array(
       'Company' => array(
         'className' => 'Company',
         'foreignKey' => 'account_id',
@@ -106,11 +136,15 @@
     );
     
     
-    public function beforeSave($data)
+    /**
+     * Create slug for account
+     *
+     * @param string $slug Slug
+     * @access public
+     * @return string
+     */
+    public function makeSlug($slug)
     {
-      if(!isset($this->data[$this->alias]['slug'])) { return true; }
-    
-      $slug = $this->data[$this->alias]['slug'];
       $slug = Inflector::slug($slug);
       $slug = str_replace('_','-',$slug);
       $slug = strtolower($slug);
@@ -133,8 +167,7 @@
       //Slug doesn't exist
       if(empty($records))
       {
-        $this->data[$this->alias]['slug'] = $slug;
-        return true;
+        return $slug;
       }
       
       //Find highest number
@@ -152,9 +185,31 @@
       
       //Set
       $highest++;
-      $this->data[$this->alias]['slug'] = $slug.$highest;
-      
-      return true;
+      return $slug.$highest;
+    }
+    
+    
+    /**
+     * Has Access
+     *
+     * If this User.id is listed in People, which is associated with the main company of the account
+     *
+     * @param string $slug Account slug
+     * @param array $user User data array
+     * @access public
+     * @return boolean
+     */
+    public function hasAccess($id,$user)
+    {
+      return $this->Person->find('count',array(
+        'conditions' => array(
+          'Person.user_id' => $user['User']['id'],
+          'Company.account_id' => $id
+        ),
+        'contain' => array(
+          'Company' => array('id')
+        )
+      ));
     }
 
   }

@@ -52,7 +52,7 @@
         if($this->User->validates())
         {
           //Account
-          $this->data['Account']['slug'] = $this->data['Company']['name'];
+          $this->data['Account']['slug'] = $this->User->Account->makeSlug($this->data['Company']['name']);
         
           $saved = $this->User->saveAll($this->data, array('validate'=>false));
           
@@ -62,10 +62,20 @@
             $this->User->Company->saveField('account_id',$this->User->Account->id);
             $this->User->Company->saveField('person_id',$this->User->Person->id);
             $this->User->Person->saveField('company_id',$this->User->Company->id);
+            $this->User->Person->saveField('user_id',$this->User->id);
             $this->User->Account->saveField('person_id',$this->User->Person->id);
+            $this->User->Account->saveField('user_id',$this->User->id);
+            $this->User->Account->saveField('company_id',$this->User->Company->id);
             
-            debug($saved);
-            exit;
+            $this->Authorization->login($this->data);
+            
+            $this->redirect(array(
+              'controller'  => 'accounts',
+              'action'      => 'index',
+              'prefix'      => 'account',
+              'account'     => $this->data['Account']['slug']
+            ));
+
           }
           else
           {

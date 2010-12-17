@@ -8,26 +8,6 @@ class User extends AppModel {
     );
     
   var $validate = array(
-    'account_id' => array(
-      'numeric' => array(
-        'rule' => array('numeric'),
-        //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
-      ),
-    ),
-    'person_id' => array(
-      'numeric' => array(
-        'rule' => array('numeric'),
-        //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
-      ),
-    ),
     'role_id' => array(
       'numeric' => array(
         'rule' => array('numeric'),
@@ -60,7 +40,7 @@ class User extends AppModel {
       'notempty' => array(
         'rule' => array('notempty')
       ),
-      'passwordmatch' => array(
+      'passwordsMatch' => array(
         'rule' => array('passwordsMatch', 'password_confirm'),
         'message' => 'Your password and confirmation passwords must match'
       )
@@ -112,34 +92,18 @@ class User extends AppModel {
     ),
     'Person' => array(
       'className' => 'Person',
-      'foreignKey' => 'user_id',
-      'dependent' => false,
+      'foreignKey' => 'person_id',
       'conditions' => '',
       'fields' => '',
-      'order' => '',
-      'limit' => '',
-      'offset' => '',
-      'exclusive' => '',
-      'finderQuery' => '',
-      'counterQuery' => ''
-    )
-  );
-  
-  var $hasOne = array(
+      'order' => ''
+    ),
     'Account' => array(
       'className' => 'Account',
-      'foreignKey' => 'user_id',
+      'foreignKey' => 'account_id',
       'conditions' => '',
       'fields' => '',
       'order' => ''
-    ),
-    'Person' => array(
-      'className' => 'Person',
-      'foreignKey' => 'user_id',
-      'conditions' => '',
-      'fields' => '',
-      'order' => ''
-    ),
+    )
   );
 
   var $hasMany = array(

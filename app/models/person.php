@@ -1,6 +1,7 @@
 <?php
 class Person extends AppModel {
 	var $name = 'Person';
+	public $actsAs = array('Containable');
 	var $validate = array(
 		'company_id' => array(
 			'numeric' => array(
@@ -207,19 +208,6 @@ class Person extends AppModel {
 		),
 		'TodosItem' => array(
 			'className' => 'TodosItem',
-			'foreignKey' => 'person_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'User' => array(
-			'className' => 'User',
 			'foreignKey' => 'person_id',
 			'dependent' => false,
 			'conditions' => '',

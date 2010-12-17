@@ -1,6 +1,7 @@
-.install h1 { padding: 0px 0px 0px 20px;  }
 
-header h1 { width:900px; margin:0 auto; font-size:14px; font-family:arial; }
+header { height:40px; background-color:#222; color:#fff; }
+header h1 { width:900px; margin:0 auto; padding-top:10px; font-size:14px; font-family:arial; }
+
 
 #install { margin: 0px auto; width:820px; padding: 20px 0px 0px 0px; }
 #install .forgot { float: right; }

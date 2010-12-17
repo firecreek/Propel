@@ -18,7 +18,9 @@
      * @access public
      * @var array
      */
-    public $components = array('Acl','Auth','AclFilter','DebugKit.Toolbar');
+    public $components = array('Acl','Authorization','AclFilter','DebugKit.Toolbar');
+    
+    public $uses = array('User','Account');
     
     
     /**
