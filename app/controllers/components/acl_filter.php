@@ -122,10 +122,10 @@
         
         if(!empty($permission))
         {
-          $this->Authorization->set('Permissions',$permission);
-          $this->Authorization->set('Company',$company);
-          $this->Authorization->set('Account',$account);
-          $this->Authorization->set('Person',$person);
+          $this->Authorization->write('Permissions',$permission);
+          $this->Authorization->write('Company',$company);
+          $this->Authorization->write('Account',$account);
+          $this->Authorization->write('Person',$person);
         }
         else
         {

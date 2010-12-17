@@ -107,16 +107,29 @@
     
     
     /**
-     * Set data
+     * Write data
      *
      * @param string $slug Account slug
      * @access public
      * @return void
      */
-    public function set($key,$data)
+    public function write($key,$data)
     {
       $this->Session->write('AuthAccount.'.$key,$data);
       $this->access[$key] = $data;
+    }
+    
+    
+    /**
+     * Read data
+     *
+     * @param string $path
+     * @access public
+     * @return void
+     */
+    public function read($path)
+    {
+      return Set::extract($this->access,$path);
     }
     
     
