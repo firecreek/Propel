@@ -53,19 +53,17 @@
         {
           //Account
           $this->data['Account']['slug'] = $this->User->Account->makeSlug($this->data['Company']['name']);
+          
+          $this->data['Company']['account_owner'] = true;
+          $this->data['Person']['company_owner'] = true;
         
           $saved = $this->User->saveAll($this->data, array('validate'=>false));
           
           if($saved)
           {
-            //@todo Fix up, some association id's are not being set after save
             $this->User->Company->saveField('account_id',$this->User->Account->id);
-            $this->User->Company->saveField('person_id',$this->User->Person->id);
             $this->User->Person->saveField('company_id',$this->User->Company->id);
             $this->User->Person->saveField('user_id',$this->User->id);
-            $this->User->Account->saveField('person_id',$this->User->Person->id);
-            $this->User->Account->saveField('user_id',$this->User->id);
-            $this->User->Account->saveField('company_id',$this->User->Company->id);
             
             $this->Authorization->login($this->data);
             
@@ -99,7 +97,7 @@
      * @return void
      */
     public function login()
-    {
+    {    
       if(!empty($this->data) && $this->Authorization->login($this->data))
       {
         $this->redirect(array(

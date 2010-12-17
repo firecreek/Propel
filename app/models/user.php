@@ -31,10 +31,10 @@ class User extends AppModel {
         'rule' => array('between', 3, 20),
         'message' => 'Username must be between 3 and 20 characters in length'
       ),
-      'isUnique' => array(
+      /*'isUnique' => array(
         'rule' => 'isUnique',
         'message' => 'This username has already been taken.'
-      )
+      )*/
     ),
     'password' => array(
       'notempty' => array(

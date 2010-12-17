@@ -45,11 +45,6 @@
           'rule' => array('numeric')
         ),
       ),
-      'person_id' => array(
-        'numeric' => array(
-          'rule' => array('numeric')
-        ),
-      ),
       'user_id' => array(
         'numeric' => array(
           'rule' => array('numeric')
@@ -64,27 +59,21 @@
      * @var array
      */
     public $belongsTo = array(
-      'Person' => array(
-        'className' => 'Person',
-        'foreignKey' => 'person_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
-      ),
-      'User' => array(
-        'className' => 'User',
-        'foreignKey' => 'user_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
-      ),
-      'Company' => array(
+      'CompanyOwner' => array(
         'className' => 'Company',
-        'foreignKey' => 'company_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
-      )
+        'foreignKey' => false,
+        'conditions' => array(
+          'CompanyOwner.account_id = Account.id',
+          'CompanyOwner.account_owner = 1'
+        ),
+      ),
+      'UserOwner' => array(
+        'className' => 'User',
+        'foreignKey' => false,
+        'conditions' => array(
+          'UserOwner.account_id = Account.id'
+        ),
+      ),
     );
 
     /**
@@ -97,41 +86,12 @@
       'Company' => array(
         'className' => 'Company',
         'foreignKey' => 'account_id',
-        'dependent' => false,
-        'conditions' => '',
-        'fields' => '',
-        'order' => '',
-        'limit' => '',
-        'offset' => '',
-        'exclusive' => '',
-        'finderQuery' => '',
-        'counterQuery' => ''
+        'dependent' => false
       ),
       'Project' => array(
         'className' => 'Project',
         'foreignKey' => 'account_id',
-        'dependent' => false,
-        'conditions' => '',
-        'fields' => '',
-        'order' => '',
-        'limit' => '',
-        'offset' => '',
-        'exclusive' => '',
-        'finderQuery' => '',
-        'counterQuery' => ''
-      ),
-      'User' => array(
-        'className' => 'User',
-        'foreignKey' => 'account_id',
-        'dependent' => false,
-        'conditions' => '',
-        'fields' => '',
-        'order' => '',
-        'limit' => '',
-        'offset' => '',
-        'exclusive' => '',
-        'finderQuery' => '',
-        'counterQuery' => ''
+        'dependent' => false
       )
     );
     

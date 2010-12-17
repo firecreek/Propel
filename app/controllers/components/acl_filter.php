@@ -81,9 +81,9 @@
           //No such account
           $this->cakeError('error404'); 
         }
-        
+      
         //Check they have access
-        if(!$this->controller->Account->hasAccess($this->Authorization->account('id'),$this->Session->read('Auth')))
+        if(!$this->controller->Person->hasAccess($this->Session->read('Auth.User.id'),$this->Authorization->account('id')))
         {
           $this->_throwError(__('You do not have access to this account'));
         }

@@ -20,7 +20,7 @@
      */
     public $components = array('Acl','Authorization','AclFilter','Session','DebugKit.Toolbar');
     
-    public $uses = array('User','Account');
+    public $uses = array('User','Account','Person');
     
     
     /**

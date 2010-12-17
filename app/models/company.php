@@ -1,117 +1,129 @@
 <?php
-class Company extends AppModel {
-	var $name = 'Company';
-	var $displayField = 'name';
-	public $actsAs = array('Containable');
-	var $validate = array(
-		'account_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'private' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'person_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
-		'Account' => array(
-			'className' => 'Account',
-			'foreignKey' => 'account_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Country' => array(
-			'className' => 'Country',
-			'foreignKey' => 'country_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Timezone' => array(
-			'className' => 'Timezone',
-			'foreignKey' => 'timezone_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'person_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+  /**
+   * Company Model
+   *
+   * @category Model
+   * @package  OpenCamp
+   * @version  1.0
+   * @author   Darren Moore <darren.m@firecreek.co.uk>
+   * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+   * @link     http://opencamp.firecreek.co.uk
+   */
+  class Company extends AppModel
+  {
+    /**
+     * Model name
+     *
+     * @access public
+     * @var string
+     */
+    public $name = 'Company';
+    
+    /**
+     * Display field
+     *
+     * @access public
+     * @var string
+     */
+    public $displayField = 'name';
+    
+    /**
+     * Behaviors
+     *
+     * @access public
+     * @var array
+     */
+    public $actsAs = array('Containable');
+    
+    /**
+     * Validation
+     *
+     * @access public
+     * @var array
+     */
+    public $validate = array(
+      'account_id' => array(
+        'numeric' => array(
+          'rule' => array('numeric'),
+        ),
+      ),
+      'name' => array(
+        'notempty' => array(
+          'rule' => array('notempty'),
+        ),
+      ),
+      'private' => array(
+        'boolean' => array(
+          'rule' => array('boolean'),
+        ),
+      ),
+      'person_id' => array(
+        'numeric' => array(
+          'rule' => array('numeric'),
+        ),
+      ),
+    );
+    
+    /**
+     * Belongs to
+     *
+     * @access public
+     * @var array
+     */
+    public $belongsTo = array(
+      'PersonOwner' => array(
+        'className' => 'Person',
+        'foreignKey' => false,
+        'conditions' => array(
+          'PersonOwner.company_id = Company.id',
+          'PersonOwner.company_owner = 1'
+        ),
+      ),
+      'Account' => array(
+        'className' => 'Account',
+        'foreignKey' => 'account_id'
+      ),
+      'Country' => array(
+        'className' => 'Country',
+        'foreignKey' => 'country_id'
+      ),
+      'Timezone' => array(
+        'className' => 'Timezone',
+        'foreignKey' => 'timezone_id'
+      )
+    );
 
-	var $hasMany = array(
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'company_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+    /**
+     * Has many
+     *
+     * @access public
+     * @var array
+     */
+    public $hasMany = array(
+      'People' => array(
+        'className' => 'Person',
+        'foreignKey' => 'company_id',
+        'dependent' => false
+      )
+    );
 
+    /**
+     * Has and belongs to many
+     *
+     * @access public
+     * @var array
+     */
+    public $hasAndBelongsToMany = array(
+      'Project' => array(
+        'className' => 'Project',
+        'joinTable' => 'projects_companies',
+        'foreignKey' => 'company_id',
+        'associationForeignKey' => 'project_id',
+        'unique' => true
+      )
+    );
 
-	var $hasAndBelongsToMany = array(
-		'Project' => array(
-			'className' => 'Project',
-			'joinTable' => 'projects_companies',
-			'foreignKey' => 'company_id',
-			'associationForeignKey' => 'project_id',
-			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
-		)
-	);
-
-}
+  }
+  
 ?>

@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-12-18 01:12:15 : 1292609775*/
+/* App schema generated on: 2010-12-18 03:12:10 : 1292619190*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -16,9 +16,6 @@ class AppSchema extends CakeSchema {
 		'slug' => array('type' => 'string', 'null' => false, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'diskspace_used' => array('type' => 'float', 'null' => false, 'default' => '0.00', 'length' => '10,2'),
 		'project_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
-		'person_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'company_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
@@ -118,6 +115,7 @@ class AppSchema extends CakeSchema {
 	var $companies = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'account_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'account_owner' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'name' => array('type' => 'string', 'null' => false, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'address_one' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'address_two' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -131,7 +129,6 @@ class AppSchema extends CakeSchema {
 		'phone_number_fax' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'timezone_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'person_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
@@ -177,6 +174,7 @@ class AppSchema extends CakeSchema {
 	var $people = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'company_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'company_owner' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'first_name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'last_name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),

@@ -120,11 +120,11 @@
           'Account.slug' => $slug
         ),
         'contain' => array(
-          'Company' => array('id','name')
+          'CompanyOwner' => array('id','name')
         )
       ));
       $this->Session->write('AuthAccount.Account',$this->account['Account']);
-      $this->Session->write('AuthAccount.Company',$this->account['Company']);
+      $this->Session->write('AuthAccount.Company',$this->account['CompanyOwner']);
       
       return $this->account ? true : false;
     }
