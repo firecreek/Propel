@@ -82,7 +82,7 @@
         $record = $this->controller->User->Person->query("
           SELECT *
           FROM people as Person
-          INNER JOIN companies as Company ON (Company.account_id = Person.company_id)
+          INNER JOIN companies as Company ON (Company.id = Person.company_id)
           INNER JOIN accounts as Account ON (Account.id = Company.account_id AND Account.slug = '".$accountSlug."')
           WHERE Person.user_id = ".$userId."
         ");
@@ -190,19 +190,26 @@
           }
         }
         
-        //Check if person can access this
+        //Check if person can access this action
         $hasPermission = false;
         if(isset($this->controller->permissions) && isset($this->controller->permissions[$this->controller->action]))
         {
           $actionPermissions = $this->controller->permissions[$this->controller->action];
-          if(!is_array($actionPermissions)) { $actionPermissions = array($actionPermissions); }
           
-          foreach($actionPermissions as $actionPermission)
+          if($actionPermissions == true)
           {
-            if(isset($permission['_'.$actionPermission]) && $permission['_'.$actionPermission])
+            $hasPermission = true;
+          }
+          else
+          {
+            if(!is_array($actionPermissions)) { $actionPermissions = array($actionPermissions); }
+            foreach($actionPermissions as $actionPermission)
             {
-              $hasPermission = true;
-              break;
+              if(isset($permission['_'.$actionPermission]) && $permission['_'.$actionPermission])
+              {
+                $hasPermission = true;
+                break;
+              }
             }
           }
         }
