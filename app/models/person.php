@@ -69,6 +69,10 @@
           'allowEmpty' => false,
           'message' => 'Enter a valid email address'
         ),
+        'unique' => array(
+          'rule' => 'uniqueEmail',
+          'message' => 'This account already has a person with this email address'
+        )
       )
     );
     
@@ -235,6 +239,44 @@
      */
     public function parentNode()
     {
+    }
+    
+    
+    /**
+     * Validation check if company name is unique to this account
+     *
+     * @access public
+     * @return boolean
+     */
+    public function uniqueEmail()
+    {
+      //Load company record to get account_id
+      $accountId = $this->Company->field('account_id',array('id'=>$this->data[$this->alias]['company_id']));
+      
+      $this->Company->bindModel(array(
+        'belongsTo'=>array(
+          'Person' => array(
+            'className' => 'Person',
+            'foreignKey' => false,
+            'type' => 'INNER',
+            'conditions' => array(
+              'Person.company_id = Company.id',
+              'Person.email' => $this->data[$this->alias]['email']
+            )
+          )
+        )
+      ));
+      
+      $check = $this->Company->find('count',array(
+        'conditions' => array(
+          'account_id'  => $accountId
+        ),
+        'contain' => array(
+          'Person'
+        )
+      ));
+      
+      return $check ? false : true;
     }
 
   }
