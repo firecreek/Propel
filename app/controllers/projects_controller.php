@@ -90,6 +90,18 @@
         
       }
     }
+    
+    
+    /**
+     * Project Index
+     *
+     * @access public
+     * @return void
+     */
+    public function project_index()
+    {
+    }
+    
   
   }
   

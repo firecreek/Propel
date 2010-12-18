@@ -39,6 +39,24 @@
       parent::beforeFilter();
     }
     
+    public function beforeRender()
+    {
+      if(isset($this->params['prefix']))
+      {
+        switch($this->params['prefix'])
+        {
+          case 'account':
+            $this->layout = 'account';
+            break;
+          case 'project':
+            $this->layout = 'project';
+            break;
+        }
+      }
+    
+      parent::beforeRender();
+    }
+    
     
     /**
      * Redirect

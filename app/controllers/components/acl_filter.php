@@ -74,10 +74,7 @@
         $this->controller->redirect($this->Authorization->loginAction);
       }
       else
-      {
-        //Account
-        $this->controller->layout = 'account';
-      
+      {      
         //Load Person based on account slug and user id
         $accountSlug = $this->controller->params['accountSlug'];
         $userId = $this->Authorization->user('id');
@@ -135,17 +132,74 @@
         {
           $this->_throwError(__('You do not have access to this account'),3);
         }
-        elseif(!empty($permission))
+        
+        //Load projects this user can access
+        $projects = array();
+        $records = $this->controller->Acl->Aco->Permission->find('all',array(
+          'conditions' => array(
+            'Permission.aro_id' => $aroId,
+            'Permission._read' => true,
+            'Aco.model' => 'Project',
+          ),
+          'fields' => array('Aco.foreign_key','Permission.*')
+        ));
+        
+        if(!empty($records))
         {
-          $this->Authorization->write('Permissions',$permission);
-          $this->Authorization->write('Company',$company);
-          $this->Authorization->write('Account',$account);
-          $this->Authorization->write('Person',$person);
+          $projectPermissions = Set::combine($records, '{n}.Aco.foreign_key', '{n}.Permission');
+          $projectIds = Set::extract($records,'{n}.Aco.foreign_key');
           
-          $this->Authorization->allowedActions = array('*');
+          $projectRecords = $this->controller->Account->Project->find('all',array(
+            'conditions' => array(
+              'Project.id'      => $projectIds,
+              'Project.status'  => 'active'
+            ),
+            'contain' => array(
+              'Account' => array(
+                'fields' => array('id','slug')
+              ),
+              'Company' => array(
+                'fields' => array('id','name')
+              )
+            )
+          ));
           
-          $this->Authorization->afterAclAuth();
+          foreach($projectRecords as $key => $projectRecord)
+          {
+            $projects[$projectRecord['Project']['id']] = array_merge(
+              array('Permission'=>$projectPermissions[$projectRecord['Project']['id']]),
+              $projectRecord
+            );
+          }
         }
+        
+        //Check if project id is set
+        $project = null;        
+        if(isset($this->controller->params['projectId']))
+        {
+          if(isset($projects[$this->controller->params['projectId']]))
+          {
+            $project = array_merge(
+              $projects[$this->controller->params['projectId']]['Project'],
+              $projects[$this->controller->params['projectId']]
+            );
+          }
+          else
+          {
+            $this->_throwError(__('You do not have access to this project'),4);
+          }
+        }
+        
+        
+        //Set to authorization component
+        $this->Authorization->write('Permissions',$permission);
+        $this->Authorization->write('Company',$company);
+        $this->Authorization->write('Account',$account);
+        $this->Authorization->write('Person',$person);
+        $this->Authorization->write('Projects',$projects);
+        $this->Authorization->write('Project',$project);
+        
+        $this->Authorization->allowedActions = array('*');
         
       }
       

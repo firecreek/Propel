@@ -12,15 +12,6 @@
   Router::connect('/users/logout', array('controller' => 'users', 'action' => 'logout'));
   Router::connect('/users/register', array('controller' => 'users', 'action' => 'register'));
   
-  //Accounts
-  Router::connect('/:accountSlug',
-    array('controller'=>'accounts', 'action'=>'index', 'prefix'=>'account'),
-    array('accountSlug'=>'[a-z0-9\-]+')
-  );
-  Router::connect('/:accountSlug/:controller/:action/*',
-    array('controller'=>'accounts', 'action'=>'index', 'prefix'=>'account'),
-    array('accountSlug'=>'[a-z0-9\-]+')
-  );
   
   //Projects
   Router::connect('/:accountSlug/projects/:projectId',
@@ -30,6 +21,17 @@
   Router::connect('/:accountSlug/projects/:projectId/:controller/:action/*',
     array('controller'=>'projects', 'action'=>'index', 'prefix'=>'project'),
     array('accountSlug'=>'[a-z0-9\-]+','projectId'=>'[0-9]+')
+  );
+  
+  
+  //Accounts
+  Router::connect('/:accountSlug',
+    array('controller'=>'accounts', 'action'=>'index', 'prefix'=>'account'),
+    array('accountSlug'=>'[a-z0-9\-]+')
+  );
+  Router::connect('/:accountSlug/:controller/:action/*',
+    array('controller'=>'accounts', 'action'=>'index', 'prefix'=>'account'),
+    array('accountSlug'=>'[a-z0-9\-]+')
   );
 
 ?>

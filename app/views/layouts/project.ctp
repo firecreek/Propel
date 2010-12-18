@@ -23,7 +23,7 @@
     </div>
 
     <header>
-      <h1><?php echo $session->read('AuthAccount.Company.name'); ?></h1>
+      <h1><?php echo $session->read('AuthAccount.Project.name'); ?></h1>
       
       <nav id="account">
           <ul>
