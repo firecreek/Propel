@@ -55,6 +55,10 @@
         'notempty' => array(
           'rule' => array('notempty'),
         ),
+        'unique' => array(
+          'rule' => 'uniqueName',
+          'message' => 'This account already has a company with this name'
+        )
       ),
       'private' => array(
         'boolean' => array(
@@ -119,6 +123,26 @@
      */
     public $hasAndBelongsToMany = array(
     );
+    
+    
+    /**
+     * Validation check if company name is unique to this account
+     *
+     * @access public
+     * @return boolean
+     */
+    public function uniqueName()
+    {
+      $check = $this->find('count',array(
+        'conditions' => array(
+          'account_id'  => $this->data[$this->alias]['account_id'],
+          'name'        => $this->data[$this->alias]['name'],
+        ),
+        'recursive' => -1
+      ));
+      
+      return $check ? false : true;
+    }
     
     
     /**
