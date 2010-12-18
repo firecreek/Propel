@@ -133,15 +133,26 @@
      */
     public function uniqueName()
     {
+      if(!isset($this->data[$this->alias]['account_id']) && $this->id)
+      {
+        $this->data[$this->alias]['account_id'] = $this->field('account_id',array('id'=>$this->id));
+      }
+    
+      $conditions = array();
+      if($this->id)
+      {
+        $conditions['id !='] = $this->id;
+      }
+    
       $check = $this->find('count',array(
-        'conditions' => array(
+        'conditions' => array_merge(array(
           'account_id'  => $this->data[$this->alias]['account_id'],
           'name'        => $this->data[$this->alias]['name'],
-        ),
+        ),$conditions),
         'recursive' => -1
       ));
       
-      return $check ? false : true;
+      return $check > 0 ? false : true;
     }
     
     
