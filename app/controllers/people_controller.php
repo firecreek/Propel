@@ -38,7 +38,7 @@
     
     
     /**
-     * Index
+     * Add
      *
      * @access public
      * @return void
@@ -79,6 +79,65 @@
       }
       
       $this->set(compact('companyId', 'record'));
+    }
+    
+    
+    /**
+     * Edit
+     *
+     * @access public
+     * @return void
+     */
+    public function account_edit($personId)
+    {
+      $record = $this->Person->find('first',array(
+        'conditions' => array(
+          'Person.id' => $personId,
+          'Company.account_id' => $this->Authorization->read('Account.id')
+        ),
+        'contain' => array(
+          'Company' => array('id'),
+          'User' => array()
+        )
+      ));
+      
+      if(empty($record))
+      {
+        $this->Session->setFlash(__('You do not have permission to edit this person',true),'default',array('class'=>'error'));
+        $this->redirect($this->referer(), null, true); 
+      }
+      
+      $companies = $this->Company->find('list',array(
+        'conditions' => array(
+          'Company.account_id' => $this->Authorization->read('Account.id')
+        )
+      ));
+      
+      //Save
+      if(!empty($this->data))
+      {
+        $this->data['Person']['id'] = $personId;
+        
+        $this->Person->set($this->data);
+        
+        if($this->Person->validates() && isset($companies[$this->data['Person']['company_id']]))
+        {
+          $this->Person->save();
+          $this->Session->setFlash(__('Persons details have been updated',true));
+          $this->redirect(array('controller'=>'companies','action'=>'index'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Please check the form and try again',true),'default',array('class'=>'error'));
+        }
+      }
+      
+      if(empty($this->data))
+      {
+        $this->data = $record;
+      }
+      
+      $this->set(compact('personId', 'record', 'companies'));
     }
   
   }
