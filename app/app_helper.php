@@ -9,6 +9,7 @@
       { 
         if(
           isset($this->params['accountSlug']) &&
+          !isset($url['accountSlug']) &&
           (!isset($url['account']) || (isset($url['account']) && $url['account'] !== false)))
         {
           $url['accountSlug'] = $this->params['accountSlug'];

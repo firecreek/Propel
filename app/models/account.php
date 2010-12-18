@@ -64,6 +64,7 @@
       'CompanyOwner' => array(
         'className' => 'Company',
         'foreignKey' => false,
+        'type' => 'INNER',
         'conditions' => array(
           'CompanyOwner.account_id = Account.id',
           'CompanyOwner.account_owner = 1'

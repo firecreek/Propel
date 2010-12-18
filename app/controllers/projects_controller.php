@@ -47,8 +47,9 @@
     {
       if(!empty($this->data))
       {
-        $this->data['Project']['account_id'] = $this->Authorization->read('Account.id');
-        $this->data['Project']['person_id'] = $this->Authorization->read('Person.id');
+        $this->data['Project']['account_id']  = $this->Authorization->read('Account.id');
+        $this->data['Project']['person_id']   = $this->Authorization->read('Person.id');
+        $this->data['Project']['company_id']  = $this->Authorization->read('Company.id');
         $this->data['People'] = array('id' => $this->Authorization->read('Person.id'));
       
         $this->Project->set($this->data);

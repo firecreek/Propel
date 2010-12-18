@@ -45,7 +45,7 @@
      */
     public function register()
     {
-      //$this->_checkUser();
+      $this->_checkUser();
       
       if(!empty($this->data))
       {

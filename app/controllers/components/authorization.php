@@ -107,6 +107,46 @@
     
     
     /**
+     * After ACL Auth
+     *
+     * @access public
+     * @return void
+     */
+    public function afterAclAuth()
+    {
+      //Load projects this user can access
+      $aroId = $this->read('Person._aro_id');
+      
+      $records = $this->controller->Acl->Aco->Permission->find('all',array(
+        'conditions' => array(
+          'Permission.aro_id' => $aroId,
+          'Permission._read' => true,
+          'Aco.model' => 'Project',
+        ),
+        'fields' => array('Aco.foreign_key')
+      ));
+      $projectIds = Set::extract($records,'{n}.Aco.foreign_key');
+      
+      $projects = $this->controller->Account->Project->find('all',array(
+        'conditions' => array(
+          'Project.id'      => $projectIds,
+          'Project.status'  => 'active'
+        ),
+        'contain' => array(
+          'Account' => array(
+            'fields' => array('id','slug')
+          ),
+          'Company' => array(
+            'fields' => array('id','name')
+          )
+        )
+      ));
+      
+      $this->write('Projects',$projects);
+    }
+    
+    
+    /**
      * Write data
      *
      * @param string $slug Account slug

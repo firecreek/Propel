@@ -25,31 +25,47 @@
       }
     ?>
     
+    <?php $projects = $auth->read('Projects'); ?>
+    <?php if(!empty($projects)): ?>
     <div class="area">
       <h3>Your projects</h3>
+      <?php
+        //Group projects by company
+        $projectCompanies = array();
+        
+        foreach($projects as $project)
+        {
+          if(!isset($projectCompanies[$project['Company']['name']]))
+          {
+            $projectCompanies[$project['Company']['name']] = array();
+          }
+          
+          $projectCompanies[$project['Company']['name']][] = $project;
+        }
+      ?>
       <div class="content">
         <ul class="project-list">
-          <li>
-              <strong>Company Name</strong>
+          <?php foreach($projectCompanies as $companyName => $companyProjects): ?>
+            <li>
+              <strong><?php echo $companyName; ?></strong>
               <ul>
-                <li><?php echo $html->link('Example project 1','#'); ?></li>
-                <li><?php echo $html->link('Example project 2','#'); ?></li>
-                <li><?php echo $html->link('Example project 3','#'); ?></li>
-                <li><?php echo $html->link('Example project 4','#'); ?></li>
-                <li><?php echo $html->link('Example project 5','#'); ?></li>
+                <?php foreach($companyProjects as $project): ?>
+                  <li><?php
+                    echo $html->link($project['Project']['name'],array(
+                      'accountSlug' => $project['Account']['slug'],
+                      'projectId'   => $project['Project']['id'],
+                      'controller'  => 'projects',
+                      'action'      => 'index'
+                    ));
+                  ?></li>
+                <?php endforeach; ?>
               </ul>
-          </li>
-          <li>
-              <strong>Lipsum Company</strong>
-              <ul>
-                <li><?php echo $html->link('Example project 1','#'); ?></li>
-                <li><?php echo $html->link('Example project 2','#'); ?></li>
-                <li><?php echo $html->link('Example project 3','#'); ?></li>
-              </ul>
-          </li>
+            </li>
+          <?php endforeach; ?>
         </ul>
       </div>
     </div>
+    <?php endif; ?>
   
   </div>
 </div>

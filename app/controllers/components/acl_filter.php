@@ -90,6 +90,11 @@
           WHERE Person.user_id = ".$userId."
         ");
         
+        if(empty($record))
+        {
+          $this->_throwError(__('You do not have access to this account'),1);
+        }
+        
         $person = Set::extract($record,'0.Person');
         $company = Set::extract($record,'0.Company');
         $account = Set::extract($record,'0.Account');
@@ -103,6 +108,7 @@
             'recursive' => -1,
         ));
         $aroId = $aro['Aro']['id'];
+        $person['_aro_id'] = $aroId;
         
         //Find Account acos
         $root = $this->Acl->Aco->node('accounts/'.$accountSlug);
@@ -120,21 +126,29 @@
         ));
         $permission = Set::extract($permission,'Permission');
         
-        if(!empty($permission))
+        //Handle responses
+        if(empty($permission))
+        {
+          $this->_throwError(__('You do not have access to this account'),2);
+        }
+        elseif(!$permission['_read'])
+        {
+          $this->_throwError(__('You do not have access to this account'),3);
+        }
+        elseif(!empty($permission))
         {
           $this->Authorization->write('Permissions',$permission);
           $this->Authorization->write('Company',$company);
           $this->Authorization->write('Account',$account);
           $this->Authorization->write('Person',$person);
-        }
-        else
-        {
-          $this->_throwError(__('You do not have access to this account'));
+          
+          $this->Authorization->allowedActions = array('*');
+          
+          $this->Authorization->afterAclAuth();
         }
         
       }
       
-      $this->Authorization->allowedActions = array('*');
     }
     
     
@@ -145,8 +159,13 @@
      * @access private
      * @return boolean 
      */ 
-    private function _throwError($error)
+    private function _throwError($error,$errorNumber = null)
     {
+      if($errorNumber)
+      {
+        $error .= ' (E'.$errorNumber.')';
+      }
+    
       $this->Session->setFlash($error, 'default', array('class' => 'error'));
       $this->controller->redirect($this->controller->referer(), null, true); 
     }

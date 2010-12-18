@@ -34,7 +34,10 @@
      * @access public
      * @var array
      */
-    public $actsAs = array('Containable');
+    public $actsAs = array(
+      'Acl' => array('type' => 'requester'),
+      'Containable'
+    );
     
     /**
      * Validation
@@ -123,6 +126,14 @@
         'unique' => true
       )
     );
+    
+    
+    /**
+     *
+     */
+    public function parentNode()
+    {
+    }
 
   }
   

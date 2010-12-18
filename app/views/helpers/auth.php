@@ -19,6 +19,11 @@
       return $this->Session->read('AuthAccount.Permissions._create');
     }
     
+    public function read($key)
+    {
+      return $this->Session->read('AuthAccount.'.$key);
+    }
+    
   }
   
 ?>

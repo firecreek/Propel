@@ -1,6 +1,18 @@
 <?php
 class Project extends AppModel {
 	var $name = 'Project';
+    
+    /**
+     * Behaviors
+     *
+     * @access public
+     * @var array
+     */
+    public $actsAs = array(
+      'Containable'
+    );
+		
+		
 	var $validate = array(
 		'account_id' => array(
 			'numeric' => array(
@@ -59,6 +71,10 @@ class Project extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'Company' => array(
+			'className' => 'Company',
+			'foreignKey' => 'company_id'
 		)
 	);
 
