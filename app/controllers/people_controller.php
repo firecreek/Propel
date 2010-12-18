@@ -34,7 +34,7 @@
      * @access public
      * @access public
      */
-    public $uses = array();
+    public $uses = array('Person','Company');
     
     
     /**
@@ -43,8 +43,17 @@
      * @access public
      * @return void
      */
-    public function account_add()
+    public function account_add($companyId)
     {
+      $record = $this->Company->find('first',array(
+        'conditions' => array(
+          'Company.id' => $companyId,
+          'Company.account_id' => $this->Authorization->read('Account.id')
+        ),
+        'contain' => array()
+      ));
+      
+      $this->set(compact('record'));
     }
   
   }

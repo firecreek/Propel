@@ -59,7 +59,7 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 
 .area {}
 .area h3 { background-color:#EDF3FE; border-bottom:1px solid gainsboro; color:#333; font-size:13px; padding:6px 10px; margin:0 0 10px 0; }
-.area .content { margin:0 10px 0 10px; }
+.area .content { margin:0 10px 0 10px; font-size:12px; line-height:16px; }
 
 
 

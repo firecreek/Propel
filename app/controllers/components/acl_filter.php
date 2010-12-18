@@ -35,11 +35,12 @@
      * @var array
      */
     public $permissionMap = array(
-      'index'   => '_read',
-      'view'    => '_read',
-      'edit'    => '_update',
-      'add'     => '_create',
-      'delete'  => '_delete'
+      'index'   => 'read',
+      'view'    => 'read',
+      'edit'    => 'update',
+      'add'     => 'create',
+      'delete'  => 'delete',
+      'update'  => 'update'
     );
     
 
@@ -217,7 +218,7 @@
         }
         
         //No permission
-        if(!$prefixPermissions[$this->permissionMap[$action]])
+        if(!$prefixPermissions['_'.$this->permissionMap[$action]])
         {
           $this->_throwError(__('You do not have access to do that action',true),5);
         }
