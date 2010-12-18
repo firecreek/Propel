@@ -36,6 +36,17 @@
      */
     public $uses = array('Project');
     
+    /**
+     * Permissions required
+     *
+     * @access public
+     * @access public
+     */
+    public $permissions = array(
+      'account_add' => 'create',
+      'project_index' => 'read',
+    );
+    
     
     /**
      * Index

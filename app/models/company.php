@@ -107,7 +107,7 @@
       'People' => array(
         'className' => 'Person',
         'foreignKey' => 'company_id',
-        'dependent' => false
+        'dependent' => true
       )
     );
 

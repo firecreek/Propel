@@ -174,7 +174,7 @@
           'controller'  => 'accounts',
           'action'      => 'index',
           'prefix'      => 'account',
-          'accountSlug' => $this->Authorization->account('slug')
+          'accountSlug' => $this->Authorization->read('Account.slug')
         ));
       }
       

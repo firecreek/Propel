@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-12-18 16:12:20 : 1292663060*/
+/* App schema generated on: 2010-12-18 16:12:57 : 1292664777*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -125,7 +125,6 @@ class AppSchema extends CakeSchema {
 		'country_id' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'web_address' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'phone_number_office' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'phone_number_office_ext' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 6, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'phone_number_fax' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'timezone_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),

@@ -1,48 +1,32 @@
 <?php
-class Country extends AppModel {
-	var $name = 'Country';
-	var $validate = array(
-		'name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $hasMany = array(
-		'Company' => array(
-			'className' => 'Company',
-			'foreignKey' => 'country_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'country_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+  /**
+   * Country Model
+   *
+   * @category Model
+   * @package  OpenCamp
+   * @version  1.0
+   * @author   Darren Moore <darren.m@firecreek.co.uk>
+   * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+   * @link     http://opencamp.firecreek.co.uk
+   */
+  class Country extends AppModel
+  {
+    /**
+     * Model name
+     *
+     * @access public
+     * @var string
+     */
+    public $name = 'Country';
+    
+    /**
+     * Default order
+     *
+     * @access public
+     * @var string
+     */
+    public $order = 'Country.name ASC';
 
-}
+  }
 ?>

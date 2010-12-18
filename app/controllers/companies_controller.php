@@ -43,8 +43,10 @@
      * @access public
      */
     public $permissions = array(
-      'account_index' => 'create',
+      'account_index' => 'read',
       'account_add' => 'create',
+      'account_edit' => 'update',
+      'account_delete' => 'delete',
     );
     
     
@@ -64,7 +66,8 @@
         'contain' => array(
           'PersonOwner' => array('id','user_id'),
           'People' => array('id','full_name','email','title','company_owner')
-        )
+        ),
+        'order' => 'Company.created DESC'
       ));
       
       $this->set(compact('records'));
@@ -104,7 +107,94 @@
         }
         
       }
+    }
+    
+    
+    /**
+     * Edit
+     *
+     * @access public
+     * @return void
+     */
+    public function account_edit($companyId)
+    {
+      $record = $this->Company->find('first',array(
+        'conditions' => array(
+          'Company.id' => $companyId,
+          'Company.account_id' => $this->Authorization->read('Account.id')
+        ),
+        'contain' => array()
+      ));
       
+      if(empty($record))
+      {
+        $this->Session->setFlash(__('You do not have permission to access this company',true),'default',array('class'=>'error'));
+        $this->redirect($this->referer(), null, true); 
+      }
+      
+      //Save
+      if(!empty($this->data))
+      {
+        $this->data['Company']['id'] = $companyId;
+        
+        $this->Company->set($this->data);
+        
+        if($this->Company->validates())
+        {
+          $this->Company->save();
+          $this->Session->setFlash(__('Company details updated',true));
+          $this->redirect(array('action'=>'index'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Please check the form and try again',true),'default',array('class'=>'error'));
+        }
+      }
+      
+      $countries = $this->Company->Country->find('list');
+      
+      if(empty($this->data))
+      {
+        $this->data = $record;
+      }
+      
+      $this->set(compact('companyId','countries','record'));
+    }
+    
+    
+    /**
+     * Delete
+     *
+     * @access public
+     * @return void
+     */
+    public function account_delete($companyId)
+    {
+      $record = $this->Company->find('first',array(
+        'conditions' => array(
+          'Company.id' => $companyId,
+          'Company.account_id' => $this->Authorization->read('Account.id'),
+          'Company.account_owner' => false
+        ),
+        'contain' => false
+      ));
+      
+      if(empty($record))
+      {
+        $this->Session->setFlash(__('You do not have permission to delete this company',true),'default',array('class'=>'error'));
+        $this->redirect($this->referer(), null, true); 
+      }
+      
+      if($this->Company->delete($companyId))
+      {
+        $this->Session->setFlash(__('This company has been deleted',true),'default',array('class'=>'success'));
+        $this->redirect(array('action'=>'index'));
+      }
+      else
+      {
+        $this->Session->setFlash(__('There was a problem deleting this company',true),'default',array('class'=>'error'));
+        $this->redirect($this->referer(), null, true);
+      }
     }
   
   }

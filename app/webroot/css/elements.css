@@ -34,6 +34,12 @@ form .submit a:hover { color:#FFF; background-color:#ff0000; text-decoration:non
 form .block label, form.block label { display:block; float:none; width:auto; margin-bottom:2px; }
 form .block small, form.block small { margin-left:0; }
 
+form.basic fieldset { background-color:#F0F0F0; padding:20px 5px; }
+form.basic label { text-align:right; font-size:11px; margin-top:3px; padding-right:10px; }
+form.basic input { font-size:12px; padding:3px; font-weight:normal; }
+form.basic label:after { content:":" }
+form.basic div.text input { width:15em; }
+
 form .input.strong label { font-weight:bold; }
 
 /**

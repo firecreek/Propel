@@ -80,7 +80,8 @@
     public $belongsTo = array(
       'Company' => array(
         'className' => 'Company',
-        'foreignKey' => 'company_id'
+        'foreignKey' => 'company_id',
+        'dependant' => true
       ),
       'User' => array(
         'className' => 'User',
