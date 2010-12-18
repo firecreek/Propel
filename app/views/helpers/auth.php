@@ -16,7 +16,7 @@
     
     public function canCreateProject()
     {
-      return $this->Session->read('AuthAccount.Permissions._create');
+      return $this->Session->read('AuthAccount.Permissions.Account._create');
     }
     
     public function read($key)

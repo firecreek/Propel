@@ -28,6 +28,19 @@
      */
     public $components = array('Authorization','Acl','Session');
     
+    /**
+     * CRUD permission map
+     *
+     * @access public
+     * @var array
+     */
+    public $permissionMap = array(
+      'index' => '_read',
+      'view'  => '_read',
+      'edit'  => '_update',
+      'add'   => '_create'
+    );
+    
 
     /**
      * Initialize component
@@ -74,7 +87,10 @@
         $this->controller->redirect($this->Authorization->loginAction);
       }
       else
-      {      
+      {
+        //Permissions array
+        $permissions = array('Account'=>null,'Project'=>null);
+      
         //Load Person based on account slug and user id
         $accountSlug = $this->controller->params['accountSlug'];
         $userId = $this->Authorization->user('id');
@@ -133,6 +149,8 @@
           $this->_throwError(__('You do not have access to this account',true),3);
         }
         
+        $permissions['Account'] = $permission;
+        
         //Load projects this user can access
         $projects = array();
         $records = $this->controller->Acl->Aco->Permission->find('all',array(
@@ -175,52 +193,36 @@
         
         //Check if project id is set
         $project = null;        
-        if(isset($this->controller->params['projectId']))
+        if(isset($this->controller->params['projectId']) && isset($projects[$this->controller->params['projectId']]))
         {
-          if(isset($projects[$this->controller->params['projectId']]))
-          {
-            $project = array_merge(
-              $projects[$this->controller->params['projectId']]['Project'],
-              $projects[$this->controller->params['projectId']]
-            );
-          }
-          else
-          {
-            $this->_throwError(__('You do not have access to this project',true),4);
-          }
+          $permissions['Project'] = $projects[$this->controller->params['projectId']]['Permission'];
+      
+          $project = array_merge(
+            $projects[$this->controller->params['projectId']]['Project'],
+            $projects[$this->controller->params['projectId']]
+          );
         }
         
-        //Check if person can access this action
-        $hasPermission = false;
-        if(isset($this->controller->permissions) && isset($this->controller->permissions[$this->controller->action]))
+        //Check permissions depending on prefix and called action
+        $prefixPermissions = $permissions[Inflector::classify($prefix)];
+        $action = str_replace($prefix.'_','',$this->controller->action);
+        
+        //Fatal error on not defined map
+        if(!isset($this->permissionMap[$action]))
         {
-          $actionPermissions = $this->controller->permissions[$this->controller->action];
-          
-          if($actionPermissions == true)
-          {
-            $hasPermission = true;
-          }
-          else
-          {
-            if(!is_array($actionPermissions)) { $actionPermissions = array($actionPermissions); }
-            foreach($actionPermissions as $actionPermission)
-            {
-              if(isset($permission['_'.$actionPermission]) && $permission['_'.$actionPermission])
-              {
-                $hasPermission = true;
-                break;
-              }
-            }
-          }
+          trigger_error(sprintf(
+            __('%s action has not been assigned a permission map record', true), $action
+          ), E_USER_ERROR);
         }
         
-        if(!$hasPermission)
+        //No permission
+        if(!$prefixPermissions[$this->permissionMap[$action]])
         {
           $this->_throwError(__('You do not have access to do that action',true),5);
-        }        
+        }
         
         //Set to authorization component
-        $this->Authorization->write('Permissions',$permission);
+        $this->Authorization->write('Permissions',$permissions);
         $this->Authorization->write('Company',$company);
         $this->Authorization->write('Account',$account);
         $this->Authorization->write('Person',$person);
