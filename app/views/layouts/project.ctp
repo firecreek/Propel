@@ -28,8 +28,9 @@
       <nav id="account">
           <ul>
               <li><?php echo $session->read('AuthAccount.Person.first_name').' '.$session->read('AuthAccount.Person.last_name'); ?></li>
+              <li><?php echo $html->link(__('Project Settings',true),array('controller'=>'project','action'=>'edit')); ?></li>
               <li><?php echo $html->link(__('My info',true),array('controller'=>'people','action'=>'edit',$session->read('Auth.Person.id'))); ?></li>
-              <li><?php echo $html->link(__('Sign out',true),array('account'=>false,'controller'=>'users','action'=>'logout')); ?></li>
+              <li><?php echo $html->link(__('Sign out',true),array('project'=>false,'account'=>false,'controller'=>'users','action'=>'logout')); ?></li>
           </ul>
       </nav>
       
@@ -39,17 +40,18 @@
       
       <nav class="main top tabs">
         <ul>
-          <li<?php if($active == 'Accounts') { echo ' class="active"'; } ?>><?php echo $html->link(__('Dashboard',true),array('controller'=>'accounts','action'=>'index')); ?></li>
+          <li<?php if($active == 'Projects') { echo ' class="active"'; } ?>><?php echo $html->link(__('Overview',true),array('controller'=>'projects','action'=>'index')); ?></li>
+          <li<?php if($active == 'Messages') { echo ' class="active"'; } ?>><?php echo $html->link(__('Messages',true),array('controller'=>'messages','action'=>'index')); ?></li>
           <li<?php if($active == 'Todos') { echo ' class="active"'; } ?>><?php echo $html->link(__('To-Dos',true),array('controller'=>'todos','action'=>'index')); ?></li>
           <li<?php if($active == 'Milestones') { echo ' class="active"'; } ?>><?php echo $html->link(__('Milestones',true),array('controller'=>'milestones','action'=>'index')); ?></li>
+          <li<?php if($active == 'Times') { echo ' class="active"'; } ?>><?php echo $html->link(__('Time',true),array('controller'=>'times','action'=>'index')); ?></li>
         </ul>
       </nav>
       
       <nav class="extra top tabs">
         <ul>
-          <li<?php if($active == 'Companies') { echo ' class="active"'; } ?>><?php echo $html->link(__('All People',true),array('controller'=>'companies','action'=>'index')); ?></li>
+          <li<?php if($active == 'Companies') { echo ' class="active"'; } ?>><?php echo $html->link(__('People & Permissions',true),array('controller'=>'companies','action'=>'index')); ?></li>
           <li<?php if($active == 'Search') { echo ' class="active"'; } ?>><?php echo $html->link(__('Search',true),array('controller'=>'search','action'=>'index')); ?></li>
-          <li<?php if($active == 'Settings') { echo ' class="active"'; } ?>><?php echo $html->link(__('Settings',true),array('controller'=>'settings','action'=>'index')); ?></li>
         </ul>
       </nav>
       

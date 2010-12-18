@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-12-18 07:12:45 : 1292631885*/
+/* App schema generated on: 2010-12-18 08:12:20 : 1292634860*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -225,22 +225,6 @@ class AppSchema extends CakeSchema {
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-	var $projects_companies = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'project_id' => array('type' => 'integer', 'null' => false),
-		'company_id' => array('type' => 'integer', 'null' => false),
-		'updated' => array('type' => 'datetime', 'null' => false),
-		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-	var $projects_people = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'person_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);

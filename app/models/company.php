@@ -118,13 +118,6 @@
      * @var array
      */
     public $hasAndBelongsToMany = array(
-      'Project' => array(
-        'className' => 'Project',
-        'joinTable' => 'projects_companies',
-        'foreignKey' => 'company_id',
-        'associationForeignKey' => 'project_id',
-        'unique' => true
-      )
     );
     
     

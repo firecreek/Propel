@@ -14,11 +14,11 @@
   
   
   //Projects
-  Router::connect('/:accountSlug/projects/:projectId',
+  Router::connect('/:accountSlug/:projectId',
     array('controller'=>'projects', 'action'=>'index', 'prefix'=>'project'),
     array('accountSlug'=>'[a-z0-9\-]+','projectId'=>'[0-9]+')
   );
-  Router::connect('/:accountSlug/projects/:projectId/:controller/:action/*',
+  Router::connect('/:accountSlug/:projectId/:controller/:action/*',
     array('controller'=>'projects', 'action'=>'index', 'prefix'=>'project'),
     array('accountSlug'=>'[a-z0-9\-]+','projectId'=>'[0-9]+')
   );
