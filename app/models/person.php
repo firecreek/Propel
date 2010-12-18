@@ -32,6 +32,15 @@
     );
     
     /**
+     * Behaviors
+     *
+     * @access public
+     * @var array
+     */
+    public $virtualFields = array(
+    );
+    
+    /**
      * Validation
      *
      * @access public
@@ -203,7 +212,24 @@
     
     
     /**
+     * Construct
      *
+     * @access public
+     * @return void
+     */
+    public function __construct($id = false, $table = null, $ds = null)
+    {
+      parent::__construct($id, $table, $ds);
+      
+      $this->virtualFields['full_name'] = sprintf('CONCAT(%s.first_name, " ", %s.last_name)', $this->alias, $this->alias);
+    }
+    
+    
+    /**
+     * Parent Node
+     *
+     * @access public
+     * @return void
      */
     public function parentNode()
     {

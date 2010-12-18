@@ -42,7 +42,6 @@
     public function initialize(&$controller, $settings = array())
     {
       $this->controller =& $controller;
-      
       parent::initialize($controller, $settings);
     }
     

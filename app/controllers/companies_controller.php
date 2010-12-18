@@ -36,6 +36,17 @@
      */
     public $uses = array('Company');
     
+    /**
+     * Permissions required
+     *
+     * @access public
+     * @access public
+     */
+    public $permissions = array(
+      'account_index' => 'create',
+      'account_add' => 'create',
+    );
+    
     
     /**
      * Index
@@ -45,6 +56,18 @@
      */
     public function account_index()
     {
+      $records = $this->Company->find('all',array(
+        'conditions' => array(
+          'Company.account_id' => $this->Authorization->read('Account.id'),
+        ),
+        'fields' => array('id','name'),
+        'contain' => array(
+          'PersonOwner' => array('id','user_id'),
+          'People' => array('id','full_name','email','title','company_owner')
+        )
+      ));
+      
+      $this->set(compact('records'));
     }
     
     
@@ -58,8 +81,8 @@
     {
       if(!empty($this->data))
       {
-        $this->data['Company']['account_id'] = $this->Authorization->account('id');
-        $this->data['Company']['person_id'] = $this->Authorization->person('id');
+        $this->data['Company']['account_id'] = $this->Authorization->read('Account.id');
+        $this->data['Company']['person_id'] = $this->Authorization->read('Person.id');
       
         $this->Company->set($this->data);
         

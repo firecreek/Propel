@@ -89,7 +89,7 @@
         
         if(empty($record))
         {
-          $this->_throwError(__('You do not have access to this account'),1);
+          $this->_throwError(__('You do not have access to this account',true),1);
         }
         
         $person = Set::extract($record,'0.Person');
@@ -126,11 +126,11 @@
         //Handle responses
         if(empty($permission))
         {
-          $this->_throwError(__('You do not have access to this account'),2);
+          $this->_throwError(__('You do not have access to this account',true),2);
         }
         elseif(!$permission['_read'])
         {
-          $this->_throwError(__('You do not have access to this account'),3);
+          $this->_throwError(__('You do not have access to this account',true),3);
         }
         
         //Load projects this user can access
@@ -186,10 +186,31 @@
           }
           else
           {
-            $this->_throwError(__('You do not have access to this project'),4);
+            $this->_throwError(__('You do not have access to this project',true),4);
           }
         }
         
+        //Check if person can access this
+        $hasPermission = false;
+        if(isset($this->controller->permissions) && isset($this->controller->permissions[$this->controller->action]))
+        {
+          $actionPermissions = $this->controller->permissions[$this->controller->action];
+          if(!is_array($actionPermissions)) { $actionPermissions = array($actionPermissions); }
+          
+          foreach($actionPermissions as $actionPermission)
+          {
+            if(isset($permission['_'.$actionPermission]) && $permission['_'.$actionPermission])
+            {
+              $hasPermission = true;
+              break;
+            }
+          }
+        }
+        
+        if(!$hasPermission)
+        {
+          $this->_throwError(__('You do not have access to do that action',true),5);
+        }        
         
         //Set to authorization component
         $this->Authorization->write('Permissions',$permission);

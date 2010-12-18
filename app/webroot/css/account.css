@@ -57,6 +57,13 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 .area .content { margin:0 10px 0 10px; }
 
 
+
+/**
+ * Type
+ */
+h3.section { background-color:#E9E9E9; font-size:16px; color:#333; padding:5px 10px; margin-bottom:5px; }
+
+
 /**
  * Main
  */
@@ -79,6 +86,23 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 .col.right .project-list {}
 
 
+/**
+ * People list
+ */
+h3.section { clear:both; }
+
+.people-list { min-height:100px; clear:both; margin-bottom:20px; }
+.people-list li { width:33%; display:inline-block; vertical-align:top; float:left; min-height:90px; }
+.people-list img { float:left; }
+.people-list .detail { float:left; margin-left:10px; }
+.people-list h4 {}
+.people-list p { font-size:11px; margin:0 !important; }
+.people-list .title { }
+.people-list .email {}
+.people-list .edit {}
+ 
+.people-list li.company { background:url(/img/company.png) transparent no-repeat; }
+.people-list li.company .detail { margin-left:65px; }
 
 
 

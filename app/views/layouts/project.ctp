@@ -19,7 +19,10 @@
 
 
     <div id="launchbar">
-      <p><?php __('OpenCamp'); ?></p>
+      <p>
+        <?php __('OpenCamp'); ?>
+        <?php echo $html->link(__('Back to Projects',true),array('project'=>false,'controller'=>'accounts','action'=>'index')); ?>
+      </p>
     </div>
 
     <header>

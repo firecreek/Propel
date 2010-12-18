@@ -55,8 +55,10 @@
         {
           //Account
           $this->data['Account']['slug'] = $this->User->Account->makeSlug($this->data['Company']['name']);
+          
           $this->data['Company']['account_owner'] = true;
           $this->data['Person']['company_owner'] = true;
+          $this->data['Person']['email'] = $this->data['User']['email'];
         
           $saved = $this->User->saveAll($this->data, array('validate'=>false));
           
