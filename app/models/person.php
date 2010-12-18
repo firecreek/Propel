@@ -63,10 +63,11 @@
           'allowEmpty' => false
         ),
       ),
-      'last_name' => array(
-        'notempty' => array(
-          'rule' => array('notempty'),
-          'allowEmpty' => false
+      'email' => array(
+        'email' => array(
+          'rule' => array('email'),
+          'allowEmpty' => false,
+          'message' => 'Enter a valid email address'
         ),
       )
     );

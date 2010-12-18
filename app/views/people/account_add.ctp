@@ -14,7 +14,7 @@
           echo $form->create('Person',array('url'=>$this->here,'class'=>'basic'));
         ?>
         
-        <p><?php __('This person\'s name will be displayed next to their messages, comments, to-dos, milestones, and files.'); ?></p>
+        <p class="intro"><?php __('This person\'s name will be displayed next to their messages, comments, to-dos, milestones, and files.'); ?></p>
         <fieldset>
           <?php
             echo $form->input('first_name',array('label'=>__('First name',true),'div'=>'input text strong'));
@@ -25,7 +25,7 @@
         
         
         
-        <p><?php __('The rest is optional. You can fill it in later if you\'d like.'); ?></p>
+        <p class="intro"><?php __('The rest is optional. You can fill it in later if you\'d like.'); ?></p>
         <fieldset>
           <?php
             echo $form->input('title');
@@ -39,12 +39,14 @@
         
         
         <h3><?php __('Include a personal note along with the invitation to set up their account?'); ?></h3>
-        <p><?php __('This person will receive a welcome email with a link to choose their username and password. You can also add a personalized note that will appear at the bottom of the email. Please use plain text (no HTML tags).'); ?></p>
+        <p class="intro"><?php __('This person will receive a welcome email with a link to choose their username and password. You can also add a personalized note that will appear at the bottom of the email. Please use plain text (no HTML tags).'); ?></p>
         <fieldset class="tight">
           <?php
             echo $form->input('invitation_note',array('label'=>false));
           ?>
         </fieldset>
+        
+        <hr />
         
         <h3><?php __('What happens now?'); ?></h3>
         <p><?php __('When you click the "Add this person" button below, we\'ll fire off a nice invitation to the email address you entered above. The email will contain a link to a web page where this person will complete the setup process by picking their own username and password. Plus, you can immediately start involving them in projects even before they\'ve chosen their username and password.'); ?></p>

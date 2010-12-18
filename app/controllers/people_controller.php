@@ -53,7 +53,32 @@
         'contain' => array()
       ));
       
-      $this->set(compact('record'));
+      if(empty($record))
+      {
+        $this->Session->setFlash(__('You do not have permission to add a person to this company',true),'default',array('class'=>'error'));
+        $this->redirect($this->referer(), null, true); 
+      }
+      
+      //Save
+      if(!empty($this->data))
+      {
+        $this->data['Person']['company_id'] = $companyId;
+        
+        $this->Person->set($this->data);
+        
+        if($this->Person->validates())
+        {
+          $this->Person->save();
+          $this->Session->setFlash(__('Person added to company',true));
+          $this->redirect(array('controller'=>'companies','action'=>'index'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Please check the form and try again',true),'default',array('class'=>'error'));
+        }
+      }
+      
+      $this->set(compact('companyId', 'record'));
     }
   
   }
