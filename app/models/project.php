@@ -185,39 +185,5 @@ class Project extends AppModel {
 		)
 	);
 
-
-	var $hasAndBelongsToMany = array(
-		'Company' => array(
-			'className' => 'Company',
-			'joinTable' => 'projects_companies',
-			'foreignKey' => 'project_id',
-			'associationForeignKey' => 'company_id',
-			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
-		),
-		'People' => array(
-			'className' => 'Person',
-			'joinTable' => 'projects_people',
-			'foreignKey' => 'project_id',
-			'associationForeignKey' => 'person_id',
-			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
-		)
-	);
-
 }
 ?>
