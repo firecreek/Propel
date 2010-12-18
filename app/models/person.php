@@ -253,16 +253,23 @@
       //Load company record to get account_id
       $accountId = $this->Company->field('account_id',array('id'=>$this->data[$this->alias]['company_id']));
       
+      $conditions = array();
+      
+      if($this->id)
+      {
+        $conditions['Person.id !='] = $this->id;
+      }
+      
       $this->Company->bindModel(array(
         'belongsTo'=>array(
           'Person' => array(
             'className' => 'Person',
             'foreignKey' => false,
             'type' => 'INNER',
-            'conditions' => array(
+            'conditions' => array_merge(array(
               'Person.company_id = Company.id',
               'Person.email' => $this->data[$this->alias]['email']
-            )
+            ),$conditions)
           )
         )
       ));
