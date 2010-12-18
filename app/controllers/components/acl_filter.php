@@ -35,10 +35,11 @@
      * @var array
      */
     public $permissionMap = array(
-      'index' => '_read',
-      'view'  => '_read',
-      'edit'  => '_update',
-      'add'   => '_create'
+      'index'   => '_read',
+      'view'    => '_read',
+      'edit'    => '_update',
+      'add'     => '_create',
+      'delete'  => '_delete'
     );
     
 

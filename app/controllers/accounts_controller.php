@@ -36,16 +36,6 @@
      */
     public $uses = array();
     
-    /**
-     * Permissions required
-     *
-     * @access public
-     * @access public
-     */
-    public $permissions = array(
-      'account_index' => 'read'
-    );
-    
     
     /**
      * Register new user, account and person

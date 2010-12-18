@@ -36,19 +36,6 @@
      */
     public $uses = array('Company');
     
-    /**
-     * Permissions required
-     *
-     * @access public
-     * @access public
-     */
-    public $permissions = array(
-      'account_index' => 'read',
-      'account_add' => 'create',
-      'account_edit' => 'update',
-      'account_delete' => 'delete',
-    );
-    
     
     /**
      * Index
