@@ -16,7 +16,7 @@
     
     public function check($alias,$type)
     {
-      return $this->Session->read('AuthAccount.Permissions.Account.'.$alias.'.'.$type);
+      return $this->Session->read('AuthAccount.Permissions.'.$alias.'.'.$type);
     }
     
     public function read($key)

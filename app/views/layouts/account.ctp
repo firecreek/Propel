@@ -23,12 +23,12 @@
     </div>
 
     <header>
-      <h1><?php echo $session->read('AuthAccount.Company.name'); ?></h1>
+      <h1><?php echo $session->read('AuthAccount.Account.name'); ?></h1>
       
       <nav id="account">
           <ul>
               <li><?php echo $session->read('AuthAccount.Person.first_name').' '.$session->read('AuthAccount.Person.last_name'); ?></li>
-              <li><?php echo $html->link(__('My info',true),array('controller'=>'people','action'=>'edit',$session->read('Auth.Person.id'))); ?></li>
+              <li><?php echo $html->link(__('My info',true),array('controller'=>'people','action'=>'edit',$session->read('AuthAccount.Person.id'))); ?></li>
               <li><?php echo $html->link(__('Sign out',true),array('account'=>false,'controller'=>'users','action'=>'logout')); ?></li>
           </ul>
       </nav>
@@ -38,19 +38,25 @@
       ?>
       
       <nav class="main top tabs">
-        <ul>
-          <li<?php if($active == 'Accounts') { echo ' class="active"'; } ?>><?php echo $html->link(__('Dashboard',true),array('controller'=>'accounts','action'=>'index')); ?></li>
-          <li<?php if($active == 'Todos') { echo ' class="active"'; } ?>><?php echo $html->link(__('To-Dos',true),array('controller'=>'todos','action'=>'index')); ?></li>
-          <li<?php if($active == 'Milestones') { echo ' class="active"'; } ?>><?php echo $html->link(__('Milestones',true),array('controller'=>'milestones','action'=>'index')); ?></li>
-        </ul>
+        <?php
+          $menu = array(
+            'accounts' => array('name'=>__('Overview',true),'url'=>array('controller'=>'accounts','action'=>'index')),
+            'todos' => array('name'=>__('Todos',true),'url'=>array('controller'=>'todos','action'=>'index')),
+            'milestones' => array('name'=>__('Milestones',true),'url'=>array('controller'=>'milestones','action'=>'index')),
+          );
+          echo $layout->menu($menu,array('permissions'=>'Account'));
+        ?>
       </nav>
       
       <nav class="extra top tabs">
-        <ul>
-          <li<?php if($active == 'Companies' || $active == 'People') { echo ' class="active"'; } ?>><?php echo $html->link(__('All People',true),array('controller'=>'companies','action'=>'index')); ?></li>
-          <li<?php if($active == 'Search') { echo ' class="active"'; } ?>><?php echo $html->link(__('Search',true),array('controller'=>'search','action'=>'index')); ?></li>
-          <li<?php if($active == 'Settings') { echo ' class="active"'; } ?>><?php echo $html->link(__('Settings',true),array('controller'=>'settings','action'=>'index')); ?></li>
-        </ul>
+        <?php
+          $menu = array(
+            'companies' => array('name'=>__('All People',true),'url'=>array('controller'=>'companies','action'=>'index')),
+            'search' => array('name'=>__('Search',true),'url'=>array('controller'=>'search','action'=>'index')),
+            'settings' => array('name'=>__('Settings',true),'url'=>array('controller'=>'settings','action'=>'index')),
+          );
+          echo $layout->menu($menu,array('permissions'=>'Account'));
+        ?>
       </nav>
       
     </header>
