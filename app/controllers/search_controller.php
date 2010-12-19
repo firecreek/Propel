@@ -1,5 +1,7 @@
 <?php
 
+  App::import('Sanitize');
+  
   /**
    * Search Controller
    *
@@ -45,6 +47,20 @@
      */
     public function account_index()
     {
+      $search = false;
+      $terms  = isset($this->params['url']['terms']) ? $this->params['url']['terms'] : null;
+      $scope  = isset($this->params['url']['scope']) ? $this->params['url']['scope'] : 'all';
+      
+      if(!empty($terms))
+      {
+        $search = true;
+        
+        $results = array();
+        
+        $this->set(compact('results'));
+      }
+      
+      $this->set(compact('terms','scope','search'));
     }
   
   }
