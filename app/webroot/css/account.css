@@ -50,7 +50,7 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 .box .banner { border-bottom:none; position:relative; background-color:#EDF3FE; }
 .box .banner h2 { font-size:14px; padding:15px 0 0 20px; }
 
-.box .banner .button { position:absolute; right:20px; top:12px; }
+.box .banner .button { position:absolute; right:20px; top:10px; }
 
 .box .banner ul.left { position:absolute; top:17px; left:20px; }
 .box .banner ul.left li { float:left; margin-right:15px; }
