@@ -2,6 +2,8 @@
 * { margin: 0;}
 html, body { font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; background-color: #E5E5E5; line-height:1.5; height: 100%; }
 
+h1, h2, h3, h4, h5 { font-family:Arial; }
+
 a { color:#03C; }
 a:hover { color:#0099ff; }
 

@@ -16,6 +16,8 @@
       </div>
       <div class="content">
       
+        <?php echo $session->flash(); ?>
+      
         <?php if(!$search): ?>
         
           <p><?php __('Enter your search terms above.'); ?></p>
@@ -79,9 +81,30 @@
     <div class="area">
       <div class="banner">
         <h3><?php __('Your recent searches across all projects'); ?></h3>
+        
+        <?php if(!empty($recentSearches)): ?>
+          <ul class="right">
+            <li><?php echo $html->link(__('Clear',true),array('action'=>'forget')); ?></li>
+          </ul>
+        <?php endif; ?>
+        
       </div>
       <div class="content">
-        <p>hello!</p>
+        
+        <?php if(empty($recentSearches)): ?>
+        
+          <p><?php __('Your searches will be saved here for future reference.'); ?></p>
+        
+        <?php else: ?>
+        
+          <ul>
+            <?php foreach($recentSearches as $recentSearch): ?>
+              <li><?php echo $html->link($recentSearch['terms'],array('action'=>'index','?'=>$recentSearch),array('class'=>'lnk-blue')); ?></li>
+            <?php endforeach; ?>
+          </ul>
+        
+        <?php endif; ?>
+        
       </div>
     </div>
   

@@ -54,7 +54,7 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 
 .box .banner ul.left { position:absolute; top:17px; left:20px; }
 .box .banner ul.left li { float:left; margin-right:15px; }
-.box .banner ul.left li a { font-size:12px; color:#03C; padding:1px; }
+.box .banner ul.left li a { font-size:12px; color:#03C; padding:0 1px; }
 .box .banner ul.left li a:hover { text-decoration:none; background-color:#03C; color:#FFFFFF; }
 .box .banner ul.left li.active a { color:black; text-decoration:none; font-weight:bold; }
 
@@ -75,11 +75,18 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 
 .box .content p a.active { color:black; text-decoration:none; font-weight:bold; }
 
+
+
 .area {}
 .area h3 { color:#333; font-size:13px; padding:6px 0 0 10px; }
-.area .banner { background-color:#EDF3FE; border-bottom:1px solid gainsboro; margin:0 0 10px 0; min-height:30px;  }
-.area .content { margin:0 10px 0 10px; font-size:12px; line-height:16px; }
 
+.area .banner { background-color:#EDF3FE; border-bottom:1px solid gainsboro; margin:0 0 10px 0; min-height:30px; position:relative; }
+.area .banner ul.right { position:absolute; top:4px; right:10px; }
+.area .banner ul.right li {}
+.area .banner ul.right li a { font-size:10px; font-family:arial; color:#03C; padding:0 1px; }
+.area .banner ul.right li a:hover { text-decoration:none; background-color:#03C; color:#FFFFFF; }
+
+.area .content { margin:0 10px 0 10px; font-size:12px; line-height:16px; }
 
 
 /**
