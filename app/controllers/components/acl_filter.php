@@ -34,7 +34,7 @@
      * @access public
      * @var array
      */
-    public $permissionMap = array(
+    public $actionMap = array(
       'index'   => '_read',
       'view'    => '_read',
       'edit'    => '_update',
@@ -66,6 +66,11 @@
      */
     public function auth()
     {
+      if(isset($this->controller->actionMap))
+      {
+        $this->actionMap = array_merge($this->actionMap,$this->controller->actionMap);
+      }
+    
       //Configure AuthComponent
       $this->Authorization->authorize = 'crud';
       $this->Authorization->autoRedirect = false;
@@ -203,7 +208,7 @@
           
           $action = str_replace($prefix.'_','',$this->controller->action);
           
-          $isAllowed = Set::extract($records,'Permission.'.$this->permissionMap[$action]);
+          $isAllowed = Set::extract($records,'Permission.'.$this->actionMap[$action]);
         }
         
         //Throw error

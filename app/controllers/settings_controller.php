@@ -34,7 +34,17 @@
      * @access public
      * @access public
      */
-    public $uses = array();
+    public $uses = array('Account');
+    
+    /**
+     * Uses
+     *
+     * @access public
+     * @access public
+     */
+    public $actionMap = array(
+      'appearance' => '_update'
+    );
     
     
     /**
@@ -44,6 +54,54 @@
      * @return void
      */
     public function account_index()
+    {
+      $record = $this->Account->find('first',array(
+        'conditions' => array(
+          'Account.id' => $this->Authorization->read('Account.id')
+        ),
+        'contain' => false
+      ));
+      
+      if(!empty($this->data))
+      {
+        $this->data['Account']['id'] = $this->Authorization->read('Account.id');
+        
+        $this->Account->set($this->data);
+        
+        if($this->Account->validates())
+        {
+          if($this->Account->save($this->data,array('fields'=>'name')))
+          {
+            $this->Session->setFlash(__('Account settings updated',true), 'default', array('class'=>'success'));
+            $this->redirect(array('controller'=>'settings','action'=>'index'));
+          }
+          else
+          {
+            $this->Session->setFlash(__('Failed to save changes',true), 'default', array('class'=>'error'));
+          }
+        }
+        else
+        {
+          $this->Session->setFlash(__('Please check the form and try again',true), 'default', array('class'=>'error'));
+        }
+      }
+      
+      if(empty($this->data))
+      {
+        $this->data = $record;
+      }
+      
+      $this->set(compact('record'));
+    }
+    
+    
+    /**
+     * Appearance
+     *
+     * @access public
+     * @return void
+     */
+    public function account_appearance()
     {
     }
   

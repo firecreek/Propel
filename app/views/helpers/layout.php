@@ -21,7 +21,7 @@
      * @access public
      * @return void
      */
-    public function menu($links,$options = array())
+    public function menu($links,$options = array(),$menuOptions = array())
     {
       $_options = array(
         'permissions' => false
@@ -53,7 +53,7 @@
         $output .= $this->Html->tag('li', $tagLink, $tagOptions);
       }
       
-      $output = '<ul>'.$output.'</ul>';
+      $output = $this->Html->tag('ul', $output, $menuOptions);
       
       return $output;
     }
