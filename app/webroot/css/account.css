@@ -63,8 +63,10 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 .box .banner ul.right li a { font-size:11px; color:#FF0000; padding:1px; }
 .box .banner ul.right li a:hover { text-decoration:none; background-color:#FF0000; color:#FFFFFF; }
 
+
 .area {}
-.area h3 { background-color:#EDF3FE; border-bottom:1px solid gainsboro; color:#333; font-size:13px; padding:6px 10px; margin:0 0 10px 0; }
+.area h3 { color:#333; font-size:13px; padding:6px 0 0 10px; }
+.area .banner { background-color:#EDF3FE; border-bottom:1px solid gainsboro; margin:0 0 10px 0; height:30px  }
 .area .content { margin:0 10px 0 10px; font-size:12px; line-height:16px; }
 
 

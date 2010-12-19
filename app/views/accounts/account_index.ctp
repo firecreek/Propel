@@ -28,7 +28,9 @@
     <?php $projects = $auth->read('Projects'); ?>
     <?php if(!empty($projects)): ?>
     <div class="area">
-      <h3><?php __('Your projects'); ?></h3>
+      <div class="banner">
+        <h3><?php __('Your projects'); ?></h3>
+      </div>
       <?php
         //Group projects by company
         $projectCompanies = array();
