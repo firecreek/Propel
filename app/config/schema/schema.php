@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-12-18 19:12:30 : 1292676750*/
+/* App schema generated on: 2010-12-19 19:12:36 : 1292761956*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -139,6 +139,29 @@ class AppSchema extends CakeSchema {
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
+	var $grants = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'name' => array('type' => 'string', 'null' => false, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'alias' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'aco_alias' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'updated' => array('type' => 'datetime', 'null' => false),
+		'created' => array('type' => 'datetime', 'null' => false),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+	);
+	var $grants_sets = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'grant_id' => array('type' => 'integer', 'null' => false),
+		'acos_alias' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'_create' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'_read' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'_update' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'_delete' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'updated' => array('type' => 'datetime', 'null' => false),
+		'created' => array('type' => 'datetime', 'null' => false),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+	);
 	var $logs = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
@@ -172,6 +195,7 @@ class AppSchema extends CakeSchema {
 	);
 	var $people = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'account_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'company_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'company_owner' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),

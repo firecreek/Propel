@@ -68,21 +68,13 @@
             $this->User->Company->saveField('account_id',$this->User->Account->id);
             $this->User->Person->saveField('company_id',$this->User->Company->id);
             $this->User->Person->saveField('user_id',$this->User->id);
+            $this->User->Person->saveField('account_id',$this->User->Account->id);
             
             //Create ACO for this account
-            $root = $this->Acl->Aco->node('accounts');
-            $root = $root[0];
-            
-            $this->Acl->Aco->create(array(
-              'parent_id'       => $root['Aco']['id'],
-              'model'           => 'Account',
-              'foreign_key'     => $this->User->Account->id,
-              'alias'           => $this->data['Account']['slug']
-            ));
-            $this->Acl->Aco->save();
+            $this->AclManager->create('accounts',$this->User->Account->id);
             
             //Give this person permission for this account
-            $this->Acl->allow($this->User->Person, 'accounts/'.$this->data['Account']['slug']);
+            $this->AclManager->allow($this->User->Person, 'accounts', $this->User->Account->id, array('set' => 'owner'));
             
             //Automatically login and redirect
             $this->Authorization->login($this->data);

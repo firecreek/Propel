@@ -58,21 +58,12 @@
         {
           if($this->Project->saveAll($this->data))
           {
-            //Give this user permission
-            $root = $this->Acl->Aco->node('projects');
-            $root = $root[0];
-            
-            $this->Acl->Aco->create(array(
-              'parent_id'       => $root['Aco']['id'],
-              'model'           => 'Project',
-              'foreign_key'     => $this->Project->id,
-              'alias'           => $this->Project->id
-            ));
-            $this->Acl->Aco->save();
+            //Create ACO for this account
+            $this->AclManager->create('projects',$this->Project->id);
             
             //Give this person permission for this account
             $this->User->Person->id = $this->Authorization->read('Person.id');
-            $this->Acl->allow($this->User->Person, 'projects/'.$this->Project->id);
+            $this->AclManager->allow($this->User->Person, 'projects', $this->Project->id, array('set' => 'owner'));
           
             //
             $this->Session->setFlash(__('Project created',true), 'default', array('class'=>'success'));

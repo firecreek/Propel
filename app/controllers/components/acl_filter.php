@@ -35,12 +35,12 @@
      * @var array
      */
     public $permissionMap = array(
-      'index'   => 'read',
-      'view'    => 'read',
-      'edit'    => 'update',
-      'add'     => 'create',
-      'delete'  => 'delete',
-      'update'  => 'update'
+      'index'   => '_read',
+      'view'    => '_read',
+      'edit'    => '_update',
+      'add'     => '_create',
+      'delete'  => '_delete',
+      'update'  => '_update'
     );
     
 
@@ -90,90 +90,59 @@
       }
       else
       {
-        //Permissions array
-        $permissions = array('Account'=>null,'Project'=>null);
-      
         //Load Person based on account slug and user id
+        $permissions = array('Account'=>array(),'Project'=>array());
         $accountSlug = $this->controller->params['accountSlug'];
         $userId = $this->Authorization->user('id');
         
-        $record = $this->controller->User->Person->query("
-          SELECT *
-          FROM people as Person
-          INNER JOIN companies as Company ON (Company.id = Person.company_id)
-          INNER JOIN accounts as Account ON (Account.id = Company.account_id AND Account.slug = '".$accountSlug."')
-          WHERE Person.user_id = ".$userId."
-        ");
+        //Load account
+        $account = $this->controller->Account->find('first',array(
+          'conditions' => array(
+            'Account.slug' => $accountSlug
+          ),
+          'contain' => array(
+            'CompanyOwner' => array()
+          )
+        ));
         
-        if(empty($record))
-        {
-          $this->_throwError(__('You do not have access to this account',true),1);
-        }
-        
-        $person = Set::extract($record,'0.Person');
-        $company = Set::extract($record,'0.Company');
-        $account = Set::extract($record,'0.Account');
+        //Load person
+        $person = $this->controller->Person->find('first',array(
+          'conditions' => array(
+            'Person.account_id' => $account['Account']['id'],
+            'Person.user_id'    => $userId
+          ),
+          'contain' => false
+        ));
         
         //Find Person aro
         $aro = $this->Acl->Aro->find('first', array(
             'conditions' => array(
                 'Aro.model' => 'Person',
-                'Aro.foreign_key' => $person['id'],
+                'Aro.foreign_key' => $person['Person']['id'],
             ),
             'recursive' => -1,
         ));
-        $aroId = $aro['Aro']['id'];
-        $person['_aro_id'] = $aroId;
+        $person['Person']['_aro_id'] = $aro['Aro']['id'];
         
-        //Find Account acos
-        $root = $this->Acl->Aco->node('accounts/'.$accountSlug);
-        $acoId = Set::extract($root,'0.Aco.id');
-        
-        //Get this Persons permissions for this account
-        $permission = $this->controller->Acl->Aco->Permission->find('first',array(
-          'conditions' => array(
-            'Permission.aro_id' => $aroId,
-            'Permission.aco_id' => $acoId,
-          ),
-          'fields' => array(
-            'Permission.*'
-          )
-        ));
-        $permission = Set::extract($permission,'Permission');
-        
-        //Handle responses
-        if(empty($permission))
-        {
-          $this->_throwError(__('You do not have access to this account',true),2);
-        }
-        elseif(!$permission['_read'])
-        {
-          $this->_throwError(__('You do not have access to this account',true),3);
-        }
-        
-        $permissions['Account'] = $permission;
-        
-        //Load projects this user can access
+        //Load projects
         $projects = array();
         $records = $this->controller->Acl->Aco->Permission->find('all',array(
           'conditions' => array(
-            'Permission.aro_id' => $aroId,
+            'Permission.aro_id' => $person['Person']['_aro_id'],
             'Permission._read' => true,
-            'Aco.model' => 'Project',
+            'Aco.model' => 'Projects',
           ),
           'fields' => array('Aco.foreign_key','Permission.*')
         ));
         
         if(!empty($records))
         {
-          $projectPermissions = Set::combine($records, '{n}.Aco.foreign_key', '{n}.Permission');
-          $projectIds = Set::extract($records,'{n}.Aco.foreign_key');
-          
-          $projectRecords = $this->controller->Account->Project->find('all',array(
+          $projects = $this->controller->Account->Project->find('all',array(
             'conditions' => array(
-              'Project.id'      => $projectIds,
+              'Project.id'      => Set::extract($records,'{n}.Aco.foreign_key'),
               'Project.status'  => 'active'
             ),
+            'fields' => array('id','name'),
             'contain' => array(
               'Account' => array(
                 'fields' => array('id','slug')
@@ -183,55 +152,75 @@
               )
             )
           ));
-          
-          foreach($projectRecords as $key => $projectRecord)
-          {
-            $projects[$projectRecord['Project']['id']] = array_merge(
-              array('Permission'=>$projectPermissions[$projectRecord['Project']['id']]),
-              $projectRecord
-            );
-          }
         }
         
-        //Check if project id is set
-        $project = null;        
-        if(isset($this->controller->params['projectId']) && isset($projects[$this->controller->params['projectId']]))
+        //Load account permissions
+        $accountNode = $this->controller->Acl->Aco->node('opencamp/accounts/'.$account['Account']['id']);
+
+        $controllers = $this->controller->Acl->Aco->find('list',array(
+          'conditions' => array(
+            'Aco.parent_id' => $accountNode[0]['Aco']['id']
+          ),
+          'fields' => array(
+            'Aco.id',
+            'Aco.alias',
+          ),
+          'recursive' => '-1',
+        ));
+        $controllerIds = array_keys($controllers);
+        $allowedControllers = $this->controller->Acl->Aco->Permission->find('all', array(
+          'conditions' => array(
+            'Permission.aro_id' => $person['Person']['_aro_id'],
+            'Permission.aco_id' => $controllerIds
+          ),
+          'fields' => array('Permission.*','Aco.alias')
+        ));
+        
+        foreach($allowedControllers as $allowedController)
         {
-          $permissions['Project'] = $projects[$this->controller->params['projectId']]['Permission'];
-      
-          $project = array_merge(
-            $projects[$this->controller->params['projectId']]['Project'],
-            $projects[$this->controller->params['projectId']]
+          $permissions['Account'][$allowedController['Aco']['alias']] = array(
+            'create'  => $allowedController['Permission']['_create'],
+            'read'    => $allowedController['Permission']['_read'],
+            'update'  => $allowedController['Permission']['_update'],
+            'delete'  => $allowedController['Permission']['_delete'],
           );
         }
         
-        //Check permissions depending on prefix and called action
-        $prefixPermissions = $permissions[Inflector::classify($prefix)];
-        $action = str_replace($prefix.'_','',$this->controller->action);
         
-        //Fatal error on not defined map
-        if(!isset($this->permissionMap[$action]))
+        //Load action permissions
+        $isAllowed = false;
+        $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$account['Account']['id'].'/'.$this->controller->name);
+        
+        if(!empty($permissionNode))
         {
-          trigger_error(sprintf(
-            __('%s action has not been assigned a permission map record', true), $action
-          ), E_USER_ERROR);
+          $records = $this->controller->Acl->Aco->Permission->find('first',array(
+            'conditions' => array(
+              'Permission.aro_id' => $person['Person']['_aro_id'],
+              'Permission.aco_id' => $permissionNode[0]['Aco']['id']
+            ),
+            'fields' => array('Permission.*')
+          ));
+          
+          $action = str_replace($prefix.'_','',$this->controller->action);
+          
+          $isAllowed = Set::extract($records,'Permission.'.$this->permissionMap[$action]);
         }
         
-        //No permission
-        if(!$prefixPermissions['_'.$this->permissionMap[$action]])
+        //Throw error
+        if(!$isAllowed)
         {
           $this->_throwError(__('You do not have access to do that action',true),5);
         }
         
-        //Set to authorization component
-        $this->Authorization->write('Permissions',$permissions);
-        $this->Authorization->write('Company',$company);
-        $this->Authorization->write('Account',$account);
-        $this->Authorization->write('Person',$person);
-        $this->Authorization->write('Projects',$projects);
-        $this->Authorization->write('Project',$project);
-        
         $this->Authorization->allowedActions = array('*');
+        
+        //Sets
+        $this->Authorization->write('Permissions',$permissions);
+        $this->Authorization->write('Company',$account['CompanyOwner']);
+        $this->Authorization->write('Account',$account['Account']);
+        $this->Authorization->write('Person',$person['Person']);
+        $this->Authorization->write('Projects',$projects);
+        //$this->Authorization->write('Project',$project);
         
       }
       

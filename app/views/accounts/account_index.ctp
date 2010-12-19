@@ -19,7 +19,7 @@
   <div class="col right">
   
     <?php
-      if($auth->canCreateProject())
+      if($auth->check('Projects','create'))
       {
         echo $html->link(__('Create a new project',true),array('controller'=>'projects','action'=>'add'),array('class'=>'button action add large'));
       }

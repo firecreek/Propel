@@ -137,6 +137,10 @@
       {
         $this->data[$this->alias]['account_id'] = $this->field('account_id',array('id'=>$this->id));
       }
+      else
+      {
+        return true;
+      }
     
       $conditions = array();
       if($this->id)

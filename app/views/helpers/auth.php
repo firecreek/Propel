@@ -14,9 +14,9 @@
   {
     public $helpers = array('Session');
     
-    public function canCreateProject()
+    public function check($alias,$type)
     {
-      return $this->Session->read('AuthAccount.Permissions.Account._create');
+      return $this->Session->read('AuthAccount.Permissions.Account.'.$alias.'.'.$type);
     }
     
     public function read($key)

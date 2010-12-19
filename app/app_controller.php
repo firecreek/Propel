@@ -18,10 +18,22 @@
      * @access public
      * @var array
      */
-    public $components = array('Acl','Authorization','AclFilter','Session','DebugKit.Toolbar');
+    public $components = array('Acl','Authorization','AclFilter','AclManager','Openbase','RequestHandler','Session','DebugKit.Toolbar');
     
+    /**
+     * Models
+     *
+     * @access public
+     * @var array
+     */
     public $uses = array('User','Account','Person');
     
+    /**
+     * Helpers
+     *
+     * @access public
+     * @var array
+     */
     public $helpers = array('Html','Form','Auth');
     
     
@@ -39,6 +51,13 @@
       parent::beforeFilter();
     }
     
+    
+    /**
+     * Before Render
+     *
+     * @access public
+     * @return void
+     */
     public function beforeRender()
     {
       if(isset($this->params['prefix']))
