@@ -44,7 +44,16 @@
      * @return void
      */
     public function account_index()
-    {      
+    {
+      //Give this person permission for this account
+      
+      //$this->Person->id = 44;
+      //$this->AclManager->allow($this->Person, 'accounts', 40, array('set' => 'owner'));
+      //exit
+      
+      //$this->Person->id = 45;
+      //$this->AclManager->allow($this->Person, 'accounts', 40, array('set' => 'shared'));
+      //exit;
     }
   
   }

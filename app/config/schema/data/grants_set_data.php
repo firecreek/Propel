@@ -103,6 +103,72 @@ class GrantsSetData {
 			'updated' => '2010-12-19 20:04:40',
 			'created' => '2010-12-19 20:04:40'
 		),
+		array(
+			'id' => '10',
+			'grant_id' => '1',
+			'acos_alias' => 'Todos',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-19 20:58:34',
+			'created' => '2010-12-19 20:58:34'
+		),
+		array(
+			'id' => '11',
+			'grant_id' => '1',
+			'acos_alias' => 'Milestones',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-19 20:58:34',
+			'created' => '2010-12-19 20:58:34'
+		),
+		array(
+			'id' => '12',
+			'grant_id' => '1',
+			'acos_alias' => 'Search',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-19 21:07:57',
+			'created' => '2010-12-19 21:07:57'
+		),
+		array(
+			'id' => '13',
+			'grant_id' => '1',
+			'acos_alias' => 'Settings',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-19 21:07:57',
+			'created' => '2010-12-19 21:07:57'
+		),
+		array(
+			'id' => '14',
+			'grant_id' => '3',
+			'acos_alias' => 'Milestones',
+			'_create' => '0',
+			'_read' => '1',
+			'_update' => '0',
+			'_delete' => '0',
+			'updated' => '2010-12-19 21:12:19',
+			'created' => '2010-12-19 21:12:19'
+		),
+		array(
+			'id' => '15',
+			'grant_id' => '3',
+			'acos_alias' => 'Search',
+			'_create' => '0',
+			'_read' => '1',
+			'_update' => '0',
+			'_delete' => '0',
+			'updated' => '2010-12-19 21:12:19',
+			'created' => '2010-12-19 21:12:19'
+		),
 	);
 
 }

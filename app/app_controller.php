@@ -34,7 +34,7 @@
      * @access public
      * @var array
      */
-    public $helpers = array('Html','Form','Auth');
+    public $helpers = array('Html','Form','Auth','Layout');
     
     
     /**

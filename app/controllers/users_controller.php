@@ -55,6 +55,7 @@
         {
           //Account
           $this->data['Account']['slug'] = $this->User->Account->makeSlug($this->data['Company']['name']);
+          $this->data['Account']['name'] = $this->data['Company']['name'];
           
           $this->data['Company']['account_owner'] = true;
           $this->data['Person']['company_owner'] = true;
