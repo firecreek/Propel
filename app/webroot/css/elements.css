@@ -6,9 +6,8 @@
 .box { margin:0px 0px 0px 0px;  background: #fff;  }
 .box { -webkit-box-shadow:#BBB 3px 3px 4px; -moz-box-shadow:#BBB 3px 3px 4px; }
 
-.box .banner {}
-.box .banner { border-bottom:1px solid #d4d5d0; margin-bottom:20px; }
-.box .banner h2 { background-color:#f0f1e9; margin:0; font-size:16px; padding:10px 20px 10px 20px; }
+.box .banner { border-bottom:1px solid #d4d5d0; margin-bottom:20px; background-color:#f0f1e9; height:48px; }
+.box .banner h2 { margin:0; font-size:x; padding:10px 20px 10px 20px; }
 
 .box .content { padding: 0px 20px 20px 20px; }
 .box .content h2 { margin:0; font-size:22px; font-weight:normal; padding:10px 0 10px 0; }
