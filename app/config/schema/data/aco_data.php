@@ -9,7 +9,7 @@ class AcoData {
 			'parent_id' => null,
 			'model' => null,
 			'foreign_key' => null,
-			'alias' => 'openbase',
+			'alias' => 'opencamp',
 			'lft' => 1,
 			'rght' => 8
 		),

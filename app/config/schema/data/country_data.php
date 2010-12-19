@@ -230,7 +230,7 @@ class CountryData {
 		),
 		array(
 			'id' => '312',
-			'name' => 'CÃ´te d'Ivoire'
+			'name' => 'CÃ´te d\'Ivoire'
 		),
 		array(
 			'id' => '313',
@@ -462,7 +462,7 @@ class CountryData {
 		),
 		array(
 			'id' => '370',
-			'name' => 'Korea, Democratic People's Republic of'
+			'name' => 'Korea, Democratic People\'s Republic of'
 		),
 		array(
 			'id' => '371',
@@ -482,7 +482,7 @@ class CountryData {
 		),
 		array(
 			'id' => '375',
-			'name' => 'Lao People's Democratic Republic'
+			'name' => 'Lao People\'s Democratic Republic'
 		),
 		array(
 			'id' => '376',
