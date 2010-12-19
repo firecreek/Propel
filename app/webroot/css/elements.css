@@ -85,6 +85,7 @@ form .input.strong label { font-weight:bold; }
 
 .button:hover {
  background-color: #8fb53c;
+ color: white;
 }
 
 .button.action {
