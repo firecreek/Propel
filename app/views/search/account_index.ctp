@@ -22,16 +22,7 @@
         
         <?php else: ?>
         
-          <?php
-          
-            $modelScopes = array(
-              'messages'    => __('Messages',true),
-              'comments'    => __('Comments',true),
-              'todos'       => __('To-Dos',true),
-              /*'files'     => __('Files',true),*/
-              'milestones'  => __('Milestones',true),
-            );
-            
+          <?php            
             $scopesOut = '';
             $count = 0;
             

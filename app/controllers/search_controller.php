@@ -38,6 +38,37 @@
      */
     public $uses = array();
     
+    /**
+     * Uses
+     *
+     * @access public
+     * @access public
+     */
+    public $modelScopes = array(
+    );
+    
+    
+    /**
+     * Before Render
+     *
+     * @access public
+     * @return void
+     */
+    public function beforeRender()
+    {
+      $this->modelScopes = array(
+        'messages'    => __('Messages',true),
+        'comments'    => __('Comments',true),
+        'todos'       => __('To-Dos',true),
+        /*'files'     => __('Files',true),*/
+        'milestones'  => __('Milestones',true)
+      );
+    
+      $this->set('modelScopes',$this->modelScopes);
+      
+      parent::beforeRender();
+    }
+    
     
     /**
      * Index
