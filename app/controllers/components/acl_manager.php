@@ -56,8 +56,6 @@
     {
       //Get account ACO root
       $root = $this->root($alias);
-      debug($root);
-      exit;
       
       //Check if company has a root
       if(!$acoRoot = $this->root($alias.'/'.$foreignId))
