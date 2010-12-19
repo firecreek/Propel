@@ -63,12 +63,18 @@
       if(!empty($this->data))
       {
         $this->data['Person']['company_id'] = $companyId;
+        $this->data['Person']['account_id'] = $this->Authorization->read('Account.id');
         
         $this->Person->set($this->data);
         
         if($this->Person->validates())
         {
           $this->Person->save();
+          
+          //Give this person permission for this account
+          $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'shared'));
+          
+          //Message and redirect
           $this->Session->setFlash(__('Person added to company',true));
           $this->redirect(array('controller'=>'companies','action'=>'index'));
         }

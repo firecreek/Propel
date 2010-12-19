@@ -45,6 +45,7 @@
      */
     public function account_index()
     {
+            
       $records = $this->Company->find('all',array(
         'conditions' => array(
           'Company.account_id' => $this->Authorization->read('Account.id'),
