@@ -40,8 +40,8 @@
       <nav class="main top tabs">
         <?php
           $menu = array(
-            'accounts' => array('name'=>__('Overview',true),'url'=>array('controller'=>'accounts','action'=>'index')),
-            'todos' => array('name'=>__('Todos',true),'url'=>array('controller'=>'todos','action'=>'index')),
+            'accounts' => array('name'=>__('Dashboard',true),'url'=>array('controller'=>'accounts','action'=>'index')),
+            'todos' => array('name'=>__('To-Dos',true),'url'=>array('controller'=>'todos','action'=>'index')),
             'milestones' => array('name'=>__('Milestones',true),'url'=>array('controller'=>'milestones','action'=>'index')),
           );
           echo $layout->menu($menu,array('permissions'=>'Account'));
