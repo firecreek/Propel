@@ -95,13 +95,18 @@ form .input.strong label { font-weight:bold; }
 .button:hover {
  background-color: #8fb53c;
  color: white;
+ padding: 5px 15px 6px;
 }
 
 .button.action {
   background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5));
-  color:black;
+  color:#000000;
   text-shadow: rgba(255, 255, 255, 0.246094) 0px -1px 1px;
   border-radius: 12px;
+}
+
+.button.action:hover {
+  color:#3D3D3D;
 }
 
 .button.action.large {
@@ -151,7 +156,6 @@ table.logs td.description { font-size:11px; width:100%; }
 table.logs td.action { white-space:nowrap; color:#999; text-align:right; }
 table.logs td.person { white-space:nowrap; }
 table.logs td.date { white-space:nowrap; border-left:1px solid #F0F0F0; padding-left:5px; }
-
 
 table.logs.dated { }
 table.logs.dated tr:first-child h4 { margin-top:0; }

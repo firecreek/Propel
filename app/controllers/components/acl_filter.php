@@ -217,12 +217,22 @@
           $this->_throwError(__('You do not have access to do that action',true),5);
         }
         
+        //Allow auth
         $this->Authorization->allowedActions = array('*');
+        
+        
+        //Load account style
+        $styles = $this->controller->Account->AccountStyle->find('list',array(
+          'conditions' => array('account_id' => $account['Account']['id']),
+          'fields' => array('key','value'),
+          'recursive' => -1
+        ));
         
         //Sets
         $this->Authorization->write('Permissions',$permissions);
         $this->Authorization->write('Company',$account['CompanyOwner']);
         $this->Authorization->write('Account',$account['Account']);
+        $this->Authorization->write('AccountStyle',$styles);
         $this->Authorization->write('Person',$person['Person']);
         $this->Authorization->write('Projects',$projects);
         //$this->Authorization->write('Project',$project);

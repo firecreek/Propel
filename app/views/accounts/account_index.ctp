@@ -36,7 +36,7 @@
         
         
         <div class="section">
-          <div class="banner">
+          <div class="banner tight">
             <h3><?php echo $html->link('Test Project Name','#'); ?></h3>
           </div>
           <div class="content">
@@ -59,7 +59,7 @@
                 </tr>
                 <tr>
                   <td class="type"><div class="badge post">Message</div></td>
-                  <td class="description"><a href="#" class="lnk-blue">Shared colleague to access the Calendar for the shared job</a></td>
+                  <td class="description"><a href="#">Shared colleague to access the Calendar for the shared job</a></td>
                   <td class="action">Completed by</td>
                   <td class="person">Darren M.</td>
                   <td class="date">Dec 16</td>
@@ -119,7 +119,7 @@
                 </tr>
                 <tr>
                   <td class="type"><div class="badge post">Message</div></td>
-                  <td class="description"><a href="#" class="lnk-blue">Shared colleague to access the Calendar for the shared job</a></td>
+                  <td class="description"><a href="#">Shared colleague to access the Calendar for the shared job</a></td>
                   <td class="action">Completed by</td>
                   <td class="person">Darren M.</td>
                   <td class="date">Dec 16</td>

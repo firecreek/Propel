@@ -13,6 +13,9 @@
     ));
     echo $scripts_for_layout;
   ?>
+  <style type="text/css" media="screen"><!--
+    <?php echo $this->element('style'); ?>
+  --></style>
 </head>
 
 <body>

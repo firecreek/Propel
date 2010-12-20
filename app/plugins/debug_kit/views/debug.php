@@ -59,13 +59,13 @@ class DebugView extends DoppelGangerView {
 			(isset($this->params['url']['ext']) && $this->params['url']['ext'] === 'html') ||
 			!isset($this->params['url']['ext'])
 		);
-		if ($isHtml) {
+		/*if ($isHtml) {
 			$out .= sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Starting to render', true), $name); 
-		}
+		}*/
 		$out .= parent::element($name, $params, $loadHelpers);
-		if ($isHtml) {
+		/*if ($isHtml) {
 			$out .= sprintf("\n<!-- %s - %s -->\n", __d('debug_kit', 'Finished', true), $name);
-		}
+		}*/
 		return $out;
 	}
 

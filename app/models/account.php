@@ -95,6 +95,11 @@
         'className' => 'Project',
         'foreignKey' => 'account_id',
         'dependent' => false
+      ),
+      'AccountStyle' => array(
+        'className' => 'AccountStyle',
+        'foreignKey' => 'account_id',
+        'dependent' => false
       )
     );
     

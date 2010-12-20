@@ -67,16 +67,20 @@
     <?php if(!$personal): ?>
       
       <div class="area">
-        <h3><?php __('Delete this person?'); ?></h3>
+        <div class="banner">
+          <h3><?php __('Delete this person?'); ?></h3>
+        </div>
         <div class="content">
           <p><?php __(sprintf('This will permanently remove %s from your account. Don\'t worry, their messages, comments, and history will not be erased.',$record['Person']['first_name'])); ?></p>
-          <p><?php echo $html->link(__(sprintf('Delete %s now',$record['Person']['first_name']),true),array('action'=>'delete',$personId),array('class'=>'lnk-red')); ?></p>
+          <p><?php echo $html->link(__(sprintf('Delete %s now',$record['Person']['first_name']),true),array('action'=>'delete',$personId),array('class'=>'red')); ?></p>
         </div>
       </div>
       
       
       <div class="area">
-        <h3><?php echo $record['Person']['first_name'].' '.__('can access...', true); ?></h3>
+        <div class="banner">
+          <h3><?php echo $record['Person']['first_name'].' '.__('can access...', true); ?></h3>
+        </div>
         <div class="content">
           <p>TO DO</p>
         </div>

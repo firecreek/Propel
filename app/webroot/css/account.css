@@ -66,8 +66,7 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 
 .box .banner ul.right { position:absolute; top:16px; right:20px; }
 .box .banner ul.right li {}
-.box .banner ul.right li a { font-size:11px; color:#FF0000; padding:1px; }
-.box .banner ul.right li a:hover { text-decoration:none; background-color:#FF0000; color:#FFFFFF; }
+.box .banner ul.right li a { font-size:11px; }
 
 .box .banner form { padding:5px 0 15px 0; margin:0 0 0 20px; }
 .box .banner form div.input.text input { font-size:14px; font-weight:normal; }
@@ -114,10 +113,11 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 .section.outlined .content { padding:0 10px; margin-bottom:10px; }
  
 .section .banner { background-color:#F0F0F0; margin:0 0 10px 0; min-height:30px; position:relative; }
+.section .banner.tight { margin-bottom:2px; }
+ 
 .section .banner h3 { font-size:16px; color:#333; padding:4px 0 0 10px; }
-
 .section .banner h3 a { font-size:14px; color:#333; text-decoration:none; }
-.section .banner h3 a:hover { color:white; background-color:#03C; padding:0 1px; }
+.section .banner h3 a:hover { color:white; }
 
 .section .content { padding:0; }
 .section .content p:last-child { margin-bottom:0; }
