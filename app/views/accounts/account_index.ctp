@@ -11,7 +11,16 @@
         <?php
           echo $session->flash();
         ?>
-        <p>Overview of all projects associated to here</p>
+        
+        <div class="section outlined">
+          <div class="banner">
+            <h3>Late Milestones</h3>
+          </div>
+          <div class="content">
+            <p>Some text here</p>
+          </div>
+        </div>
+        
       </div>
     </div>
 

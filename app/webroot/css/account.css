@@ -25,8 +25,13 @@ header nav a, header nav li { color:#D1EEFF; font-size:10px; }
 header nav a:hover { background-color: #054700; color:white; text-decoration:none; }
 
 nav#account ul { position:absolute; right:30px; top:0; }
-nav#account li { float:left; margin-left:15px; padding:6px 4px 6px 4px; }
+nav#account li { float:left; padding:6px 5px 6px 4px; margin:0; display:inline; }
+
 nav#account li a { padding:6px 4px 6px 4px; }
+nav#account li span { padding:6px 6px 6px 4px; }
+
+nav#account li:after { content:" | "; color:#D1EEFF; font-size:9px; }
+nav#account li:last-child:after { content:""; }
 
 nav.main { position:absolute; bottom:0px; left:30px; }
 nav.extra { position:absolute; bottom:0px; right:30px; }
@@ -102,10 +107,17 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 
 
 /**
- * Type
+ * Section
  */
-h3.section { background-color:#F0F0F0; font-size:16px; color:#333; padding:4px 10px; margin-bottom:10px; }
-
+.section { }
+.section.outlined { border:1px solid #CCC; padding:2px; }
+.section.outlined .content { padding:0 10px; margin-bottom:10px; }
+ 
+.section h3 { font-size:16px; color:#333; padding:4px 0 0 10px; }
+.section .banner { background-color:#F0F0F0; margin:0 0 10px 0; min-height:30px; position:relative; }
+.section .content { padding:0; }
+.section .content p:last-child { margin-bottom:0; }
+ 
 
 /**
  * Main
