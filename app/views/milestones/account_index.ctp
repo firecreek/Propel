@@ -9,7 +9,20 @@
     <?php echo $session->flash(); ?>
     
     <p>list of late milestones</p>
-    <p>list of milestones in calendar element</p>
+    
+    <?php
+      $months = 3;
+      
+      for($ii = 0; $ii < $months; $ii++)
+      {
+        $display = strtotime('+'.$ii.' month');
+        
+        $class = ($ii > 0) ? 'no-head' : null;
+        
+        echo $this->element('calendar/month',array('class'=>$class,'month'=>date('n',$display),'year'=>date('Y',$display)));
+      }
+      
+    ?>
     
   </div>
 </div>

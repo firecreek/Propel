@@ -109,3 +109,24 @@ form .input.strong label { font-weight:bold; }
  padding: 6px 19px 6px;
 }
 
+
+/**
+ * Calendar
+ */
+table.calendar { width:100%; border-collapse:separate; }
+
+table.calendar.no-head thead { display:none; }
+table.calendar th { color:#999; text-transform:uppercase; }
+
+table.calendar td { height:65px; vertical-align:top; width:20%; padding:10px 12px; font-size:10px; position:relative; }
+table.calendar th.month { width:1%; padding:0; }
+table.calendar th.month div { text-align:center; text-transform:uppercase; color:#000000; background-color:#333; padding:15px 0 15px 0; width:60px; color:white; font-weight:bold; font-size:14px; position:relative; top:2px; }
+ 
+table.calendar td.empty { background-color:#f5f5f5; border:1px solid #f5f5f5; }
+table.calendar td.day { background-color:#F0F0F0; border:1px solid #F0F0F0; }
+table.calendar td.today { background-color:#FFC; border:1px solid #FC0; }
+table.calendar td.weekend { background-color:#CCC; border:1px solid #CCC; width:1%; min-width:20px; }
+
+table.calendar td .wrapper { position:relative; }
+table.calendar td .day { float:right; color:#999; position:absolute; top:0; right:0; }
+table.calendar td.today .day { text-transform:uppercase; color:white; background-color:#FC0; padding:1px 5px; }
