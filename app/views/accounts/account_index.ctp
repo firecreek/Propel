@@ -34,6 +34,130 @@
           </div>
         </div>
         
+        
+        <div class="section">
+          <div class="banner">
+            <h3><?php echo $html->link('Test Project Name','#'); ?></h3>
+          </div>
+          <div class="content">
+          
+            <table class="logs">
+              <tbody>
+                <tr>
+                  <td class="type"><div class="badge todo">To-do</div></td>
+                  <td class="description">Shared colleague to access the Calendar for the shared job</td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge milestone">Milestone</div></td>
+                  <td class="description">Shared colleague to access the Calendar for the shared job</td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge post">Message</div></td>
+                  <td class="description"><a href="#" class="lnk-blue">Shared colleague to access the Calendar for the shared job</a></td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge comment">Comment</div></td>
+                  <td class="description">Shared colleague to access the Calendar for the shared job Shared colleague to access the Calendar for the shared job Shared colleague to access the Calendar for the shared job Shared colleague to access the Calendar for the shared job</td>
+                  <td class="action">Posted by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge post">Message</div></td>
+                  <td class="description">Shared colleague to access the Calendar for the shared job</td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge post private">Message</div></td>
+                  <td class="description">This is a private message</td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            
+            
+
+            <table class="logs dated">
+              <tbody>
+                <tr class="date">
+                  <td colspan="5">
+                    <h4><span>Thursday, 16 December 2010</span></h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge todo">To-do</div></td>
+                  <td class="description">Shared colleague to access the Calendar for the shared job</td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge milestone">Milestone</div></td>
+                  <td class="description">Shared colleague to access the Calendar for the shared job</td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr class="date">
+                  <td colspan="5">
+                    <h4><span>Monday, 13 December 2010</span></h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge post">Message</div></td>
+                  <td class="description"><a href="#" class="lnk-blue">Shared colleague to access the Calendar for the shared job</a></td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge comment">Comment</div></td>
+                  <td class="description">Shared colleague to access the Calendar for the shared job Shared colleague to access the Calendar for the shared job Shared colleague to access the Calendar for the shared job Shared colleague to access the Calendar for the shared job</td>
+                  <td class="action">Posted by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge post">Message</div></td>
+                  <td class="description">Shared colleague to access the Calendar for the shared job</td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+                <tr class="date">
+                  <td colspan="5">
+                    <h4><span>Saturday, 9 December 2010</span></h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="type"><div class="badge post private">Message</div></td>
+                  <td class="description">This is a private message</td>
+                  <td class="action">Completed by</td>
+                  <td class="person">Darren M.</td>
+                  <td class="date">Dec 16</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          </div>
+        </div>
+        
+        
+        
       </div>
     </div>
 

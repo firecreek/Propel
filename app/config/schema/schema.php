@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-12-19 21:12:40 : 1292768560*/
+/* App schema generated on: 2010-12-20 18:12:46 : 1292845426*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -168,11 +168,14 @@ class AppSchema extends CakeSchema {
 		'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'model_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'type' => array('type' => 'string', 'null' => false, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'description' => array('type' => 'text', 'null' => false, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'action' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 90, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'link' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'strike_through' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'person_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'person_name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),

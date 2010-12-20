@@ -109,12 +109,16 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 /**
  * Section
  */
-.section { }
+.section { margin:0 0 20px 0; }
 .section.outlined { border:1px solid #CCC; padding:2px; }
 .section.outlined .content { padding:0 10px; margin-bottom:10px; }
  
-.section h3 { font-size:16px; color:#333; padding:4px 0 0 10px; }
 .section .banner { background-color:#F0F0F0; margin:0 0 10px 0; min-height:30px; position:relative; }
+.section .banner h3 { font-size:16px; color:#333; padding:4px 0 0 10px; }
+
+.section .banner h3 a { font-size:14px; color:#333; text-decoration:none; }
+.section .banner h3 a:hover { color:white; background-color:#03C; padding:0 1px; }
+
 .section .content { padding:0; }
 .section .content p:last-child { margin-bottom:0; }
  
