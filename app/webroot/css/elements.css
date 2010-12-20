@@ -31,6 +31,7 @@ form label { width:120px; float:left; font-size:12px; color:#222; margin-top:5px
 form .text input, form .password input { font-size:16px; font-weight:bold; padding:3px; color:#000; }
 form small { font-size:10px; color:#999; display:block; margin-left:120px; padding-top:2px; }
 form textarea { width:65%; height:8em; }
+form select { font-size:14px; padding:1px; color:#000;}
 
 form .input.checkbox input { float:left; margin:2px 0 0 0; }
 form .input.checkbox label { width:auto; margin:0 0 0 8px; }
