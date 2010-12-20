@@ -103,6 +103,7 @@
      */
     public function account_appearance()
     {
+      $this->loadModel('Scheme');
     }
   
   }
