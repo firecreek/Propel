@@ -1,34 +1,61 @@
 <?php
 
-  if(!isset($class)) { $class = null; }
+  //Settings
+  if(!isset($class)) { $class = array(); }
+  elseif(is_string($class)) { $class = array($class); }
+  
+  if(!isset($type)) { $type = 'full'; }
+  
+  $class[] = $type;
 
+  //
   $daysInMonth = date("t", mktime(0, 0, 0, $month, 1, $year));
   $firstDayInMonth = date('D', mktime(0,0,0, $month, 1, $year));
   $today = false;
 
   if($year == date('Y') && $month == date('n'))
-  {	
+  {
     $today = date('j');
   }
 
-  $dayList = array(
-    __('Mon',true),
-    __('Tue',true),
-    __('Wed',true),
-    __('Thu',true),
-    __('Fri',true),
-    __('Sat',true),
-    __('Sun',true)
-  );
+  //Types
+  if($type == 'full')
+  {
+    $showMonth = true;
+    $continueDates = false;
+    $day = 1;
+    
+    $dayList = array(
+      __('Mon',true),
+      __('Tue',true),
+      __('Wed',true),
+      __('Thu',true),
+      __('Fri',true),
+      __('Sat',true),
+      __('Sun',true)
+    );
+  }
+  elseif($type == 'short')
+  {
+    $showMonth = false;
+    $continueDates = true;
+    $day = date('j');
+    
+    $dayList = array();
+    for($ii = 0; $ii < 7; $ii++)
+    {
+      $dayList[] = date('D',strtotime('+'.$ii.' day'));
+    }
+  }
   
 ?>
 
-<table class="calendar<?php if(!empty($class)) { echo ' '.$class; } ?>">
+<table class="calendar<?php if(!empty($class)) { echo ' '.implode(' ',$class); } ?>">
   <thead>
     <tr>
-      <th>&nbsp;</th>
-      <?php foreach($dayList as $day): ?>
-        <th><?php echo $day; ?></th>
+      <?php if($showMonth): ?><th>&nbsp;</th><?php endif; ?>
+      <?php foreach($dayList as $dayName): ?>
+        <th><?php echo $dayName; ?></th>
       <?php endforeach; ?>
     </tr>
   </thead>
@@ -36,11 +63,11 @@
     <?php
 
       $str = '';
-
-      $day = 1;
+      $dayShowMonth = false;
+      
       while($day <= $daysInMonth)
       {
-        if($day == 1) { echo '<tr><th class="month" rowspan="7"><div>'.date('M',mktime(0,0,0,$month,1,$year)).'</div></th></tr>'; }
+        if($showMonth && $day == 1) { echo '<tr><th class="month" rowspan="7"><div>'.date('M',mktime(0,0,0,$month,1,$year)).'</div></th></tr>'; }
         
         $str .= '<tr class="days">';
         
@@ -58,13 +85,31 @@
             $class[] = 'day';
           }
      
-          if($day == $today) {
+          if($day == $today)
+          {
+            if($continueDates) { $dayShowMonth = true; }
             $class[] = 'today';
           }
      
-          if(($firstDayInMonth == $dayList[$i] || $day > 1) && ($day <= $daysInMonth))
+          if(($firstDayInMonth == $dayList[$i] || $day > 1) && ($day <= $daysInMonth || $continueDates == true))
           {
             $dayDisplay = ($day == $today) ? __('Today',true) : $day;
+            
+            if($day > $daysInMonth)
+            {
+              $dayDisplay = $day - $daysInMonth;
+              if($continueDates && $dayDisplay == 1)
+              {
+                $dayDisplay = date('M',strtotime('+1 month',mktime(0, 0, 0, $month, 1, $year))).' '.$dayDisplay;
+              }
+            }
+            
+            if($day != $today && $dayShowMonth)
+            {
+              $dayShowMonth = false;
+              $dayDisplay = date('M').' '.$dayDisplay;
+            }
+            
             $str .= '
               <td class="'.implode(' ',$class).'">
                 <div class="wrapper">
