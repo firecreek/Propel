@@ -14,13 +14,13 @@ class SchemesStyleData {
 			'id' => '2',
 			'scheme_id' => '1',
 			'key' => 'projectTextColour',
-			'value' => '#FFFFF'
+			'value' => '#FFFFFF'
 		),
 		array(
 			'id' => '3',
 			'scheme_id' => '1',
 			'key' => 'clientTextColour',
-			'value' => '#FFFFF'
+			'value' => '#d1eeff'
 		),
 		array(
 			'id' => '4',
@@ -44,7 +44,7 @@ class SchemesStyleData {
 			'id' => '7',
 			'scheme_id' => '1',
 			'key' => 'tabTextColourHover',
-			'value' => '#FFFFF'
+			'value' => '#FFFFFF'
 		),
 		array(
 			'id' => '8',

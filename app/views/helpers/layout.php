@@ -42,13 +42,21 @@
           continue;
         }
       
+        $classes = array();
         $tagOptions = array();
         $tagLink = $this->Html->link($link['name'], $link['url']);
         
         if($key == $options['active'])
         {
-          $tagOptions['class'] = 'active';
+          $classes[] = 'active';
         }
+        
+        if(isset($link['class']))
+        {
+          $classes[] = $link['class'];
+        }
+        
+        $tagOptions['class'] = implode(' ',$classes);
         
         $output .= $this->Html->tag('li', $tagLink, $tagOptions);
       }

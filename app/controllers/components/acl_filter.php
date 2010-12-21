@@ -222,9 +222,9 @@
         
         
         //Load account style
-        $styles = $this->controller->Account->AccountStyle->find('list',array(
-          'conditions' => array('account_id' => $account['Account']['id']),
-          'fields' => array('key','value'),
+        $style = $this->controller->Account->Scheme->SchemeStyle->find('list',array(
+          'conditions' => array('scheme_id' => $account['Account']['scheme_id']),
+          'fields'  => array('SchemeStyle.key','SchemeStyle.value'),
           'recursive' => -1
         ));
         
@@ -232,7 +232,7 @@
         $this->Authorization->write('Permissions',$permissions);
         $this->Authorization->write('Company',$account['CompanyOwner']);
         $this->Authorization->write('Account',$account['Account']);
-        $this->Authorization->write('AccountStyle',$styles);
+        $this->Authorization->write('Style',$style);
         $this->Authorization->write('Person',$person['Person']);
         $this->Authorization->write('Projects',$projects);
         //$this->Authorization->write('Project',$project);

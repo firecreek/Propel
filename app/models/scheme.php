@@ -47,7 +47,8 @@
      */
     public $hasMany = array(
       'SchemeStyle' => array(
-        'className' => 'SchemeStyle'
+        'className' => 'SchemeStyle',
+        'dependent' => true
       )
     );
 

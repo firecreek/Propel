@@ -1,0 +1,117 @@
+
+h3 { margin-bottom:10px; }
+
+#schemeExample { margin-bottom:20px; background-color:#E5E5E5; border-bottom:1px solid #CCC; }
+#schemeExample h1 { margin-left:20px; }
+#schemeExample nav { left:20px; }
+#schemeExample .mainid { margin:0px auto; margin:10px 20px; }
+#schemeExample .mainid .box .content { padding:10px; }
+#schemeExample .mainid p { margin:0; }
+
+.scheme .col { float:left;  }
+.scheme .col.sets { width:180px; }
+.scheme .col.colours { width:210px; padding-right:20px; }
+.scheme .col.picker { margin-left:20px; }
+
+.scheme.cols { border-bottom:1px solid #CCC; margin-bottom:20px; }
+.scheme.cols .col { height:335px; }
+.scheme .col.sets, .scheme .col.colours { border-right:1px solid #CCC; }
+
+.scheme .col1, .scheme .col2 { margin-right:20px; padding-right:10px; }
+.scheme .colours { text-align:right; }
+
+.scheme .col1 fieldset { float:right; }
+.scheme .col1 label {  }
+
+.schemes { padding-top:10px; }
+.schemes .option { height:35px; }
+.schemes .option input { position:relative; top:2px; }
+.schemes .scheme { padding:8px 15px; font-size:12px; }
+.schemes .scheme span { padding:0 15px; }
+
+.scheme-preview { height:28px; cursor:pointer; }
+.scheme-preview p { float:left; width:155px; text-align:right; font-size:12px; margin:0 0 0 0 !important; }
+.scheme-preview span { float:right; width:45px; height:20px; border:1px solid #CCC; }
+.scheme-preview.active span { border:2px solid #666; }
+
+.colorpicker input { display:none; }
+
+.colorpicker a { text-decoration:none; }
+.colorpicker .colorpicker_undo { position:absolute; top:282px; right:48px; display:none; }
+.colorpicker .colorpicker_close { position:absolute; top:278px; right:25px; font-size:15px; }
+
+.colorpicker {
+  background-color:#999;
+	width: 320px;
+	height: 315px;
+	overflow: hidden;
+	display: none;
+}
+.colorpicker_color {
+	width: 256px;
+	height: 256px;
+  top:15px;
+  left:15px;
+	position: absolute;
+	background: #f00;
+	overflow: hidden;
+	cursor: crosshair;
+}
+.colorpicker_color div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 256px;
+	height: 256px;
+	background: url(/img/colorpicker/colorpicker_overlay-2.png);
+}
+.colorpicker_color div div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 11px;
+	height: 11px;
+	overflow: hidden;
+	background: url(/img/colorpicker/colorpicker_select.gif);
+	margin: -5px 0 0 -5px;
+}
+.colorpicker_hue {
+	position: absolute;
+	top: 15px;
+	left: 280px;
+	width: 30px;
+	height: 256px;
+	cursor: n-resize;
+	background: url(/img/colorpicker/slider-2.png) no-repeat
+}
+.colorpicker_hue div {
+	position: absolute;
+	width: 35px;
+	height: 9px;
+	overflow: hidden;
+	background: url(/img/colorpicker/colorpicker_indic.gif) left top;
+	margin: -4px 0 0 0;
+	left: 0px;
+}
+
+
+.colorpicker_hex {
+	position: absolute;
+	left: 15px;
+	top: 280px;
+}
+.colorpicker_hex input { display:inline; width:4em; margin-left:2px; }
+.colorpicker_hex:before { content:"Hex code:" }
+
+.colorpicker_focus {
+	background-position: center;
+}
+.colorpicker_hex.colorpicker_focus {
+	background-position: bottom;
+}
+.colorpicker_submit.colorpicker_focus {
+	background-position: bottom;
+}
+.colorpicker_slider {
+	background-position: bottom;
+}

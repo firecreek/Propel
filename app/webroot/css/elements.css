@@ -23,6 +23,17 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 
 /**
+ * Columns
+ */
+.cols {}
+.cols .col {}
+ 
+.cols .col.left { width:70%; float:left; }
+.cols .col.right { width:28%; float:right; }
+ 
+ 
+ 
+/**
  * Forms
  */
 form fieldset { margin-bottom:20px; }
@@ -35,6 +46,9 @@ form select { font-size:14px; padding:1px; color:#000;}
 
 form .input.checkbox input { float:left; margin:2px 0 0 0; }
 form .input.checkbox label { width:auto; margin:0 0 0 8px; }
+
+form .input.radio input { float:left; margin:2px 0 0 0; }
+form .input.radio label { width:auto; margin:0 0 0 8px; }
 
 form .input { margin-bottom:10px; }
 

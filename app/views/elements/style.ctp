@@ -16,7 +16,7 @@
   $linkTextColour = '#03C';
   
   //Overwrite if they exist
-  if($accountStyles = $session->read('AuthAccount.AccountStyle'))
+  if($accountStyles = $session->read('AuthAccount.Style'))
   {
     foreach($accountStyles as $key => $val)
     {
@@ -31,8 +31,9 @@ header h1 span { color:<?php echo $clientTextColour; ?>; }
 
 nav.tabs li a { background-color:<?php echo $tabBackground; ?>; }
 nav.tabs li a { color:<?php echo $tabTextColour; ?>; }
-nav.tabs li a:hover { background-color:<?php echo $tabBackgroundHover; ?>; }
-nav.tabs li a:hover { color:<?php echo $tabTextColourHover; ?>; }
+nav.tabs li a:hover, nav.tabs li.hover a { background-color:<?php echo $tabBackgroundHover; ?>; }
+nav.tabs li a:hover, nav.tabs li.hover a { color:<?php echo $tabTextColourHover; ?>; }}
+
 nav.tabs li.active a { color:<?php echo $tabTextColourActive; ?>; }
 
 a { color:<?php echo $linkTextColour; ?>; }

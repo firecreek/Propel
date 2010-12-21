@@ -128,10 +128,9 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
  */
 #main { margin:0px auto; margin:10px 30px 20px 30px; }
 
-#main .cols {}
-#main .cols .col {}
-#main .cols .col.left { width:70%; float:left; }
-#main .cols .col.right { width:28%; float:right; }
+
+
+
 
 
 /**
@@ -167,7 +166,5 @@ h3.section { clear:both; }
  
 .people-list li.company { background:url(/img/company.png) transparent no-repeat; }
 .people-list li.company .detail { margin-left:65px; }
-
-
 
 

@@ -46,6 +46,38 @@
       'appearance' => '_update'
     );
     
+    /**
+     * Scheme keys
+     *
+     * @access public
+     * @access public
+     */
+    public $schemeKeys = array();
+    
+    
+    /**
+     * Before filter
+     *
+     * @access public
+     * @return void
+     */
+    public function beforeFilter()
+    {
+      $this->schemeKeys = array(
+        'backgroundColor'       => array('name'=>'Header Background'),
+        'projectTextColour'     => array('name'=>'Project Name'),
+        'clientTextColour'      => array('name'=>'Client Name'),
+        'tabBackground'         => array('name'=>'Tab Background'),
+        'tabBackgroundHover'    => array('name'=>'Tab Hover Background'),
+        'tabTextColour'         => array('name'=>'Tab Text'),
+        'tabTextColourHover'    => array('name'=>'Tab Hover Text'),
+        'tabTextColourActive'   => array('name'=>'Current Tab Text'),
+        'linkTextColour'        => array('name'=>'Links')
+      );
+      
+      parent::beforeFilter();
+    }
+    
     
     /**
      * Index
@@ -104,6 +136,68 @@
     public function account_appearance()
     {
       $this->loadModel('Scheme');
+      
+      if(!empty($this->data))
+      {
+        //Custom or predefined
+        if($this->data['Scheme']['scheme_id'] == 'custom')
+        {
+          //Delete old
+          $this->Scheme->deleteAll(array(
+            'Scheme.account_id' => $this->Authorization->read('Account.id')
+          ));
+          
+          $schemeStyles = array();
+          foreach($this->data['SchemeStyle'] as $key => $val)
+          {
+            if(substr($val,0,1) != '#') { $val = '#'.$val; }
+            $schemeStyles[] = array(
+              'key' => $key,
+              'value' => $val
+            );
+          }
+          
+          //Create new
+          $this->Scheme->saveAll(array(
+            'Scheme' => array(
+              'name' => 'Custom',
+              'account_id' => $this->Authorization->read('Account.id')
+            ),
+            'SchemeStyle' => $schemeStyles
+          ));
+          
+          $schemeId = $this->Scheme->id;
+        }
+        else
+        {
+          $schemeId = $this->data['Scheme']['scheme_id'];
+        }
+        
+        //
+        $this->data['Account']['id'] = $this->Authorization->read('Account.id');
+        $this->data['Account']['scheme_id'] = $schemeId;
+        
+        $this->Account->set($this->data);
+        
+        if($this->Account->validates())
+        {
+          $this->Account->save();
+          $this->Session->setFlash(__('Colour scheme updated',true),'default',array('class'=>'success'));
+          $this->redirect(array('action'=>'appearance'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Please check the form and try again',true),'default',array('class'=>'error'));
+        }
+      }
+      
+      $records = $this->Scheme->find('all',array(
+        'conditions' => array('Scheme.account_id'=>null),
+        'order' => 'Scheme.position ASC',
+      ));
+      
+      $this->set('schemeKeys',$this->schemeKeys);
+      $this->set(compact('records'));
     }
   
   }

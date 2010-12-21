@@ -77,6 +77,9 @@
           'UserOwner.account_id = Account.id'
         ),
       ),
+      'Scheme' => array(
+        'className' => 'Scheme'
+      )
     );
 
     /**
@@ -93,11 +96,6 @@
       ),
       'Project' => array(
         'className' => 'Project',
-        'foreignKey' => 'account_id',
-        'dependent' => false
-      ),
-      'AccountStyle' => array(
-        'className' => 'AccountStyle',
         'foreignKey' => 'account_id',
         'dependent' => false
       )
