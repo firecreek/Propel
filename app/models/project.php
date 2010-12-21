@@ -157,19 +157,6 @@
       'exclusive' => '',
       'finderQuery' => '',
       'counterQuery' => ''
-    ),
-    'TodoItem' => array(
-      'className' => 'TodoItem',
-      'foreignKey' => 'project_id',
-      'dependent' => false,
-      'conditions' => '',
-      'fields' => '',
-      'order' => '',
-      'limit' => '',
-      'offset' => '',
-      'exclusive' => '',
-      'finderQuery' => '',
-      'counterQuery' => ''
     )
   );
 

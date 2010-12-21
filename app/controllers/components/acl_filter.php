@@ -211,8 +211,42 @@
           );
         }
         
+        //Load project permissions
+        if(!empty($project))
+        {
+          $accountNode = $this->controller->Acl->Aco->node('opencamp/projects/'.$project['Project']['id']);
+
+          $controllers = $this->controller->Acl->Aco->find('list',array(
+            'conditions' => array(
+              'Aco.parent_id' => $accountNode[0]['Aco']['id']
+            ),
+            'fields' => array(
+              'Aco.id',
+              'Aco.alias',
+            ),
+            'recursive' => '-1',
+          ));
+          $controllerIds = array_keys($controllers);
+          $allowedControllers = $this->controller->Acl->Aco->Permission->find('all', array(
+            'conditions' => array(
+              'Permission.aro_id' => $person['Person']['_aro_id'],
+              'Permission.aco_id' => $controllerIds
+            ),
+            'fields' => array('Permission.*','Aco.alias')
+          ));
+          
+          foreach($allowedControllers as $allowedController)
+          {
+            $permissions['Project'][$allowedController['Aco']['alias']] = array(
+              'create'  => $allowedController['Permission']['_create'],
+              'read'    => $allowedController['Permission']['_read'],
+              'update'  => $allowedController['Permission']['_update'],
+              'delete'  => $allowedController['Permission']['_delete'],
+            );
+          }
+        }        
         
-        //Load permissions
+        //Check request permissions
         $isAllowed = false;
         
         $modelId = ${$prefix}[Inflector::camelize($prefix)]['id'];

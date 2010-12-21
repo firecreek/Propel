@@ -18,7 +18,16 @@
      * @access public
      * @var array
      */
-    public $components = array('Acl','Authorization','AclFilter','AclManager','Openbase','RequestHandler','Session','DebugKit.Toolbar');
+    public $components = array(
+      'Acl',
+      'Authorization',
+      'AclFilter',
+      'AclManager',
+      'Openbase',
+      'RequestHandler',
+      'Session',
+      'DebugKit.Toolbar'
+    );
     
     /**
      * Models
@@ -26,7 +35,12 @@
      * @access public
      * @var array
      */
-    public $uses = array('User','Account','Person');
+    public $uses = array(
+      'User',
+      'Account',
+      'Person',
+      'Project'
+    );
     
     /**
      * Helpers
@@ -34,7 +48,13 @@
      * @access public
      * @var array
      */
-    public $helpers = array('Html','Form','Javascript','Auth','Layout');
+    public $helpers = array(
+      'Html',
+      'Form',
+      'Javascript',
+      'Auth',
+      'Layout'
+    );
     
     
     /**
@@ -60,17 +80,21 @@
      */
     public function beforeRender()
     {
-      if(isset($this->params['prefix']))
+      if(isset($this->params['prefix']) && $prefix = $this->params['prefix'])
       {
-        switch($this->params['prefix'])
+        $this->layout = 'account';
+        
+        switch($prefix)
         {
           case 'account':
-            $this->layout = 'account';
+            $header = $this->Authorization->read('Account.name');
             break;
           case 'project':
-            $this->layout = 'project';
+            $header = $this->Authorization->read('Project.name');
             break;
         }
+        
+        $this->set(compact('prefix','header'));
       }
     
       parent::beforeRender();
