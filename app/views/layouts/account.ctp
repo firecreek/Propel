@@ -6,7 +6,6 @@
   <?php
     echo $html->css(array(
       'reset',
-      '960',
       'type',
       'elements',
       'account'

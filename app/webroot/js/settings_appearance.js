@@ -16,6 +16,12 @@ var SettingsAppearance = {
       }
     });
     
+    
+    $('#schemeExample a').bind('click',function(e){
+      e.preventDefault();
+    });
+    
+    
     $('.schemes input').bind('click',function(){
       var value = $(this).val();
       
@@ -90,7 +96,6 @@ var SettingsAppearance = {
     $('#schemeExample header h1').css({ color: $('#SchemeStyleprojectTextColour').val() });
     $('#schemeExample header h1 span').css({ color: $('#SchemeStyleclientTextColour').val() });
     $('#schemeExample a').css({ color: $('#SchemeStylelinkTextColour').val() });
-    $('#schemeExample a:hover').css({ color:'white', backgroundColor: $('#SchemeStylelinkTextColour').val() });
     $('#schemeExample nav.tabs li a').css({ backgroundColor: $('#SchemeStyletabBackground').val() });
     $('#schemeExample nav.tabs li a').css({ color: $('#SchemeStyletabTextColour').val() });
     $('#schemeExample nav.tabs li.hover a').css({ backgroundColor: $('#SchemeStyletabBackgroundHover').val() });

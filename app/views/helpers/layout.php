@@ -41,10 +41,14 @@
         {
           continue;
         }
+        
+        if(!isset($link['options'])) { $link['options'] = array(); }
+        if($link['url'] == false) { $link['url'] = '#'; $link['options'] = array('onclick'=>'return false;'); }
       
+        $tagLink = $this->Html->link($link['name'], $link['url'], $link['options']);
+        
         $classes = array();
         $tagOptions = array();
-        $tagLink = $this->Html->link($link['name'], $link['url']);
         
         if($key == $options['active'])
         {

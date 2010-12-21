@@ -38,6 +38,7 @@
           <div class="content"><p><?php echo $html->link(__('This is the link colour',true),'#'); ?></p></div>
         </div>
       </div>
+      <div class="cover"></div>
     </div>
       
     
@@ -50,12 +51,11 @@
         <h3><?php __('Choose a colour scheme'); ?></h3>
         
         <?php
-        
-          echo $javascript->codeBlock("
-            var colourSchemes = new Array;
-          ");
-            
+          
+          //Build radio buttons
           $schemeOptions = array();
+          $schemeSetsJs = null;
+          
           foreach($records as $record)
           {
             $colours = Set::combine($record, 'SchemeStyle.{n}.key', 'SchemeStyle.{n}.value');
@@ -74,18 +74,20 @@
               $schemeData[] = $key.': "'.$val.'"';
             }
             
-            echo $javascript->codeBlock("
-              colourSchemes[".$record['Scheme']['id']."] = {
-                ".implode(', ',$schemeData)."
-              };
-            ");
+            $schemeSetsJs .= "colourSchemes[".$record['Scheme']['id']."] = {".implode(', ',$schemeData)."};\n";
           }
+        
+          echo $javascript->codeBlock("
+            var colourSchemes = new Array;
+            ".$schemeSetsJs."
+          ");
           
           $schemeOptions['custom'] = __('Custom colours',true);
           
           //Selected
           $selected = isset($schemeOptions[$auth->read('Account.scheme_id')]) ? $selected = $auth->read('Account.scheme_id') : 'custom';
           
+          //Output
           echo '<fieldset class="schemes">';
           echo $form->input('scheme_id',array(
             'options'   => $schemeOptions,
