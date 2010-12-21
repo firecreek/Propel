@@ -16,6 +16,18 @@
     
     
     /**
+     * button
+     *
+     * @access public
+     * @return void
+     */
+    public function button($text,$url,$type = '')
+    {
+      return $this->Html->link('<span>'.$text.'</span>',$url,array('class'=>'button action '.$type,'escape'=>false));
+    }
+    
+    
+    /**
      * Basic menu
      *
      * @access public

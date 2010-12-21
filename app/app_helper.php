@@ -8,11 +8,12 @@
       $this->tags['radio'] = '<input type="radio" name="%s" id="%s" %s /><label for="%2$s">%s</label>'; 
       parent::__construct(); 
     }
+    
   
     public function url($url = null, $full = false)
     {
       if(is_array($url))
-      { 
+      {
         //Add account slug
         if(
           isset($this->params['accountSlug']) &&

@@ -167,7 +167,7 @@
     <?php
       if($auth->check('Account.Projects','create'))
       {
-        echo $html->link(__('Create a new project',true),array('controller'=>'projects','action'=>'add'),array('class'=>'button action add large'));
+        echo $layout->button(__('Create a new project',true),array('controller'=>'projects','action'=>'add'),'large add');
       }
     ?>
     

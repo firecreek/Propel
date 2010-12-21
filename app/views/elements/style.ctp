@@ -29,6 +29,10 @@ header { background-color:<?php echo $backgroundColor; ?> }
 header h1 { color:<?php echo $projectTextColour; ?>; }
 header h1 span { color:<?php echo $clientTextColour; ?>; }
 
+header nav a, header nav li { color:<?php echo $clientTextColour; ?>; }
+header nav a:hover { background-color:<?php echo $tabBackgroundHover; ?>; color:white; }
+nav#account li:after { color:<?php echo $clientTextColour; ?>; }
+
 nav.tabs li a { background-color:<?php echo $tabBackground; ?>; }
 nav.tabs li a { color:<?php echo $tabTextColour; ?>; }
 nav.tabs li a:hover, nav.tabs li.hover a { background-color:<?php echo $tabBackgroundHover; ?>; }

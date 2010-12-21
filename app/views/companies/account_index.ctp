@@ -3,7 +3,7 @@
   <div class="banner">
     <h2><?php __('Every company and person in your system'); ?></h2>
     
-    <?php echo $html->link(__('Add a new company',true),array('action'=>'add'),array('class'=>'button action add large')); ?>
+    <?php echo $layout->button(__('Add a new company',true),array('action'=>'add'),'add large'); ?>
     
   </div>
   <div class="content">
@@ -34,7 +34,7 @@
         
         <div class="content">
           
-          <p><?php echo $html->link(__('Add a new person',true),array('controller'=>'people','action'=>'add',$company['Company']['id']),array('class'=>'button action add')); ?></p>
+          <p><?php echo $layout->button(__('Add a new person',true),array('controller'=>'people','action'=>'add',$company['Company']['id']),'large add'); ?></p>
           
           <ul class="people-list">
             <li class="company">
