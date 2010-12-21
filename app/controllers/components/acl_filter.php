@@ -100,6 +100,7 @@
         $accountSlug = $this->controller->params['accountSlug'];
         $userId = $this->Authorization->user('id');
         
+        
         //Load account
         $account = $this->controller->Account->find('first',array(
           'conditions' => array(
@@ -110,6 +111,7 @@
           )
         ));
         
+        
         //Load person
         $person = $this->controller->Person->find('first',array(
           'conditions' => array(
@@ -118,6 +120,7 @@
           ),
           'contain' => false
         ));
+        
         
         //Find Person aro
         $aro = $this->Acl->Aro->find('first', array(
@@ -128,6 +131,23 @@
             'recursive' => -1,
         ));
         $person['Person']['_aro_id'] = $aro['Aro']['id'];
+        
+        
+        //Load project
+        $project = null;        
+        if($prefix == 'project')
+        {
+          $project = $this->controller->Account->Project->find('first',array(
+            'conditions' => array(
+              'Project.id' => $this->controller->params['projectId']
+            ),
+            'contain' => array(
+              'Company' => array('id','name','private'),
+              'Person' => array('id','user_id','full_name','email')
+            )
+          ));
+        }
+        
         
         //Load projects
         $projects = array();
@@ -192,9 +212,11 @@
         }
         
         
-        //Load action permissions
+        //Load permissions
         $isAllowed = false;
-        $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$account['Account']['id'].'/'.$this->controller->name);
+        
+        $modelId = ${$prefix}[Inflector::camelize($prefix)]['id'];
+        $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controller->name);
         
         if(!empty($permissionNode))
         {
@@ -235,7 +257,7 @@
         $this->Authorization->write('Style',$style);
         $this->Authorization->write('Person',$person['Person']);
         $this->Authorization->write('Projects',$projects);
-        //$this->Authorization->write('Project',$project);
+        $this->Authorization->write('Project',$project['Project']);
         
       }
       
