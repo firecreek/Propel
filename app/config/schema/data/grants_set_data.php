@@ -169,6 +169,61 @@ class GrantsSetData {
 			'updated' => '2010-12-19 21:12:19',
 			'created' => '2010-12-19 21:12:19'
 		),
+		array(
+			'id' => '16',
+			'grant_id' => '2',
+			'acos_alias' => 'Companies',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-22 00:17:15',
+			'created' => '2010-12-22 00:17:15'
+		),
+		array(
+			'id' => '17',
+			'grant_id' => '2',
+			'acos_alias' => 'People',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-22 00:17:15',
+			'created' => '2010-12-22 00:17:15'
+		),
+		array(
+			'id' => '18',
+			'grant_id' => '2',
+			'acos_alias' => 'Search',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-22 00:19:42',
+			'created' => '2010-12-22 00:19:42'
+		),
+		array(
+			'id' => '19',
+			'grant_id' => '2',
+			'acos_alias' => 'Milestones',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-22 00:22:23',
+			'created' => '2010-12-22 00:22:23'
+		),
+		array(
+			'id' => '20',
+			'grant_id' => '2',
+			'acos_alias' => 'Messages',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-22 00:22:23',
+			'created' => '2010-12-22 00:22:23'
+		),
 	);
 
 }
