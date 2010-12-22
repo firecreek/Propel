@@ -17,13 +17,18 @@
   {
     $today = date('j');
   }
+  
+  //Settings
+  $showMonth = true;
+  $todayText = true;
+  $continueDates = false;
+  $monthPosition = 'top';
+  $day = 1;
 
   //Types
   if($type == 'full')
   {
-    $showMonth = true;
-    $continueDates = false;
-    $day = 1;
+    $monthPosition = 'inner';
     
     $dayList = array(
       __('Mon',true),
@@ -34,6 +39,22 @@
       __('Sat',true),
       __('Sun',true)
     );
+  }
+  elseif($type == 'small')
+  {
+    $todayText = false;
+    
+    $dayList = array(
+      __('Mon',true),
+      __('Tue',true),
+      __('Wed',true),
+      __('Thu',true),
+      __('Fri',true),
+      __('Sat',true),
+      __('Sun',true)
+    );
+    
+    $dayHeader = array('M','T','W','T','F','S','S');
   }
   elseif($type == 'short')
   {
@@ -53,13 +74,24 @@
 <table class="calendar<?php if(!empty($class)) { echo ' '.implode(' ',$class); } ?>">
   <thead>
     <tr>
-      <?php if($showMonth): ?><th>&nbsp;</th><?php endif; ?>
-      <?php foreach($dayList as $dayName): ?>
-        <th><?php echo $dayName; ?></th>
+      <?php if($showMonth): ?>
+        <?php if($monthPosition == 'top'): ?>
+          <th class="month" rowspan="8"><?php echo date('M',mktime(0,0,0,$month,1,$year)); ?></th>
+        <?php else: ?>
+          <th>&nbsp;</th>
+        <?php endif; ?>
+      <?php endif; ?>
+      <?php foreach($dayList as $key => $dayName): ?>
+        <th><?php echo (isset($dayHeader) && isset($dayHeader[$key])) ? $dayHeader[$key] : $dayName; ?></th>
       <?php endforeach; ?>
     </tr>
   </thead>
   <tbody>
+  
+    <?php if($showMonth && $monthPosition == 'inner'): ?>
+      <tr><th class="month" rowspan="7"><div><?php echo date('M',mktime(0,0,0,$month,1,$year)); ?></div></th></tr>
+    <?php endif; ?>
+  
     <?php
 
       $str = '';
@@ -67,10 +99,9 @@
       
       while($day <= $daysInMonth)
       {
-        if($showMonth && $day == 1) { echo '<tr><th class="month" rowspan="7"><div>'.date('M',mktime(0,0,0,$month,1,$year)).'</div></th></tr>'; }
-        
         $str .= '<tr class="days">';
         
+        if($showMonth && $monthPosition != 'inner') { $str .= '<td></td>'; }
      
         for($i = 0; $i < 7; $i ++)
         {
@@ -93,7 +124,7 @@
      
           if(($firstDayInMonth == $dayList[$i] || $day > 1) && ($day <= $daysInMonth || $continueDates == true))
           {
-            $dayDisplay = ($day == $today) ? __('Today',true) : $day;
+            $dayDisplay = ($day == $today && $todayText) ? __('Today',true) : $day;
             
             if($day > $daysInMonth)
             {
