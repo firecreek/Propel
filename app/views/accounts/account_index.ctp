@@ -21,7 +21,8 @@
           echo $session->flash();
         ?>
         
-        <div class="section outlined">
+        
+        <div class="section outlined small important">
           <div class="banner">
             <h3><?php __('Late milestones'); ?></h3>
           </div>
@@ -33,6 +34,21 @@
             ?>
           </div>
         </div>
+        
+        
+        <div class="section outlined small highlight">
+          <div class="banner">
+            <h3><?php __('Upcoming milestones'); ?></h3>
+          </div>
+          <div class="content">
+            <p>Some text here</p>
+            
+            <?php
+              echo $this->element('calendar/month',array('type'=>'short','month'=>date('n'),'year'=>date('Y')));
+            ?>
+          </div>
+        </div>
+        
         
         
         <div class="section">

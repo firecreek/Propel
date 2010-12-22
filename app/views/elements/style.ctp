@@ -39,6 +39,7 @@ nav.tabs li a:hover, nav.tabs li.hover a { background-color:<?php echo $tabBackg
 nav.tabs li a:hover, nav.tabs li.hover a { color:<?php echo $tabTextColourHover; ?>; }}
 
 nav.tabs li.active a { color:<?php echo $tabTextColourActive; ?>; }
+nav.tabs li.active a:hover { color:<?php echo $tabTextColourActive; ?>; }
 
 a { color:<?php echo $linkTextColour; ?>; }
 a:hover { background-color:<?php echo $linkTextColour; ?>; }

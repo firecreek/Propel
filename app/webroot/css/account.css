@@ -53,7 +53,9 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
  * Box
  */
 .box .banner { border-bottom:none; position:relative; background-color:#EDF3FE; }
+
 .box .banner h2 { font-size:14px; padding:15px 0 0 20px; }
+.box .banner h2 span { font-size:12px; color:#999; font-weight:normal; margin-left:10px; }
 
 .box .banner .button { position:absolute; right:20px; top:10px; }
 
@@ -112,8 +114,6 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
  * Section
  */
 .section { margin:0 0 20px 0; }
-.section.outlined { border:1px solid #CCC; padding:2px; }
-.section.outlined .content { padding:0 10px; margin-bottom:10px; }
  
 .section .banner { background-color:#F0F0F0; margin:0 0 10px 0; min-height:30px; position:relative; }
 .section .banner.tight { margin-bottom:2px; }
@@ -124,7 +124,21 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 
 .section .content { padding:0; }
 .section .content p:last-child { margin-bottom:0; }
+
+.section.outlined { border:1px solid #CCC; padding:2px; }
+.section.outlined .content { padding:0 10px; margin-bottom:10px; }
+
+.section.important {}
+.section.important .banner { background-color:#C00; }
+.section.important .banner h3 { color:white; }
+
+.section.highlight {}
+.section.highlight .banner { background-color:#FC0; }
+.section.highlight .banner h3 { color:black; }
  
+.section.small .banner { min-height:26px; }
+.section.small .banner h3 { font-size:13px; font-weight:bold; padding:4px 0 0 6px; }
+
 
 /**
  * Main

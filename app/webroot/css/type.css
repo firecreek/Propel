@@ -4,11 +4,13 @@ html, body { font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", 
 
 h1, h2, h3, h4, h5 { font-family:Arial; }
 
+p.important { color:#C00; }
+
 a { color:#03C; padding:0 1px; }
 a:hover { background-color:#03C; text-decoration:none; color:white; padding:0 1px; }
 
-a.red { color:red; padding:0 1px; }
-a.red:hover { background-color:red; text-decoration:none; color:white; padding:0 1px; }
+a.important, .banner ul.right a { color:red; padding:0 1px; }
+a.important:hover, .banner ul.right a:hover { background-color:red; text-decoration:none; color:white; padding:0 1px; }
 
 .error,
 .notice,
@@ -22,3 +24,7 @@ a.red:hover { background-color:red; text-decoration:none; color:white; padding:0
 .notice a,
 .message a { color: #817134; }
 .success a { color: #529214; }
+
+/** Remove */
+a.red { color:red; background-color:red; border:10px solid red; padding:0 1px; }
+a.red:hover { background-color:red; text-decoration:none; color:white; padding:0 1px; }
