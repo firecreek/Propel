@@ -26,6 +26,7 @@
       'Openbase',
       'RequestHandler',
       'Session',
+      'ProjectHandler',
       'DebugKit.Toolbar'
     );
     

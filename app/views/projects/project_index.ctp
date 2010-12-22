@@ -20,7 +20,29 @@
   </div>
   <div class="col right">
   
-    <p>right</p>
+    <div class="area">
+      <div class="banner"><h3><?php __('People on this project'); ?></h3></div>
+      <div class="content">
+        <?php
+          //Sort by company
+          $companies = array();
+          
+          foreach($projectPeople as $person)
+          {
+            if(!isset($companies[$person['Company']['name']])) { $companies[$person['Company']['name']] = array(); }
+            $companies[$person['Company']['name']][] = $person;
+          }
+        ?>
+        <?php foreach($companies as $company => $people): ?>
+          <h4><strong><?php echo $company; ?></strong></h4>
+          <ul>
+            <?php foreach($people as $person): ?>
+              <li><?php echo $person['Person']['full_name']; ?></li>
+            <?php endforeach; ?>
+          </ul>
+        <?php endforeach; ?>
+      </div>
+    </div>
   
   </div>
 </div>

@@ -214,11 +214,11 @@
         //Load project permissions
         if(!empty($project))
         {
-          $accountNode = $this->controller->Acl->Aco->node('opencamp/projects/'.$project['Project']['id']);
+          $node = $this->controller->Acl->Aco->node('opencamp/projects/'.$project['Project']['id']);
 
           $controllers = $this->controller->Acl->Aco->find('list',array(
             'conditions' => array(
-              'Aco.parent_id' => $accountNode[0]['Aco']['id']
+              'Aco.parent_id' => $node[0]['Aco']['id']
             ),
             'fields' => array(
               'Aco.id',

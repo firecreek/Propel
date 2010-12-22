@@ -103,6 +103,9 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
 .area .banner ul.right li a:hover { text-decoration:none; background-color:#03C; color:#FFFFFF; }
 
 .area .content { margin:0 10px 0 10px; font-size:12px; line-height:16px; }
+.area .content h4 { border-bottom:1px solid #CCC; margin-bottom:5px; }
+.area .content ul { margin-bottom:20px; }
+.area .content ul:last-child { margin-bottom:0; }
 
 
 /**
