@@ -27,7 +27,7 @@
           //Sort by company
           $companies = array();
           
-          foreach($projectPeople as $person)
+          foreach($auth->read('People') as $person)
           {
             if(!isset($companies[$person['Company']['name']])) { $companies[$person['Company']['name']] = array(); }
             $companies[$person['Company']['name']][] = $person;

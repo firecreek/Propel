@@ -1,8 +1,16 @@
 
 <div class="box">
   <div class="banner">
-    <h2><?php __(sprintf('%s milestones over the next 3 months',$name.'\'s')); ?></h2>
-    <?php echo $this->element('milestones/banner-form'); ?>
+    <h2><?php __(sprintf('%s milestones over the next 3 months',$responsible['name'].'\'s')); ?></h2>
+    <?php
+      $responsibleOptions = $layout->permissionList($auth->read('People'));
+      
+      echo $form->create('Milestones',array('url'=>$this->here,'type'=>'get','class'=>'single right'));
+      echo $form->input('responsible',array('label'=>__('Show milestones assigned to',true).':','options'=>$responsibleOptions,'selected'=>$responsible));
+      echo $form->submit(__('Search',true));
+      echo $form->end();
+    ?>
+
   </div>
   <div class="content">
   

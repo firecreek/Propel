@@ -23,10 +23,9 @@
       'Authorization',
       'AclFilter',
       'AclManager',
-      'Openbase',
+      'Opencamp',
       'RequestHandler',
       'Session',
-      'ProjectHandler',
       'DebugKit.Toolbar'
     );
     

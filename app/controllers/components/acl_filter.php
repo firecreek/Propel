@@ -181,7 +181,6 @@
         
         //Load account permissions
         $accountNode = $this->controller->Acl->Aco->node('opencamp/accounts/'.$account['Account']['id']);
-
         $controllers = $this->controller->Acl->Aco->find('list',array(
           'conditions' => array(
             'Aco.parent_id' => $accountNode[0]['Aco']['id']
@@ -244,27 +243,55 @@
               'delete'  => $allowedController['Permission']['_delete'],
             );
           }
-        }        
+        }
         
         //Check request permissions
         $isAllowed = false;
-        
         $modelId = ${$prefix}[Inflector::camelize($prefix)]['id'];
         $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controller->name);
         
         if(!empty($permissionNode))
         {
-          $records = $this->controller->Acl->Aco->Permission->find('first',array(
+          //
+          $action = str_replace($prefix.'_','',$this->controller->action);
+          $actionKey = $this->actionMap[$action];
+          
+          //Find everyone
+          $records = $this->controller->Acl->Aco->Permission->find('all', array(
             'conditions' => array(
-              'Permission.aro_id' => $person['Person']['_aro_id'],
+              'Aro.model' => 'Person',
               'Permission.aco_id' => $permissionNode[0]['Aco']['id']
             ),
-            'fields' => array('Permission.*')
+            'fields' => array('Permission.*','Aro.foreign_key')
           ));
           
-          $action = str_replace($prefix.'_','',$this->controller->action);
+          //Map data and find this current person's permission
+          $people = array();
+          foreach($records as $record)
+          {
+            $peopleIds[] = $record['Aro']['foreign_key'];
+            
+            if($record['Permission']['aro_id'] == $person['Person']['_aro_id'] && $record['Permission'][$actionKey])
+            {
+              $isAllowed = true;
+            }
+          }
           
-          $isAllowed = Set::extract($records,'Permission.'.$this->actionMap[$action]);
+          //Load all people associated to this prefix
+          $people = array();
+          if(!empty($peopleIds))
+          {
+            $people = $this->controller->Person->find('all',array(
+              'conditions' => array(
+                'Person.id' => $peopleIds
+              ),
+              'fields' => array('id','full_name','first_name','last_name','email','title'),
+              'contain' => array(
+                'Company' => array('id','name'),
+                'User' => array('id')
+              )
+            ));
+          }
         }
         
         //Throw error
@@ -290,6 +317,7 @@
         $this->Authorization->write('Account',$account['Account']);
         $this->Authorization->write('Style',$style);
         $this->Authorization->write('Person',$person['Person']);
+        $this->Authorization->write('People',$people);
         $this->Authorization->write('Projects',$projects);
         $this->Authorization->write('Project',$project['Project']);
         

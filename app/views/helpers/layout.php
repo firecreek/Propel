@@ -82,6 +82,65 @@
       return $output;
     }
     
+    
+    /**
+     * Generate list of people and companies for select
+     *
+     * @access public
+     * @return array
+     */
+    public function permissionList($people,$options = array())
+    {
+      $space = 0;
+      $spacer = '---------------------------';
+      
+      $_options = array(
+        'anyone'  => true,
+        'self'    => true
+      );
+      $options = array_merge($_options,$options);
+      
+      //Map data
+      $companies = array();
+      foreach($people as $person)
+      {
+        if(!isset($companies[$person['Company']['name']]))
+        { 
+          $companies[$person['Company']['name']] = array('Company'=>$person['Company'],'People'=>array());
+        }
+        $companies[$person['Company']['name']]['People'][] = $person;
+      }
+      
+      //Build list
+      $list = array();
+      
+      //Add anyone
+      if($options['anyone'])
+      {
+        $list['anyone'] = __('Anyone',true);
+      }
+      
+      //Add self
+      if($options['self'])
+      {
+        $list['self'] = __('Me',true) . ' ('.$this->Auth->read('Person.full_name').')';
+      }
+      
+      //Build list
+      foreach($companies as $record)
+      {
+        $list['_'.($space++)] = $spacer;
+        $list['company_'.$record['Company']['id']] = strtoupper($record['Company']['name']);
+          
+        foreach($record['People'] as $person)
+        {
+          $list['person_'.$person['Person']['id']] = '  '.$person['Person']['full_name'];
+        }
+      }
+    
+      return $list;
+    }
+    
   }
   
 ?>
