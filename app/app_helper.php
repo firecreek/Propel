@@ -12,7 +12,7 @@
   
     public function url($url = null, $full = false)
     {
-      if(is_array($url))
+      if(is_array($url) && (!isset($url['prefix']) || $url['prefix'] !== false))
       {
         //Add account slug
         if(

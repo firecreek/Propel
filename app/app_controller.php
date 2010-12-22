@@ -109,7 +109,7 @@
      */
     public function redirect($url, $status = null, $exit = true)
     {
-      if(is_array($url))
+      if(is_array($url) && (!isset($url['prefix']) && $url['prefix'] !== false))
       { 
         //Add account slug
         if(

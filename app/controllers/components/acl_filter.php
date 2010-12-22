@@ -74,8 +74,8 @@
       //Configure AuthComponent
       $this->Authorization->authorize = 'crud';
       $this->Authorization->autoRedirect = false;
-      $this->Authorization->loginAction = array('account' => false, 'controller' => 'users', 'action' => 'login');
-      $this->Authorization->logoutRedirect = array('account' => false, 'controller' => 'users', 'action' => 'login');
+      $this->Authorization->loginAction = array('prefix' => false, 'controller' => 'users', 'action' => 'login');
+      $this->Authorization->logoutRedirect = array('prefix' => false, 'controller' => 'users', 'action' => 'login');
       $this->Authorization->userScope = array('User.status' => 1);
       $this->Authorization->actionPath = 'openbase/';
       
