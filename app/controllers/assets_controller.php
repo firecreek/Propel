@@ -142,131 +142,25 @@
       //File exists, use cache
       if(file_exists($dest))
       {
-        return;
+        //return;
       }
+    
+      //Setup phpthumb
+      App::import('Vendor', 'phpThumb', array( 
+          'file' => 'phpThumb' . DS . 'phpthumb.class.php' 
+      )); 
+      $phpThumb = new phpThumb(); 
+    
+      $phpThumb->setSourceFilename($img); 
       
-  
-      switch ($cType){
-        default:
-        case 'resize':
-          # Maintains the aspect ration of the image and makes sure that it fits
-          # within the maxW(newWidth) and maxH(newHeight) (thus some side will be smaller)
-          $widthScale = 2;
-          $heightScale = 2;
-          
-          if($newWidth) $widthScale = 	$newWidth / $oldWidth;
-          if($newHeight) $heightScale = $newHeight / $oldHeight;
-          //debug("W: $widthScale  H: $heightScale<br>");
-          if($widthScale < $heightScale) {
-            $maxWidth = $newWidth;
-            $maxHeight = false;							
-          } elseif ($widthScale > $heightScale ) {
-            $maxHeight = $newHeight;
-            $maxWidth = false;
-          } else {
-            $maxHeight = $newHeight;
-            $maxWidth = $newWidth;
-          }
-          
-          if($maxWidth > $maxHeight){
-            $applyWidth = $maxWidth;
-            $applyHeight = ($oldHeight*$applyWidth)/$oldWidth;
-          } elseif ($maxHeight > $maxWidth) {
-            $applyHeight = $maxHeight;
-            $applyWidth = ($applyHeight*$oldWidth)/$oldHeight;
-          } else {
-            $applyWidth = $maxWidth; 
-              $applyHeight = $maxHeight;
-          }
-          //debug("mW: $maxWidth mH: $maxHeight<br>");
-          //debug("aW: $applyWidth aH: $applyHeight<br>");
-          $startX = 0;
-          $startY = 0;
-          //exit();
-          break;
-        case 'resizeCrop':
-          // -- resize to max, then crop to center
-          $ratioX = $newWidth / $oldWidth;
-          $ratioY = $newHeight / $oldHeight;
-
-          if ($ratioX < $ratioY) { 
-            $startX = round(($oldWidth - ($newWidth / $ratioY))/2);
-            $startY = 0;
-            $oldWidth = round($newWidth / $ratioY);
-            $oldHeight = $oldHeight;
-          } else { 
-            $startX = 0;
-            $startY = round(($oldHeight - ($newHeight / $ratioX))/2);
-            $oldWidth = $oldWidth;
-            $oldHeight = round($newHeight / $ratioX);
-          }
-          $applyWidth = $newWidth;
-          $applyHeight = $newHeight;
-          break;
-        case 'crop':
-          // -- a straight centered crop
-          $startY = ($oldHeight - $newHeight)/2;
-          $startX = ($oldWidth - $newWidth)/2;
-          $oldHeight = $newHeight;
-          $applyHeight = $newHeight;
-          $oldWidth = $newWidth; 
-          $applyWidth = $newWidth;
-          break;
-      }
+      if($newWidth) { $phpThumb->setParameter('w', $newWidth); }
+      if($newHeight) { $phpThumb->setParameter('h', $newHeight); }
+      if($quality) { $phpThumb->setParameter('q', $quality); }
       
+      if($cType == 'resizeCrop') { $phpThumb->setParameter('zc', true); }
       
-      switch($ext)
-      {
-        case 'gif' :
-          $oldImage = imagecreatefromgif($img);
-          break;
-        case 'png' :
-          $oldImage = imagecreatefrompng($img);
-          break;
-        case 'jpg' :
-        case 'jpeg' :
-          $oldImage = imagecreatefromjpeg($img);
-          break;
-        default :
-          //image type is not a possible option
-          return false;
-          break;
-      }
-      
-      //create new image
-      $newImage = imagecreatetruecolor($applyWidth, $applyHeight);
-      
-      if($bgcolor):
-      //set up background color for new image
-        sscanf($bgcolor, "%2x%2x%2x", $red, $green, $blue);
-        $newColor = ImageColorAllocate($newImage, $red, $green, $blue); 
-        imagefill($newImage,0,0,$newColor);
-      endif;
-      
-      //put old image on top of new image
-      imagecopyresampled($newImage, $oldImage, 0,0 , $startX, $startY, $applyWidth, $applyHeight, $oldWidth, $oldHeight);
-      
-        switch($ext)
-        {
-          case 'gif' :
-            imagegif($newImage, $dest, $quality);
-            break;
-          case 'png' :
-            if($quality > 9) { $quality = $quality / 10; }
-            imagepng($newImage, $dest, $quality);
-            break;
-          case 'jpg' :
-          case 'jpeg' :
-            imagejpeg($newImage, $dest, $quality);
-            break;
-          default :
-            return false;
-            break;
-        }
-      
-      imagedestroy($newImage);
-      imagedestroy($oldImage);
-      
+      $phpThumb->generateThumbnail();
+      $phpThumb->RenderToFile($dest);      
     }
     
 

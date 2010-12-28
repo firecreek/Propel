@@ -61,8 +61,19 @@
           </div>
           
           <div class="col shortcut">
-            <div class="image"></div>
-            <p class="type"><strong><?php __('Shortcut icon'); ?></strong> (<?php echo $html->link(__('Upload logo',true),array('action'=>'logo','shortcut')); ?>)</p>
+            <div class="image"><?php
+              $image = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'shortcut.ico';
+              
+              if(file_exists($image))
+              {
+                echo $html->image('/'.$auth->read('Account.slug').'/assets/image/logo/shortcut.ico/size:16x16/type:resizeCrop');
+              }
+              else
+              {
+                echo $html->image('/favicon.ico');
+              }
+            ?></div>
+            <p class="type"><strong><?php __('Shortcut icon'); ?></strong> (<?php echo $html->link(__('Change',true),array('action'=>'logo','shortcut')); ?>)</p>
             <p class="info"><?php __('Your shortcut icon, or favicon, appears in some web browsers on the address bar, tabs or bookmarks menu.'); ?></p>
           </div>
           

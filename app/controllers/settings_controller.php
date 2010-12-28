@@ -141,7 +141,7 @@
       //Delete
       if(isset($this->params['url']['delete']))
       {
-        $file = ASSETS_DIR.DS.'accounts'.DS.$this->Authorization->read('Account.id').DS.'logo'.DS.'account.png';
+        $file = ASSETS_DIR.DS.'accounts'.DS.$this->Authorization->read('Account.id').DS.'logo'.DS.$type.'.png';
         
         if(file_exists($file))
         {
@@ -166,13 +166,17 @@
       //Save
       if(!empty($this->data))
       {
+        $ext = 'png';
+        
+        if($type == 'shortcut') { $ext = 'ico'; }
+      
         $options = array(
-          'filename' => $type.'.png'
+          'filename' => $type.'.'.$ext
         );
       
         if(!$this->Assets->save('logo',$this->data['Account']['image'],$options))
         {
-          $error = __('Failed to save image, please try again');
+          $error = __('Failed to save image, please try again',true);
           
           if(!empty($this->Assets->errors))
           {

@@ -80,14 +80,17 @@
         case 'account':
           $size = '300x300';
           $type = 'resize';
+          $ext = 'png';
           break;
         case 'apple':
           $size = '114x114';
           $type = 'resizeCrop';
+          $ext = 'png';
           break;
         case 'shortcut':
           $size = '16x16';
           $type = 'resizeCrop';
+          $ext = 'ico';
           break;
       }
       
@@ -97,7 +100,7 @@
     <div class="area">
       <div class="banner"><h3><?php __('Current image'); ?></h3></div>
       <div class="content">
-        <?php echo $html->image('/'.$auth->read('Account.slug').'/assets/image/logo/account.png/size:'.$size.'/type:'.$type); ?>
+        <?php echo $html->image('/'.$auth->read('Account.slug').'/assets/image/logo/'.$type.'.'.$ext.'/size:'.$size.'/type:'.$type); ?>
         <p><?php echo $html->link(__('Delete image',true),array('action'=>'logo',$type,'?'=>array('delete'=>'true')),array('class'=>'important')); ?></p>
       </div>
     </div>
