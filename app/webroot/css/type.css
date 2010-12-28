@@ -6,6 +6,9 @@ h1, h2, h3, h4, h5 { font-family:Arial; }
 
 p.important { color:#C00; }
 
+p.note { color:#666; font-size:12px; }
+p.note span { text-transform:uppercase; font-weight:bold; }
+
 a { color:#03C; padding:0 1px; }
 a:hover { background-color:#03C; text-decoration:none; color:white; padding:0 1px; }
 

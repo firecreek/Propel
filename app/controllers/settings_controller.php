@@ -43,7 +43,8 @@
      * @access public
      */
     public $actionMap = array(
-      'appearance' => '_update'
+      'appearance'  => '_update',
+      'logo'        => '_update',
     );
     
     /**
@@ -125,6 +126,20 @@
       
       $this->set(compact('record'));
     }
+    
+    
+    
+    /**
+     * Logo
+     *
+     * @access public
+     * @return void
+     */
+    public function account_logo($type)
+    {
+      $this->set(compact('type'));
+    }
+    
     
     
     /**
