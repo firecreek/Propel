@@ -25,14 +25,38 @@
         <div class="logos">
         
           <div class="col account">
-            <div class="image"></div>
-            <p class="type"><strong><?php __('Your logo'); ?></strong> (<?php echo $html->link(__('Upload logo',true),array('action'=>'logo','account')); ?>)</p>
+            <div class="image"><?php
+              $image = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'account.png';
+              $logoAction = __('Upload logo',true);
+              
+              if(file_exists($image))
+              {
+                echo $html->image('/'.$auth->read('Account.slug').'/assets/image/logo/account.png/size:230x110');
+                $logoAction = __('Change',true);
+              }
+              else
+              {
+                echo '<span>'.__('No logo uploaded',true).'</span>';
+              }
+            ?></div>
+            <p class="type"><strong><?php __('Your logo'); ?></strong> (<?php echo $html->link($logoAction,array('action'=>'logo','account')); ?>)</p>
             <p class="info"><?php __('Your logo appears on the sign in screen, the Dashboard, and Overview pages.'); ?></p>
           </div>
           
           <div class="col apple">
-            <div class="image"></div>
-            <p class="type"><strong><?php __('iPhone/iPad icon'); ?></strong> (<?php echo $html->link(__('Upload logo',true),array('action'=>'logo','apple')); ?>)</p>
+            <div class="image"><?php
+              $image = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'apple.png';
+              
+              if(file_exists($image))
+              {
+                echo $html->image('/'.$auth->read('Account.slug').'/assets/image/logo/apple.png/size:114x114/type:resizeCrop');
+              }
+              else
+              {
+                echo $html->image('/apple-touch-icon.png');
+              }
+            ?></div>
+            <p class="type"><strong><?php __('iPhone/iPad icon'); ?></strong> (<?php echo $html->link(__('Change',true),array('action'=>'logo','apple')); ?>)</p>
             <p class="info"><?php __('Appears when you add a home screen icon on your iPhone, iPad, or iPod Touch (apple-touch-icon.png).'); ?></p>
           </div>
           

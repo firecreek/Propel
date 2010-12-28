@@ -26,7 +26,7 @@
      * @access public
      * @access public
      */
-    public $components = array();
+    public $components = array('Assets');
     
     /**
      * Uses
@@ -132,11 +132,63 @@
     /**
      * Logo
      *
+     * @todo More checks on incoming files, use assets component
      * @access public
      * @return void
      */
     public function account_logo($type)
     {
+      //Delete
+      if(isset($this->params['url']['delete']))
+      {
+        $file = ASSETS_DIR.DS.'accounts'.DS.$this->Authorization->read('Account.id').DS.'logo'.DS.'account.png';
+        
+        if(file_exists($file))
+        {
+          if(unlink($file))
+          {
+            $this->Session->setFlash(__('Logo image has been deleted',true),'default',array('class'=>'success'));
+            $this->redirect(array('action'=>'index'));
+          }
+          else
+          {
+            $this->Session->setFlash(__('Failed to delete logo image',true),'default',array('class'=>'error'));
+            $this->redirect(array('action'=>'logo',$type));
+          }
+        }
+        else
+        {
+          $this->Session->setFlash(__('Logo image could not be deleted, not found',true),'default',array('class'=>'error'));
+        }
+        
+      }
+    
+      //Save
+      if(!empty($this->data))
+      {
+        $options = array(
+          'filename' => $type.'.png'
+        );
+      
+        if(!$this->Assets->save('logo',$this->data['Account']['image'],$options))
+        {
+          $error = __('Failed to save image, please try again');
+          
+          if(!empty($this->Assets->errors))
+          {
+            $error = implode('<br />',$this->Assets->errors);
+          }
+          
+          $this->Session->setFlash($error,'default',array('class'=>'error'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Image has been updated successfully',true),'default',array('class'=>'success'));
+          
+          $this->redirect(array('action'=>'index'));
+        }
+      }
+      
       $this->set(compact('type'));
     }
     

@@ -120,7 +120,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .cols .col {}
  
 .cols .col.left { width:70%; float:left; }
-.cols .col.right { width:28%; float:right; }
+.cols .col.right { width:28%; float:right; min-width:340px; }
  
  
  

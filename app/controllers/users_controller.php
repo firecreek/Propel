@@ -77,6 +77,9 @@
             //Give this person permission for this account
             $this->AclManager->allow($this->User->Person, 'accounts', $this->User->Account->id, array('set' => 'owner'));
             
+            //Create assets directory for saving files
+            mkdir(ASSETS_DIR.DS.'accounts'.DS.$this->User->Account->id, 0700);
+            
             //Automatically login and redirect
             $this->Authorization->login($this->data);
             

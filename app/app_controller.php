@@ -82,7 +82,10 @@
     {
       if(isset($this->params['prefix']) && $prefix = $this->params['prefix'])
       {
-        $this->layout = 'account';
+        if($this->layout !== false)
+        {
+          $this->layout = 'account';
+        }
         
         switch($prefix)
         {

@@ -48,3 +48,7 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
+ 
+define('ASSETS_DIR', dirname(dirname(dirname(__FILE__))).DS.'assets');
+
+ 
