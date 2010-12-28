@@ -86,7 +86,13 @@
             <?php endif; ?>
             <tfoot>
               <td class="important" colspan="2">
-                <?php echo $html->link(__('Add a new person',true),array('action'=>'add','company_id'=>$company['Company']['id'])); ?> to <?php echo $company['Company']['name']; ?>
+                <?php
+                  echo $html->link(__('Add a new person',true),array(
+                    'controller'=>'people',
+                    'action'=>'add',
+                    $company['Company']['id']
+                  ));
+                ?> to <?php echo $company['Company']['name']; ?>
               </td>
             </tfoot>
           </table>

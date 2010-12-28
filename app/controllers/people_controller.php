@@ -145,6 +145,62 @@
       
       $this->set(compact('personId', 'record', 'companies'));
     }
+    
+    
+    /**
+     * Project add
+     *
+     * @access public
+     * @return void
+     */
+    public function project_add($companyId)
+    {    
+      $record = $this->Company->find('first',array(
+        'conditions' => array(
+          'Company.id' => $companyId,
+          'Company.account_id' => $this->Authorization->read('Account.id')
+        ),
+        'contain' => array()
+      ));
+      
+      if(empty($record))
+      {
+        $this->Session->setFlash(__('You do not have permission to add a person to this company',true),'default',array('class'=>'error'));
+        $this->redirect($this->referer(), null, true); 
+      }
+      
+      //Save
+      if(!empty($this->data))
+      {
+        $this->data['Person']['company_id'] = $companyId;
+        $this->data['Person']['account_id'] = $this->Authorization->read('Account.id');
+        
+        $this->Person->set($this->data);
+        
+        if($this->Person->validates())
+        {
+          $this->Person->save();
+          
+          //Give this person permission for this account
+          $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'shared'));
+          
+          //Give this person permission for this project
+          $this->AclManager->allow($this->Person, 'projects', $this->Authorization->read('Project.id'), array('set' => 'shared'));
+          
+          //Message and redirect
+          $this->Session->setFlash(__('Person added to company',true));
+          $this->redirect(array('controller'=>'companies','action'=>'permissions'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Please check the form and try again',true),'default',array('class'=>'error'));
+        }
+      }
+      
+      $this->set(compact('companyId', 'record'));
+      
+      $this->render('account_add');
+    }
   
   }
   

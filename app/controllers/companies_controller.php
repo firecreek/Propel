@@ -275,7 +275,7 @@
             $this->Session->setFlash(__('You do not have permission to add the company',true), 'default', array('class'=>'error'));
           }
           
-          $this->redirect(array('controller'=>'companies','action'=>'index'));
+          $this->redirect(array('controller'=>'companies','action'=>'permissions'));
         }
         else
         {
@@ -297,7 +297,7 @@
               
               //Redirect
               $this->Session->setFlash(__('Company created',true), 'default', array('class'=>'success'));
-              $this->redirect(array('controller'=>'companies','action'=>'index'));
+              $this->redirect(array('controller'=>'companies','action'=>'permissions'));
             }
             else
             {

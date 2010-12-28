@@ -276,7 +276,7 @@
       
       $check = $this->Company->find('count',array(
         'conditions' => array(
-          'account_id'  => $accountId
+          'Company.account_id'  => $accountId
         ),
         'contain' => array(
           'Person'
