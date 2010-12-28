@@ -4,7 +4,7 @@
     <h2><?php __('Edit'); ?> <?php echo $record['Company']['name']; ?></h2>
     <?php if(!$record['Company']['account_owner']): ?>
       <ul class="right">
-        <li><?php echo $html->link(__('Delete this company',true),array('action'=>'delete',$companyId),array('class'=>'red','confirm'=>__('Are you sure you want to delete this company and all people associated with it?',true))); ?></li>
+        <li><?php echo $html->link(__('Delete this company',true),array('action'=>'delete',$companyId),array('class'=>'important','confirm'=>__('Are you sure you want to delete this company and all people associated with it?',true))); ?></li>
       </ul>
     <?php endif; ?>
   </div>

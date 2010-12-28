@@ -7,3 +7,5 @@ header h1 a:hover { color:white; }
 h2 { font-size:14px; margin-bottom:10px; }
 
 #main { margin: 0px auto; width:900px; padding: 20px 0px 0px 0px; }
+
+.box .banner { border-bottom:1px solid #d4d5d0; background-color:#f0f1e9; }

@@ -10,8 +10,6 @@
       'elements',
       'account'
     ));
-    echo $javascript->link(array(
-    ));
     echo $scripts_for_layout;
   ?>
   <style type="text/css" media="screen"><!--

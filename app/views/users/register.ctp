@@ -7,6 +7,9 @@
   
   <div class="content">
     <?php
+    
+      echo $session->flash();
+      
       echo $form->create('User',array('url'=>$this->here));
       
       echo '<fieldset><legend>'.__('Create your OpenCamp account',true).'</legend>';
