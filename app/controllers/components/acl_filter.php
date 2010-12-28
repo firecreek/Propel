@@ -251,6 +251,8 @@
         
         //Load companies added to this prefix
         $modelRootNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId);
+        
+        //Load companies
         $records = $this->controller->Acl->Aco->Permission->find('all', array(
           'conditions' => array(
             'Aro.model' => 'Company',
@@ -268,52 +270,48 @@
           'contain' => false
         ));
         
+        //Load people
+        $records = $this->controller->Acl->Aco->Permission->find('all', array(
+          'conditions' => array(
+            'Aro.model' => 'Person',
+            'Permission.aco_id' => $modelRootNode[0]['Aco']['id'],
+            'Permission._read' => true
+          ),
+          'fields' => array('Aro.foreign_key')
+        ));
+        $records = Set::extract($records,'{n}.Aro.foreign_key');
+    
+        $people = $this->controller->Person->find('all',array(
+          'conditions' => array(
+            'Person.id' => $records
+          ),
+          'fields' => array('id','full_name','first_name','last_name','email','title','company_owner'),
+          'contain' => array(
+            'Company' => array('id','name'),
+            'User' => array('id')
+          )
+        ));
+        
+        
         //Check request permissions
         $isAllowed = false;
         $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controller->name);
         
         if(!empty($permissionNode))
         {
-          //
+          //Fix action map
           $action = str_replace($prefix.'_','',$this->controller->action);
           $actionKey = $this->actionMap[$action];
           
-          //Find everyone
-          $records = $this->controller->Acl->Aco->Permission->find('all', array(
+          //Check if allowed
+          $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
             'conditions' => array(
               'Aro.model' => 'Person',
-              'Permission.aco_id' => $permissionNode[0]['Aco']['id']
-            ),
-            'fields' => array('Permission.*','Aro.foreign_key')
+              'Permission.aco_id' => $permissionNode[0]['Aco']['id'],
+              'Permission.aro_id' => $person['Person']['_aro_id'],
+              'Permission.'.$actionKey => true
+            )
           ));
-          
-          //Map data and find this current person's permission
-          $people = array();
-          foreach($records as $record)
-          {
-            $peopleIds[] = $record['Aro']['foreign_key'];
-            
-            if($record['Permission']['aro_id'] == $person['Person']['_aro_id'] && $record['Permission'][$actionKey])
-            {
-              $isAllowed = true;
-            }
-          }
-          
-          //Load all people associated to this prefix
-          $people = array();
-          if(!empty($peopleIds))
-          {
-            $people = $this->controller->Person->find('all',array(
-              'conditions' => array(
-                'Person.id' => $peopleIds
-              ),
-              'fields' => array('id','full_name','first_name','last_name','email','title','company_owner'),
-              'contain' => array(
-                'Company' => array('id','name'),
-                'User' => array('id')
-              )
-            ));
-          }
         }
         
         //Throw error
