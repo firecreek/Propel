@@ -16,7 +16,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array();
     
@@ -24,7 +24,7 @@
      * Components
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $components = array();
     
@@ -32,9 +32,19 @@
      * Uses
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $uses = array('Company');
+    
+    /**
+     * Action map
+     *
+     * @access public
+     * @var array
+     */
+    public $actionMap = array(
+      'permissions'  => '_update',
+    );
     
     
     /**
@@ -179,12 +189,25 @@
     
     
     /**
-     * Project Index
+     * Project index
      *
      * @access public
      * @return void
      */
     public function project_index()
+    {
+      $records = $this->_people();
+      $this->set(compact('records'));
+    }
+    
+    
+    /**
+     * Project permissions
+     *
+     * @access public
+     * @return void
+     */
+    public function project_permissions()
     {
       $records = $this->_people();
       $this->set(compact('records'));
@@ -289,6 +312,26 @@
       }
       
       $this->set(compact('companies'));
+    }
+    
+    
+    /**
+     * Project delete company
+     *
+     * This function does not delete companies, it will only remove the
+     * company and people from permissions
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_delete($id)
+    {
+      //Delete permission for company
+      $this->Company->id = $id;
+      $this->AclManager->delete($this->Company, 'projects', $this->Authorization->read('Project.id'), array('set' => 'company'));
+      
+      $this->Session->setFlash(__('Company has been removed from this project',true),'default',array('class'=>'success'));
+      $this->redirect(array('action'=>'permissions'));
     }
     
     

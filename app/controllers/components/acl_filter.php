@@ -264,6 +264,7 @@
         $companies = $this->controller->User->Company->find('all',array(
           'conditions' => array('Company.id'=>$records),
           'fields' => array('id','name','private','account_owner'),
+          'order' => 'Company.created DESC',
           'contain' => false
         ));
         

@@ -156,7 +156,7 @@
       $acoId = $root[0]['Aco']['id'];
       
       //Permissions
-      $record = $this->Acl->Aco->Permission->delete(array(
+      $record = $this->Acl->Aco->Permission->deleteAll(array(
         'Aro.model' => $model->alias,
         'Aro.foreign_key' => $model->id,
         'Permission.aco_id' => $acoId
@@ -179,7 +179,7 @@
         $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId.'/'.$grant['acos_alias']);
         $acoId = $root[0]['Aco']['id'];
           
-        $record = $this->Acl->Aco->Permission->delete(array(
+        $record = $this->Acl->Aco->Permission->deleteAll(array(
           'Aro.model' => $model->alias,
           'Aro.foreign_key' => $model->id,
           'Permission.aco_id' => $acoId

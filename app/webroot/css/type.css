@@ -12,8 +12,11 @@ p.note span { text-transform:uppercase; font-weight:bold; }
 a { color:#03C; padding:0 1px; }
 a:hover { background-color:#03C; text-decoration:none; color:white; padding:0 1px; }
 
-a.important, .banner ul.right a { color:red; padding:0 1px; }
-a.important:hover, .banner ul.right a:hover { background-color:red; text-decoration:none; color:white; padding:0 1px; }
+a.important, .important a { color:red; }
+a.important:hover, .important a:hover { background-color:red; text-decoration:none; color:white; }
+
+a.unimportant, .unimportant a { color:#333; padding:0 1px; }
+a.unimportant:hover, .unimportant a:hover { background-color:#333; text-decoration:none; color:white; }
 
 .error,
 .notice,

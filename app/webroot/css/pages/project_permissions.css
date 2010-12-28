@@ -1,0 +1,10 @@
+
+table {}
+
+table td.name { width:40%; }
+table td.name input { margin-right:10px; margin-left:5px; top:1px; position:relative; }
+
+table td.permissions { width:60%; }
+table td.permissions div { background-color:#999; display:inline; padding-bottom:1px; }
+table td.permissions input { margin:0 5px 0 0; position:relative;  }
+table td.permissions label { font-size:11px; padding-right:15px; }

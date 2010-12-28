@@ -1,8 +1,7 @@
 
 <div class="box">
   <div class="banner">
-    <h2><?php __('People on this project'); ?></h2>
-    <?php echo $layout->button(__('Add a new company to this project',true),array('action'=>'add'),'add large'); ?>
+    <h2><?php __('People on this project'); ?> <?php echo $html->link(__('Add people, remove people, change permissions',true),array('action'=>'permissions')); ?></h2>
   </div>
   <div class="content">
   

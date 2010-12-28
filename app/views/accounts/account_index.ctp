@@ -52,12 +52,14 @@
         
         
         <div class="section">
-          <div class="banner tight">
-            <h3><?php echo $html->link('Test Project Name','#'); ?></h3>
-          </div>
           <div class="content">
           
-            <table class="logs">
+            <table class="logs std">
+              <thead>
+                <tr>
+                  <th colspan="5"><h3><?php echo $html->link('Test Project Name','#',array('class'=>'unimportant')); ?></h3></td>
+                </tr>
+              </thead>
               <tbody>
                 <tr>
                   <td class="type"><div class="badge todo">To-do</div></td>
@@ -107,7 +109,7 @@
             
             
 
-            <table class="logs dated">
+            <table class="std logs dated">
               <tbody>
                 <tr class="date">
                   <td colspan="5">
