@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-12-29 01:12:47 : 1293559907*/
+/* App schema generated on: 2010-12-29 02:12:19 : 1293564679*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -117,7 +117,6 @@ class AppSchema extends CakeSchema {
 	var $companies = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'account_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'account_owner' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'name' => array('type' => 'string', 'null' => false, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'address_one' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),

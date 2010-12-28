@@ -78,14 +78,13 @@
           }
           else
           {
-            $this->Session->setFlash(__('Failed to save project',true), 'default', array('class'=>'error'));
+            $this->Session->setFlash(__('Failed to save company',true), 'default', array('class'=>'error'));
           }
         }
         else
         {
           $this->Session->setFlash(__('Please check the form and try again',true), 'default', array('class'=>'error'));
         }
-        
       }
     }
     
@@ -189,6 +188,107 @@
     {
       $records = $this->_people();
       $this->set(compact('records'));
+    }
+    
+    
+    /**
+     * Project add company
+     *
+     * @access public
+     * @return void
+     */
+    public function project_add()
+    {
+      //Get list of companies that can be added
+      $modelRootNode = $this->Acl->Aco->node('opencamp/accounts/'.$this->Authorization->read('Account.id'));
+      $records = $this->Acl->Aco->Permission->find('all', array(
+        'conditions' => array(
+          'Aro.model' => 'Company',
+          'Permission.aco_id' => $modelRootNode[0]['Aco']['id'],
+          'Permission._read' => true
+        ),
+        'fields' => array('Aro.foreign_key')
+      ));
+      $records = Set::extract($records,'{n}.Aro.foreign_key');
+      
+      //Remove records that have already been added
+      $existingCompanies = $this->Authorization->read('Companies');
+      
+      foreach($existingCompanies as $existingCompany)
+      {
+        $find = array_search($existingCompany['Company']['id'],$records);
+        
+        if($find !== false)
+        {
+          unset($records[$find]);
+        }
+      }
+      
+      //List of companies that can be added
+      $companies = $this->User->Company->find('list',array(
+        'conditions' => array(
+          'Company.id' => $records
+        ),
+        'fields' => array('id','name'),
+        'contain' => false
+      ));
+    
+      //Post
+      if(!empty($this->data))
+      {
+        if(isset($this->data['Company']['id']) && is_numeric($this->data['Company']['id']))
+        {
+          //Checks
+          if(isset($companies[$this->data['Company']['id']]))
+          {
+            //Grant permission for company to project
+            $this->Company->id = $this->data['Company']['id'];
+            $this->AclManager->allow($this->Company, 'projects', $this->Authorization->read('Project.id'), array('set' => 'company'));
+            
+            $this->Session->setFlash(__('Company added to project',true), 'default', array('class'=>'success'));
+          }
+          else
+          {
+            $this->Session->setFlash(__('You do not have permission to add the company',true), 'default', array('class'=>'error'));
+          }
+          
+          $this->redirect(array('controller'=>'companies','action'=>'index'));
+        }
+        else
+        {
+          //Normal save
+          $this->data['Company']['account_id'] = $this->Authorization->read('Account.id');
+          $this->data['Company']['person_id'] = $this->Authorization->read('Person.id');
+        
+          $this->Company->set($this->data);
+          
+          if($this->Company->validates())
+          {
+            if($this->Company->save($this->data))
+            {
+              //Grant permission for company to account
+              $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'company'));
+              
+              //Grant permission for company to project
+              $this->AclManager->allow($this->Company, 'projects', $this->Authorization->read('Project.id'), array('set' => 'company'));
+              
+              //Redirect
+              $this->Session->setFlash(__('Company created',true), 'default', array('class'=>'success'));
+              $this->redirect(array('controller'=>'companies','action'=>'index'));
+            }
+            else
+            {
+              $this->Session->setFlash(__('Failed to save company',true), 'default', array('class'=>'error'));
+            }
+          }
+          else
+          {
+            $this->Session->setFlash(__('Please check the form and try again',true), 'default', array('class'=>'error'));
+          }
+        }
+      }
+      
+      $this->set(compact('companies'));
     }
     
     
