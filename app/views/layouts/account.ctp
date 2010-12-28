@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title><?php echo $title_for_layout; ?> - <?php __('OpenCamp'); ?></title>
+  <title><?php echo $title_for_layout; ?> - <?php __('Opencamp'); ?></title>
   <?php
     echo $html->css(array(
       'reset',
@@ -21,7 +21,7 @@
 
 
     <div id="launchbar">
-      <p><?php __('OpenCamp'); ?></p>
+      <p><?php __('Opencamp'); ?></p>
     </div>
 
     <header>
