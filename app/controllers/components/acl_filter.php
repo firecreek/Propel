@@ -245,9 +245,30 @@
           }
         }
         
+        //Prefix model id
+        $modelId = ${$prefix}[Inflector::camelize($prefix)]['id'];
+        
+        
+        //Load companies added to this prefix
+        $modelRootNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId);
+        $records = $this->controller->Acl->Aco->Permission->find('all', array(
+          'conditions' => array(
+            'Aro.model' => 'Company',
+            'Permission.aco_id' => $modelRootNode[0]['Aco']['id'],
+            'Permission._read' => true
+          ),
+          'fields' => array('Aro.foreign_key')
+        ));
+        $records = Set::extract($records,'{n}.Aro.foreign_key');
+        
+        $companies = $this->controller->User->Company->find('all',array(
+          'conditions' => array('Company.id'=>$records),
+          'fields' => array('id','name','private','account_owner'),
+          'contain' => false
+        ));
+        
         //Check request permissions
         $isAllowed = false;
-        $modelId = ${$prefix}[Inflector::camelize($prefix)]['id'];
         $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controller->name);
         
         if(!empty($permissionNode))
@@ -285,7 +306,7 @@
               'conditions' => array(
                 'Person.id' => $peopleIds
               ),
-              'fields' => array('id','full_name','first_name','last_name','email','title'),
+              'fields' => array('id','full_name','first_name','last_name','email','title','company_owner'),
               'contain' => array(
                 'Company' => array('id','name'),
                 'User' => array('id')
@@ -320,6 +341,7 @@
         $this->Authorization->write('People',$people);
         $this->Authorization->write('Projects',$projects);
         $this->Authorization->write('Project',$project['Project']);
+        $this->Authorization->write('Companies',$companies);
         
       }
       

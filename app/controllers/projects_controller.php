@@ -61,9 +61,13 @@
             //Create ACO for this account
             $this->AclManager->create('projects',$this->Project->id);
             
-            //Give this person permission for this account
+            //Give this person permission for this project
             $this->User->Person->id = $this->Authorization->read('Person.id');
             $this->AclManager->allow($this->User->Person, 'projects', $this->Project->id, array('set' => 'owner'));
+            
+            //Give this company permission for this project
+            $this->User->Company->id = $this->Authorization->read('Company.id');
+            $this->AclManager->allow($this->User->Company, 'projects', $this->Project->id, array('set' => 'company'));
           
             //
             $this->Session->setFlash(__('Project created',true), 'default', array('class'=>'success'));

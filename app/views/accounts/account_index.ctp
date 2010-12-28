@@ -181,6 +181,16 @@
   <div class="col right">
   
     <?php
+      //Account image
+      $image = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'account.png';
+      
+      if(file_exists($image))
+      {
+        echo '<div class="account-image">'.$html->image('/'.$auth->read('Account.slug').'/assets/image/logo/account.png/size:300x300').'</div>';
+      }
+    ?>
+  
+    <?php
       if($auth->check('Account.Projects','create'))
       {
         echo $layout->button(__('Create a new project',true),array('controller'=>'projects','action'=>'add'),'large add');

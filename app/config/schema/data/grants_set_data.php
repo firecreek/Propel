@@ -224,6 +224,28 @@ class GrantsSetData {
 			'updated' => '2010-12-22 00:22:23',
 			'created' => '2010-12-22 00:22:23'
 		),
+		array(
+			'id' => '21',
+			'grant_id' => '1',
+			'acos_alias' => 'Assets',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2010-12-28 20:17:30',
+			'created' => '2010-12-28 20:17:30'
+		),
+		array(
+			'id' => '22',
+			'grant_id' => '3',
+			'acos_alias' => 'Assets',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '0',
+			'updated' => '2010-12-28 20:17:30',
+			'created' => '2010-12-28 20:17:30'
+		),
 	);
 
 }

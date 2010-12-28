@@ -28,6 +28,22 @@ class GrantData {
 			'updated' => '2010-12-19 20:01:06',
 			'created' => '2010-12-19 20:01:06'
 		),
+		array(
+			'id' => '4',
+			'name' => 'Project Company',
+			'alias' => 'company',
+			'aco_alias' => 'projects',
+			'updated' => '2010-12-29 01:30:14',
+			'created' => '2010-12-29 01:30:14'
+		),
+		array(
+			'id' => '5',
+			'name' => 'Account Company',
+			'alias' => 'company',
+			'aco_alias' => 'accounts',
+			'updated' => '2010-12-29 02:00:39',
+			'created' => '2010-12-29 02:00:39'
+		),
 	);
 
 }

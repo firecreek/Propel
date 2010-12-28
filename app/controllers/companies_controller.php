@@ -45,18 +45,7 @@
      */
     public function account_index()
     {
-      $records = $this->Company->find('all',array(
-        'conditions' => array(
-          'Company.account_id' => $this->Authorization->read('Account.id'),
-        ),
-        'fields' => array('id','name'),
-        'contain' => array(
-          'PersonOwner' => array('id','user_id'),
-          'People' => array('id','full_name','email','title','company_owner')
-        ),
-        'order' => 'Company.created DESC'
-      ));
-      
+      $records = $this->_people();
       $this->set(compact('records'));
     }
     
@@ -80,6 +69,10 @@
         {
           if($this->Company->save($this->data))
           {
+            //Grant permission for company
+            $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'company'));
+            
+            //Redirect
             $this->Session->setFlash(__('Company created',true), 'default', array('class'=>'success'));
             $this->redirect(array('controller'=>'companies','action'=>'index'));
           }
@@ -172,16 +165,17 @@
         $this->redirect($this->referer(), null, true); 
       }
       
-      if($this->Company->delete($companyId))
-      {
-        $this->Session->setFlash(__('This company has been deleted',true),'default',array('class'=>'success'));
-        $this->redirect(array('action'=>'index'));
-      }
-      else
-      {
-        $this->Session->setFlash(__('There was a problem deleting this company',true),'default',array('class'=>'error'));
-        $this->redirect($this->referer(), null, true);
-      }
+
+      //Delete permission for company
+      $this->Company->id = $companyId;
+      $this->AclManager->delete($this->Company, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'company'));
+      
+      //Delete company
+      $this->Company->delete($companyId);
+      
+      //Redirect
+      $this->Session->setFlash(__('This company has been deleted',true),'default',array('class'=>'success'));
+      $this->redirect(array('action'=>'index'));
     }
     
     
@@ -193,8 +187,41 @@
      */
     public function project_index()
     {
-           
+      $records = $this->_people();
+      $this->set(compact('records'));
     }
+    
+    
+    /**
+     * Map companies and people
+     *
+     * @access public
+     * @return void
+     */
+    private function _people()
+    {
+      $companies = $this->Authorization->read('Companies');
+      $people = $this->Authorization->read('People');
+      
+      $mapped = array();
+  
+      foreach($companies as $key => $company)
+      {
+        $companies[$key]['People'] = array();
+        
+        foreach($people as $person)
+        {
+          if($person['Company']['id'] == $company['Company']['id'])
+          {
+            $companies[$key]['People'][] = $person['Person'];
+            continue;
+          }
+        }
+      }
+      
+      return $companies;
+    }
+    
   
   }
   

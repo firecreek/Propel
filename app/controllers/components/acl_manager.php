@@ -139,7 +139,52 @@
       
         $this->Acl->allow($model, 'opencamp/'.$path.'/'.$foreignId.'/'.$grant['acos_alias'],$actions);
       }
+    }
+    
+    
+    /**
+     * Remove ACO based on a set
+     *
+     * @param string $path
+     * @access public
+     * @return int
+     */
+    public function delete(&$model, $path, $foreignId, $options = array())
+    {
+      //Get aco
+      $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId);
+      $acoId = $root[0]['Aco']['id'];
       
+      //Permissions
+      $record = $this->Acl->Aco->Permission->delete(array(
+        'Aro.model' => $model->alias,
+        'Aro.foreign_key' => $model->id,
+        'Permission.aco_id' => $acoId
+      ));
+      
+      
+      //Access to controllers
+      $Grant = ClassRegistry::init('Grant','model');
+        
+      $record = $Grant->find('first',array(
+        'conditions' => array(
+          'Grant.alias' => $options['set'],
+          'Grant.aco_alias' => $path
+        )
+      ));
+      
+      foreach($record['GrantSet'] as $grant)
+      {
+        //Find each path and delete permission
+        $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId.'/'.$grant['acos_alias']);
+        $acoId = $root[0]['Aco']['id'];
+          
+        $record = $this->Acl->Aco->Permission->delete(array(
+          'Aro.model' => $model->alias,
+          'Aro.foreign_key' => $model->id,
+          'Permission.aco_id' => $acoId
+        ));
+      }
     }
     
 
