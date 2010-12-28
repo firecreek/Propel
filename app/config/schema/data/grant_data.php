@@ -44,6 +44,30 @@ class GrantData {
 			'updated' => '2010-12-29 02:00:39',
 			'created' => '2010-12-29 02:00:39'
 		),
+		array(
+			'id' => '6',
+			'name' => 'Project Person',
+			'alias' => 'shared',
+			'aco_alias' => 'projects',
+			'updated' => '2010-12-29 05:46:29',
+			'created' => '2010-12-29 05:46:29'
+		),
+		array(
+			'id' => '7',
+			'name' => 'Project Person, Messages and Files',
+			'alias' => 'shared msg-file',
+			'aco_alias' => 'projects',
+			'updated' => '2010-12-29 06:25:35',
+			'created' => '2010-12-29 06:25:35'
+		),
+		array(
+			'id' => '8',
+			'name' => 'Project Person, Messages and Files and To-Dos',
+			'alias' => 'shared msg-file-todo',
+			'aco_alias' => 'projects',
+			'updated' => '2010-12-29 06:25:35',
+			'created' => '2010-12-29 06:25:35'
+		),
 	);
 
 }

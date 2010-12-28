@@ -67,10 +67,13 @@
                     <?php
                       if(!$person['company_owner'])
                       {
-                        echo $form->input('Permissions.'.$pid,array(
-                          'type' => 'radio',
-                          'label' => false,
-                          'legend'    => false,
+                        echo $form->hidden('GrantOriginal.'.$pid,array('value'=>$person['_grantKey']));
+                      
+                        echo $form->input('Grant.'.$pid,array(
+                          'type'    => 'radio',
+                          'label'   => false,
+                          'legend'  => false,
+                          'value'   => $person['_grantKey'],
                           'options' => array(
                             1 => __('Messages & Files',true),
                             2 => __('...plus To-Dos',true),
@@ -101,6 +104,7 @@
         
         <?php
           echo $form->submit(__('Save changes',true),array('after'=>__('or',true).' '.$html->link(__('Cancel and go back',true),array('action'=>'index') ) ));
+          echo $form->end();
         ?>
         
       </div>

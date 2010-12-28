@@ -113,6 +113,17 @@
      */
     public function allow(&$model, $path, $foreignId, $options = array())
     {
+      $_options = array(
+        'delete' => false
+      );
+      $options = array_merge($_options,$options);
+      
+      //Delete previous if exists
+      if($options['delete'])
+      {
+        $this->delete($model, $path, $foreignId, array('all'=>true));
+      }
+    
       //Access to main ACO
       $this->Acl->allow($model, 'opencamp/'.$path.'/'.$foreignId);
     
@@ -164,7 +175,7 @@
       
       
       //Access to controllers
-      $Grant = ClassRegistry::init('Grant','model');
+      /*$Grant = ClassRegistry::init('Grant','model');
         
       $record = $Grant->find('first',array(
         'conditions' => array(
@@ -184,7 +195,31 @@
           'Aro.foreign_key' => $model->id,
           'Permission.aco_id' => $acoId
         ));
-      }
+      }*/
+    }
+    
+    
+    /**
+     * Check permission
+     *
+     * @param string $path
+     * @access public
+     * @return int
+     */
+    public function check(&$model, $path, $foreignId, $action, $options = array())
+    {
+      //Get aco
+      $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId.'/'.$action);
+      $acoId = $root[0]['Aco']['id'];
+      
+      //Permissions
+      return $this->Acl->Aco->Permission->find('count',array(
+        'conditions' => array(
+          'Aro.model' => $model->alias,
+          'Aro.foreign_key' => $model->id,
+          'Permission.aco_id' => $acoId
+        )
+      ));
     }
     
 
