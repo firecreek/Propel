@@ -40,7 +40,7 @@
             <li class="company">
               <div class="detail">
                 <h4><?php echo $company['Company']['name']; ?></h4>
-                <p class="edit"><?php echo $html->link('Edit',array('controller'=>'companies','action'=>'edit',$company['Company']['id']),array('class'=>'red')); ?> this company</p>
+                <p class="edit"><?php echo $html->link('Edit',array('controller'=>'companies','action'=>'edit',$company['Company']['id']),array('class'=>'important')); ?> this company</p>
               </div>
             </li>
             <?php foreach($company['People'] as $person): ?>
@@ -58,7 +58,7 @@
                   ?>
                   <?php if($title): ?><p class="title"><?php echo $title; ?></p><?php endif; ?>
                   <p class="email"><?php echo $html->link($person['email'],'mailto:'.$person['email']); ?></p>
-                  <p class="edit"><?php echo $html->link('Edit',array('controller'=>'people','action'=>'edit',$person['id']),array('class'=>'red')); ?></p>
+                  <p class="edit"><?php echo $html->link('Edit',array('controller'=>'people','action'=>'edit',$person['id']),array('class'=>'important')); ?></p>
                 </div>
               </li>
             <?php endforeach; ?>
