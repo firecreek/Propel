@@ -78,12 +78,12 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 /**
  * Section
  */
-.section { margin:0 0 20px 0; }
+.section { margin:0 0 20px 0; clear:both; }
  
 .section .banner { background-color:#F0F0F0; margin:0 0 10px 0; min-height:30px; position:relative; }
 .section .banner.tight { margin-bottom:2px; }
  
-.section .banner h3 { font-size:16px; color:#333; padding:4px 0 0 10px; }
+.section .banner h3 { font-size:14px; color:#333; padding:4px 0 0 10px; }
 .section .banner h3 a { font-size:14px; color:#333; text-decoration:none; }
 .section .banner h3 a:hover { color:white; }
 
@@ -236,7 +236,7 @@ form .input.strong label { font-weight:bold; }
 table.std { width:100%; border-collapse:collapse; margin:0 0 25px 0; }
 
 table.std thead { }
-table.std thead th { background-color:#F0F0F0; padding:4px 5px; font-size:14px; text-align:left; font-family:arial; }
+table.std thead th { background-color:#F0F0F0; padding:4px 5px; font-size:14px; text-align:left; font-family:arial; color:#333; }
 table.std thead th h3 a { color:#333; text-decoration:none; }
 
 table.std thead th.links { text-align:right; }
