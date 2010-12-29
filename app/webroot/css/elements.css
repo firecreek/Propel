@@ -243,6 +243,37 @@ form .input.strong label { font-weight:bold; }
 .button.margin { margin-bottom:20px; }
 
 
+
+/**
+ * Selectable lists
+ */
+.selectables {}
+ 
+.selectables h3 { color:#C93; font-size:11px; margin:10px 0; }
+.selectables span { font-weight:normal; }
+.selectables span.responsibility { color:#666; }
+ 
+.selectables .item { min-height:25px; margin:5px 5px; position:relative; }
+
+.selectables .item .check div.input { position:absolute; }
+.selectables .item .check div.input input { position:relative; top:2px; }
+
+.selectables .item .name { font-size:12px; left:20px; position:relative; }
+.selectables .item .name span {  }
+
+.selectables .item .comments { display:inline-block; width:13px; height:13px; background:url(/img/icons/comments-13.png) transparent top left; text-indent:-9000px; margin-left:2px; }
+.selectables .item .comments a { display:block; width:100%; height:100%; }
+.selectables .item .comments a:hover { background-color:transparent; }
+
+.selectables .item .maintain { position:absolute; left:-58px; top:-5px; background-color:white; padding:3px 0 3px 3px; border-bottom-left-radius: 15px 15px; border-top-left-radius: 15px 15px; }
+
+.selectables .item .maintain .delete { margin:5px 0 0 6px; width:10px; height:11px; display:inline-block; text-indent:-9000px; background:url(/img/icons/delete-10.png) transparent top left; }
+.selectables .item .maintain .delete a { display:block; width:100%; height:100%; }
+.selectables .item .maintain .delete a:hover { background-color:transparent; }
+
+.selectables .item .maintain .edit {}
+.selectables .item .maintain .edit a { font-size:10px; position:relative; top:-2px; }
+
 /**
  * Tables
  */
