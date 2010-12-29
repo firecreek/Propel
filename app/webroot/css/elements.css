@@ -97,6 +97,8 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .section.outlined { border:1px solid #CCC; padding:2px; }
 .section.outlined .content { padding:0 10px; margin-bottom:10px; }
 
+.section.indented .content { padding:0 10px; margin-bottom:10px; }
+
 .section.important {}
 .section.important .banner { background-color:#C00; }
 .section.important .banner h3 { color:white; }
@@ -106,7 +108,18 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .section.highlight .banner h3 { color:black; }
  
 .section.small .banner { min-height:26px; }
-.section.small .banner h3 { font-size:13px; font-weight:bold; padding:4px 0 0 6px; }
+.section.small .banner h3 { font-size:12px; font-weight:bold; padding:4px 0 0 6px; }
+
+
+
+/**
+ * Blank slate
+ */
+.blank-slate { width:650px; margin:50px auto 100px auto; }
+.blank-slate div.icon { float:left; width:160px; }
+.blank-slate div.content {}
+.blank-slate div.content h2 { font-size:18px; color:#333; margin:0 0 5px 0; }
+.blank-slate div.content p { font-size:16px; color:#444; margin:0 0 15px 0; font-family:arial; line-height:20px; }
 
 
 /**
@@ -139,8 +152,9 @@ form .text input, form .password input { font-size:16px; font-weight:bold; paddi
 form small { font-size:10px; color:#999; display:block; margin-left:120px; padding-top:2px; }
 form textarea { width:65%; height:8em; }
 form select { font-size:14px; padding:1px; color:#000;}
+form hr { border:none; height:1px; border-top:1px dashed #CCC; margin:20px 0 20px 0; }
 
-form .input.checkbox input { float:left; margin:2px 0 0 0; }
+form .input.checkbox input { float:left; margin:2px 5px 0 0; }
 form .input.checkbox label { width:auto; margin:0 0 0 8px; }
 
 form .input.radio input { float:left; margin:2px 0 0 0; }
@@ -168,7 +182,6 @@ form.basic div.text input { width:15em; }
 form.basic small { display:inline; margin-left:10px; }
 form.basic .intro { margin-bottom:5px; }
 form.basic h3 { margin-bottom:5px; font-size:14px; }
-form.basic hr { border:none; height:1px; border-top:1px dashed #CCC; margin:5px 0 20px 0; }
 
 form .input.strong label { font-weight:bold; }
 
@@ -273,10 +286,12 @@ table.calendar td .wrapper { position:relative; }
 table.calendar td .day { float:right; color:#999; position:absolute; top:0; right:0; }
 table.calendar td.today .day { text-transform:uppercase; color:white; background-color:#FC0; padding:1px 5px; }
 
-table.calendar.short th { color:#999; text-transform:capitalize; text-align:left; font-size:12px; }
+table.calendar.short { border-collapse:separate; background-color:#E0E0E0; border-spacing:1px 1px; }
+table.calendar.short th { color:#666; background-color:#E0E0E0; text-transform:capitalize; text-align:left; font-size:10px; padding:2px 5px; }
 table.calendar.short td { width:14%; height:auto; min-height:65px; padding:5px; }
-table.calendar.short td .day { float:left; }
+table.calendar.short td .day { float:left; position:relative; }
 table.calendar.short td.weekend { background-color:#F0F0F0; border:1px solid #F0F0F0; width:14%; }
+table.calendar.short td.today { border:none; }
  
 table.calendar.small { width:200px; border-collapse:collapse; }
 table.calendar.small th { background-color:#CCC; color:#666; font-size:10px; padding:3px 0 3px 0; }
