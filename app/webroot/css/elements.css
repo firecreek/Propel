@@ -102,14 +102,20 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .section.important {}
 .section.important .banner { background-color:#C00; }
 .section.important .banner h3 { color:white; }
+.section.important h4 { color:#C00; }
 
 .section.highlight {}
 .section.highlight .banner { background-color:#FC0; }
 .section.highlight .banner h3 { color:black; }
+.section.highlight h4 { color:#C93; }
+
+.section.completed {}
+.section.completed .banner { background-color:#090; }
+.section.completed .banner h3 { color:white; }
+.section.completed h4 { color:#090; }
  
 .section.small .banner { min-height:26px; }
 .section.small .banner h3 { font-size:12px; font-weight:bold; padding:4px 0 0 6px; }
-
 
 
 /**
@@ -252,11 +258,10 @@ form .input.strong label { font-weight:bold; }
 .listable .group { border-bottom:1px solid #F0F0F0; }
 
 .listable .group .banner { background-color:white !important; min-height:0; margin:0 0 10px 0; padding:0; }
-.listable .group .banner h3 { color:#C93; font-size:11px; margin:10px 0 0 0; padding:0; }
+.listable .group .banner h4 { font-size:11px; margin:10px 0 0 0; padding:0; }
 .listable .group .banner span { font-weight:normal; }
-.listable .group .banner span.responsibility { color:#666; }
+.listable .group .banner span.responsibility { color:#666; } 
  
-
 .listable .item { min-height:20px; margin:5px 5px; position:relative; }
 
 .listable .item .check {  }

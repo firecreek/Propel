@@ -59,18 +59,54 @@
      */
     public function project_index()
     {
-      $records = $this->Milestone->find('all',array(
+      $milestoneCount = $this->Milestone->find('count',array(
         'conditions' => array(
           'Milestone.project_id' => $this->Authorization->read('Project.id')
-        )
+        ),
+        'recursive' => -1
+      ));
+      
+      //Overdue
+      $overdue = $this->Milestone->find('all',array(
+        'conditions' => array(
+          'Milestone.project_id' => $this->Authorization->read('Project.id'),
+          'Milestone.deadline <' => date('Y-m-d'),
+          'Milestone.completed'  => false
+        ),
+        'contain' => array(),
+        'order' => 'Milestone.deadline ASC',
+        'limit' => 10
+      ));
+      
+      //Upcoming
+      $upcoming = $this->Milestone->find('all',array(
+        'conditions' => array(
+          'Milestone.project_id' => $this->Authorization->read('Project.id'),
+          'Milestone.deadline >' => date('Y-m-d'),
+          'Milestone.completed'  => false
+        ),
+        'contain' => array(),
+        'limit' => 5
+      ));
+      
+      //Completed
+      $completed = $this->Milestone->find('all',array(
+        'conditions' => array(
+          'Milestone.project_id' => $this->Authorization->read('Project.id'),
+          'Milestone.completed'  => true
+        ),
+        'order' => 'Milestone.completed_date ASC',
+        'contain' => array(),
+        'limit' => 5
       ));
     
-      if(empty($records))
+      //Nothing added yet
+      if(!$milestoneCount)
       {
         return $this->render('project_index_new');
       }
       
-      $this->set(compact('records'));
+      $this->set(compact('upcoming','completed','overdue'));
     }
     
     
