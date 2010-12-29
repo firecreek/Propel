@@ -261,7 +261,7 @@ form .input.strong label { font-weight:bold; }
 .selectables .item .name { font-size:12px; left:20px; position:relative; }
 .selectables .item .name span {  }
 
-.selectables .item .comments { display:inline-block; width:13px; height:13px; background:url(/img/icons/comments-13.png) transparent top left; text-indent:-9000px; margin-left:2px; }
+.selectables .item .comments { display:inline-block; width:14px; height:13px; background:url(/img/icons/comments-13.png) transparent top left; text-indent:-9000px; margin-left:2px; }
 .selectables .item .comments a { display:block; width:100%; height:100%; }
 .selectables .item .comments a:hover { background-color:transparent; }
 
