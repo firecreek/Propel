@@ -1,6 +1,5 @@
 <?php
 
-  $javascript->link('jquery/jquery.js', false);
   $javascript->link('jquery/colorpicker.js', false);
   $javascript->link('settings_appearance.js', false);
   $html->css('colorpicker', null, array('inline'=>false));

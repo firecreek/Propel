@@ -245,34 +245,57 @@ form .input.strong label { font-weight:bold; }
 
 
 /**
- * Selectable lists
+ * Lists
  */
-.selectables {}
+.listable {}
  
-.selectables h3 { color:#C93; font-size:11px; margin:10px 0; }
-.selectables span { font-weight:normal; }
-.selectables span.responsibility { color:#666; }
+.listable .group { border-bottom:1px solid #F0F0F0; }
+
+.listable .group .banner { background-color:white !important; min-height:0; margin:0 0 10px 0; padding:0; }
+.listable .group .banner h3 { color:#C93; font-size:11px; margin:10px 0 0 0; padding:0; }
+.listable .group .banner span { font-weight:normal; }
+.listable .group .banner span.responsibility { color:#666; }
  
-.selectables .item { min-height:25px; margin:5px 5px; position:relative; }
 
-.selectables .item .check div.input { position:absolute; }
-.selectables .item .check div.input input { position:relative; top:2px; }
+.listable .item { min-height:20px; margin:5px 5px; position:relative; }
 
-.selectables .item .name { font-size:12px; left:20px; position:relative; }
-.selectables .item .name span {  }
+.listable .item .check {  }
+.listable .item .check div.input { position:absolute; z-index:10; }
+.listable .item .check div.input input { position:relative; top:2px; }
 
-.selectables .item .comments { display:inline-block; width:14px; height:13px; background:url(/img/icons/comments-13.png) transparent top left; text-indent:-9000px; margin-left:2px; }
-.selectables .item .comments a { display:block; width:100%; height:100%; }
-.selectables .item .comments a:hover { background-color:transparent; }
+.listable .item .name { font-size:12px; left:20px; position:relative; color:#333; z-index:10; }
+.listable .item .name span {  }
 
-.selectables .item .maintain { position:absolute; left:-58px; top:-5px; background-color:white; padding:3px 0 3px 3px; border-bottom-left-radius: 15px 15px; border-top-left-radius: 15px 15px; }
+.listable .item .comment { display:inline-block; width:14px; height:13px; background:url(/img/icons/comments-13.png) transparent top left; text-indent:-9000px; margin-left:2px; position:relative; top:2px; }
+.listable .item .comment a { display:block; width:100%; height:100%; }
+.listable .item .comment a:hover { background-color:transparent; }
 
-.selectables .item .maintain .delete { margin:5px 0 0 6px; width:10px; height:11px; display:inline-block; text-indent:-9000px; background:url(/img/icons/delete-10.png) transparent top left; }
-.selectables .item .maintain .delete a { display:block; width:100%; height:100%; }
-.selectables .item .maintain .delete a:hover { background-color:transparent; }
+.listable .item .maintain { position:absolute; left:-58px; top:-5px; background-color:white; padding:3px 0 3px 3px; border-bottom-left-radius: 15px 15px; border-top-left-radius: 15px 15px; width:100%; z-index:5; }
 
-.selectables .item .maintain .edit {}
-.selectables .item .maintain .edit a { font-size:10px; position:relative; top:-2px; }
+.listable .item .maintain .delete { margin:5px 0 0 6px; width:10px; height:11px; display:inline-block; text-indent:-9000px; background:url(/img/icons/delete-10.png) transparent top left; }
+.listable .item .maintain .delete a { display:block; width:100%; height:100%; }
+.listable .item .maintain .delete a:hover { background-color:transparent; }
+
+.listable .item .maintain .edit {}
+.listable .item .maintain .edit a { font-size:10px; position:relative; top:-2px; }
+
+.listable .item .maintain .position { width:13px; height:16px; display:inline-block; background:url(/img/icons/position.png) transparent top left; margin:0 0 0 2px; top:4px; position:relative; cursor:move; }
+
+
+
+.listable .item.position {}
+.listable .item.position .check input { left:20px; }
+.listable .item.position .name { left:40px; }
+
+.listable .group.large .item {}
+.listable .group.large .item .name { font-weight:bold; font-size:14px; }
+
+.listable .group.slim .item { margin:2px 5px; min-height:20px; }
+.listable .group.slim .item .check div.input input { top:0; left:20px; }
+.listable .group.slim .item .maintain .delete { margin-left:52px; margin-top:0; top:1px; position:relative; }
+.listable .group.slim .item .name { font-size:10px; color:#999; left:40px; }
+.listable .group.slim .item .name strong { color:#666; margin-right:5px; }
+.listable .group.slim .item .maintain { background-color:transparent; border-bottom-left-radius:0 0; border-top-left-radius:0 0; }
 
 /**
  * Tables

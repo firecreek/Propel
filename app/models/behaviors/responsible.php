@@ -20,7 +20,7 @@
         if($model->data['Milestone']['responsible'] == 'self')
         {
           $model->data['Milestone']['responsible_model'] = 'Person';
-          $model->data['Milestone']['responsible_id'] = $model->Authorization->read('Person.id');
+          $model->data['Milestone']['responsible_id'] = $model->personId;
         }
         elseif(substr($model->data['Milestone']['responsible'],0,6) == 'person')
         {

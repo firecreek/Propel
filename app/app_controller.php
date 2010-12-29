@@ -68,6 +68,11 @@
       //Auth settings
       $this->AclFilter->auth();
       
+      foreach($this->uses as $model)
+      {
+        $this->{$model}->personId = $this->Authorization->read('Person.id');
+      }
+      
       parent::beforeFilter();
     }
     

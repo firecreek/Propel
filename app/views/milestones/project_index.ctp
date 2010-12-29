@@ -28,29 +28,44 @@
             
             <?php echo $form->create('Milestones',array('url'=>$this->here)); ?>
             
-            <div class="selectables">
+            <div class="listable">
+            
+              <div class="group large">
+                <div class="banner">
+                  <h3>Today <span class="light">(Wednesday, 29 December)</span> <span class="responsibility">Darren Moore</span></h3>
+                </div>
+                <div class="content">
+                  <?php
+                    echo $this->element('listable/item',array('id'=>1,'name'=>'gfhyh hfgh trh rtwdqwsdv vs'));
+                    echo $this->element('listable/item',array('id'=>1,'name'=>'as dasd asdas dasd asda sd asdasd as das das da sda sd ad ads'));
+                    echo $this->element('listable/item',array('id'=>1,'name'=>'asda sd asdasdasda sd asdasdsdf ds fsdfudshf iudshfiuhds ifuh dsiuhf iudsh fiuhdsiuhfius dhiufhsiudfh idshfiuhsiudh fiudshiuf sfsdfsdf'));
+                    echo $this->element('listable/item',array('id'=>1,'name'=>'df gdfgdfg dfg dg dfg dfg'));
+                  ?>
+                </div>
+              </div>
             
               <div class="group">
-                <h3>Today <span class="light">(Wednesday, 29 December)</span> <span class="responsibility">Darren Moore</span></h3>
+                <div class="banner">
+                  <h3>Today <span class="light">(Wednesday, 29 December)</span> <span class="responsibility">Darren Moore</span></h3>
+                </div>
+                <div class="content">
+                  <?php
+                    echo $this->element('listable/item',array('id'=>1,'name'=>'gfhyh hfgh trh rtwdqwsdv vs','position'=>true));
+                    echo $this->element('listable/item',array('id'=>1,'name'=>'as dasd asdas dasd asda sd asdasd','position'=>true));
+                  ?>
+                </div>
+              </div>
             
-                <?php for($ii = 0; $ii < 6; $ii++): ?>
-              
-                  <div class="item">
-                    <div class="check">
-                      <?php echo $form->input('test',array('type'=>'checkbox','label'=>false)); ?>
-                    </div>
-                    <div class="name">
-                      Untitled mileston esdfuh sdiufh sdiuhf iudsh fiu shdifuh isuhd fesdfuh sdiufh sdiuhf iudsh fiu shdifuh isuhd fesdfuh sdiufh sdiuhf iudsh fiu shdifuh isuhd fesdfuh sdiufh sdiuhf iudsh fiu shdifuh isuhd fesdfuh sdiufh sdiuhf iudsh fiu shdifuh isuhd fesdfuh sdiufh sdiuhf iudsh fiu shdifuh isuhd fesdfuh sdiufh sdiuhf iudsh fiu shdifuh isuhd fesdfuh sdiufh sdiuhf iudsh fiu shdifuh isuhd fesdfuh sdiufh sdiuhf iudsh fiu shdifuh isuhd f
-                      <div class="comments"><?php echo $html->link(__('Comments',true),array('action'=>'comments','100'),array('title'=>__('Comments',true))); ?></div>
-                    </div>
-                    <div class="maintain important">
-                      <span class="delete"><?php echo $html->link(__('Delete',true),array('action'=>'delete','100'),array('title'=>__('Delete',true))); ?></span>
-                      <span class="edit"><?php echo $html->link(__('Edit',true),array('action'=>'edit','100')); ?></span>
-                    </div>
-                  </div>
-                
-                <?php endfor; ?>
-                
+              <div class="group slim">
+                <div class="banner">
+                  <h3>Today <span class="light">(Wednesday, 29 December)</span> <span class="responsibility">Darren Moore</span></h3>
+                </div>
+                <div class="content">
+                  <?php
+                    echo $this->element('listable/item',array('id'=>1,'name'=>'gfhyh hfgh trh rtwdqwsdv vs','edit'=>false,'checked'=>true));
+                    echo $this->element('listable/item',array('id'=>1,'name'=>'as dasd asdas dasd asda sd asdasd','edit'=>false,'checked'=>true));
+                  ?>
+                </div>
               </div>
               
             </div>

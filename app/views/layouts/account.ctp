@@ -10,6 +10,10 @@
       'elements',
       'account'
     ));
+    echo $javascript->link(array(
+      'jquery/jquery',
+      'account'
+    ));
     echo $scripts_for_layout;
   ?>
   <style type="text/css" media="screen"><!--
