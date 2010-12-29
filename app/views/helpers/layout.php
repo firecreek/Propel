@@ -92,7 +92,6 @@
     public function permissionList($people,$options = array())
     {
       $space = 0;
-      $spacer = '---------------------------';
       
       $_options = array(
         'anyone'  => true,
@@ -117,24 +116,24 @@
       //Add anyone
       if($options['anyone'])
       {
-        $list['anyone'] = __('Anyone',true);
+        $list[] = array('name'=>__('Anyone',true),'value'=>'anyone');
       }
       
       //Add self
       if($options['self'])
       {
-        $list['self'] = __('Me',true) . ' ('.$this->Auth->read('Person.full_name').')';
+        $list[] = array('name'=>__('Me',true) . ' ('.$this->Auth->read('Person.full_name').')','value'=>'self');
       }
       
       //Build list
       foreach($companies as $record)
       {
-        $list['_'.($space++)] = $spacer;
-        $list['company_'.$record['Company']['id']] = strtoupper($record['Company']['name']);
+        $list[] = array('name'=>'---------------------------','disabled'=>true,'value'=>($space++));
+        $list[] = array('name'=>strtoupper($record['Company']['name']),'value'=>'company_'.$record['Company']['id']);
           
         foreach($record['People'] as $person)
         {
-          $list['person_'.$person['Person']['id']] = '  '.$person['Person']['full_name'];
+          $list[] = array('name'=>$person['Person']['full_name'],'value'=>'person_'.$person['Person']['id']);
         }
       }
     
