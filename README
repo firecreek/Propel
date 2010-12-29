@@ -6,26 +6,43 @@ Help is welcomed with this project so please branch the code.
 
 We are phasing the development into the following sections:
 
-Phase One
+Phase One, Basic clone
 - Most of the functionality of BC
 - Design similar to BC
 - No file sharing
 - No email piping, emails only outgoing
 - Basic administration system
-- Basic API calls
+- Standardised elements
+- Javascript / ajax elements
+- Themeing
 
-Phase Two
+Phase Two, Full clone
+- Full API with wrapper to BC format
 - File sharing
 - Email piping into system for incoming email
-- API same as BC so other software can plug in easily
-- Full administration system
-- Templating
+- RSS Feeds
+- iCalendar feed
+- Email updates
 
-Phase Three
+Phase Three, Improvements
+- Better UI for people/company permissions
+- Improved paginated overview pages
+- Search element for RHS
+- Full administration area
+
+Phase Four, Beyond
 - Move functionality to extendable plugins
-- Extra features BC does not support
+- Whiteboard plugin
+- Chat plugin
+- Mantis / bug tracker items
+- Public project lists
 
-Ideas and some project files at:
+Future plugins
+- Pages plugin
+- Google wave?
+
+
+Ideas and some old project files at:
 https://docs.google.com/leaf?id=0B-rIg4LHA-zaZmUzZGQzYWQtYTdkYy00NWUyLWI0OGItMzdiY2JkZmNjNDAy&hl=en
 
 
