@@ -23,24 +23,34 @@
         $grouped = array();
         foreach($records as $record)
         {
-          $key = strtotime($record['Milestone'][$dateKey]);
+          $key = strtotime($record['Milestone'][$dateKey]).'::'.$record['Responsible']['name'];
           if(!isset($grouped[$key])) { $grouped[$key] = array(); }
           
           $grouped[$key][] = $record;
         }
       ?>
       
-      <?php foreach($grouped as $date => $records): ?>
+      <?php foreach($grouped as $key => $records): ?>
+      
+        <?php
+          $split = explode('::',$key);
+          $date = $split[0];
+          $responsibility = $split[1];
+        ?>
       
         <div class="group large">
           <div class="banner">
-            <h4><?php echo date('l, j F',$date); ?> <span class="responsibility">Darren Moore</span></h4>
+            <h4><?php echo date('l, j F',$date); ?> <span class="responsibility"><?php echo $responsibility; ?></span></h4>
           </div>
           <div class="content">
             <?php 
               foreach($records as $milestone)
               {
-                echo $this->element('listable/item',array('id'=>$milestone['Milestone']['id'],'name'=>$milestone['Milestone']['title']));
+                echo $this->element('listable/item',array(
+                  'id'      => $milestone['Milestone']['id'],
+                  'name'    => $milestone['Milestone']['title'],
+                  'checked' => (isset($checked) && $checked) ? true : false
+                ));
               }
             ?>
             <?php

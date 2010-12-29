@@ -261,6 +261,7 @@ form .input.strong label { font-weight:bold; }
 .listable .group .banner h4 { font-size:11px; margin:10px 0 0 0; padding:0; }
 .listable .group .banner span { font-weight:normal; }
 .listable .group .banner span.responsibility { color:#666; } 
+.listable .group .content { padding-left:0; }
  
 .listable .item { min-height:20px; margin:5px 5px; position:relative; }
 
@@ -275,7 +276,7 @@ form .input.strong label { font-weight:bold; }
 .listable .item .comment a { display:block; width:100%; height:100%; }
 .listable .item .comment a:hover { background-color:transparent; }
 
-.listable .item .maintain { position:absolute; left:-58px; top:-5px; background-color:white; padding:3px 0 3px 3px; border-bottom-left-radius: 15px 15px; border-top-left-radius: 15px 15px; width:100%; z-index:5; }
+.listable .item .maintain { position:absolute; left:-55px; top:-5px; background-color:white; padding:3px 0 3px 3px; border-bottom-left-radius: 15px 15px; border-top-left-radius: 15px 15px; width:100%; z-index:5; }
 
 .listable .item .maintain .delete { margin:5px 0 0 6px; width:10px; height:11px; display:inline-block; text-indent:-9000px; background:url(/img/icons/delete-10.png) transparent top left; }
 .listable .item .maintain .delete a { display:block; width:100%; height:100%; }

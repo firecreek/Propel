@@ -66,6 +66,7 @@
         'recursive' => -1
       ));
       
+      
       //Overdue
       $overdue = $this->Milestone->find('all',array(
         'conditions' => array(
@@ -73,7 +74,7 @@
           'Milestone.deadline <' => date('Y-m-d'),
           'Milestone.completed'  => false
         ),
-        'contain' => array(),
+        'contain' => array('Responsible'),
         'order' => 'Milestone.deadline ASC',
         'limit' => 10
       ));
@@ -85,7 +86,7 @@
           'Milestone.deadline >' => date('Y-m-d'),
           'Milestone.completed'  => false
         ),
-        'contain' => array(),
+        'contain' => array('Responsible'),
         'limit' => 5
       ));
       
@@ -96,7 +97,7 @@
           'Milestone.completed'  => true
         ),
         'order' => 'Milestone.completed_date ASC',
-        'contain' => array(),
+        'contain' => array('Responsible'),
         'limit' => 5
       ));
     

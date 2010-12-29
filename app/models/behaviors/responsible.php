@@ -13,6 +13,97 @@
   class ResponsibleBehavior extends ModelBehavior
   {
 
+    
+
+    public function setup(&$model, $config = array())
+    {
+    
+    }
+    
+    
+    public function beforeFind(&$model, $query)
+    {
+      if(isset($query['contain']))
+      {
+        $find = array_search('Responsible',$query['contain']);
+      }
+      
+      if(isset($find) && $find !== false)
+      {
+        $model->bindModel(array(
+          'belongsTo' => array(
+            'ResponsiblePerson' => array(
+              'className' => 'Person',
+              'foreignKey' => false,
+              'fields' => array('id','full_name'),
+              'conditions' => array(
+                'Milestone.responsible_id = ResponsiblePerson.id',
+                'Milestone.responsible_model = "Person"',
+              )
+            ),
+            'ResponsibleCompany' => array(
+              'className' => 'Company',
+              'foreignKey' => false,
+              'fields' => array('id','name'),
+              'conditions' => array(
+                'Milestone.responsible_id = ResponsibleCompany.id',
+                'Milestone.responsible_model = "Company"',
+              )
+            )
+          )
+        ),true);
+        
+        unset($query['contain'][$find]);
+        
+        $query['contain'][] = 'ResponsiblePerson';
+        $query['contain'][] = 'ResponsibleCompany';
+      }
+      
+      return $query;
+    }
+    
+    
+    
+    public function afterFind(&$model, $results, $primary)
+    {
+      //Map data back to a 'virtual table'
+      if(!empty($results) && isset($results[0]['ResponsiblePerson']))
+      {
+        foreach($results as $key => $val)
+        {
+          $model = null;
+          $foreignId = null;
+          $name = null;
+          
+          if(!empty($val['ResponsiblePerson']['id']))
+          {
+            $model = 'Person';
+            $foreignId = $val['ResponsiblePerson']['id'];
+            $name = $val['ResponsiblePerson']['full_name'];
+          }
+          elseif(!empty($val['ResponsibleCompany']['id']))
+          {
+            $model = 'Company';
+            $foreignId = $val['ResponsibleCompany']['id'];
+            $name = $val['ResponsibleCompany']['name'];
+          }
+        
+          $results[$key]['Responsible'] = array(
+            'model'       => $model,
+            'foreign_id'  => $foreignId,
+            'name'        => $name,
+          );
+          
+          unset($results[$key]['ResponsiblePerson']);
+          unset($results[$key]['ResponsibleCompany']);
+        }
+      }
+      
+      return $results;
+    }
+    
+    
+
     public function beforeSave(&$model)
     {
       if(isset($model->data['Milestone']['responsible']))

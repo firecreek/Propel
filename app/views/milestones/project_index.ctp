@@ -46,7 +46,8 @@
               'class'   => 'completed',
               'title'   => __('Completed',true),
               'records' => $completed,
-              'dateKey' => 'completed_date'
+              'dateKey' => 'completed_date',
+              'checked' => true
             ));
           }
         ?>
