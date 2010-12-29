@@ -59,7 +59,50 @@
      */
     public function project_index()
     {
+      $records = $this->Milestone->find('all',array(
+        'conditions' => array(
+          'Milestone.project_id' => $this->Authorization->read('Project.id')
+        )
+      ));
+    
+      if(empty($records))
+      {
+        return $this->render('project_index_new');
+      }
+      
+      $this->set(compact('records'));
     }
+    
+    
+    /**
+     * Project add
+     *
+     * @access public
+     * @return void
+     */
+    public function project_add()
+    {
+      if(!empty($this->data))
+      {
+        //Fill in missing data
+        if(empty($this->data['Milestone']['title'])) { $this->data['Milestone']['title'] = __('Untitled milestone',true); }
+        $this->data['Milestone']['project_id'] = $this->Authorization->read('Project.id');
+        $this->data['Milestone']['person_id'] = $this->Authorization->read('Person.id');
+
+        //
+        $this->Milestone->set($this->data);
+        
+        if($this->Milestone->validates())
+        {
+          $this->Milestone->save();
+          
+          $this->Session->setFlash(__('Milestone added',true),'default',array('class'=>'success'));
+          $this->redirect(array('action'=>'index'));
+        }
+      }
+    
+    }
+    
   
   }
   

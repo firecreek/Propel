@@ -4,6 +4,8 @@ html, body { font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", 
 
 h1, h2, h3, h4, h5 { font-family:Arial; }
 
+h3.sub { font-size:12px; border-bottom:1px solid black; margin:15px 0 5px; padding-bottom:2px; }
+
 p.important { color:#C00; }
 
 p.note { color:#666; font-size:12px; }

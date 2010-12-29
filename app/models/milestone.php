@@ -1,6 +1,10 @@
 <?php
+
 class Milestone extends AppModel {
 	var $name = 'Milestone';
+	
+	public $actsAs = array('Responsible','Containable');
+	
 	var $validate = array(
 		'project_id' => array(
 			'numeric' => array(
@@ -59,13 +63,6 @@ class Milestone extends AppModel {
 		'Project' => array(
 			'className' => 'Project',
 			'foreignKey' => 'project_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'ResponsiblePerson' => array(
-			'className' => 'Person',
-			'foreignKey' => 'responsible_person_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
