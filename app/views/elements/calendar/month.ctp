@@ -3,6 +3,7 @@
   //Settings
   if(!isset($class)) { $class = array(); }
   elseif(is_string($class)) { $class = array($class); }
+
   
   if(!isset($type)) { $type = 'full'; }
   
@@ -23,6 +24,7 @@
   $todayText = true;
   $continueDates = false;
   $monthPosition = 'top';
+  $dayEnd = $daysInMonth;
   $day = 1;
 
   //Types
@@ -60,7 +62,11 @@
   {
     $showMonth = false;
     $continueDates = true;
-    $day = date('j');
+    $day = $today;
+    
+    $dayEnd = $day + 13;
+    
+    //$daysInMonth = $day + 13;
     
     $dayList = array();
     for($ii = 0; $ii < 7; $ii++)
@@ -97,7 +103,7 @@
       $str = '';
       $dayShowMonth = false;
       
-      while($day <= $daysInMonth)
+      while($day <= $dayEnd)
       {
         $str .= '<tr class="days">';
         
