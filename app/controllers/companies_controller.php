@@ -177,7 +177,7 @@
 
       //Delete permission for company
       $this->Company->id = $companyId;
-      $this->AclManager->delete($this->Company, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'company'));
+      $this->AclManager->delete($this->Company, 'accounts', $this->Authorization->read('Account.id'), null, array('all' => true));
       
       //Delete company
       $this->Company->delete($companyId);
@@ -231,7 +231,7 @@
           {
             //Remove person from accessing this project
             $this->Person->id = $personId;
-            $this->AclManager->delete($this->Person, 'projects', $this->Authorization->read('Project.id'), array('all'=>true));
+            $this->AclManager->delete($this->Person, 'projects', $this->Authorization->read('Project.id'), null, array('all'=>true));
             $deleted[] = $personId;
           }
         }
@@ -410,7 +410,7 @@
     {
       //Delete permission for company
       $this->Company->id = $id;
-      $this->AclManager->delete($this->Company, 'projects', $this->Authorization->read('Project.id'), array('set' => 'company'));
+      $this->AclManager->delete($this->Company, 'projects', $this->Authorization->read('Project.id'), null, array('all'=>true));
       
       $this->Session->setFlash(__('Company has been removed from this project',true),'default',array('class'=>'success'));
       $this->redirect(array('action'=>'permissions'));

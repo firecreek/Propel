@@ -121,7 +121,7 @@
       //Delete previous if exists
       if($options['delete'])
       {
-        $this->delete($model, $path, $foreignId, array('all'=>true));
+        $this->delete($model, $path, $foreignId, null, array('all'=>true));
       }
     
       //Access to main ACO
@@ -158,44 +158,42 @@
      *
      * @param string $path
      * @access public
-     * @return int
+     * @return boolean
      */
-    public function delete(&$model, $path, $foreignId, $options = array())
+    public function delete(&$model, $path, $foreignId, $action = null, $options = array())
     {
+      $_options = array(
+        'all' => false
+      );
+      $options = array_merge($_options,$options);
+      
       //Get aco
-      $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId);
+      $fullpath = 'opencamp/'.$path.'/'.$foreignId;
+      if(!empty($action)) { $fullpath .= '/'.$action; }
+      
+      $root = $this->Acl->Aco->node($fullpath);
       $acoId = $root[0]['Aco']['id'];
       
-      //Permissions
-      $record = $this->Acl->Aco->Permission->deleteAll(array(
-        'Aro.model' => $model->alias,
-        'Aro.foreign_key' => $model->id,
-        'Permission.aco_id' => $acoId
-      ));
-      
-      
-      //Access to controllers
-      /*$Grant = ClassRegistry::init('Grant','model');
-        
-      $record = $Grant->find('first',array(
+      //Root permission
+      $root = $this->Acl->Aco->Permission->find('first',array(
         'conditions' => array(
-          'Grant.alias' => $options['set'],
-          'Grant.aco_alias' => $path
+          'Aro.model'         => $model->alias,
+          'Aro.foreign_key'   => $model->id,
+          'Permission.aco_id' => $acoId
         )
       ));
       
-      foreach($record['GrantSet'] as $grant)
+      //Delete children
+      if($options['all'])
       {
-        //Find each path and delete permission
-        $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId.'/'.$grant['acos_alias']);
-        $acoId = $root[0]['Aco']['id'];
-          
-        $record = $this->Acl->Aco->Permission->deleteAll(array(
-          'Aro.model' => $model->alias,
-          'Aro.foreign_key' => $model->id,
-          'Permission.aco_id' => $acoId
+        $this->Acl->Aco->Permission->deleteAll(array(
+          'Aro.model'         => $model->alias,
+          'Aro.foreign_key'   => $model->id,
+          'Aco.parent_id'     => $root['Aco']['id']
         ));
-      }*/
+      }
+    
+      return $this->Acl->Aco->Permission->delete($root['Permission']['id']);
     }
     
     
