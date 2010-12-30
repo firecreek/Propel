@@ -18,7 +18,7 @@
      * @access public
      * @access public
      */
-    public $helpers = array();
+    public $helpers = array('Listable');
     
     /**
      * Components

@@ -60,7 +60,7 @@
   </div>
   
   <?php if($options['delete'] || $options['edit'] || $options['position']): ?>
-    <div class="maintain important">
+    <div class="maintain">
     
       <?php if($options['delete']): ?>
         <span class="delete"><?php echo $html->link(__('Delete',true),array('action'=>'delete',$id),array('title'=>__('Delete',true))); ?></span>
