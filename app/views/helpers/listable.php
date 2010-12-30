@@ -29,6 +29,12 @@
      * @var array
      */
     public $tags = array(
+      'group'             => '
+                              <div class="group %s">
+                                <div class="banner"><h4>%s</h4></div>
+                                <div class="content">%s</div>
+                              </div>
+                            ',
       'item'              => '<div id="%s" class="item %s">%s</div>',
       'checkbox'          => '<div class="check">%s</div>',
       'name'              => '<div class="name">%s%s</div>',
@@ -38,6 +44,28 @@
       'edit'              => '<span class="edit important">%s</span>',
       'position'          => '<span class="position"></span>',
     );
+    
+    
+    /**
+     * Display group
+     *
+     * @access public
+     * @return string
+     */
+    public function group($alias,$title,$items,$options = array())
+    {
+      if(!isset($options['class'])) { $options['class'] = array(); }
+    
+      $itemsHtml = '';
+      foreach($items as $item)
+      {
+        $itemsHtml .= $this->item($alias,$item['id'],$item['title'],$item['options']);
+      }
+      
+      $output = sprintf($this->tags['group'],$options['class'],$title,$itemsHtml);
+      
+      return $output;
+    }
     
     
     /**

@@ -36,23 +36,24 @@
           $split = explode('::',$key);
           $date = $split[0];
           $responsibility = $split[1];
+          
+          $items = array();
+          foreach($records as $milestone)
+          {
+            $items[] = array(
+              'id'      => $milestone['Milestone']['id'],
+              'title'   => $milestone['Milestone']['title'],
+              'options' => array(
+                'checked' => (isset($checked) && $checked) ? true : false
+              )
+            );
+          }
+          
+          $title = date('l, j F',$date) . ' <span class="responsibility">'.$responsibility.'</span>';
+          
+          echo $listable->group('Milestones',$title,$items,array('class'=>'large'));
+          
         ?>
-      
-        <div class="group large">
-          <div class="banner">
-            <h4><?php echo date('l, j F',$date); ?> <span class="responsibility"><?php echo $responsibility; ?></span></h4>
-          </div>
-          <div class="content">
-            <?php 
-              foreach($records as $milestone)
-              {
-                echo $listable->item('Milestones',$milestone['Milestone']['id'],$milestone['Milestone']['title'],array(
-                  'checked' => (isset($checked) && $checked) ? true : false
-                ));
-              }
-            ?>
-          </div>
-        </div>
         
       <?php endforeach; ?>
     
