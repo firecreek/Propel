@@ -12,12 +12,21 @@
    */
   class LayoutHelper extends AppHelper
   {
+    /**
+     * Helpers
+     *
+     * @access public
+     * @var array
+     */
     public $helpers = array('Html', 'Auth');
     
     
     /**
-     * button
+     * Button
      *
+     * @param string $text
+     * @param mixed $url
+     * @param string $type
      * @access public
      * @return void
      */
@@ -30,6 +39,9 @@
     /**
      * Basic menu
      *
+     * @param array $links
+     * @param array $options
+     * @param array $menuOptions
      * @access public
      * @return void
      */
@@ -86,6 +98,8 @@
     /**
      * Generate list of people and companies for select
      *
+     * @param array $people List of people
+     * @param array $options
      * @access public
      * @return array
      */
