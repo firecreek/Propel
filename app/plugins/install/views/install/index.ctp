@@ -22,6 +22,14 @@
                 echo '<p class="error">' . __('Your config directory is NOT writable.', true) . '</p>';
             }
 
+            // assets is writable
+            if (is_writable(ASSETS_DIR)) {
+                echo '<p class="success">' . __('Your assets directory is writable.', true) . '</p>';
+            } else {
+                $check = false;
+                echo '<p class="error">' . __('Your assets directory is NOT writable.', true) . '</p>';
+            }
+
             // php version
             if (phpversion() > 5) {
                 echo '<p class="success">' . sprintf(__('PHP version %s > 5', true), phpversion()) . '</p>';
