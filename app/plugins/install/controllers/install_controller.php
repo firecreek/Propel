@@ -229,7 +229,7 @@
             $this->_check();
 
             // set new salt and seed value
-            copy(CONFIGS.'settings.php.install', CONFIGS.'settings.php');
+            //copy(CONFIGS.'settings.php.install', CONFIGS.'settings.php');
             $File =& new File(CONFIGS . 'core.php');
             if (!class_exists('Security')) {
                 require LIBS . 'security.php';
@@ -246,9 +246,9 @@
             // set new password for admin, hashed according to new salt value
             $password = rand(10000,99999);
             
-            $User = ClassRegistry::init('User');
-            $User->id = $User->field('id', array('username' => 'admin'));
-            $User->saveField('password', Security::hash($password, null, $salt));
+            //$this->loadModel('User');
+            //$this->User->id = $this->User->field('id', array('username' => 'admin'));
+            //$this->User->saveField('password', Security::hash($password, null, $salt));
             
             $this->set(compact('password'));
         }
