@@ -229,7 +229,7 @@
             $this->_check();
 
             // set new salt and seed value
-            //copy(CONFIGS.'settings.php.install', CONFIGS.'settings.php');
+            copy(CONFIGS.'settings.php.install', CONFIGS.'settings.php');
             $File =& new File(CONFIGS . 'core.php');
             if (!class_exists('Security')) {
                 require LIBS . 'security.php';

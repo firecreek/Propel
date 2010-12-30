@@ -201,12 +201,12 @@
 /**
  * A random string used in security hashing methods.
  */
-	Configure::write('Security.salt', '03bc2e81ada6fd2567f2c924faa0acd20820c2cd');
+	Configure::write('Security.salt', '1d4026052e7b51e01454a82b13f8eb2659a688c3');
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-	Configure::write('Security.cipherSeed', '14264837512110807596');
+	Configure::write('Security.cipherSeed', '129183135734994378');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).

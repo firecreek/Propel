@@ -157,15 +157,6 @@ class User extends AppModel {
         $aro['Aro']['parent_id'] = $parent[0]['Aro']['id'];
         $this->Aro->save($aro);
       }
-      else
-      {
-        //@todo Make a behavior to populate missing advanced associations
-
-          
-          //debug($this->Account->id);
-      //debug($this->data);
-      
-      }
       
     }
     

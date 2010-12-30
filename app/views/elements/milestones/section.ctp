@@ -49,17 +49,10 @@
                 echo $this->element('listable/item',array(
                   'id'      => $milestone['Milestone']['id'],
                   'name'    => $milestone['Milestone']['title'],
+                  'alias'   => 'Milestones',
                   'checked' => (isset($checked) && $checked) ? true : false
                 ));
               }
-            ?>
-            <?php
-              /*
-              echo $this->element('listable/item',array('id'=>1,'name'=>'gfhyh hfgh trh rtwdqwsdv vs'));
-              echo $this->element('listable/item',array('id'=>1,'name'=>'as dasd asdas dasd asda sd asdasd as das das da sda sd ad ads'));
-              echo $this->element('listable/item',array('id'=>1,'name'=>'asda sd asdasdasda sd asdasdsdf ds fsdfudshf iudshfiuhds ifuh dsiuhf iudsh fiuhdsiuhfius dhiufhsiudfh idshfiuhsiudh fiudshiuf sfsdfsdf'));
-              echo $this->element('listable/item',array('id'=>1,'name'=>'df gdfgdfg dfg dg dfg dfg'));
-              */
             ?>
           </div>
         </div>

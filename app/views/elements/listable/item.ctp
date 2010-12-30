@@ -12,6 +12,22 @@
     'comments'  => isset($comments) ? $comments : true,
     'position'  => isset($position) ? $position : false,
   );
+  
+  //Depending on Person permissions
+  if(isset($alias))
+  {
+    if(!$auth->check('Project.'.$alias,'update'))
+    {
+      $options['checkbox'] = false;
+      $options['edit'] = false;
+      $options['position'] = false;
+    }
+    
+    if(!$auth->check('Project.'.$alias,'delete'))
+    {
+      $options['delete'] = false;
+    }
+  }
 
   //Style
   if($options['checkbox']) { $classes[] = 'checkbox'; }

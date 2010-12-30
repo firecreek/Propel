@@ -87,7 +87,20 @@
           'Milestone.completed'  => false
         ),
         'contain' => array('Responsible'),
+        'order' => 'Milestone.deadline ASC',
         'limit' => 5
+      ));
+      
+      //Upcoming next 14 days
+      $upcoming14Days = $this->Milestone->find('all',array(
+        'conditions' => array(
+          'Milestone.project_id' => $this->Authorization->read('Project.id'),
+          'Milestone.completed'  => false,
+          'Milestone.deadline >=' => date('Y-m-d'),
+          'Milestone.deadline <=' => date('Y-m-d',strtotime('+14 days')),
+        ),
+        'contain' => array('Responsible'),
+        'limit' => 100
       ));
       
       //Completed
@@ -96,8 +109,8 @@
           'Milestone.project_id' => $this->Authorization->read('Project.id'),
           'Milestone.completed'  => true
         ),
-        'order' => 'Milestone.completed_date ASC',
         'contain' => array('Responsible'),
+        'order' => 'Milestone.completed_date ASC',
         'limit' => 5
       ));
     
@@ -107,7 +120,7 @@
         return $this->render('project_index_new');
       }
       
-      $this->set(compact('upcoming','completed','overdue'));
+      $this->set(compact('upcoming','completed','overdue','upcoming14Days'));
     }
     
     

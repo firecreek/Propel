@@ -29,11 +29,15 @@
           //Upcoming
           if(!empty($upcoming))
           {
+            $calendar = false;
+            if(!empty($upcoming14Days)) { $calendar = true; }
+          
             echo $this->element('milestones/section',array(
-              'class'   => 'highlight',
-              'calendar' => true,
-              'title'   => __('Upcoming',true),
-              'records' => $upcoming
+              'class'         => 'highlight',
+              'calendar'      => $calendar,
+              'calendarData'  => $upcoming14Days,
+              'title'         => __('Upcoming',true),
+              'records'       => $upcoming
             ));
           }
         ?>
