@@ -30,6 +30,14 @@
      */
     public $components = array('Session');
     
+    /**
+     * Access data
+     *
+     * @access public
+     * @var array
+     */
+    public $access = array();
+    
 
     /**
      * Initialize component
