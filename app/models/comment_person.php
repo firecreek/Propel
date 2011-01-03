@@ -45,11 +45,7 @@
      * @var array
      */
     public $belongsTo = array(
-      'Comment' => array(
-        'className' => 'Comment',
-      ),
       'Person' => array(
-        'className' => 'Person',
       )
     );
     

@@ -36,6 +36,19 @@
     );
     
     /**
+     * Belongs to
+     *
+     * @access public
+     * @var array
+     */
+    public $belongsTo = array(
+      'Person' => array(
+        'className' => 'Person',
+        'fields' => array('id','full_name','email','user_id'),
+      )
+    );
+    
+    /**
      * Has many
      *
      * @access public
@@ -43,8 +56,12 @@
      */
     public $hasMany = array(
       'CommentPerson' => array(
-        'className' => 'CommentPerson',
-        'foreignKey' => 'comment_id',
+        'className'   => 'CommentPerson',
+        'foreignKey'  => false,
+        'conditions'  => array(
+          'CommentPerson.model = Comment.model',
+          'CommentPerson.foreign_id = Comment.foreign_id'
+        )
       )
     );
     

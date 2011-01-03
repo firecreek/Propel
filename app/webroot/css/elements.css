@@ -70,9 +70,15 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .area .banner ul.right li a { font-size:10px; font-family:arial; }
 
 .area .content { margin:0 10px 0 10px; font-size:12px; line-height:16px; }
-.area .content h4 { border-bottom:1px solid #CCC; margin-bottom:5px; }
+.area .content h4 { border-bottom:1px solid #CCC; margin-bottom:2px; }
+
 .area .content ul { margin-bottom:20px; }
 .area .content ul:last-child { margin-bottom:0; }
+.area .content ul li { font-size:11px; margin-bottom:10px; line-height:14px; }
+
+.area .content ul.nested {}
+.area .content ul.nested li { margin-bottom:2px; }
+.area .content ul.nested ul li { margin-left:10px; font-size:11px; }
 
 
 /**

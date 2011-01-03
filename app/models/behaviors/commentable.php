@@ -21,6 +21,21 @@
      */
     public function setup(&$model, $config = array())
     {
+      $model->bindModel(array(
+        'hasMany' => array(
+          'Comment' => array(
+            'conditions'  => array('Comment.model' => $model->alias),
+            'foreignKey'  => 'foreign_id',
+            'dependent'   => true,
+            'order'       => 'Comment.created DESC'
+          ),
+          'CommentPerson' => array(
+            'conditions'  => array('CommentPerson.model' => $model->alias),
+            'foreignKey'  => 'foreign_id',
+            'dependent'   => true
+          )
+        )
+      ),false);
     }
     
     
@@ -32,6 +47,23 @@
      */
     public function addComment(&$model, $data)
     {
+      //Populate
+      $data['Comment']['model'] = $model->alias;
+      $data['Comment']['foreign_id'] = $model->id;
+      $data['Comment']['person_id'] = $model->personId;
+    
+      $model->Comment->set($data);
+      
+      if($model->Comment->validates())
+      {
+        if($model->Comment->save())
+        {
+          $this->addCommentPerson($model, $model->personId);
+          return true;
+        }
+      }
+      
+      return false;
     }
     
     
@@ -43,6 +75,51 @@
      */
     public function deleteComment(&$model, $id)
     {
+    }
+    
+    
+    /**
+     * Add a subscriber to this comment if not already
+     *
+     * @access public
+     * @return void
+     */
+    public function addCommentPerson(&$model, $personId)
+    {
+      if(!$model->Comment->CommentPerson->find('count',array(
+        'conditions' => array(
+          'model'       => $model->alias,
+          'foreign_id'  => $model->id,
+          'person_id'   => $personId
+        ),
+        'recursive' => -1
+      )))
+      {
+        //add
+        $model->Comment->CommentPerson->save(array(
+          'model'       => $model->alias,
+          'foreign_id'  => $model->id,
+          'person_id'   => $personId
+        ));
+      }    
+    }
+    
+    
+    /**
+     * Find people who are subscribed
+     *
+     * @access public
+     * @return void
+     */
+    public function findCommentPeople(&$model, $id)
+    {
+      return $model->Comment->CommentPerson->find('count',array(
+        'conditions' => array(
+          'model'       => $model->alias,
+          'foreign_id'  => $id
+        ),
+        'recursive' => -1
+      ));
     }
     
   }

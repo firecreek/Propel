@@ -154,6 +154,29 @@
       return $list;
     }
     
+    
+    /**
+     * Generate list of people for notifications
+     *
+     * @param array $people List of people
+     * @param array $options
+     * @access public
+     * @return array
+     */
+    public function notificationList($people,$options = array())
+    {
+      $_options = array(
+      );
+      $options = array_merge($_options,$options);
+      
+      foreach($people as $person)
+      {
+        $list[$person['Person']['id']] = '<strong>'.$person['Company']['name'].':</strong> '.$person['Person']['full_name'];
+      }
+    
+      return $list;
+    }
+    
   }
   
 ?>

@@ -35,12 +35,13 @@
      * @var array
      */
     public $actionMap = array(
-      'index'   => '_read',
-      'view'    => '_read',
-      'edit'    => '_update',
-      'add'     => '_create',
-      'delete'  => '_delete',
-      'update'  => '_update'
+      'index'     => '_read',
+      'view'      => '_read',
+      'comments'  => '_read',
+      'edit'      => '_update',
+      'add'       => '_create',
+      'delete'    => '_delete',
+      'update'    => '_update',
     );
     
     
