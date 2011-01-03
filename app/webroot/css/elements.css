@@ -354,12 +354,17 @@ table.calendar td .wrapper { position:relative; }
 table.calendar td .day { float:right; color:#999; position:absolute; top:0; right:0; }
 table.calendar td.today .day { text-transform:uppercase; color:white; background-color:#FC0; padding:1px 5px; }
 
+table.calendar td.with { border:1px solid black !important; background-color:white !important; }
+table.calendar td.with .day { color:black; font-weight:bold; }
+
+
 table.calendar.short { border-collapse:separate; background-color:#E0E0E0; border-spacing:1px 1px; }
 table.calendar.short th { color:#666; background-color:#E0E0E0; text-transform:capitalize; text-align:left; font-size:10px; padding:2px 5px; }
 table.calendar.short td { width:14%; height:auto; min-height:65px; padding:5px; }
-table.calendar.short td .day { float:left; position:relative; }
+table.calendar.short td .day { float:none; display:block; position:relative; }
 table.calendar.short td.weekend { background-color:#F0F0F0; border:1px solid #F0F0F0; width:14%; }
 table.calendar.short td.today { border:none; }
+table.calendar.short td.today .day { color:#333; background-color:transparent; padding:0; }
  
 table.calendar.small { width:200px; border-collapse:collapse; }
 table.calendar.small th { background-color:#CCC; color:#666; font-size:10px; padding:3px 0 3px 0; }

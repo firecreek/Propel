@@ -30,6 +30,7 @@
   //Types
   if($type == 'full')
   {
+    //Full page calendar
     $monthPosition = 'inner';
     
     $dayList = array(
@@ -44,6 +45,7 @@
   }
   elseif($type == 'small')
   {
+    //Small calendar
     $todayText = false;
     
     $dayList = array(
@@ -60,18 +62,35 @@
   }
   elseif($type == 'short')
   {
+    //14 days ahead short calendar with trailing days
     $showMonth = false;
     $continueDates = true;
     $day = $today;
     
     $dayEnd = $day + 13;
     
-    //$daysInMonth = $day + 13;
-    
     $dayList = array();
     for($ii = 0; $ii < 7; $ii++)
     {
       $dayList[] = date('D',strtotime('+'.$ii.' day'));
+    }
+  }
+  
+  //Sort event dates
+  //@todo Move this to model behavior, eventable or something
+  $events = array();
+  if(isset($records) && !empty($records))
+  {
+    foreach($records as $record)
+    {
+      $date = strtotime($record['Milestone']['deadline']);
+      
+      if(!isset($events[$date])) { $events[$date] = array(); }
+      
+      $events[$date][] = array(
+        'title' => $record['Milestone']['title'],
+        'url'   => array('controller'=>'milestones','action'=>'index','projectId'=>$record['Milestone']['project_id']),
+      );
     }
   }
   
@@ -114,7 +133,8 @@
           $cell = '&nbsp;';
           $class = array();
      
-          if($i > 4) {
+          if($i > 4)
+          {
             $class[] = 'weekend';
           }
           else
@@ -132,21 +152,49 @@
           {
             $dayDisplay = ($day == $today && $todayText) ? __('Today',true) : $day;
             
+            //Defaults
+            $cmonth = $month;
+            $cday   = $day;
+            $cyear  = $year;
+            
+            //Continue days?
             if($day > $daysInMonth)
             {
+              $ahead = strtotime('+1 month',mktime(0, 0, 0, $month, 1, $year));
+                
               $dayDisplay = $day - $daysInMonth;
+              
               if($continueDates && $dayDisplay == 1)
               {
-                $dayDisplay = date('M',strtotime('+1 month',mktime(0, 0, 0, $month, 1, $year))).' '.$dayDisplay;
+                $dayDisplay = date('M',$ahead).' '.$dayDisplay;
               }
+              
+              //Ammend date
+              $cmonth = date('n',$ahead);
+              $cyear = date('Y',$ahead);
+              $cday = $dayDisplay;
             }
             
+            //Show month appending day
             if($day != $today && $dayShowMonth)
             {
               $dayShowMonth = false;
               $dayDisplay = date('M').' '.$dayDisplay;
             }
             
+            //Check for events
+            $eventDate = mktime(0,0,0,$cmonth,$cday,$cyear);
+            if(isset($events[$eventDate]))
+            {
+              $class[] = 'with';
+              $cell = '';
+              foreach($events[$eventDate] as $event)
+              {
+                $cell .= '<div class="event">'.$html->link($event['title'],$event['url']).'</div>';
+              }
+            }
+            
+            //Build
             $str .= '
               <td class="'.implode(' ',$class).'">
                 <div class="wrapper">

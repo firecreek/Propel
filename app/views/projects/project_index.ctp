@@ -13,29 +13,57 @@
       </div>
       <div class="content">
       
-        <?php if(!empty($overdue)): ?>
+      
+      
+        <?php if(!empty($overdue) || !empty($upcoming)): ?>
           <div class="section outlined">
             <div class="banner">
-              <h3><?php __('Late milestones'); ?></h3>
+              <h3><?php
+                if(!empty($overdue) && !empty($upcoming))
+                {
+                  echo __('Late & Upcoming Milestones');
+                }
+                elseif(!empty($overdue))
+                {
+                  echo __('Late milestones');
+                }
+                elseif(!empty($upcoming))
+                {
+                  echo __('Upcoming milestones');
+                }
+              ?></h3>
             </div>
             <div class="content">
-              <ul class="overdue">
-                <?php foreach($overdue as $record): ?>
-                  <?php
-                    $total = ceil((time() - strtotime($record['Milestone']['deadline'])) / 86400);
-                  ?>
-                  <li>
-                    <strong><?php echo $total; ?> days late</strong>:
-                    <?php echo $html->link($record['Milestone']['title'],array('projectId'=>$record['Milestone']['project_id'],'controller'=>'milestones')); ?>
-                    <?php if(isset($record['Responsible'])): ?>
-                      (<?php echo $record['Responsible']['name']; ?> is responsible)
-                    <?php endif; ?>
-                  </li>
-                <?php endforeach; ?>
-              </ul>
+            
+              <?php if(!empty($overdue)): ?>
+                <ul class="overdue">
+                  <?php foreach($overdue as $record): ?>
+                    <?php
+                      $total = ceil((time() - strtotime($record['Milestone']['deadline'])) / 86400);
+                    ?>
+                    <li>
+                      <strong><?php echo $total; ?> days late</strong>:
+                      <?php echo $html->link($record['Milestone']['title'],array('projectId'=>$record['Milestone']['project_id'],'controller'=>'milestones')); ?>
+                      <?php if(isset($record['Responsible'])): ?>
+                        (<?php echo $record['Responsible']['name']; ?> is responsible)
+                      <?php endif; ?>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              <?php endif; ?>
+              
+              <?php if(!empty($upcoming)): ?>
+                <h3 class="sub"><?php __('Due in the next 14 days'); ?></h3>
+                <?php
+                  echo $this->element('calendar/month',array('records'=>$upcoming,'type'=>'short','month'=>date('n'),'year'=>date('Y')));
+                ?>
+              <?php endif; ?>
+                
             </div>
           </div>
         <?php endif; ?>
+        
+        
       
       </div>
     </div>

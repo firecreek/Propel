@@ -109,7 +109,19 @@
         'limit' => 10
       ));
       
-      $this->set(compact('overdue'));
+      //Upcoming
+      $upcoming = $this->Milestone->find('all',array(
+        'conditions' => array(
+          'Milestone.project_id' => $this->Authorization->read('Project.id'),
+          'Milestone.completed'  => false,
+          'Milestone.deadline >=' => date('Y-m-d'),
+          'Milestone.deadline <=' => date('Y-m-d',strtotime('+14 days')),
+        ),
+        'contain' => array('Responsible'),
+        'limit' => 100
+      ));
+      
+      $this->set(compact('overdue','upcoming'));
     }
     
   
