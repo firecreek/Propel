@@ -113,7 +113,7 @@ h3.section { clear:both; }
 .comment.add { border-bottom:0; }
 .comment.add .area .banner {}
 
-.comment.add div.checkbox {}
+.comment.add div.checkbox { margin-bottom:5px; }
 .comment.add div.checkbox input { position:relative; top:2px; }
 .comment.add div.checkbox label { float:none; width:auto; margin-left:5px; }
 

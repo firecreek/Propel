@@ -258,6 +258,7 @@
       $record = $this->Milestone->find('first',array(
         'conditions' => array('Milestone.id'=>$id),
         'contain' => array(
+          'Responsible' => array(),
           'Comment' => array('Person'),
           'CommentPerson' => array(
             'Person' => array(

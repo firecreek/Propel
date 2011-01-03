@@ -171,7 +171,10 @@
       
       foreach($people as $person)
       {
-        $list[$person['Person']['id']] = '<strong>'.$person['Company']['name'].':</strong> '.$person['Person']['full_name'];
+        if($this->Auth->read('Person.id') != $person['Person']['id'])
+        {
+          $list[$person['Person']['id']] = '<strong>'.$person['Company']['name'].':</strong> '.$person['Person']['full_name'];
+        }
       }
     
       return $list;

@@ -52,6 +52,9 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box .banner form.right div.submit { padding-left:10px; }
 .box .banner form.right div.submit input { padding:1px; font-size:12px; }
 
+.box .banner .record { padding:15px 20px; }
+.box .banner .record .wrapper { border-top:1px solid #CCC; border-right:2px solid #CCC; border-bottom:2px solid #CCC; border-left:1px solid #CCC; background-color:white; padding:10px; }
+
 .box .content { padding:20px; }
 .box .content h2 { margin:0; font-size:22px; font-weight:normal; padding:10px 0 10px 0; }
 .box .content p { margin:0 0 1em 0; }
@@ -308,8 +311,6 @@ form .input.strong label { font-weight:bold; }
 
 .listable .item .maintain .position { width:13px; height:16px; display:inline-block; background:url(/img/icons/position.png) transparent top left; margin:0 0 0 2px; top:4px; position:relative; cursor:move; }
 
-
-
 .listable .item.position {}
 .listable .item.position .check input { left:20px; }
 .listable .item.position .name { left:40px; }
@@ -323,6 +324,11 @@ form .input.strong label { font-weight:bold; }
 .listable .group.slim .item .name { font-size:10px; color:#999; left:40px; }
 .listable .group.slim .item .name strong { color:#666; margin-right:5px; }
 .listable .group.slim .item .maintain { background-color:transparent; border-bottom-left-radius:0 0; border-top-left-radius:0 0; }
+
+
+.banner .listable .item .check div.input input { top:6px; }
+.banner .listable .item .name { font-size:18px; }
+
 
 /**
  * Tables

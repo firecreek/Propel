@@ -26,6 +26,11 @@
       if(isset($query['contain']))
       {
         $find = array_search('Responsible',$query['contain']);
+        
+        if(!$find && isset($query['contain']['Responsible']))
+        {
+          $find = 'Responsible';
+        }
       }
       
       if(isset($find) && $find !== false)

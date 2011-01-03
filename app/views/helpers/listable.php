@@ -80,14 +80,15 @@
     public function item($alias,$id,$name,$options = array())
     {
       $_options = array(
-        'checkbox'  => true,
-        'delete'    => true,
-        'edit'      => true,
-        'comments'  => true,
-        'position'  => false,
-        'class'     => array(),
-        'checked'   => false,
-        'ident'     => $alias.'-'.$id.'-'.rand(10000,99999)
+        'checkbox'            => true,
+        'delete'              => true,
+        'edit'                => true,
+        'comments'            => true,
+        'position'            => false,
+        'class'               => array(),
+        'checked'             => false,
+        'prefix'              => false,
+        'ident'               => $alias.'-'.$id.'-'.rand(10000,99999)
       );
       $options = array_merge($_options,$options);
       
@@ -133,6 +134,12 @@
         $comments = sprintf($this->tags['comments'],$this->Html->link(__('Comments',true),array('action'=>'comments',$id),array('title'=>__('Comments',true))));
       }
       
+      //Name prefix
+      if($options['prefix'] !== false && !empty($options['prefix']))
+      {
+        $name = '<strong>'.$options['prefix'].':</strong> '.$name;
+      }
+      
       //Name
       $item .= sprintf($this->tags['name'],$name,$comments);
       
@@ -154,7 +161,11 @@
         $maintain .= $this->tags['position'];
       }
       
-      $item .= sprintf($this->tags['maintain'],$maintain);
+      //Maintain left control
+      if(!empty($maintain))
+      {
+        $item .= sprintf($this->tags['maintain'],$maintain);
+      }
       
       //Build output
       $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$item);

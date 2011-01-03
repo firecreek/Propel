@@ -16,16 +16,21 @@
         <?php __('The people you select will get an email when you post this comment.'); ?><br />
         <?php __('They\'ll also be notified by email every time a new comment is added.'); ?>
       </p>
+      
       <?php
         $people = $layout->notificationList($auth->read('People'));
         
-        echo $form->input('CommentPeople.person_id',array(
-          'multiple'  => 'checkbox',
-          'options'   => $people,
-          'label'     => false,
-          'escape'    => false,
-          'legend'    => false
-        ));
+        if(!empty($people))
+        {
+          echo $form->input('CommentPeople.person_id',array(
+            'multiple'  => 'checkbox',
+            'options'   => $people,
+            'label'     => false,
+            'escape'    => false,
+            'legend'    => false,
+            'prefixResponsible' => true
+          ));
+        }
         
       ?>
       

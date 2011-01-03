@@ -58,7 +58,15 @@
       {
         if($model->Comment->save())
         {
+          //Add self to subscribers
           $this->addCommentPerson($model, $model->personId);
+          
+          //Add checked
+          foreach($data['CommentPeople']['person_id'] as $personId)
+          {
+            $this->addCommentPerson($model, $personId);
+          }
+          
           return true;
         }
       }
