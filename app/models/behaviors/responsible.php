@@ -71,31 +71,41 @@
       {
         foreach($results as $key => $val)
         {
-          $model = null;
+          $modelAlias = null;
           $foreignId = null;
           $name = null;
           
           if(!empty($val['ResponsiblePerson']['id']))
           {
-            $model = 'Person';
+            $modelAlias = 'Person';
             $foreignId = $val['ResponsiblePerson']['id'];
             $name = $val['ResponsiblePerson']['full_name'];
           }
           elseif(!empty($val['ResponsibleCompany']['id']))
           {
-            $model = 'Company';
+            $modelAlias = 'Company';
             $foreignId = $val['ResponsibleCompany']['id'];
             $name = $val['ResponsibleCompany']['name'];
           }
-        
-          $results[$key]['Responsible'] = array(
-            'model'       => $model,
-            'foreign_id'  => $foreignId,
-            'name'        => $name,
-          );
           
-          unset($results[$key]['ResponsiblePerson']);
-          unset($results[$key]['ResponsibleCompany']);
+          if(isset($foreignId))
+          {
+            $results[$key][$model->alias]['responsible'] = strtolower($modelAlias).'_'.$foreignId;
+          
+            $results[$key]['Responsible'] = array(
+              'model'       => $modelAlias,
+              'foreign_id'  => $foreignId,
+              'name'        => $name,
+            );
+            
+            unset($results[$key]['ResponsiblePerson']);
+            unset($results[$key]['ResponsibleCompany']);
+          }
+          else
+          {
+            $results[$key][$model->alias]['responsible'] = null;
+          }
+          
         }
       }
       

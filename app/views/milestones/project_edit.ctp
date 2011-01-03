@@ -1,7 +1,7 @@
 
 <div class="box">
   <div class="banner">
-    <h2><?php __('Add a new milestone'); ?></h2>
+    <h2><?php __('Edit milestone'); ?></h2>
   </div>
   <div class="content">
     
@@ -10,7 +10,9 @@
     ?>
     
     <?php
-      echo $this->element('milestones/form');
+      echo $this->element('milestones/form',array(
+        'submitText' => __('Save changes',true)
+      ));
     ?>
     
   </div>

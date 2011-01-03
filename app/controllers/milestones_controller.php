@@ -59,6 +59,27 @@
      */
     public function project_index()
     {
+      if(!empty($this->data))
+      {
+        foreach($this->data['Milestone'] as $id => $checked)
+        {
+          $this->Milestone->id = $id;
+          
+          //Check permissions then update
+          if($this->Milestone->canUpdate())
+          {
+            if($checked)
+            {
+              $this->Milestone->complete();
+            }
+            else
+            {
+              $this->Milestone->pending();
+            }
+          }
+        }
+      }
+    
       $milestoneCount = $this->Milestone->find('count',array(
         'conditions' => array(
           'Milestone.project_id' => $this->Authorization->read('Project.id')
@@ -82,9 +103,9 @@
       //Upcoming
       $upcoming = $this->Milestone->find('all',array(
         'conditions' => array(
-          'Milestone.project_id' => $this->Authorization->read('Project.id'),
-          'Milestone.deadline >' => date('Y-m-d'),
-          'Milestone.completed'  => false
+          'Milestone.project_id'  => $this->Authorization->read('Project.id'),
+          'Milestone.deadline >=' => date('Y-m-d'),
+          'Milestone.completed'   => false
         ),
         'contain' => array('Responsible'),
         'order' => 'Milestone.deadline ASC',
@@ -150,7 +171,69 @@
           $this->redirect(array('action'=>'index'));
         }
       }
+    }
     
+    
+    /**
+     * Project edit milestone
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_edit($id)
+    {
+      $this->Milestone->id = $id;
+      
+      if(!empty($this->data))
+      {
+        $this->data['Milestone']['id'] = $id;
+        $this->Milestone->set($this->data);
+        
+        if($this->Milestone->validates())
+        {
+          $this->Milestone->save();
+          $this->Session->setFlash(__('Milestone updated',true),'default',array('class'=>'success'));
+          $this->redirect(array('action'=>'index'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Check the form and try again',true),'default',array('class'=>'error'));
+        }
+      }
+      else
+      {
+        $this->data = $this->Milestone->find('first',array(
+          'conditions' => array(
+            'Milestone.id' => $id
+          ),
+          'contain' => array(
+            'Responsible'
+          )
+        ));
+      }
+      
+      $this->set(compact('id'));
+    }
+    
+    
+    /**
+     * Project delete milestone
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_delete($id)
+    {
+      if($this->Milestone->delete($id))
+      {
+        $this->Session->setFlash(__('Milestone record deleted',true),'default',array('class'=>'success'));
+      }
+      else
+      {
+        $this->Session->setFlash(__('Failed to delete Milestone record',true),'default',array('class'=>'error'));
+      }
+      
+      $this->redirect(array('action'=>'index'));
     }
     
   

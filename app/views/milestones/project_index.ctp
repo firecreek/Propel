@@ -18,6 +18,7 @@
           if(!empty($overdue))
           {
             echo $this->element('milestones/section',array(
+              'type'    => 'overdue',
               'class'   => 'important',
               'title'   => __('Overdue',true),
               'records' => $overdue
@@ -33,10 +34,11 @@
             if(!empty($upcoming14Days)) { $calendar = true; }
           
             echo $this->element('milestones/section',array(
+              'type'          => 'upcoming',
               'class'         => 'highlight',
               'calendar'      => $calendar,
               'calendarData'  => $upcoming14Days,
-              'title'         => __('Upcoming',true),
+              'title'         => __('Late',true),
               'records'       => $upcoming
             ));
           }
@@ -47,6 +49,7 @@
           if(!empty($completed))
           {
             echo $this->element('milestones/section',array(
+              'type'    => 'completed',
               'class'   => 'completed',
               'title'   => __('Completed',true),
               'records' => $completed,
@@ -58,7 +61,6 @@
 
 
 
-        <hr />
         
         <?php
           echo $form->submit(__('Submit Changes',true)); 

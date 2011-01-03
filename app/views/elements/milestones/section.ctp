@@ -49,9 +49,56 @@
             );
           }
           
-          $title = date('l, j F',$date) . ' <span class="responsibility">'.$responsibility.'</span>';
+          //Build title
+          $titleParts = array();
           
-          echo $listable->group('Milestones',$title,$items,array('class'=>'large'));
+          if($type == 'upcoming' || $type == 'overdue')
+          {
+            if(date('Y-m-d',$date) == date('Y-m-d'))
+            {
+              $titleParts[] = __('Today',true);
+            }
+            elseif(date('Y-m-d',$date) == date('Y-m-d',strtotime('+1 day')))
+            {
+              $titleParts[] = __('Tomorrow',true);
+              $titleParts[] = '<span>('.date('l, j F',$date).')</span>';
+            }
+            elseif(date('Y-m-d',$date) == date('Y-m-d',strtotime('-1 day')))
+            {
+              $titleParts[] = __('Yesterday',true);
+              $titleParts[] = '<span>('.date('l, j F',$date).')</span>';
+            }
+            elseif($type == 'overdue')
+            {
+              //Overdue fall back
+              $total = ceil((time() - $date) / 86400);
+            
+              $titleParts[] = $total.' days ago';
+              $titleParts[] = '<span>('.date('l, j F',$date).')</span>';
+            }
+            else
+            {
+              //Upcoming fall back
+              $titleParts[] = date('l, j F',$date);
+              
+              $total = ceil($date / (time()+86400));
+              if($total < 30)
+              {
+                $titleParts[] = '<span>('.$total.' day'.($total > 1 ? 's' : null).' away)</span>';
+              }
+            }
+          }
+          else
+          {
+            $titleParts[] = date('l, j F',$date);
+          }
+          
+          $titleParts[] = '<span class="responsibility">'.$responsibility.'</span>';
+          
+          $title = implode(' ',$titleParts);
+          
+          //
+          echo $listable->group('Milestone',$title,$items,array('class'=>'large'));
           
         ?>
         

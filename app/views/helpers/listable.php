@@ -91,15 +91,18 @@
       );
       $options = array_merge($_options,$options);
       
+      //
+      $aliasAco = Inflector::pluralize($alias);
+      
       //Depending on Person permissions
-      if(!$this->Auth->check('Project.'.$alias,'update'))
+      if(!$this->Auth->check('Project.'.$aliasAco,'update'))
       {
         $options['checkbox'] = false;
         $options['edit'] = false;
         $options['position'] = false;
       }
       
-      if(!$this->Auth->check('Project.'.$alias,'delete'))
+      if(!$this->Auth->check('Project.'.$aliasAco,'delete'))
       {
         $options['delete'] = false;
       }
@@ -118,7 +121,9 @@
       //Checkbox
       if($options['checkbox'])
       {
-        $item .= sprintf($this->tags['checkbox'],$this->Form->input('test',array('type'=>'checkbox','label'=>false,'checked'=>$options['checked'])));
+        $key = $alias.'.'.$id;
+      
+        $item .= sprintf($this->tags['checkbox'],$this->Form->input($key,array('type'=>'checkbox','label'=>false,'checked'=>$options['checked'])));
       }
       
       //Comments button

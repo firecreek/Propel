@@ -71,10 +71,16 @@
       foreach($this->uses as $model)
       {
         $this->{$model}->personId = $this->Authorization->read('Person.id');
+        
+        if($this->{$model}->Behaviors->attached('Auth'))
+        {
+          $this->{$model}->setAuthState($this->Session->read('AuthAccount'));
+        }
       }
       
       parent::beforeFilter();
     }
+  
     
     
     /**

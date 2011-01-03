@@ -43,6 +43,18 @@
       'update'  => '_update'
     );
     
+    
+    /**
+     * Checks with Auth model behavior if record can be modified
+     *
+     * @access public
+     * @var array
+     */
+    public $modelAuthCheck = array(
+      '_update'  => true,
+      '_delete'  => true
+    );
+    
 
     /**
      * Initialize component
@@ -292,17 +304,16 @@
           )
         ));
         
+        //Fix action map
+        $action = str_replace($prefix.'_','',$this->controller->action);
+        $actionKey = $this->actionMap[$action];
         
         //Check request permissions
         $isAllowed = false;
         $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controller->name);
         
         if(!empty($permissionNode))
-        {
-          //Fix action map
-          $action = str_replace($prefix.'_','',$this->controller->action);
-          $actionKey = $this->actionMap[$action];
-          
+        {          
           //Check if allowed
           $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
             'conditions' => array(
@@ -312,6 +323,37 @@
               'Permission.'.$actionKey => true
             )
           ));
+        }
+        
+        //Check action for this controller is permitted, only if allowed already
+        //This is a customised version of the model record validation
+        if(isset($this->modelAuthCheck[$actionKey]) && $isAllowed == true)
+        {
+          $modelAlias = Inflector::classify($this->controller->name);
+          $fieldKey   = $prefix.'_id';
+          
+          if(
+            isset($this->controller->params['pass'][0]) &&
+            is_numeric($this->controller->params['pass'][0]) &&
+            isset($this->controller->{$modelAlias}) &&
+            is_object($this->controller->{$modelAlias}) &&
+            $this->controller->{$modelAlias}->hasField($fieldKey)
+          )
+          {
+            //Model exists, and the record has to match up with the prefix
+            if(!$this->controller->{$modelAlias}->find('count',array(
+              'conditions' => array(
+                'id'        => $this->controller->params['pass'][0],
+                $fieldKey   => $modelId
+              ),
+              'recursive' => -1
+            )))
+            {
+              //Failed to match prefix and updating record together
+              $isAllowed = false;
+            }
+            
+          }
         }
         
         //Throw error

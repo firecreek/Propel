@@ -114,8 +114,8 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .section.completed .banner h3 { color:white; }
 .section.completed h4 { color:#090; }
  
-.section.small .banner { min-height:26px; }
-.section.small .banner h3 { font-size:12px; font-weight:bold; padding:4px 0 0 6px; }
+.section.small .banner { min-height:20px; }
+.section.small .banner h3 { font-size:11px; font-weight:bold; padding:2px 0 0 6px; }
 
 
 /**
@@ -255,9 +255,9 @@ form .input.strong label { font-weight:bold; }
  */
 .listable {}
  
-.listable .group { border-bottom:1px solid #F0F0F0; }
+.listable .group { border-bottom:1px solid #E0E0E0; }
 
-.listable .group .banner { background-color:white !important; min-height:0; margin:0 0 10px 0; padding:0; }
+.listable .group .banner { background-color:white !important; min-height:0; margin:0 0 5px 0; padding:0; }
 .listable .group .banner h4 { font-size:11px; margin:10px 0 0 0; padding:0; }
 .listable .group .banner span { font-weight:normal; }
 .listable .group .banner span.responsibility { color:#666; } 
@@ -272,7 +272,7 @@ form .input.strong label { font-weight:bold; }
 .listable .item .name { font-size:12px; left:20px; position:relative; color:#333; z-index:10; }
 .listable .item .name span {  }
 
-.listable .item .comment { display:inline-block; width:14px; height:13px; background:url(/img/icons/comments-13.png) transparent top left; text-indent:-9000px; margin-left:2px; position:relative; top:2px; }
+.listable .item .comment { display:inline-block; width:14px; height:13px; background:url(/img/icons/comments-13.png) transparent top left; text-indent:-9000px; margin-left:5px; position:relative; top:2px; }
 .listable .item .comment a { display:block; width:100%; height:100%; }
 .listable .item .comment a:hover { background-color:transparent; }
 
@@ -282,7 +282,7 @@ form .input.strong label { font-weight:bold; }
 .listable .item .maintain .delete a { display:block; width:100%; height:100%; }
 .listable .item .maintain .delete a:hover { background-color:transparent; }
 
-.listable .item .maintain .edit {}
+.listable .item .maintain .edit { margin:0 0 0 6px; }
 .listable .item .maintain .edit a { font-size:10px; position:relative; top:-2px; }
 
 .listable .item .maintain .position { width:13px; height:16px; display:inline-block; background:url(/img/icons/position.png) transparent top left; margin:0 0 0 2px; top:4px; position:relative; cursor:move; }
