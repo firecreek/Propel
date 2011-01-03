@@ -1,48 +1,53 @@
 <?php
-class Comment extends AppModel {
-	var $name = 'Comment';
-	var $validate = array(
-		'model' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'model_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'person_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'person_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-}
+  /**
+   * Comment Model
+   *
+   * @category Model
+   * @package  OpenCamp
+   * @version  1.0
+   * @author   Darren Moore <darren.m@firecreek.co.uk>
+   * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+   * @link     http://opencamp.firecreek.co.uk
+   */
+  class Comment extends AppModel
+  {
+    /**
+     * Name
+     *
+     * @access public
+     * @var string
+     */
+    public $name = 'Comment';
+    
+    /**
+     * Validation
+     *
+     * @access public
+     * @var array
+     */
+    public $validate = array(
+      'body' => array(
+        'notempty' => array(
+          'rule' => array('notempty'),
+          'required' => true,
+        ),
+      )
+    );
+    
+    /**
+     * Has many
+     *
+     * @access public
+     * @var array
+     */
+    public $hasMany = array(
+      'CommentPerson' => array(
+        'className' => 'CommentPerson',
+        'foreignKey' => 'comment_id',
+      )
+    );
+    
+  }
+
 ?>

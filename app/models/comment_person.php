@@ -1,11 +1,9 @@
 <?php
 
   /**
-   * Comment Read Model
+   * Comment Person
    *
-   * Used to check which comments have been read by a Person
-   * If record exists then comments have been read already
-   * When viewing a comment a new record is added to this model with the comment id
+   * People subscribed to the main comment thread
    *
    * @category Model
    * @package  OpenCamp
@@ -14,7 +12,7 @@
    * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
    * @link     http://opencamp.firecreek.co.uk
    */
-  class CommentRead extends AppModel
+  class CommentPerson extends AppModel
   {
     /**
      * Name
@@ -22,7 +20,15 @@
      * @access public
      * @var string
      */
-    public $name = 'CommentRead';
+    public $name = 'CommentPerson';
+    
+    /**
+     * Use table
+     *
+     * @access public
+     * @var string
+     */
+    public $useTable = 'comments_people';
     
     /**
      * Validation
