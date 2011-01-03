@@ -3,11 +3,13 @@
         <h2><?php echo $title_for_layout; ?></h2>
     </div>
     <div class="content">
+        <?php /*
         <p>
             Admin panel: <?php echo $html->link(Router::url('/admin', true), Router::url('/admin', true)); ?><br />
             Username: admin<br />
             Password: <?php echo $password; ?>
         </p>
+        */ ?>
         
         <p>
             Home: <?php echo $html->link(Router::url('/', true), Router::url('/', true)); ?><br />
