@@ -375,13 +375,16 @@ table.calendar.short td.today .day { color:#333; background-color:transparent; p
  
 table.calendar.small { width:200px; border-collapse:collapse; }
 table.calendar.small th { background-color:#CCC; color:#666; font-size:10px; padding:3px 0 3px 0; }
-table.calendar.small td { background-color:transparent; border:none; padding:0; width:22px; height:22px; }
+table.calendar.small td { background-color:transparent; border:1px solid transparent !important; padding:0; width:22px; height:22px; }
 table.calendar.small td .day { color:black; float:none; width:100%; text-align:center; margin:3px 0 0 0; }
 table.calendar.small td.weekend .day { color:#999; }
-table.calendar.small td.today { background-color:#FC0; }
-table.calendar.small td.today .day { padding:0; float:none; background-color:transparent; }
+table.calendar.small td.today { background-color:#FC0; border:1px solid #69C !important; }
+table.calendar.small td.today .day { padding:0; float:none; background-color:transparent; font-weight:bold !important; }
 
 table.calendar.small th.month { width:36px; font-size:10px; }
+
+table.calendar.small td.with { background-color:#FC0 !important; }
+table.calendar.small td.with .day { font-weight:normal; color:black; }
 
  
 

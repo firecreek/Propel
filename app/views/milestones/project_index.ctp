@@ -38,7 +38,7 @@
               'class'         => 'highlight',
               'calendar'      => $calendar,
               'calendarData'  => $upcoming14Days,
-              'title'         => __('Late',true),
+              'title'         => __('Upcoming',true),
               'records'       => $upcoming
             ));
           }
@@ -87,7 +87,12 @@
     <?php
     
       //Small calendar
-      echo $this->element('calendar/month',array('type'=>'small','month'=>date('n'),'year'=>date('Y')));
+      echo $this->element('calendar/month',array(
+        'type'    => 'small',
+        'month'   => date('n'),
+        'year'    => date('Y'),
+        'records' => $upcoming
+      ));
       
     ?>
     

@@ -25,6 +25,7 @@
   $continueDates = false;
   $monthPosition = 'top';
   $dayEnd = $daysInMonth;
+  $showEvents = true;
   $day = 1;
 
   //Types
@@ -47,6 +48,7 @@
   {
     //Small calendar
     $todayText = false;
+    $showEvents = false;
     
     $dayList = array(
       __('Mon',true),
@@ -187,10 +189,14 @@
             if(isset($events[$eventDate]))
             {
               $class[] = 'with';
-              $cell = '';
-              foreach($events[$eventDate] as $event)
+              
+              if($showEvents)
               {
-                $cell .= '<div class="event">'.$html->link($event['title'],$event['url']).'</div>';
+                $cell = '';
+                foreach($events[$eventDate] as $event)
+                {
+                  $cell .= '<div class="event">'.$html->link($event['title'],$event['url']).'</div>';
+                }
               }
             }
             

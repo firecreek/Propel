@@ -8,7 +8,12 @@
     <?php if(isset($calendar) && $calendar == true): ?>
       <h3 class="sub"><?php __('Due in the next 14 days'); ?></h3>
       <?php
-        echo $this->element('calendar/month',array('type'=>'short','month'=>date('n'),'year'=>date('Y')));
+        echo $this->element('calendar/month',array(
+          'type'=>'short',
+          'month'=>date('n'),
+          'year'=>date('Y'),
+          'records' => isset($calendarData) ? $calendarData : null
+        ));
       ?>
       <br />
       <h3 class="sub"><?php __('All upcoming'); ?></h3>
