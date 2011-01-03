@@ -11,33 +11,38 @@ Phase One, Basic clone
 - Design similar to BC
 - No file sharing
 - No email piping, emails only outgoing
-- Basic administration system
 - Standardised elements
-- Javascript / ajax elements
 - Themeing
+- Projects
+- ACL
 
-Phase Two, Full clone
-- Full API with wrapper to BC format
+Phase Two, Clone
+- Categorising content
+- Javascript / ajax elements
+- Basic administration system
+- Full system API
 - File sharing
 - Email piping into system for incoming email
 - RSS Feeds
 - iCalendar feed
 - Email updates
 
-Phase Three, Improvements
+Phase Three, BC
+- API wrapper for BC format
+- Import from BC
+
+Phase Four, Improvements
 - Better UI for people/company permissions
 - Improved paginated overview pages
 - Search element for RHS
 - Full administration area
 
-Phase Four, Beyond
+Future
 - Move functionality to extendable plugins
 - Whiteboard plugin
 - Chat plugin
 - Mantis / bug tracker items
 - Public project lists
-
-Future plugins
 - Pages plugin
 - Google wave?
 
