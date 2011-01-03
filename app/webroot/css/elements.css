@@ -119,6 +119,15 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 
 /**
+ * HTML lists
+ */
+ul.overdue {}
+ul.overdue li { font-size:11px; margin:0 0 4px 0; }
+ul.overdue li:last-child { margin-bottom:0; }
+ul.overdue li strong { color:#C00; }
+
+
+/**
  * Blank slate
  */
 .blank-slate { width:650px; margin:50px auto 100px auto; }
@@ -249,9 +258,8 @@ form .input.strong label { font-weight:bold; }
 .button.margin { margin-bottom:20px; }
 
 
-
 /**
- * Lists
+ * Listable
  */
 .listable {}
  

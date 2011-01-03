@@ -109,17 +109,10 @@
     {
       $record = $this->Company->find('first',array(
         'conditions' => array(
-          'Company.id' => $companyId,
-          'Company.account_id' => $this->Authorization->read('Account.id')
+          'Company.id' => $companyId
         ),
         'contain' => array()
       ));
-      
-      if(empty($record))
-      {
-        $this->Session->setFlash(__('You do not have permission to access this company',true),'default',array('class'=>'error'));
-        $this->redirect($this->referer(), null, true); 
-      }
       
       //Save
       if(!empty($this->data))
@@ -162,7 +155,6 @@
       $record = $this->Company->find('first',array(
         'conditions' => array(
           'Company.id' => $companyId,
-          'Company.account_id' => $this->Authorization->read('Account.id'),
           'Company.account_owner' => false
         ),
         'contain' => false

@@ -95,7 +95,21 @@
      */
     public function project_index()
     {
-           
+      $this->loadModel('Milestone');
+    
+      //Overdue
+      $overdue = $this->Milestone->find('all',array(
+        'conditions' => array(
+          'Milestone.project_id' => $this->Authorization->read('Project.id'),
+          'Milestone.deadline <' => date('Y-m-d'),
+          'Milestone.completed'  => false
+        ),
+        'contain' => array('Responsible'),
+        'order' => 'Milestone.deadline ASC',
+        'limit' => 10
+      ));
+      
+      $this->set(compact('overdue'));
     }
     
   

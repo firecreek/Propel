@@ -12,7 +12,31 @@
         </ul>
       </div>
       <div class="content">
-        <p>overview here</p>
+      
+        <?php if(!empty($overdue)): ?>
+          <div class="section outlined">
+            <div class="banner">
+              <h3><?php __('Late milestones'); ?></h3>
+            </div>
+            <div class="content">
+              <ul class="overdue">
+                <?php foreach($overdue as $record): ?>
+                  <?php
+                    $total = ceil((time() - strtotime($record['Milestone']['deadline'])) / 86400);
+                  ?>
+                  <li>
+                    <strong><?php echo $total; ?> days late</strong>:
+                    <?php echo $html->link($record['Milestone']['title'],array('projectId'=>$record['Milestone']['project_id'],'controller'=>'milestones')); ?>
+                    <?php if(isset($record['Responsible'])): ?>
+                      (<?php echo $record['Responsible']['name']; ?> is responsible)
+                    <?php endif; ?>
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          </div>
+        <?php endif; ?>
+      
       </div>
     </div>
   

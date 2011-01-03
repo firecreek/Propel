@@ -351,8 +351,7 @@
             {
               //Failed to match prefix and updating record together
               $isAllowed = false;
-            }
-            
+            }            
           }
         }
         

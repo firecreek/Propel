@@ -23,7 +23,8 @@
         $grouped = array();
         foreach($records as $record)
         {
-          $key = strtotime($record['Milestone'][$dateKey]).'::'.$record['Responsible']['name'];
+          $responsible = isset($record['Responsible']['name']) ? $record['Responsible']['name'] : null;
+          $key = strtotime($record['Milestone'][$dateKey]).'::'.$responsible;
           if(!isset($grouped[$key])) { $grouped[$key] = array(); }
           
           $grouped[$key][] = $record;
@@ -93,7 +94,10 @@
             $titleParts[] = date('l, j F',$date);
           }
           
-          $titleParts[] = '<span class="responsibility">'.$responsibility.'</span>';
+          if(!empty($responsibility))
+          {
+            $titleParts[] = '<span class="responsibility">'.$responsibility.'</span>';
+          }
           
           $title = implode(' ',$titleParts);
           
