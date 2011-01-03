@@ -72,7 +72,7 @@
             elseif($type == 'overdue')
             {
               //Overdue fall back
-              $total = ceil((time() - $date) / 86400);
+              $total = floor((time() - $date) / 86400);
             
               $titleParts[] = $total.' days ago';
               $titleParts[] = '<span>('.date('l, j F',$date).')</span>';
@@ -82,7 +82,8 @@
               //Upcoming fall back
               $titleParts[] = date('l, j F',$date);
               
-              $total = ceil($date / (time()+86400));
+              $total = ceil(($date - time()) / 86400);
+              
               if($total < 30)
               {
                 $titleParts[] = '<span>('.$total.' day'.($total > 1 ? 's' : null).' away)</span>';

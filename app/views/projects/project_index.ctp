@@ -39,7 +39,7 @@
                 <ul class="overdue">
                   <?php foreach($overdue as $record): ?>
                     <?php
-                      $total = ceil((time() - strtotime($record['Milestone']['deadline'])) / 86400);
+                      $total = floor((time() - strtotime($record['Milestone']['deadline'])) / 86400);
                     ?>
                     <li>
                       <strong><?php echo $total; ?> days late</strong>:

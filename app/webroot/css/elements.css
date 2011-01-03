@@ -182,6 +182,13 @@ form .submit input { padding:3px 5px 3px 5px; margin-right:8px; }
 form .submit a { color:#ff0000; padding:0 1px; }
 form .submit a:hover { color:#FFF; background-color:#ff0000; text-decoration:none; }
 
+form .extra { border:1px dotted #999; padding:5px; margin:15px 0; }
+form .extra p { font-size:12px; }
+form .extra div.input { padding:0 5px; margin-bottom:5px; }
+form .extra div.input:last-child { margin-bottom:0; }
+form .extra div.input label { font-size:11px; top:2px; }
+form .extra .input.checkbox input { margin-top:1px; }
+
 form .block label, form.block label { display:block; float:none; width:auto; margin-bottom:2px; }
 form .block small, form.block small { margin-left:0; }
 
