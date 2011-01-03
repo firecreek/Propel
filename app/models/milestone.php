@@ -30,6 +30,7 @@
       'Responsible',
       'Containable',
       'Completable',
+      'Commentable',
       'Auth'
     );
     
