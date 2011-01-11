@@ -95,7 +95,9 @@
           'Milestone.deadline <' => date('Y-m-d'),
           'Milestone.completed'  => false
         ),
-        'contain' => array('Responsible'),
+        'contain' => array(
+          'Responsible'
+        ),
         'order' => 'Milestone.deadline ASC',
         'limit' => 10
       ));

@@ -93,27 +93,27 @@ h3.section { clear:both; }
 /**
  * Comments
  */
-.comment { min-height:70px; margin-bottom:20px; border-bottom:1px solid #E0E0E0; }
+.comments .comment { min-height:70px; margin-bottom:20px; border-bottom:1px solid #E0E0E0; }
  
-.comment .avatar { float:left; }
+.comments .comment .avatar { float:left; }
  
-.comment .area { margin-left:75px; }
+.comments .comment .area { margin-left:75px; }
 
-.comment .area .banner { min-height:0; background-color:transparent; border-bottom:0; margin-bottom:5px;  }
-.comment .area .banner h4 { font-size:12px; margin:0; }
-.comment .area .banner span { font-weight:normal; margin-left:5px; }
-.comment .area .banner ul.right { top:0; }
-.comment .area .banner .delete { margin:5px 0 0 6px; width:10px; height:11px; display:inline-block; text-indent:-9000px; background:url(/img/icons/delete-10.png) transparent top left; }
-.comment .area .banner .delete a { display:block; width:100%; height:100%; }
-.comment .area .banner .delete a:hover { background-color:transparent; }
+.comments .comment .area .banner { min-height:0; background-color:transparent; border-bottom:0; margin-bottom:5px;  }
+.comments .comment .area .banner h4 { font-size:12px; margin:0; }
+.comments .comment .area .banner span { font-weight:normal; margin-left:5px; }
+.comments .comment .area .banner ul.right { top:0; }
+.comments .comment .area .banner .delete { margin:5px 0 0 6px; width:10px; height:11px; display:inline-block; text-indent:-9000px; background:url(/img/icons/delete-10.png) transparent top left; }
+.comments .comment .area .banner .delete a { display:block; width:100%; height:100%; }
+.comments .comment .area .banner .delete a:hover { background-color:transparent; }
 
-.comment .area .content { padding:0; margin:0; }
+.comments .comment .area .content { padding:0; margin:0; }
 
 
-.comment.add { border-bottom:0; }
-.comment.add .area .banner {}
+.comments .comment.add { border-bottom:0; }
+.comments .comment.add .area .banner {}
 
-.comment.add div.checkbox { margin-bottom:5px; }
-.comment.add div.checkbox input { position:relative; top:2px; }
-.comment.add div.checkbox label { float:none; width:auto; margin-left:5px; }
+.comments .comment.add div.checkbox { margin-bottom:5px; }
+.comments .comment.add div.checkbox input { position:relative; top:2px; }
+.comments .comment.add div.checkbox label { float:none; width:auto; margin-left:5px; }
 

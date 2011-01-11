@@ -24,10 +24,10 @@
       $model->bindModel(array(
         'hasMany' => array(
           'Comment' => array(
-            'conditions'  => array('Comment.model' => $model->alias),
-            'foreignKey'  => 'foreign_id',
-            'dependent'   => true,
-            'order'       => 'Comment.created DESC'
+            'conditions'    => array('Comment.model' => $model->alias),
+            'foreignKey'    => 'foreign_id',
+            'dependent'     => true,
+            'order'         => 'Comment.created DESC'
           ),
           'CommentPerson' => array(
             'conditions'  => array('CommentPerson.model' => $model->alias),
@@ -62,10 +62,16 @@
           $this->addCommentPerson($model, $model->personId);
           
           //Add checked
-          foreach($data['CommentPeople']['person_id'] as $personId)
+          if(isset($data['CommentPeople']['person_id']) && !empty($data['CommentPeople']['person_id']))
           {
-            $this->addCommentPerson($model, $personId);
+            foreach($data['CommentPeople']['person_id'] as $personId)
+            {
+              $this->addCommentPerson($model, $personId);
+            }
           }
+          
+          //Update count
+          $this->updateCommentCount($model);
           
           return true;
         }
@@ -129,6 +135,27 @@
         'recursive' => -1
       ));
     }
+    
+    
+    /**
+     * Update comment_count field
+     *
+     * @access public
+     * @return boolean
+     */
+    public function updateCommentCount(&$model)
+    {
+      $count = $model->Comment->find('count',array(
+        'conditions' => array(
+          'Comment.model' => $model->alias,
+          'Comment.foreign_id' => $model->id
+        ),
+        'recursive' => -1
+      ));
+      
+      return $model->saveField('comment_count',$count);
+    }
+    
     
   }
 

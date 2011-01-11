@@ -22,12 +22,14 @@
         <?php
           echo $session->flash();
         ?>
-        <?php
-          echo $this->element('comments/list',array('comments'=>$record['Comment']));
-        ?>
-        <?php
-          echo $this->element('comments/add');
-        ?>
+        <div class="comments">
+          <?php
+            echo $this->element('comments/list',array('comments'=>$record['Comment']));
+          ?>
+          <?php
+            echo $this->element('comments/add');
+          ?>
+        </div>
       </div>
     </div>
 

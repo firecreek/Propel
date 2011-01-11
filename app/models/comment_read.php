@@ -33,6 +33,14 @@
     public $validate = array();
     
     /**
+     * Use table
+     *
+     * @access public
+     * @var string
+     */
+    public $useTable = 'comments_reads';
+    
+    /**
      * Belongs to
      *
      * @access public

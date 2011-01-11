@@ -1,4 +1,8 @@
+<?php
 
+  $javascript->link('listable.js', false);
+  
+?>
 <div class="cols">
 
   <div class="col left">
@@ -67,6 +71,12 @@
           echo $form->end();
         ?>
         
+        
+        <?php
+          echo $javascript->codeBlock("
+            $('.listable .item').listable();
+          ");
+        ?>
         
         
       </div>

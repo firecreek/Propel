@@ -38,7 +38,7 @@
       'item'              => '<div id="%s" class="item %s">%s</div>',
       'checkbox'          => '<div class="check">%s</div>',
       'name'              => '<div class="name">%s%s</div>',
-      'comments'          => '<div class="comment">%s</div>',
+      'comments'          => '<div class="comment"><span class="icon">%s</span><span class="count">%s</span></div>',
       'maintain'          => '<div class="maintain">%s</div>',
       'delete'            => '<span class="delete">%s</span>',
       'edit'              => '<span class="edit important">%s</span>',
@@ -84,6 +84,7 @@
         'delete'              => true,
         'edit'                => true,
         'comments'            => true,
+        'commentCount'        => 0,
         'position'            => false,
         'class'               => array(),
         'checked'             => false,
@@ -110,11 +111,14 @@
 
       //Style
       if(!is_array($options['class'])) { $options['class'] = array($options['class']); }
-      if($options['checkbox'])  { $options['class'][] = 'checkbox'; }
-      if($options['delete'])    { $options['class'][] = 'delete'; }
-      if($options['edit'])      { $options['class'][] = 'edit'; }
-      if($options['comments'])  { $options['class'][] = 'comments'; }
-      if($options['position'])  { $options['class'][] = 'position'; }
+      
+      if($options['checkbox'])  { $options['class'][] = 'l-checkbox'; }
+      if($options['delete'])    { $options['class'][] = 'l-delete'; }
+      if($options['edit'])      { $options['class'][] = 'l-edit'; }
+      if($options['position'])  { $options['class'][] = 'l-position'; }
+      if($options['comments'])  { $options['class'][] = 'l-comments'; }
+      
+      if($options['commentCount'] > 0)  { $options['class'][] = 'l-comments-with'; }
       
       //Item
       $item = '';
@@ -131,7 +135,9 @@
       $comments = '';
       if($options['comments'])
       {
-        $comments = sprintf($this->tags['comments'],$this->Html->link(__('Comments',true),array('action'=>'comments',$id),array('title'=>__('Comments',true))));
+        $commentLink = $this->Html->link(__('Comments',true),array('action'=>'comments',$id),array('title'=>__('Comments',true)));
+        $commentCount = $this->Html->link($options['commentCount'],array('action'=>'comments',$id),array('title'=>__('Comments',true)));
+        $comments = sprintf($this->tags['comments'],$commentLink,$commentCount);
       }
       
       //Name prefix
@@ -169,10 +175,6 @@
       
       //Build output
       $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$item);
-      
-      $output .= $this->Javascript->codeBlock("
-        Account.listableDisplay('".$options['ident']."','hide');
-      ");
       
       return $output;
     }

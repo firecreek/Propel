@@ -50,7 +50,8 @@
               'id'      => $milestone['Milestone']['id'],
               'title'   => $milestone['Milestone']['title'],
               'options' => array(
-                'checked' => (isset($checked) && $checked) ? true : false
+                'checked'       => (isset($checked) && $checked) ? true : false,
+                'commentCount'  => $milestone['Milestone']['comment_count']
               )
             );
           }
