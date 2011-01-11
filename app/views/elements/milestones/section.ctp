@@ -47,11 +47,12 @@
           foreach($records as $milestone)
           {
             $items[] = array(
-              'id'      => $milestone['Milestone']['id'],
-              'title'   => $milestone['Milestone']['title'],
-              'options' => array(
+              'id'        => $milestone['Milestone']['id'],
+              'title'     => $milestone['Milestone']['title'],
+              'options'   => array(
                 'checked'       => (isset($checked) && $checked) ? true : false,
-                'commentCount'  => $milestone['Milestone']['comment_count']
+                'commentCount'  => $milestone['Milestone']['comment_count'],
+                'editUrl'   => $html->url(array('controller'=>'milestones','action'=>'edit',$milestone['Milestone']['id']))
               )
             );
           }

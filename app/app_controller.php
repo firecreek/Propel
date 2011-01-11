@@ -90,8 +90,10 @@
      * @return void
      */
     public function beforeRender()
-    {
-      if(isset($this->params['prefix']) && $prefix = $this->params['prefix'])
+    { 
+      $prefix = isset($this->params['prefix']) ? $this->params['prefix'] : null;
+      
+      if($prefix && !$this->RequestHandler->isAjax())
       {
         if($this->layout !== false)
         {
@@ -108,8 +110,10 @@
             break;
         }
         
-        $this->set(compact('prefix','header'));
+        $this->set(compact('header'));
       }
+      
+      $this->set(compact('prefix'));
     
       parent::beforeRender();
     }
@@ -123,7 +127,7 @@
      */
     public function redirect($url, $status = null, $exit = true)
     {
-      if(is_array($url) && (!isset($url['prefix']) && $url['prefix'] !== false))
+      if(is_array($url) && !isset($url['prefix']) && (isset($url['prefix']) && $url['prefix'] !== false))
       { 
         //Add account slug
         if(

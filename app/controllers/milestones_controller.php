@@ -194,6 +194,12 @@
         if($this->Milestone->validates())
         {
           $this->Milestone->save();
+          
+          if($this->RequestHandler->isAjax())
+          {
+            return $this->render();
+          }
+          
           $this->Session->setFlash(__('Milestone updated',true),'default',array('class'=>'success'));
           $this->redirect(array('action'=>'index'));
         }

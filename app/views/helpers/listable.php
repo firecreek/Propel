@@ -35,14 +35,16 @@
                                 <div class="content">%s</div>
                               </div>
                             ',
-      'item'              => '<div id="%s" class="item %s">%s</div>',
+      'item'              => '<div id="%s" class="item %s" rel-url="%s">%s</div>',
       'checkbox'          => '<div class="check">%s</div>',
       'name'              => '<div class="name">%s%s</div>',
+      'inline'            => '<div class="inline"></div>',
       'comments'          => '<div class="comment"><span class="icon">%s</span><span class="count">%s</span></div>',
       'maintain'          => '<div class="maintain">%s</div>',
       'delete'            => '<span class="delete">%s</span>',
       'edit'              => '<span class="edit important">%s</span>',
       'position'          => '<span class="position"></span>',
+      'loading'           => '<span class="loading" style="display:none;"></span>',
     );
     
     
@@ -83,6 +85,7 @@
         'checkbox'            => true,
         'delete'              => true,
         'edit'                => true,
+        'editUrl'             => false,
         'comments'            => true,
         'commentCount'        => 0,
         'position'            => false,
@@ -149,6 +152,9 @@
       //Name
       $item .= sprintf($this->tags['name'],$name,$comments);
       
+      //Loading
+      $item .= sprintf($this->tags['loading']);
+      
       //Maintain
       $maintain = '';
       
@@ -173,8 +179,11 @@
         $item .= sprintf($this->tags['maintain'],$maintain);
       }
       
+      //Inline
+      $item .= sprintf($this->tags['inline']);
+      
       //Build output
-      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$item);
+      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$options['editUrl'],$item);
       
       return $output;
     }

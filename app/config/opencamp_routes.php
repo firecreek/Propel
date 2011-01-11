@@ -6,6 +6,8 @@
     Router::connect('/', array('plugin' => 'install' ,'controller' => 'install'));
     return;
   }
+  
+  Router::parseExtensions('rss','json','ajax','xml'); 
 
   Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
   Router::connect('/users/login', array('controller' => 'users', 'action' => 'login'));
