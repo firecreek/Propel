@@ -127,7 +127,7 @@
      */
     public function redirect($url, $status = null, $exit = true)
     {
-      if(is_array($url) && !isset($url['prefix']) && (isset($url['prefix']) && $url['prefix'] !== false))
+      if(is_array($url) && !isset($url['prefix']))
       { 
         //Add account slug
         if(
@@ -146,7 +146,7 @@
         {
           $url['projectId'] = $this->params['projectId'];
         }
-      } 
+      }
       
       return parent::redirect($url, $status, $exit);
     }
