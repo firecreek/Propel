@@ -28,7 +28,12 @@
      */
     public $actsAs = array(
       'Acl' => array('type' => 'requester'),
-      'Containable'
+      'Containable',
+      'Cached' => array(
+        'prefix' => array(
+          'person_'
+        ),
+      ),
     );
     
     /**

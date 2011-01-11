@@ -301,3 +301,5 @@
  *
  */
 	Cache::config('default', array('engine' => 'File'));
+  
+	Cache::config('acl', array('engine' => 'File','path'=>CACHE.DS.'acl'));
