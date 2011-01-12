@@ -11,17 +11,18 @@
         echo $form->input('body',array('type'=>'textarea','label'=>false));
       ?>
       
-      <h5><?php __('Subscribe people to receive email notifications'); ?></h5>
-      <p>
-        <?php __('The people you select will get an email when you post this comment.'); ?><br />
-        <?php __('They\'ll also be notified by email every time a new comment is added.'); ?>
-      </p>
-      
       <?php
         $people = $layout->notificationList($auth->read('People'));
+        if(!empty($people)):
+      ?>
         
-        if(!empty($people))
-        {
+        <h5><?php __('Subscribe people to receive email notifications'); ?></h5>
+        <p>
+          <?php __('The people you select will get an email when you post this comment.'); ?><br />
+          <?php __('They\'ll also be notified by email every time a new comment is added.'); ?>
+        </p>
+        
+        <?php
           echo $form->input('CommentPeople.person_id',array(
             'multiple'  => 'checkbox',
             'options'   => $people,
@@ -30,8 +31,10 @@
             'legend'    => false,
             'prefixResponsible' => true
           ));
-        }
-        
+        ?>
+      
+      <?php
+        endif;
       ?>
       
       <?php

@@ -17,7 +17,6 @@
 
     public function setup(&$model, $config = array())
     {
-    
     }
     
     
@@ -42,8 +41,8 @@
               'foreignKey' => false,
               'fields' => array('id','full_name'),
               'conditions' => array(
-                'Milestone.responsible_id = ResponsiblePerson.id',
-                'Milestone.responsible_model = "Person"',
+                $model->alias.'.responsible_id = ResponsiblePerson.id',
+                $model->alias.'.responsible_model = "Person"',
               )
             ),
             'ResponsibleCompany' => array(
@@ -51,8 +50,8 @@
               'foreignKey' => false,
               'fields' => array('id','name'),
               'conditions' => array(
-                'Milestone.responsible_id = ResponsibleCompany.id',
-                'Milestone.responsible_model = "Company"',
+                $model->alias.'.responsible_id = ResponsibleCompany.id',
+                $model->alias.'.responsible_model = "Company"',
               )
             )
           )

@@ -1,4 +1,6 @@
-
+<?php
+  $javascript->link('listable.js', false);
+?>
 <div class="cols">
 
   <div class="col left">
@@ -13,11 +15,19 @@
               'delete'    => false,
               'edit'      => false,
               'comments'  => false,
-              'prefix'    => isset($record['Responsible']['name']) ? $record['Responsible']['name'] : null
+              'prefix'    => isset($record['Responsible']['name']) ? $record['Responsible']['name'] : null,
+              'updateUrl' => $html->url(array('controller'=>'milestones','action'=>'update',$id))
             ));
           ?></div>
         </div>
       </div>
+      
+      <?php
+        echo $javascript->codeBlock("
+          $('.listable .item').listable();
+        ");
+      ?>
+      
       <div class="content">
         <?php
           echo $session->flash();

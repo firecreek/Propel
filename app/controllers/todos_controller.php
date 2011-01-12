@@ -18,7 +18,7 @@
      * @access public
      * @var array
      */
-    public $helpers = array();
+    public $helpers = array('Listable');
     
     /**
      * Components
@@ -35,6 +35,17 @@
      * @var array
      */
     public $uses = array('Todo','Company');
+    
+    /**
+     * Action map
+     *
+     * @access public
+     * @var array
+     */
+    public $actionMap = array(
+      'add_item'  => '_create',
+      'edit_item'  => '_update',
+    );
     
     /**
      * Due options
@@ -113,9 +124,181 @@
       $this->data['Todo']['responsible']  = isset($this->params['url']['responsible']) ? $this->params['url']['responsible'] : 'all';
       $this->data['Todo']['due']          = isset($this->params['url']['due']) ? $this->params['url']['due'] : 'anytime';
       
+      
+      //Todo lists
+      $todos = $this->Todo->find('all',array(
+        'conditions' => array(
+          'Todo.project_id' => $this->Authorization->read('Project.id')
+        ),
+        'fields' => array('id','name'),
+        'order' => 'Todo.position ASC',
+        'contain' => false,
+        'items' => array(
+          'conditions' => array(
+            'TodoItem.completed' => false
+          ),
+          'contain' => array(
+            'Responsible'
+          )
+        )
+      ));
+      
       $responsible = $this->Opencamp->findResponsible();
       
-      $this->set(compact('responsible','records'));
+      $this->set(compact('responsible','todos'));
+    }
+    
+    
+    /**
+     * Project add
+     *
+     * @access public
+     * @return void
+     */
+    public function project_add()
+    {
+      if(!empty($this->data))
+      {
+        //Fill in missing data
+        $this->data['Todo']['project_id'] = $this->Authorization->read('Project.id');
+        $this->data['Todo']['person_id'] = $this->Authorization->read('Person.id');
+
+        //
+        $this->Todo->set($this->data);
+        
+        if($this->Todo->validates())
+        {
+          $this->Todo->save();
+          
+          $this->Todo->setFlash(__('Todo list added',true),'default',array('class'=>'success'));
+          $this->redirect(array('action'=>'index'));
+        }
+      }
+    }
+    
+    
+    /**
+     * Project edit todo
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_edit($id)
+    {
+      $this->Todo->id = $id;
+      
+      if(!empty($this->data))
+      {
+        $this->data['Todo']['id'] = $id;
+        $this->Todo->set($this->data);
+        
+        if($this->Todo->validates())
+        {
+          $this->Todo->save();
+          
+          if($this->RequestHandler->isAjax())
+          {
+            $this->set(compact('id'));
+            return $this->render();
+          }
+          
+          $this->Session->setFlash(__('Todo updated',true),'default',array('class'=>'success'));
+          $this->redirect(array('action'=>'index'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Check the form and try again',true),'default',array('class'=>'error'));
+        }
+      }
+      else
+      {
+        $this->data = $this->Todo->find('first',array(
+          'conditions' => array(
+            'Todo.id' => $id
+          ),
+          'contain' => false
+        ));
+      }
+      
+      $this->set(compact('id'));
+    }
+    
+    
+    /**
+     * Add todo item
+     *
+     * @access public
+     * @return void
+     */
+    public function project_add_item($todoId)
+    {
+      if(!empty($this->data))
+      {
+        $this->data['TodoItem']['todo_id'] = $todoId;
+        $this->data['TodoItem']['project_id'] = $this->Authorization->read('Project.id');
+        $this->data['TodoItem']['person_id'] = $this->Authorization->read('Person.id');
+        
+        $this->Todo->TodoItem->set($this->data);
+
+        if($this->Todo->TodoItem->validates())
+        {
+          $this->Todo->TodoItem->save();
+        }
+        else
+        {
+          $this->Session->setFlash(__('Failed to save the record, please check the form',true),'default',array('class'=>'error'));
+        }
+        
+        $this->redirect(array('action'=>'index'));
+      }
+    }
+    
+    
+    /**
+     * Edit todo item
+     *
+     * @access public
+     * @return void
+     */
+    public function project_edit_item($todoId,$id)
+    {
+      if(!empty($this->data))
+      {
+        $this->data['TodoItem']['id'] = $id;
+        
+        $this->Todo->TodoItem->set($this->data);
+
+        if($this->Todo->TodoItem->validates())
+        {
+          $this->Todo->TodoItem->save();
+          
+          if($this->RequestHandler->isAjax())
+          {
+            $this->set(compact('id'));
+            return $this->render();
+          }
+          
+          $this->Session->setFlash(__('Todo item updated',true),'default',array('class'=>'success'));
+          $this->redirect(array('action'=>'index'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Failed to save the record, please check the form',true),'default',array('class'=>'error'));
+        }
+      }
+      else
+      {
+        $this->data = $this->Todo->TodoItem->find('first',array(
+          'conditions' => array(
+            'TodoItem.id' => $id
+          ),
+          'contain' => array(
+            'Responsible'
+          )
+        ));
+      }
+      
+      $this->set(compact('todoId','id'));
     }
   
   

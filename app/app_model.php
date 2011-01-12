@@ -1,4 +1,6 @@
 <?php
+App::import('Lib', 'LazyModel');
+
 /**
  * Application model
  *
@@ -13,7 +15,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AppModel extends Model {
+class AppModel extends LazyModel {
 /**
  * use Caching
  *

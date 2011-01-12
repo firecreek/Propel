@@ -14,7 +14,7 @@
       <div class="content">
         <?php echo $session->flash(); ?>
         
-        <?php echo $form->create('Milestones',array('url'=>$this->here,'id'=>'MilestoneIndex')); ?>
+        <?php echo $form->create('Milestone',array('url'=>$this->here,'id'=>'MilestoneIndex')); ?>
         
         
         <?php

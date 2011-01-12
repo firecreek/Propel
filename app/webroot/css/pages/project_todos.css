@@ -1,0 +1,26 @@
+
+.listable .group { border-bottom:none; margin:0 0 20px 0; }
+
+.listable .group .header .item { margin-left:0; }
+.listable .group .header .item .maintain { left:-45px; top:-2px; }
+.listable .group .header .item .name { left:10px; }
+.listable .group .header .item .name a { font-weight:bold; font-size:16px; color:#000000; }
+.listable .group .header .item .name a:hover { background-color:transparent; color:#000000; text-decoration:underline; }
+
+.items { margin:5px 0 0 10px; }
+.items .item .maintain { left:-60px; }
+
+.add-item-link { background-color:#EFEFEF; padding:2px 5px; margin:5px 0 0 35px; }
+.add-item-link a { font-size:11px; }
+
+.item-add { background-color:#EFEFEF; padding:5px; margin:5px 0 0 35px; }
+.item-add label { display:block; font-size:11px; float:none; margin:0 0 3px 0; }
+.item-add textarea { height:4em; width:60%; }
+.item-add hr { margin:5px 0; clear:both; }
+
+.item-add .options {  }
+.item-add .options div.first { float:left; margin-right:20px; }
+.item-add .options div.second { float:left; }
+
+.inline .item-add { margin-left:20px; }
+.inline .item-add .description label { display:none; }

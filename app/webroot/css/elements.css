@@ -62,6 +62,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 
 .inline .box { border:2px solid #999; padding:10px; z-index:50; -webkit-box-shadow:none; }
+.inline .banner { display:none; }
 .inline .box h2 { display:none; }
 
 /**

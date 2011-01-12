@@ -169,6 +169,8 @@
       );
       $options = array_merge($_options,$options);
       
+      $list = array();
+      
       foreach($people as $person)
       {
         if($this->Auth->read('Person.id') != $person['Person']['id'])

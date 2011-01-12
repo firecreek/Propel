@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-01-03 19:01:13 : 1294057873*/
+/* App schema generated on: 2011-01-12 20:01:40 : 1294838680*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -105,11 +105,20 @@ class AppSchema extends CakeSchema {
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
+	var $comments_people = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'foreign_id' => array('type' => 'integer', 'null' => false),
+		'person_id' => array('type' => 'integer', 'null' => false),
+		'unsubscribed' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+	);
 	var $comments_reads = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'comment_id' => array('type' => 'integer', 'null' => false),
 		'person_id' => array('type' => 'integer', 'null' => false),
-		'model' => array('type' => 'string', 'null' => false, 'length' => 39, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'model_id' => array('type' => 'integer', 'null' => false),
+		'last_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
@@ -189,7 +198,7 @@ class AppSchema extends CakeSchema {
 		'title' => array('type' => 'string', 'null' => false, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'responsible_model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 90, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'responsible_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'comments_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+		'comment_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'email' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'completed' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'completed_date' => array('type' => 'date', 'null' => true, 'default' => NULL),
@@ -324,7 +333,7 @@ class AppSchema extends CakeSchema {
 		'responsible_model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'responsible_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'description' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'due_date' => array('type' => 'date', 'null' => true, 'default' => NULL),
+		'deadline' => array('type' => 'date', 'null' => true, 'default' => NULL),
 		'position' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'comment_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'completed' => array('type' => 'boolean', 'null' => false, 'default' => '0'),

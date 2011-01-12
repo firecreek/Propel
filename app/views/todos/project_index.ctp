@@ -1,4 +1,10 @@
+<?php
 
+  $javascript->link('listable.js', false);
+  $javascript->link('todos.js', false);
+  $html->css('pages/project_todos', null, array('inline'=>false));
+  
+?>
 <div class="cols">
 
   <div class="col left">
@@ -11,7 +17,35 @@
         </ul>
       </div>
       <div class="content">
-        <p>To do</p>
+        <?php echo $session->flash(); ?>
+        
+        <?php
+          //echo $form->create('Todo',array('url'=>$this->here,'id'=>'TodoIndex'));
+        ?>
+        
+        
+        <?php
+          if(!empty($todos))
+          {
+            echo $this->element('todos/list',array(
+              'records' => $todos
+            ));
+          }
+        ?>
+        
+        
+        <?php
+          //echo $form->submit(__('Submit Changes',true)); 
+          //echo $form->end();
+        ?>
+        
+        
+        <?php
+          echo $javascript->codeBlock("
+            //$('form#TodoIndex .submit').hide();
+            $('.listable .item').listable();
+          ");
+        ?>
       </div>
     </div>
 

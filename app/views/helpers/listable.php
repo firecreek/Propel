@@ -82,10 +82,12 @@
     public function item($alias,$id,$name,$options = array())
     {
       $_options = array(
+        'url'                 => false,
         'checkbox'            => true,
         'delete'              => true,
         'edit'                => true,
         'editUrl'             => false,
+        'updateUrl'           => false,
         'comments'            => true,
         'commentCount'        => 0,
         'position'            => false,
@@ -150,7 +152,14 @@
       }
       
       //Name
-      $item .= sprintf($this->tags['name'],$name,$comments);
+      if(!empty($options['url']))
+      {
+        $item .= sprintf($this->tags['name'],$this->Html->link($name,$options['url']),$comments);
+      }
+      else
+      {
+        $item .= sprintf($this->tags['name'],$name,$comments);
+      }
       
       //Loading
       $item .= sprintf($this->tags['loading']);
