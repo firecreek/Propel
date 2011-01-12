@@ -35,7 +35,7 @@
                                 <div class="content">%s</div>
                               </div>
                             ',
-      'item'              => '<div id="%s" class="item %s" rel-edit-url="%s" rel-update-url="%s">%s</div>',
+      'item'              => '<div id="%s" class="item %s" rel-record-id="%s" rel-edit-url="%s" rel-update-url="%s">%s</div>',
       'checkbox'          => '<div class="check">%s</div>',
       'name'              => '<div class="name">%s%s</div>',
       'inline'            => '<div class="inline"></div>',
@@ -193,7 +193,7 @@
       $item .= sprintf($this->tags['inline']);
       
       //Build output
-      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$options['editUrl'],$options['updateUrl'],$item);
+      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$item);
       
       //Highlight
       if(isset($options['highlight']) && $options['highlight'] == true)

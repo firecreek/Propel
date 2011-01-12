@@ -7,7 +7,7 @@
       $ident = 'todo-'.$record['Todo']['id'].'-'.rand(1000,9999);
     ?>
 
-    <div class="group" id="<?php echo $ident; ?>">
+    <div class="group" id="<?php echo $ident; ?>" rel-todo-id="<?php echo $record['Todo']['id']; ?>">
     
       <div class="header">
         <?php

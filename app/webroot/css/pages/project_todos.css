@@ -7,6 +7,8 @@
 .listable .group .header .item .name a { font-weight:bold; font-size:16px; color:#000000; }
 .listable .group .header .item .name a:hover { background-color:transparent; color:#000000; text-decoration:underline; }
 
+.listable .sortable { min-height:20px; }
+
 .items { margin:5px 0 0 20px; }
 .items .item .maintain { left:-70px; }
 

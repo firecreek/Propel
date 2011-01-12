@@ -4,18 +4,6 @@ var Todos = {
   load: function()
   {
   
-    $('.sortable').sortable({
-      connectWith: '.sortable',
-      axis: 'y',
-      start: function(event,ui){
-        $('.listable .item').attr('rel-maintain-lock','true');
-      },
-      update: function(event,ui){
-        $('.listable .item').removeAttr('rel-maintain-lock');
-      }
-    }).disableSelection();
-    
-    
     $('.item-add .submit a').bind('click',function(e){
       var group = $('.item-add .submit a').closest('.group');
       

@@ -43,7 +43,10 @@
         <?php
           echo $javascript->codeBlock("
             //$('form#TodoIndex .submit').hide();
-            $('.listable .item').listable();
+            $('.listable .item').listable({
+              sortable:true,
+              positionUrl:'".$html->url(array('action'=>'update_positions'))."'
+            });
           ");
         ?>
       </div>

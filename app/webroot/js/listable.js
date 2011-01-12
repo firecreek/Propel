@@ -5,6 +5,25 @@
   {
     var opts = $.extend({}, $.fn.listable.defaults, options);
 
+    //Sortable
+    if(opts.sortable)
+    {
+      $('.sortable').sortable({
+        connectWith: '.sortable',
+        axis: 'y',
+        start: function(event,ui){
+          $('.listable .item').attr('rel-maintain-lock','true');
+        },
+        update: function(event,ui){
+          if(this === ui.item.parent()[0])
+          {
+            $('.listable .item').removeAttr('rel-maintain-lock');
+            $.fn.listable.updatePositions(this,opts.positionUrl);
+          }
+        }
+      }).disableSelection();
+    }
+
     return this.each(function() {
 
       var self = this;
@@ -39,6 +58,42 @@
 
     });
   };
+
+
+  /**
+   * Update positions
+   */
+  $.fn.listable.updatePositions = function(obj,url)
+  {
+    var params = {};
+  
+    $('.listable .group').each(function(){
+      
+      var todoId = $(this).attr('rel-todo-id');
+      var count = 0;
+      
+      $(this).find('.items .item').each(function(){
+        count++;
+        params['TodoItem'+$(this).attr('rel-record-id')] = todoId+'-'+count;
+      });
+      
+    });
+    
+    $.ajax({
+      type: 'POST',
+      url: url+'.json',
+      dataType: 'json',
+      data: params,
+      cache: false,
+      success: function(response)
+      {
+        if(response.success)
+        {
+          alert('ok');
+        }
+      }
+    });
+  }
 
 
   /**
@@ -153,6 +208,7 @@
    * Defaults
    */
   $.fn.listable.defaults = {
+    sortable: false
   };
 
 })(jQuery);

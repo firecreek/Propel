@@ -46,6 +46,7 @@
       'add_item'  => '_create',
       'edit_item'  => '_update',
       'update_item'  => '_update',
+      'update_positions' => '_update'
     );
     
     /**
@@ -333,6 +334,39 @@
       }
       
       $this->set(compact('id','completed'));
+    }
+    
+    
+    /**
+     * Project update todo item positions
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_update_positions()
+    {
+      foreach($this->params['form'] as $key => $data)
+      {
+        $datasplit = explode('-',$data);
+        
+        $todoId = $datasplit[0];
+        $position = $datasplit[1];
+        
+        $todoItemId = str_replace('TodoItem','',$key);
+        
+        
+        $this->Todo->TodoItem->updateAll(
+          array(
+            'TodoItem.todo_id' => $todoId,
+            'TodoItem.position' => $position
+          ),
+          array('TodoItem.id'=>$todoItemId)
+        );
+        
+      }
+      debug($this->params);
+      echo 'ok';
+      exit;
     }
   
   
