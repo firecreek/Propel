@@ -197,6 +197,7 @@
           
           if($this->RequestHandler->isAjax())
           {
+            $this->set(compact('id'));
             return $this->render();
           }
           
@@ -221,6 +222,37 @@
       }
       
       $this->set(compact('id'));
+    }
+    
+    
+    /**
+     * Project update milestone completed
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_update($id,$completed = false)
+    {
+      if($completed == 'true')
+      {
+        $this->Milestone->updateAll(
+          array(
+            'completed' => '1',
+            'completed_date' => '"'.date('Y-m-d').'"',
+            'completed_person_id' => $this->Authorization->read('Person.id')
+          ),
+          array('Milestone.id'=>$id)
+        );
+      }
+      else
+      {
+        $this->Milestone->updateAll(
+          array('completed' => '0'),
+          array('Milestone.id'=>$id)
+        );
+      }
+      
+      $this->set(compact('id','completed'));
     }
     
     

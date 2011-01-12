@@ -207,23 +207,15 @@
         $companies = $this->_loadPrefixCompanies($modelRootNode[0]['Aco']['id']);
         $people = $this->_loadPrefixPeople($modelRootNode[0]['Aco']['id']);
         
-        
-        //Load account style
-        $style = $this->controller->Account->Scheme->SchemeStyle->find('list',array(
-          'conditions' => array('scheme_id' => $account['Account']['scheme_id']),
-          'fields'  => array('SchemeStyle.key','SchemeStyle.value'),
-          'recursive' => -1
-        ));
-        
         //Sets
-        $this->Authorization->write('Permissions',$permissions);
-        $this->Authorization->write('Company',$account['CompanyOwner']);
         $this->Authorization->write('Account',$account['Account']);
-        $this->Authorization->write('Style',$style);
+        $this->Authorization->write('Project',$project['Project']);
+        $this->Authorization->write('Company',$account['CompanyOwner']);
         $this->Authorization->write('Person',$person['Person']);
+        
+        $this->Authorization->write('Permissions',$permissions);
         $this->Authorization->write('People',$people);
         $this->Authorization->write('Projects',$projects);
-        $this->Authorization->write('Project',$project['Project']);
         $this->Authorization->write('Companies',$companies);
         
         

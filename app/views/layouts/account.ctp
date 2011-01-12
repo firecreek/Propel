@@ -12,6 +12,7 @@
     ));
     echo $javascript->link(array(
       'jquery/jquery',
+      'jquery/jquery-ui',
       'account'
     ));
     echo $scripts_for_layout;

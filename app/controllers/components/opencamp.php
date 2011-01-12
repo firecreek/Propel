@@ -26,7 +26,7 @@
      * @access public
      * @var object
      */
-    public $components = array('Acl','Authorization');
+    public $components = array('Acl','Authorization','Session');
     
 
     /**
@@ -40,6 +40,21 @@
     public function initialize(&$controller, $settings = array())
     {
       $this->controller =& $controller;
+    }
+    
+    
+    /**
+     * Startup
+     *
+     * @access public
+     * @return void
+     */
+    public function startup()
+    {
+      if(isset($this->controller->params['prefix']))
+      {
+        $this->_layoutScheme();
+      }
     }
     
 
@@ -91,6 +106,24 @@
       }
       
       return $responsible;
+    }
+    
+    
+    /**
+     * Layout scheme colours
+     *
+     * @access private
+     * @return boolean
+     */
+    private function _layoutScheme()
+    {
+      $style = $this->controller->Account->Scheme->SchemeStyle->find('list',array(
+        'conditions' => array('scheme_id' => $this->Authorization->read('Account.scheme_id')),
+        'fields'  => array('SchemeStyle.key','SchemeStyle.value'),
+        'recursive' => -1
+      ));
+      
+      return $this->Session->write('Style',$style);
     }
     
     

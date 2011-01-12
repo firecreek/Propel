@@ -20,8 +20,16 @@
         $.fn.listable.display(this,'hide');
       });
       
+      //Checkbox
+      if($(this).attr('rel-update-url'))
+      {
+        $(this).find('.check input').bind('change',function(e){
+          $.fn.listable.checked(self);
+        });
+      }
+      
       //Inline editing
-      if($(this).attr('rel-url'))
+      if($(this).attr('rel-edit-url'))
       {
         $(this).find('.edit').bind('click',function(e){
           e.preventDefault();
@@ -31,6 +39,39 @@
 
     });
   };
+
+
+  /**
+   * Check
+   */
+  $.fn.listable.checked = function(obj)
+  {
+    var loading = $(obj).find('.loading');
+    $(loading).show();
+    
+    $.fn.listable.checkActive++;
+    
+    $.ajax({
+      type: 'POST',
+      url: $(obj).attr('rel-update-url')+'/'+$(obj).find('.check input').is(':checked')+'.json',
+      dataType: 'json',
+      cache: false,
+      success: function(response)
+      {
+        $.fn.listable.checkActive--;
+        
+        if(response.success)
+        {
+          if(response.reload && $.fn.listable.checkActive == 0)
+          {
+            $('#main').load(response.reload);
+          }
+        }
+      }
+    });
+  }
+  
+  $.fn.listable.checkActive = 0;
 
 
   /**
@@ -78,7 +119,7 @@
     var maintain = $(obj).find('.maintain');
     var checkbox = $(obj).find('.check');
     
-    var url = $(obj).attr('rel-url')+'?container=true';
+    var url = $(obj).attr('rel-edit-url')+'?container=true';
     
     $(loading).show();
     

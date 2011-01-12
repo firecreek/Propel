@@ -16,7 +16,7 @@
   $linkTextColour = '#03C';
   
   //Overwrite if they exist
-  if($accountStyles = $session->read('AuthAccount.Style'))
+  if($accountStyles = $session->read('Style'))
   {
     foreach($accountStyles as $key => $val)
     {

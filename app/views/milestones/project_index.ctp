@@ -14,7 +14,7 @@
       <div class="content">
         <?php echo $session->flash(); ?>
         
-        <?php echo $form->create('Milestones',array('url'=>$this->here)); ?>
+        <?php echo $form->create('Milestones',array('url'=>$this->here,'id'=>'MilestoneIndex')); ?>
         
         
         <?php
@@ -74,6 +74,7 @@
         
         <?php
           echo $javascript->codeBlock("
+            $('form#MilestoneIndex .submit').hide();
             $('.listable .item').listable();
           ");
         ?>

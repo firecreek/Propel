@@ -1,4 +1,7 @@
-
+<?php
+  //Highlight records with js if updated
+  $highlight = isset($this->params['url']['highlight']) ? $this->params['url']['highlight'] : null;
+?>
 <div class="section small <?php echo $class; ?> indented">
   <div class="banner">
     <h3><?php echo $title; ?></h3>
@@ -46,13 +49,21 @@
           $items = array();
           foreach($records as $milestone)
           {
+            $itemHighlight = false;
+            if($highlight == $milestone['Milestone']['id'])
+            {
+              $itemHighlight = true;
+            }
+          
             $items[] = array(
               'id'        => $milestone['Milestone']['id'],
               'title'     => $milestone['Milestone']['title'],
               'options'   => array(
                 'checked'       => (isset($checked) && $checked) ? true : false,
                 'commentCount'  => $milestone['Milestone']['comment_count'],
-                'editUrl'   => $html->url(array('controller'=>'milestones','action'=>'edit',$milestone['Milestone']['id']))
+                'editUrl'   => $html->url(array('controller'=>'milestones','action'=>'edit',$milestone['Milestone']['id'])),
+                'updateUrl'   => $html->url(array('controller'=>'milestones','action'=>'update',$milestone['Milestone']['id'])),
+                'highlight' => $itemHighlight
               )
             );
           }
