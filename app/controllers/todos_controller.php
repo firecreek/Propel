@@ -43,10 +43,11 @@
      * @var array
      */
     public $actionMap = array(
-      'add_item'  => '_create',
-      'edit_item'  => '_update',
-      'update_item'  => '_update',
-      'update_positions' => '_update'
+      'add_item'              => '_create',
+      'edit_item'             => '_update',
+      'update_positions'      => '_update',
+      'update_item'           => '_update',
+      'update_item_positions' => '_update'
     );
     
     /**
@@ -229,6 +230,28 @@
     
     
     /**
+     * Project update todo positions
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_update_positions()
+    {
+      foreach($this->params['form'] as $key => $data)
+      {
+        $todoId = str_replace('Todo','',$key);
+        $position = $data;
+        
+        $this->Todo->TodoItem->updateAll(
+          array('Todo.position' => $position),
+          array('Todo.id'=>$todoId)
+        );
+        
+      }
+    }
+    
+    
+    /**
      * Add todo item
      *
      * @access public
@@ -343,7 +366,7 @@
      * @access public
      * @return void
      */
-    public function project_update_positions()
+    public function project_update_item_positions()
     {
       foreach($this->params['form'] as $key => $data)
       {
@@ -364,9 +387,6 @@
         );
         
       }
-      debug($this->params);
-      echo 'ok';
-      exit;
     }
   
   

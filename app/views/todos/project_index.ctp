@@ -12,8 +12,17 @@
     <div class="box">
       <div class="banner">
         <h2><?php __('To-do lists'); ?></h2>
-        <ul class="right">
-          <li><?php echo $html->link(__('Reorder lists',true),array('action'=>'reorder')); ?></li>
+        <ul class="right important">
+          <li><?php
+            $notActive = __('Reorder lists',true);
+            $active = __('Done reordering lists',true);
+            echo $html->link($notActive,array('action'=>'reorder'),array(
+              'id'              => 'reorderLists',
+              'rel-not-active'  => $notActive,
+              'rel-active'      => $active,
+              'rel-update-url'  => $html->url(array('action'=>'update_positions'))
+            ));
+          ?></li>
         </ul>
       </div>
       <div class="content">
@@ -45,7 +54,7 @@
             //$('form#TodoIndex .submit').hide();
             $('.listable .item').listable({
               sortable:true,
-              positionUrl:'".$html->url(array('action'=>'update_positions'))."'
+              positionUrl:'".$html->url(array('action'=>'update_item_positions'))."'
             });
           ");
         ?>

@@ -43,7 +43,7 @@
       'maintain'          => '<div class="maintain">%s</div>',
       'delete'            => '<span class="delete">%s</span>',
       'edit'              => '<span class="edit important">%s</span>',
-      'position'          => '<span class="position"></span>',
+      'position'          => '<span class="position"%s></span>',
       'loading'           => '<span class="loading" style="display:none;"></span>',
     );
     
@@ -91,6 +91,7 @@
         'comments'            => true,
         'commentCount'        => 0,
         'position'            => false,
+        'positionHide'        => false,
         'class'               => array(),
         'checked'             => false,
         'prefix'              => false,
@@ -180,7 +181,9 @@
       
       if($options['position'])
       {
-        $maintain .= $this->tags['position'];
+        $positionAttrs = '';
+        if($options['positionHide']) { $positionAttrs = ' style="display:none;"'; }
+        $maintain .= sprintf($this->tags['position'],$positionAttrs);
       }
       
       //Maintain left control

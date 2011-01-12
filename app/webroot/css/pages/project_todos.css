@@ -12,7 +12,16 @@
 .items { margin:5px 0 0 20px; }
 .items .item .maintain { left:-70px; }
 
-.recent { margin:10px 0 0 10px; }
+
+.reorder-todos {}
+.reorder-todos .item-content { display:none; }
+.reorder-todos .header .maintain { background-color:transparent; left:-15px !important; }
+.reorder-todos .header .maintain .delete { display:none; }
+.reorder-todos .header .maintain .edit { display:none; }
+.reorder-todos .header .maintain .position { display:block !important; }
+
+
+.recent { margin:10px 0 0 20px; }
 .recent .item .maintain { left:-60px; }
 .recent .item .name { font-size:10px; color:#999; }
 .recent .item .name strong { color:#666; }

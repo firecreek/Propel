@@ -11,6 +11,7 @@
       $('.sortable').sortable({
         connectWith: '.sortable',
         axis: 'y',
+        handle: '.position',
         start: function(event,ui){
           $('.listable .item').attr('rel-maintain-lock','true');
         },
@@ -89,7 +90,6 @@
       {
         if(response.success)
         {
-          alert('ok');
         }
       }
     });
