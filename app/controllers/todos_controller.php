@@ -132,7 +132,13 @@
       //Todo lists
       $todos = $this->Todo->find('all',array(
         'conditions' => array(
-          'Todo.project_id' => $this->Authorization->read('Project.id')
+          'Todo.project_id' => $this->Authorization->read('Project.id'),
+          'OR' => array(
+            'Todo.todo_items_count' => 0,
+            'NOT' => array(
+              'Todo.todo_items_count = Todo.todo_items_completed_count'
+            )
+          )
         ),
         'fields' => array('id','name'),
         'order' => 'Todo.position ASC',
@@ -149,7 +155,20 @@
         )
       ));
       
-      $this->set(compact('todos'));
+      //Todo completed lists
+      $todosCompleted = $this->Todo->find('all',array(
+        'conditions' => array(
+          'Todo.project_id' => $this->Authorization->read('Project.id'),
+          'Todo.todo_items_count >' => 0,
+          'Todo.todo_items_count = Todo.todo_items_completed_count',
+        ),
+        'fields' => array('id','name'),
+        'order' => 'Todo.name ASC',
+        'contain' => false,
+        'items' => false
+      ));
+      
+      $this->set(compact('todos','todosCompleted'));
     }
     
     

@@ -67,6 +67,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .inline .banner { display:none; }
 .inline .box h2 { display:none; }
 
+
 /**
  * Area
  */
@@ -89,6 +90,12 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .area .content ul.nested li { margin-bottom:2px; }
 .area .content ul.nested ul li { margin-left:10px; font-size:11px; }
 
+.area.plain {  }
+.area.plain .banner { background-color:transparent; border-bottom:none; margin-left:0; margin-bottom:2px; min-height:0; }
+.area.plain .banner h3 { padding:0; }
+.area.plain .content { margin:0; }
+.area.plain .content li { margin-bottom:2px; }
+ 
 
 /**
  * Section
@@ -295,7 +302,7 @@ form .input.strong label { font-weight:bold; }
 .listable .group .banner span.responsibility { color:#666; } 
 .listable .group .content { padding-left:0; }
  
-.listable .item { min-height:20px; margin:5px 5px; position:relative; }
+.listable .item { min-height:15px; margin:2px 5px; position:relative; }
 
 .listable .item .check {  }
 .listable .item .check div.input { position:absolute; z-index:10; }
@@ -329,7 +336,7 @@ form .input.strong label { font-weight:bold; }
 .listable .item .maintain .edit { margin:0 0 0 6px; }
 .listable .item .maintain .edit a { font-size:10px; position:relative; top:-2px; }
 
-.listable .item .maintain .position { width:13px; height:16px; display:inline-block; background:url(/img/icons/position.png) transparent top left; margin:0 0 0 2px; top:4px; position:relative; cursor:move; }
+.listable .item .maintain .position { width:13px; height:16px; display:inline-block; background:url(/img/icons/position.png) transparent top left; margin:0 0 0 4px; top:4px; position:relative; cursor:move; }
 
 .listable .item.position {}
 .listable .item.position .check input { left:20px; }

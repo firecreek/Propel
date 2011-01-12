@@ -7,7 +7,7 @@
 .listable .group .header .item .name a { color:#000000; }
 .listable .group .header .item .name a:hover { background-color:transparent; color:#000000; text-decoration:underline; }
 
-.listable .sortable { min-height:20px; }
+.listable .sortable { min-height:5px; }
 
 .items { margin:5px 0 0 20px; }
 .items .item .maintain { left:-70px; }

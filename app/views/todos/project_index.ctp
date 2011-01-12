@@ -29,11 +29,6 @@
         <?php echo $session->flash(); ?>
         
         <?php
-          //echo $form->create('Todo',array('url'=>$this->here,'id'=>'TodoIndex'));
-        ?>
-        
-        
-        <?php
           if(!empty($todos))
           {
             echo $this->element('todos/list',array(
@@ -42,16 +37,8 @@
           }
         ?>
         
-        
-        <?php
-          //echo $form->submit(__('Submit Changes',true)); 
-          //echo $form->end();
-        ?>
-        
-        
         <?php
           echo $javascript->codeBlock("
-            //$('form#TodoIndex .submit').hide();
             $('.listable .item').listable({
               sortable:true,
               positionUrl:'".$html->url(array('action'=>'update_item_positions'))."'
@@ -72,15 +59,49 @@
       }
     ?>
     
-    <?php
-      $responsibleOptions = $layout->permissionList($auth->read('People'));
-      
-      echo $form->create('Todos',array('url'=>$this->here,'type'=>'get'));
-      echo $form->input('responsible',array('label'=>__('Show to-dos assigned to',true),'options'=>$responsibleOptions));
-      echo $form->input('due',array('label'=>__('Show to-dos that are due',true),'options'=>$dueOptions));
-      echo $form->submit(__('Search',true));
-      echo $form->end();
-    ?>
+    <div class="area plain">
+      <div class="content">
+        <?php
+          $responsibleOptions = $layout->permissionList($auth->read('People'));
+          
+          echo $form->create('Todos',array('url'=>$this->here,'type'=>'get'));
+          echo $form->input('responsible',array('label'=>__('Show to-dos assigned to',true),'options'=>$responsibleOptions));
+          echo $form->input('due',array('label'=>__('Show to-dos that are due',true),'options'=>$dueOptions));
+          echo $form->submit(__('Search',true));
+          echo $form->end();
+        ?>
+      </div>
+    </div>
+    
+    
+    <?php if(!empty($todos)): ?>
+      <div class="area plain">
+        <div class="banner"><h3><?php __('Current to-do lists'); ?></h3></div>
+        <div class="content">
+          <ul>
+            <?php foreach($todos as $todo): ?>
+              <li><?php echo $html->link($todo['Todo']['name'],array('action'=>'view',$todo['Todo']['id'])); ?></li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+      </div>
+    <?php endif; ?>
+    
+    
+    <?php if(!empty($todosCompleted)): ?>
+      <div class="area plain">
+        <div class="banner"><h3><?php __('Completed to-do lists'); ?></h3></div>
+        <div class="content">
+          <ul>
+            <?php foreach($todosCompleted as $todo): ?>
+              <li><?php echo $html->link($todo['Todo']['name'],array('action'=>'view',$todo['Todo']['id'])); ?></li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+      </div>
+    <?php endif; ?>
+    
+    
   
   </div>
   

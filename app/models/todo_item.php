@@ -92,7 +92,13 @@
     );
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
-    var $belongsTo = array(
+    /**
+     * Belongs to
+     *
+     * @access public
+     * @var array
+     */
+    public $belongsTo = array(
       'Project' => array(
         'className' => 'Project',
         'foreignKey' => 'project_id',
@@ -103,10 +109,61 @@
       'Todo' => array(
         'className' => 'Todo',
         'foreignKey' => 'todo_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
+        'counterCache' => 'todo_items_count'
       )
     );
+    
+    
+    /**
+     * Update
+     *
+     * @todo Passing the ID
+     * @access public
+     * @return boolean
+     */
+    public function updateAll($fields,$conditions = true)
+    {
+      if(parent::updateAll($fields,$conditions))
+      {
+        if(isset($conditions['TodoItem.id']))
+        {
+          $this->updateCompletedCount($conditions['TodoItem.id']);
+        }
+        return true;
+      }
+      
+      return false;
+    }
+    
+    
+    /**
+     * Update completed count
+     *
+     * @access public
+     * @return boolean
+     */
+    public function updateCompletedCount($todoItemId)
+    {
+      //Get main
+      $this->id = $todoItemId;
+      
+      $this->recursive = -1;
+      $todoId = $this->read('todo_id');
+      $todoId = $todoId[$this->alias]['todo_id'];
+      
+      //Count
+      $count = $this->find('count',array(
+        'conditions' => array(
+          $this->alias.'.todo_id' => $todoId,
+          $this->alias.'.completed' => true
+        )
+      ));
+      
+      //Update
+      $this->Todo->id = $todoId;
+      
+      return $this->Todo->saveField('todo_items_completed_count',$count);
+    }
+    
   }
 ?>
