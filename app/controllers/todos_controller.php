@@ -257,11 +257,11 @@
      * @access public
      * @return void
      */
-    public function project_add_item($todoId)
+    public function project_add_item($id)
     {
       if(!empty($this->data))
       {
-        $this->data['TodoItem']['todo_id'] = $todoId;
+        $this->data['TodoItem']['todo_id'] = $id;
         $this->data['TodoItem']['project_id'] = $this->Authorization->read('Project.id');
         $this->data['TodoItem']['person_id'] = $this->Authorization->read('Person.id');
         
@@ -270,6 +270,15 @@
         if($this->Todo->TodoItem->validates())
         {
           $this->Todo->TodoItem->save();
+          
+          if($this->RequestHandler->isAjax())
+          {
+            $this->set(compact('id'));
+            return $this->render();
+          }
+          
+          $this->Session->setFlash(__('Todo item added',true),'default',array('class'=>'success'));
+          $this->redirect(array('action'=>'index'));
         }
         else
         {

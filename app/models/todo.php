@@ -84,6 +84,7 @@
                 'TodoItem.todo_id' => $result[$this->alias]['id'],
                 'TodoItem.completed' => true
               ),
+              'limit' => 3,
               'contain' => array('Responsible'),
               'order' => 'TodoItem.completed_date DESC'
             ));

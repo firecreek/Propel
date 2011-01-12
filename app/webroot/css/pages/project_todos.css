@@ -1,5 +1,5 @@
 
-.listable .group { border-bottom:none; margin:0 0 20px 0; }
+.listable .group { border-bottom:none; margin:0 0 15px 0; }
 
 .listable .group .header .item { margin-left:0; }
 .listable .group .header .item .maintain { left:-45px; top:-2px; }
@@ -22,10 +22,12 @@
 
 
 .recent { margin:10px 0 0 20px; }
+.recent .item { min-height:15px; }
 .recent .item .maintain { left:-60px; }
 .recent .item .name { font-size:10px; color:#999; }
-.recent .item .name strong { color:#666; }
+.recent .item .name strong { color:#666; font-weight:normal; }
 .recent .item .check div.input input { top:0; }
+.recent .item .maintain { left:-30px; top:-8px; }
 
 
 .add-item-link { background-color:#EFEFEF; padding:2px 5px; margin:5px 0 0 35px; }
@@ -40,5 +42,9 @@
 .item-add .options div.first { float:left; margin-right:20px; }
 .item-add .options div.second { float:left; }
 
-.inline .item-add { margin-left:20px; }
+.item-add .submit .saving { background-color:#EFEFEF; }
+
+.inline .box { padding:0; border:none; }
+.inline .box .content { padding:0; }
+.inline .item-add { margin-left:0; }
 .inline .item-add .description label { display:none; }

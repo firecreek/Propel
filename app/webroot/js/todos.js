@@ -78,8 +78,9 @@ var Todos = {
       
       return false;
     });
-  
-    $('.item-add .submit a').bind('click',function(e){
+    
+    
+    $('.item-add .submit a').live('click',function(e){
       var group = $('.item-add .submit a').closest('.group');
       
       $(group).find('.item-add').hide();
@@ -88,7 +89,7 @@ var Todos = {
       return false;
     });
   
-    $('.add-item-link a').bind('click',function(e){
+    $('.add-item-link a').live('click',function(e){
       $('#'+$(this).attr('rel')).find('.add-item-link').hide();
       $('#'+$(this).attr('rel')).find('.item-add').show();
       

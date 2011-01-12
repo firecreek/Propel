@@ -41,10 +41,6 @@
         </div>
         <?php
           echo $this->element('todos/add_item',array('todoId'=>$record['Todo']['id']));
-          echo $javascript->codeBlock("
-            $('.add-item-link').show();
-            $('.item-add').hide();
-          ");
         ?>
         
         <?php if(!empty($record['TodoItemRecent'])): ?>
@@ -65,6 +61,14 @@
       </div>
       
     </div>
+    
+    <?php
+      echo $javascript->codeBlock("
+        $('#".$ident." .item-add form').ajaxSubmit();
+        $('#".$ident." .add-item-link').show();
+        $('#".$ident." .item-add').hide();
+      ");
+    ?>
 
   <?php endforeach; ?>
 
