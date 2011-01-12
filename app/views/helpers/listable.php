@@ -35,7 +35,7 @@
                                 <div class="content">%s</div>
                               </div>
                             ',
-      'item'              => '<div id="%s" class="item %s" rel-record-id="%s" rel-edit-url="%s" rel-update-url="%s">%s</div>',
+      'item'              => '<div id="%s" class="item %s" rel-record-id="%s" rel-edit-url="%s" rel-update-url="%s" rel-delete-url="%s">%s</div>',
       'checkbox'          => '<div class="check">%s</div>',
       'name'              => '<div class="name">%s%s</div>',
       'inline'            => '<div class="inline"></div>',
@@ -88,6 +88,7 @@
         'edit'                => true,
         'editUrl'             => false,
         'updateUrl'           => false,
+        'deleteUrl'           => false,
         'comments'            => true,
         'commentCount'        => 0,
         'position'            => false,
@@ -171,7 +172,8 @@
       
       if($options['delete'])
       {
-        $maintain .= sprintf($this->tags['delete'],$this->Html->link(__('Delete',true),array('action'=>'delete',$id),array('title'=>__('Delete',true))));
+        if(!isset($options['deleteUrl'])) { $options['deleteUrl'] = array('action'=>'delete',$id); }
+        $maintain .= sprintf($this->tags['delete'],$this->Html->link(__('Delete',true),$options['deleteUrl'],array('title'=>__('Delete',true))));
       }
       
       if($options['edit'])
@@ -196,7 +198,7 @@
       $item .= sprintf($this->tags['inline']);
       
       //Build output
-      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$item);
+      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$options['deleteUrl'],$item);
       
       //Highlight
       if(isset($options['highlight']) && $options['highlight'] == true)

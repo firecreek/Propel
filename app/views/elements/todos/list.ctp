@@ -11,14 +11,27 @@
     
       <div class="header">
         <?php
-          echo $listable->item('Todo',$record['Todo']['id'],$record['Todo']['name'],array(
-            'checkbox'    => false,
-            'comments'    => false,
-            'position'    => true,
-            'positionHide' => true,
-            'url'         => $html->url(array('controller'=>'todos','action'=>'view',$record['Todo']['id'])),
-            'editUrl'     => $html->url(array('controller'=>'todos','action'=>'edit',$record['Todo']['id'])),
-          ));
+          
+          $headerOptions = array(
+            'checkbox'      => false,
+            'comments'      => false,
+            'position'      => true,
+            'positionHide'  => true,
+            'url'           => $html->url(array('controller'=>'todos','action'=>'view',$record['Todo']['id'])),
+            'editUrl'       => $html->url(array('controller'=>'todos','action'=>'edit',$record['Todo']['id'])),
+            'deleteUrl'   => $html->url(array('controller'=>'todos','action'=>'delete',$record['Todo']['id'])),
+          );
+        
+          if(isset($headerLink) && $headerLink == false)
+          {
+            $headerOptions['position'] = false;
+            $headerOptions['positionHide'] = false;
+            $headerOptions['edit'] = false;
+            $headerOptions['delete'] = false;
+            $headerOptions['url'] = false;
+          }
+        
+          echo $listable->item('Todo',$record['Todo']['id'],$record['Todo']['name'],$headerOptions);
         ?>
       </div>
       
@@ -31,6 +44,7 @@
                 'position'  => true,
                 'editUrl'   => $html->url(array('controller'=>'todos','action'=>'edit_item',$record['Todo']['id'],$item['TodoItem']['id'])),
                 'updateUrl'   => $html->url(array('controller'=>'todos','action'=>'update_item',$record['Todo']['id'],$item['TodoItem']['id'])),
+                'deleteUrl'   => $html->url(array('controller'=>'todos','action'=>'delete_item',$record['Todo']['id'],$item['TodoItem']['id'])),
               ));
             ?>
           <?php endforeach; ?>
@@ -56,6 +70,16 @@
             ?>
           <?php endforeach; ?>
         </div>
+        <?php endif; ?>
+        
+        
+        <?php if(isset($record['TodoItemCountCompleted']) && !empty($record['TodoItemCountCompleted'])): ?>
+          <div class="count">
+            <p><?php
+              $text = sprintf(__('View all %s completed items',true),$record['TodoItemCountCompleted']);
+              echo $html->link($text,array('action'=>'view',$record['Todo']['id']));
+            ?></p>
+          </div>
         <?php endif; ?>
         
       </div>

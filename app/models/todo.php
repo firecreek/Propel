@@ -79,23 +79,23 @@
           //Recently completed
           if(isset($this->_loadItems['recent']) && $this->_loadItems['recent'] == true)
           {
-            $results[$key]['TodoItemRecent'] = $this->TodoItem->find('all',array(
+            $results[$key]['TodoItemRecent'] = $this->TodoItem->find('all',Set::merge(array(
               'conditions' => array(
                 'TodoItem.todo_id' => $result[$this->alias]['id'],
                 'TodoItem.completed' => true
               ),
-              'limit' => 3,
               'contain' => array('Responsible'),
               'order' => 'TodoItem.completed_date DESC'
-            ));
+            ),$this->_loadItems['recent']));
           }
           
           //Count
           if(isset($this->_loadItems['count']) && $this->_loadItems['count'] == true)
           {
-            $results[$key]['TodoItemCount'] = $this->TodoItem->find('count',array(
+            $results[$key]['TodoItemCountCompleted'] = $this->TodoItem->find('count',array(
               'conditions' => array(
-                'TodoItem.todo_id' => $result[$this->alias]['id']
+                'TodoItem.todo_id' => $result[$this->alias]['id'],
+                'TodoItem.completed' => true
               ),
               'recursive' => -1
             ));

@@ -44,6 +44,7 @@
      */
     public $actionMap = array(
       'add_item'              => '_create',
+      'delete_item'           => '_delete',
       'edit_item'             => '_update',
       'update_positions'      => '_update',
       'update_item'           => '_update',
@@ -143,14 +144,49 @@
           'contain' => array(
             'Responsible'
           ),
-          'recent' => true,
+          'recent' => array('limit'=>3),
           'count' => true
         )
       ));
       
-      $responsible = $this->Opencamp->findResponsible();
+      $this->set(compact('todos'));
+    }
+    
+    
+    /**
+     * Project View Id
+     *
+     * @access public
+     * @return void
+     */
+    public function project_view($id)
+    {
+      //Params
+      $this->data['Todo']['responsible']  = isset($this->params['url']['responsible']) ? $this->params['url']['responsible'] : 'all';
+      $this->data['Todo']['due']          = isset($this->params['url']['due']) ? $this->params['url']['due'] : 'anytime';
       
-      $this->set(compact('responsible','todos'));
+      
+      //Todo lists
+      $todo = $this->Todo->find('first',array(
+        'conditions' => array(
+          'Todo.project_id' => $this->Authorization->read('Project.id'),
+          'Todo.id' => $id
+        ),
+        'fields' => array('id','name'),
+        'order' => 'Todo.position ASC',
+        'contain' => false,
+        'items' => array(
+          'conditions' => array(
+            'TodoItem.completed' => false
+          ),
+          'contain' => array(
+            'Responsible'
+          ),
+          'recent' => true
+        )
+      ));
+      
+      $this->set(compact('id','todo'));
     }
     
     
@@ -230,6 +266,27 @@
     
     
     /**
+     * Project delete todo
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_delete($id)
+    {
+      $this->Todo->delete($id);
+
+      if($this->RequestHandler->isAjax())
+      {
+        $this->set(compact('id'));
+        return $this->render();
+      }
+      
+      $this->Session->setFlash(__('Todo deleted',true),'default',array('class'=>'success'));
+      $this->redirect(array('action'=>'index'));
+    }
+    
+    
+    /**
      * Project update todo positions
      * 
      * @access public
@@ -291,6 +348,27 @@
     
     
     /**
+     * Project delete todo item
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_delete_item($todoId,$id)
+    {
+      $this->Todo->TodoItem->delete($id);
+
+      if($this->RequestHandler->isAjax())
+      {
+        $this->set(compact('todoId','id'));
+        return $this->render();
+      }
+      
+      $this->Session->setFlash(__('Todo item deleted',true),'default',array('class'=>'success'));
+      $this->redirect(array('action'=>'index'));
+    }
+    
+    
+    /**
      * Edit todo item
      *
      * @access public
@@ -310,7 +388,7 @@
           
           if($this->RequestHandler->isAjax())
           {
-            $this->set(compact('id'));
+            $this->set(compact('todoId','id'));
             return $this->render();
           }
           
@@ -365,7 +443,7 @@
         );
       }
       
-      $this->set(compact('id','completed'));
+      $this->set(compact('todoId','id','completed'));
     }
     
     

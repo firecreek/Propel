@@ -40,6 +40,12 @@
         $.fn.listable.display(this,'hide');
       });
       
+      //Delete
+      $(this).find('.delete a').bind('click',function(e){
+        $.fn.listable.delete(self);
+        return false;
+      });
+      
       //Checkbox
       if($(this).attr('rel-update-url'))
       {
@@ -200,6 +206,38 @@
         $(obj).removeAttr('rel-maintain-lock');
       });
       
+    });
+  }
+
+
+  /**
+   * Inline delete
+   */
+  $.fn.listable.delete = function(obj)
+  {
+    var loading = $(obj).find('.loading');
+    $(loading).show();
+    
+    var url = $(obj).attr('rel-delete-url');
+    
+    $.ajax({
+      type: 'POST',
+      url: url+'.json',
+      dataType: 'json',
+      success: function(response)
+      {
+        if(response.success)
+        {
+          if(response.reload)
+          {
+            $('#main').load(response.reload);
+          }
+          else
+          {
+            $(obj).fadeOut();
+          }
+        }
+      }
     });
   }
 
