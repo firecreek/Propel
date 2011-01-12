@@ -80,7 +80,7 @@
   $.fn.listable.display = function(obj,type)
   {
     //Locked in edit mode
-    if($(obj).attr('rel-edit-lock') && type == 'show')
+    if($(obj).attr('rel-maintain-lock'))
     {
       return;
     }
@@ -111,7 +111,7 @@
    */
   $.fn.listable.edit = function(obj)
   {
-    $(obj).attr('rel-edit-lock','true');
+    $(obj).attr('rel-maintain-lock','true');
     
     var inline = $(obj).find('.inline');
     var loading = $(obj).find('.loading');
@@ -142,7 +142,7 @@
         $(name).show();
         $(checkbox).show();
         
-        $(obj).removeAttr('rel-edit-lock');
+        $(obj).removeAttr('rel-maintain-lock');
       });
       
     });

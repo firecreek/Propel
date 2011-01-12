@@ -7,8 +7,15 @@
 .listable .group .header .item .name a { font-weight:bold; font-size:16px; color:#000000; }
 .listable .group .header .item .name a:hover { background-color:transparent; color:#000000; text-decoration:underline; }
 
-.items { margin:5px 0 0 10px; }
-.items .item .maintain { left:-60px; }
+.items { margin:5px 0 0 20px; }
+.items .item .maintain { left:-70px; }
+
+.recent { margin:10px 0 0 10px; }
+.recent .item .maintain { left:-60px; }
+.recent .item .name { font-size:10px; color:#999; }
+.recent .item .name strong { color:#666; }
+.recent .item .check div.input input { top:0; }
+
 
 .add-item-link { background-color:#EFEFEF; padding:2px 5px; margin:5px 0 0 35px; }
 .add-item-link a { font-size:11px; }

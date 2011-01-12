@@ -94,6 +94,7 @@
         'class'               => array(),
         'checked'             => false,
         'prefix'              => false,
+        'append'              => false,
         'ident'               => $alias.'-'.$id.'-'.rand(10000,99999)
       );
       $options = array_merge($_options,$options);

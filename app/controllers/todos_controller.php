@@ -45,6 +45,7 @@
     public $actionMap = array(
       'add_item'  => '_create',
       'edit_item'  => '_update',
+      'update_item'  => '_update',
     );
     
     /**
@@ -139,7 +140,9 @@
           ),
           'contain' => array(
             'Responsible'
-          )
+          ),
+          'recent' => true,
+          'count' => true
         )
       ));
       
@@ -299,6 +302,37 @@
       }
       
       $this->set(compact('todoId','id'));
+    }
+    
+    
+    /**
+     * Project update todo item completed
+     * 
+     * @access public
+     * @return void
+     */
+    public function project_update_item($todoId,$id,$completed = false)
+    {
+      if($completed == 'true')
+      {
+        $this->Todo->TodoItem->updateAll(
+          array(
+            'completed' => '1',
+            'completed_date' => '"'.date('Y-m-d').'"',
+            'completed_person_id' => $this->Authorization->read('Person.id')
+          ),
+          array('TodoItem.id'=>$id)
+        );
+      }
+      else
+      {
+        $this->Todo->TodoItem->updateAll(
+          array('completed' => '0'),
+          array('TodoItem.id'=>$id)
+        );
+      }
+      
+      $this->set(compact('id','completed'));
     }
   
   
