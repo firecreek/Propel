@@ -265,7 +265,6 @@ form .input.strong label { font-weight:bold; }
 .button:hover {
  background-color: #8fb53c;
  color: white;
- padding: 5px 15px 6px;
 }
 
 .button.action {
