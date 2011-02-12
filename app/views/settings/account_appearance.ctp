@@ -58,8 +58,11 @@
           foreach($records as $record)
           {
             $colours = Set::combine($record, 'SchemeStyle.{n}.key', 'SchemeStyle.{n}.value');
+            
+            $schemeKey = $record['Scheme']['id'];
+            if(!empty($record['Scheme']['account_id'])) { $schemeKey = 'custom'; }
           
-            $schemeOptions[$record['Scheme']['id']] = '
+            $schemeOptions[$schemeKey] = '
               <span class="scheme" style="background-color:'.$colours['backgroundColor'].'">
                 <span style="background-color:'.$colours['projectTextColour'].'"></span>
                 <span style="background-color:'.$colours['clientTextColour'].'"></span>
@@ -73,7 +76,7 @@
               $schemeData[] = $key.': "'.$val.'"';
             }
             
-            $schemeSetsJs .= "colourSchemes[".$record['Scheme']['id']."] = {".implode(', ',$schemeData)."};\n";
+            $schemeSetsJs .= "colourSchemes['".$schemeKey."'] = {".implode(', ',$schemeData)."};\n\n";
           }
         
           echo $javascript->codeBlock("

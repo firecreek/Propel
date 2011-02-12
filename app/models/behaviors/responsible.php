@@ -120,22 +120,25 @@
 
     public function beforeSave(&$model)
     {
-      if(isset($model->data['Milestone']['responsible']))
+    
+      if(isset($model->data[$model->alias]['responsible']))
       {
-        if($model->data['Milestone']['responsible'] == 'self')
+        if($model->data[$model->alias]['responsible'] == 'self')
         {
-          $model->data['Milestone']['responsible_model'] = 'Person';
-          $model->data['Milestone']['responsible_id'] = $model->personId;
+          $personId = Set::extract($_SESSION, 'AuthAccount.Person.id');
+          
+          $model->data[$model->alias]['responsible_model'] = 'Person';
+          $model->data[$model->alias]['responsible_id'] = $personId;
         }
-        elseif(substr($model->data['Milestone']['responsible'],0,6) == 'person')
+        elseif(substr($model->data[$model->alias]['responsible'],0,6) == 'person')
         {
-          $model->data['Milestone']['responsible_model'] = 'Person';
-          $model->data['Milestone']['responsible_id'] = substr($model->data['Milestone']['responsible'],7);
+          $model->data[$model->alias]['responsible_model'] = 'Person';
+          $model->data[$model->alias]['responsible_id'] = substr($model->data[$model->alias]['responsible'],7);
         }
-        elseif(substr($model->data['Milestone']['responsible'],0,7) == 'company')
+        elseif(substr($model->data[$model->alias]['responsible'],0,7) == 'company')
         {
-          $model->data['Milestone']['responsible_model'] = 'Company';
-          $model->data['Milestone']['responsible_id'] = substr($model->data['Milestone']['responsible'],8);
+          $model->data[$model->alias]['responsible_model'] = 'Company';
+          $model->data[$model->alias]['responsible_id'] = substr($model->data[$model->alias]['responsible'],8);
         }
       }
       

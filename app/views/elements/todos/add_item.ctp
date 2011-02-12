@@ -16,12 +16,12 @@
       $url = array('controller'=>'todos','action'=>'edit_item',$todoId,$id);
     }
   
-    echo $form->create('TodoItem',array('id'=>null,'url'=>$url));
-    echo $form->input('description',array('div'=>'input textarea description','id'=>null,'label'=>__('Enter a to-do item',true)));
+    echo $form->create('TodoItem',array('id'=>false,'url'=>$url));
+    echo $form->input('description',array('div'=>'input textarea description','id'=>false,'label'=>__('Enter a to-do item',true)));
   ?>
   <div class="options">
     <?php
-      echo $form->input('responsible',array('div'=>'input first','options'=>$responsibleOptions,'empty'=>true,'label'=>__('Who\'s responsible?',true)));
+      echo $form->input('responsible',array('id'=>false,'div'=>'input first','options'=>$responsibleOptions,'empty'=>true,'label'=>__('Who\'s responsible?',true)));
       echo $form->input('deadline',array('empty'=>true,'div'=>'input second','label'=>__('When is it due?',true)));
     ?>
   </div>

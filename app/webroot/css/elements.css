@@ -308,8 +308,12 @@ form .input.strong label { font-weight:bold; }
 .listable .item .check div.input { position:absolute; z-index:10; }
 .listable .item .check div.input input { position:relative; top:2px; }
 
-.listable .item .name { font-size:12px; left:20px; position:relative; color:#333; z-index:10; }
+.listable .item .name { font-size:12px; left:20px; position:relative; color:#333; z-index:10; display:inline; }
 .listable .item .name span {  }
+
+.listable .item .extra { background-color:#EFEFEF; display:inline; border-radius:10px; margin-left:5px; padding:2px 8px; font-size:10px; color:#333; }
+.listable .item .extra.hover { background-color:#C9C9C9; cursor:pointer; }
+.listable .item .extra.active { background-color:#000104; color:white; cursor:pointer; }
 
 .listable .item .comment { display:inline-block; }
 

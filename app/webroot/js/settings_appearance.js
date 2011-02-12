@@ -20,23 +20,6 @@ var SettingsAppearance = {
     $('#schemeExample a').bind('click',function(e){
       e.preventDefault();
     });
-    
-    
-    $('.schemes input').bind('click',function(){
-      var value = $(this).val();
-      
-      $('.scheme-preview').removeClass('active');
-      $('#colorpicker').hide();
-      
-      if(colourSchemes[value])
-      {
-        for(var i in colourSchemes[value])
-        {
-          self.active = i;
-          self.update(colourSchemes[value][i]);
-        }
-      }
-    });
   
     $('.scheme-preview').bind('click',function(){
       self.active = $(this).attr('id').replace('SchemeStylePreview','');
@@ -72,6 +55,35 @@ var SettingsAppearance = {
       
       $('.colorpicker .colorpicker_undo').hide();
     });
+    
+    
+    $('.schemes input').bind('click',function(){
+      var value = $(this).val();
+      
+      $('.scheme-preview').removeClass('active');
+      $('#colorpicker').hide();
+      
+      if(colourSchemes[value])
+      {
+        for(var i in colourSchemes[value])
+        {
+          self.active = i;
+          self.update(colourSchemes[value][i]);
+        }
+      }
+    });
+    
+    
+    var value = $('.schemes input[checked=checked]').val();
+    if(colourSchemes[value])
+    {
+      for(var i in colourSchemes[value])
+      {
+        this.active = i;
+        this.update(colourSchemes[value][i]);
+      }
+    }
+    
   },
   
   

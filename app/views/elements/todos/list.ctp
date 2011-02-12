@@ -40,8 +40,23 @@
         <div class="items sortable">
           <?php foreach($record['TodoItem'] as $item): ?>
             <?php
+              $extras = array();
+              
+              if(isset($item['Responsible']) && !empty($item['Responsible']))
+              {
+                $extras[] = $item['Responsible']['name'];
+              }
+              
+              if(!empty($item['TodoItem']['deadline']))
+              {
+                $extras[] = date('j M Y',strtotime($item['TodoItem']['deadline']));
+              }
+              
+              $extra = implode(' ',$extras);
+            
               echo $listable->item('Todo',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
                 'position'  => true,
+                'extra'     => $extra,
                 'editUrl'   => $html->url(array('controller'=>'todos','action'=>'edit_item',$record['Todo']['id'],$item['TodoItem']['id'])),
                 'updateUrl'   => $html->url(array('controller'=>'todos','action'=>'update_item',$record['Todo']['id'],$item['TodoItem']['id'])),
                 'deleteUrl'   => $html->url(array('controller'=>'todos','action'=>'delete_item',$record['Todo']['id'],$item['TodoItem']['id'])),

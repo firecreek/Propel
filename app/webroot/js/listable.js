@@ -16,9 +16,9 @@
           $('.listable .item').attr('rel-maintain-lock','true');
         },
         update: function(event,ui){
+          $('.listable .item').removeAttr('rel-maintain-lock');
           if(this === ui.item.parent()[0])
           {
-            $('.listable .item').removeAttr('rel-maintain-lock');
             $.fn.listable.updatePositions(this,opts.positionUrl);
           }
         }
@@ -45,6 +45,20 @@
         $.fn.listable.delete(self);
         return false;
       });
+      
+      //Extra
+      $(this).find('.extra').hover(
+        function(){
+          $(this).addClass('hover');
+        },
+        function()
+        {
+          $(this).removeClass('hover');
+        }
+      );
+      //$(this).find('.extra').bind('click',function(e){
+      //  $.fn.listable.extra(self);
+      //});
       
       //Checkbox
       if($(this).attr('rel-update-url'))

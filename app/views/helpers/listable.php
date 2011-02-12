@@ -35,9 +35,19 @@
                                 <div class="content">%s</div>
                               </div>
                             ',
-      'item'              => '<div id="%s" class="item %s" rel-record-id="%s" rel-edit-url="%s" rel-update-url="%s" rel-delete-url="%s">%s</div>',
+      'item'              => '
+                              <div id="%s" class="item %s"
+                                rel-record-id="%s"
+                                rel-edit-url="%s"
+                                rel-update-url="%s"
+                                rel-delete-url="%s">
+                                  <div class="overview">%s</div>
+                                  <div class="detail">%s</div>
+                              </div>
+                            ',
       'checkbox'          => '<div class="check">%s</div>',
-      'name'              => '<div class="name">%s%s</div>',
+      'extra'             => '<div class="extra">%s</div>',
+      'name'              => '<div class="name">%s%s%s</div>',
       'inline'            => '<div class="inline"></div>',
       'comments'          => '<div class="comment"><span class="icon">%s</span><span class="count">%s</span></div>',
       'maintain'          => '<div class="maintain">%s</div>',
@@ -83,6 +93,7 @@
     {
       $_options = array(
         'url'                 => false,
+        'extra'               => false,
         'checkbox'            => true,
         'delete'              => true,
         'edit'                => true,
@@ -148,6 +159,13 @@
         $comments = sprintf($this->tags['comments'],$commentLink,$commentCount);
       }
       
+      //Extra
+      $extra = '';
+      if(!empty($options['extra']))
+      {
+        $extra = sprintf($this->tags['extra'],$options['extra']);
+      }
+      
       //Name prefix
       if($options['prefix'] !== false && !empty($options['prefix']))
       {
@@ -157,11 +175,11 @@
       //Name
       if(!empty($options['url']))
       {
-        $item .= sprintf($this->tags['name'],$this->Html->link($name,$options['url']),$comments);
+        $item .= sprintf($this->tags['name'],$this->Html->link($name,$options['url']),$extra,$comments);
       }
       else
       {
-        $item .= sprintf($this->tags['name'],$name,$comments);
+        $item .= sprintf($this->tags['name'],$name,$extra,$comments);
       }
       
       //Loading
@@ -195,10 +213,10 @@
       }
       
       //Inline
-      $item .= sprintf($this->tags['inline']);
+      $inline = sprintf($this->tags['inline']);
       
       //Build output
-      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$options['deleteUrl'],$item);
+      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$options['deleteUrl'],$item,$inline);
       
       //Highlight
       if(isset($options['highlight']) && $options['highlight'] == true)

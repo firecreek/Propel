@@ -250,6 +250,7 @@
         
         $this->Account->set($this->data);
         
+        
         if($this->Account->validates())
         {
           $this->Account->save();
@@ -263,8 +264,13 @@
       }
       
       $records = $this->Scheme->find('all',array(
-        'conditions' => array('Scheme.account_id'=>null),
-        'order' => 'Scheme.position ASC',
+        'conditions' => array(
+          '
+            Scheme.account_id IS NULL OR
+            Scheme.account_id = '.$this->Authorization->read('Account.id').'
+          '
+        ),
+        'order' => 'Scheme.account_id ASC, Scheme.position ASC',
       ));
       
       $this->set('schemeKeys',$this->schemeKeys);
