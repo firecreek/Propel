@@ -167,6 +167,12 @@
         'contain' => false,
         'items' => false
       ));
+    
+      //Nothing added yet
+      if(empty($todos) && empty($todosCompleted))
+      {
+        return $this->render('project_index_new');
+      }
       
       $this->set(compact('todos','todosCompleted'));
     }

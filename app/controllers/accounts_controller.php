@@ -26,7 +26,7 @@
      * @access public
      * @access public
      */
-    public $components = array();
+    public $components = array('Authorization');
     
     /**
      * Uses
@@ -45,15 +45,10 @@
      */
     public function account_index()
     {
-      //Give this person permission for this account
-      
-      //$this->Person->id = 44;
-      //$this->AclManager->allow($this->Person, 'accounts', 40, array('set' => 'owner'));
-      //exit
-      
-      //$this->Person->id = 45;
-      //$this->AclManager->allow($this->Person, 'accounts', 40, array('set' => 'shared'));
-      //exit;
+      if(!$this->Authorization->read('Projects'))
+      {
+        return $this->render('account_index_new');
+      }
     }
   
   }
