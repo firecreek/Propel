@@ -99,7 +99,7 @@
             }
           
             //
-            $this->Session->setFlash(__('Project created',true), 'default', array('class'=>'success'));
+            //$this->Session->setFlash(__('Project created',true), 'default', array('class'=>'success'));
             $this->redirect(array(
               'projectId'   => $this->Project->id,
               'controller'  => 'projects',
@@ -128,9 +128,26 @@
      */
     public function project_index()
     {
-      return $this->render('project_index_new');
-    
+      //Load models required
+      $this->loadModel('Todo');
       $this->loadModel('Milestone');
+      $this->loadModel('Post');
+      
+      //Check if this project has started
+      $q = array(
+        'conditions' => array('project_id' => $this->Authorization->read('Project.id')),
+        'recursive'  => -1
+      );
+      
+      $todoCount        = $this->Todo->find('count',$q);
+      $milestoneCount   = $this->Milestone->find('count',$q);
+      $postCount        = $this->Post->find('count',$q);
+      
+      if(!$todoCount && !$milestoneCount && !$postCount)
+      {
+        return $this->render('project_index_new');
+      }
+    
     
       //Overdue
       $overdue = $this->Milestone->find('all',array(
