@@ -76,6 +76,7 @@
             if(date('Y-m-d',$date) == date('Y-m-d'))
             {
               $titleParts[] = __('Today',true);
+              $titleParts[] = '<span>('.date('l, j F',$date).')</span>';
             }
             elseif(date('Y-m-d',$date) == date('Y-m-d',strtotime('+1 day')))
             {
