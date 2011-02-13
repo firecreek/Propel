@@ -22,6 +22,27 @@
         ?>
         
         
+        <?php if($projects == 1): ?>
+          <?php
+            $project = $auth->read('Projects.0');
+          ?>
+          <p class="large"><strong>
+            <?php __('Your project'); ?>:
+            <?php echo $html->link($project['Project']['name'],array('controller'=>'projects','action'=>'index','projectId'=>$project['Project']['id'],)); ?>
+          </strong></p>
+        <?php endif; ?>
+        
+        
+        <?php if(!$activeProjectCount): ?>
+          <p>
+            <strong class="highlight"><?php __('There hasn\'t been any activity in your project yet'); ?></strong><br />
+            <?php __('After you begin posting messages, comments, milestones or to-dos, you\'ll see a log of recent activity on this page.'); ?>
+          </p>
+        <?php endif; ?>
+        
+        
+        <?php
+        /*
         <div class="section outlined small important">
           <div class="banner">
             <h3><?php __('Late milestones'); ?></h3>
@@ -173,6 +194,8 @@
           
           </div>
         </div>
+        */
+        ?>
         
         
         

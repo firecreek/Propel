@@ -78,7 +78,8 @@
     public $belongsTo = array(
       'Project' => array(
         'className' => 'Project',
-        'foreignKey' => 'project_id'
+        'foreignKey' => 'project_id',
+        'counterCache' => true
       ),
       'CompletedPerson' => array(
         'className' => 'Person',

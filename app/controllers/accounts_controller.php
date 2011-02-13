@@ -34,7 +34,7 @@
      * @access public
      * @access public
      */
-    public $uses = array();
+    public $uses = array('Project');
     
     
     /**
@@ -45,10 +45,26 @@
      */
     public function account_index()
     {
+      //New account, create project
       if(!$this->Authorization->read('Projects'))
       {
         return $this->render('account_index_new');
       }
+      
+      //Empty projects
+      $activeProjectCount = $this->Project->find('count',array(
+        'conditions' => array(
+          'Project.account_id' => $this->Authorization->read('Account.id'),
+          'OR' => array(
+            'Project.todo_count >'      => '0',
+            'Project.milestone_count >' => '0',
+            'Project.post_count >'      => '0',
+          )
+        ),
+        'recursive' => -1
+      ));
+      
+      $this->set(compact('activeProjectCount'));
     }
   
   }

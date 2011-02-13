@@ -11,6 +11,8 @@ p.important { color:#C00; }
 p.note { color:#666; font-size:12px; }
 p.note span { text-transform:uppercase; font-weight:bold; }
 
+p.large { font-size:16px; font-family:arial; }
+
 a { color:#03C; padding:0 1px; }
 a:hover { background-color:#03C; text-decoration:none; color:white; padding:0 1px; }
 
@@ -31,8 +33,10 @@ a.unimportant:hover, .unimportant a:hover { background-color:#333; text-decorati
 .success { background: #E6EFC2; color: #529214; border-color: #C6D880; }
 .error a { color: #D12F19; }
 .notice a,
-.message a { color: #817134; }
-.success a { color: #529214; }
+.message a { color:#817134; }
+.success a { color:#529214; }
+
+.highlight { background-color:#FFC; }
 
 /** Remove */
 a.red { color:red; background-color:red; border:10px solid red; padding:0 1px; }

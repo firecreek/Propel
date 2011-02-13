@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-01-13 04:01:43 : 1294867723*/
+/* App schema generated on: 2011-02-13 20:02:52 : 1297602532*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -263,6 +263,9 @@ class AppSchema extends CakeSchema {
 		'status' => array('type' => 'string', 'null' => false, 'default' => 'active', 'length' => 10, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'start_controller' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'person_id' => array('type' => 'integer', 'null' => false),
+		'todo_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+		'milestone_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+		'post_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
@@ -277,7 +280,7 @@ class AppSchema extends CakeSchema {
 	var $schemes = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => false, 'length' => 90, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'position' => array('type' => 'integer', 'null' => false),
+		'position' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'account_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),

@@ -236,7 +236,7 @@
         {
           $this->Todo->save();
           
-          $this->Todo->setFlash(__('Todo list added',true),'default',array('class'=>'success'));
+          $this->Session->setFlash(__('Todo list added',true),'default',array('class'=>'success'));
           $this->redirect(array('action'=>'index'));
         }
       }

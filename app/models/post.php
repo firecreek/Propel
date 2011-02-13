@@ -69,6 +69,7 @@ class Post extends AppModel {
 		'Project' => array(
 			'className' => 'Project',
 			'foreignKey' => 'project_id',
+			'counterCache' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
