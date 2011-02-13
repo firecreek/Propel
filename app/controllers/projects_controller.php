@@ -34,7 +34,7 @@
      * @access public
      * @access public
      */
-    public $uses = array('Project');
+    public $uses = array('Project','Company');
     
     
     /**
@@ -68,6 +68,35 @@
             //Give this company permission for this project
             $this->User->Company->id = $this->Authorization->read('Company.id');
             $this->AclManager->allow($this->User->Company, 'projects', $this->Project->id, array('set' => 'company'));
+            
+            //Create a new company?
+            if(isset($this->data['Permission']['action']) && $this->data['Permission']['action'] == 'add')
+            {
+              if($this->data['Permission']['option'] == 'create')
+              {
+                //Create new company and give permission
+                $this->Company->create();
+                $checkCompany = $this->Company->save(array(
+                  'name'        => $this->data['Permission']['company_new'],
+                  'account_id'  => $this->Authorization->read('Account.id'),
+                  'person_id'   => $this->Authorization->read('Person.id')
+                ));
+                
+                if($checkCompany)
+                {
+                  //Add permission for this account and project
+                  $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'company'));
+                  $this->AclManager->allow($this->Company, 'projects', $this->Project->id, array('set' => 'company'));
+                }
+                
+              }
+              elseif($this->data['Permission']['option'] == 'select' && is_numeric($this->data['Permission']['company_id']))
+              {
+                //Add company permission that already exists
+                $this->Company->id = $this->data['Permission']['company_id'];
+                $this->AclManager->allow($this->Company, 'projects', $this->Project->id, array('set' => 'company'));
+              }
+            }
           
             //
             $this->Session->setFlash(__('Project created',true), 'default', array('class'=>'success'));
