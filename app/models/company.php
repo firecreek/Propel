@@ -36,6 +36,11 @@
      */
     public $actsAs = array(
       'Acl' => array('type' => 'requester'),
+      'Cached' => array(
+        'prefix' => array(
+          'companies_',
+        ),
+      ),
       'Containable'
     );
     

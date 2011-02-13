@@ -20,6 +20,7 @@
       'Containable',
       'Cached' => array(
         'prefix' => array(
+          'projects_',
           'project_',
           'account_'
         ),
