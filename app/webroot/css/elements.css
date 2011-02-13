@@ -171,11 +171,13 @@ ul.overdue li strong { color:#C00; }
 /**
  * Blank slate
  */
-.blank-slate { width:650px; margin:50px auto 100px auto; }
+.blank-slate { width:650px; margin:50px auto 100px auto; background-color:white; padding:20px 40px; -webkit-box-shadow:#BBB 3px 3px 4px; -moz-box-shadow:#BBB 3px 3px 4px; }
 .blank-slate div.icon { float:left; width:160px; }
-.blank-slate div.content {}
+.blank-slate div.content { margin-left:160px; }
 .blank-slate div.content h2 { font-size:18px; color:#333; margin:0 0 5px 0; }
 .blank-slate div.content p { font-size:16px; color:#444; margin:0 0 15px 0; font-family:arial; line-height:20px; }
+.blank-slate div.content ul {}
+.blank-slate div.content li { font-size:16px; }
 
 
 /**

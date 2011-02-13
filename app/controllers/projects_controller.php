@@ -100,7 +100,11 @@
           
             //
             $this->Session->setFlash(__('Project created',true), 'default', array('class'=>'success'));
-            $this->redirect(array('controller'=>'accounts','action'=>'index'));
+            $this->redirect(array(
+              'projectId'   => $this->Project->id,
+              'controller'  => 'projects',
+              'action'      => 'index'
+            ));
           }
           else
           {
@@ -124,6 +128,8 @@
      */
     public function project_index()
     {
+      return $this->render('project_index_new');
+    
       $this->loadModel('Milestone');
     
       //Overdue
