@@ -112,6 +112,37 @@
     
     
     
+    /**
+     * Get project list
+     *
+     * @access public
+     * @return array
+     */
+    public function findProjectList($projectId)
+    {
+      $output = array();
+    
+      $records = $this->find('all',array(
+        'conditions' => array($this->alias.'.project_id'=>$projectId),
+        'order' => $this->alias.'.title ASC',
+        'recursive' => -1,
+        'fields' => array('id','title','completed','deadline')
+      ));
+      
+      foreach($records as $record)
+      {
+        $prefix = null;
+        
+        if($record[$this->alias]['completed'])
+        { 
+          $prefix = __('COMPLETED',true).' - ';
+        }
+      
+        $output[$record[$this->alias]['id']] = $prefix.$record[$this->alias]['title'];
+      }
+      
+      return $output;
+    }
 
   }
   

@@ -24,7 +24,7 @@
         <?php
           echo $form->input('name',array(
             'label' => __('Name the project',true).' <span>('.__('"Home page redesign" or "Marketing ideas", etc.',true).')</span>',
-            'div'   => 'input text strong'
+            'div'   => 'input text strong full-width'
           ));
           //echo $form->input('description',array('label'=>__('Description',true),'after'=>'<small>'.__('(Not required)',true).'</small>'));
         ?>

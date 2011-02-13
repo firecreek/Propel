@@ -240,6 +240,11 @@
           $this->redirect(array('action'=>'index'));
         }
       }
+      
+      //Milestone list
+      $milestoneOptions = $this->Todo->Milestone->findProjectList($this->Authorization->read('Project.id'));
+
+      $this->set(compact('milestoneOptions'));
     }
     
     

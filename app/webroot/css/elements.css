@@ -221,6 +221,7 @@ form .input.radio input { float:left; margin:2px 0 0 0; }
 form .input.radio label { width:auto; margin:0 0 0 8px; }
 
 form .input { margin-bottom:10px; }
+form .input.strong label { font-weight:bold; }
 
 form .submit { font-size:11px; position:relative; }
 form .submit input { padding:3px 5px 3px 5px; margin-right:8px; }
@@ -255,8 +256,7 @@ form.basic h3 { margin-bottom:5px; }
 form.larger label { font-size:14px; }
 
 
-form .input.strong label { font-weight:bold; }
-
+form .input.text.full-width input { width:90%; }
 
 
 /**
