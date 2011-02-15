@@ -17,6 +17,8 @@
       echo $form->create('Todo',array('url'=>$this->here,'class'=>'block'));
       
       echo $form->input('name',array('label'=>__('First give the list a name',true)));
+      
+      echo $form->hidden('ident',array('value'=>$this->params['url']['objId']));
     ?>
       
     <hr />

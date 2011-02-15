@@ -8,7 +8,8 @@
       'reset',
       'type',
       'elements',
-      'account'
+      'account',
+      'listable'
     ));
     echo $javascript->link(array(
       'jquery/jquery',

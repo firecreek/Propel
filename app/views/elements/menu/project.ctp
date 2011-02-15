@@ -7,7 +7,7 @@
   <?php
     $menu = array(
       'projects'    => array('name'=>__('Overview',true),'url'=>array('controller'=>'projects','action'=>'index')),
-      'messages'    => array('name'=>__('Messages',true),'url'=>array('controller'=>'messages','action'=>'index')),
+      'posts'       => array('name'=>__('Messages',true),'url'=>array('controller'=>'posts','action'=>'index')),
       'todos'       => array('name'=>__('To-Dos',true),'url'=>array('controller'=>'todos','action'=>'index')),
       'milestones'  => array('name'=>__('Milestones',true),'url'=>array('controller'=>'milestones','action'=>'index')),
     );

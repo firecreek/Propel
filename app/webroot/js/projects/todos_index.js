@@ -49,15 +49,12 @@ var Todos = {
         
         $.ajax({
           type: 'POST',
-          url: $(this).attr('rel-update-url')+'.json',
-          dataType: 'json',
+          url: $(this).attr('rel-update-url')+'.js',
+          dataType: 'script',
           data: params,
           cache: false,
           success: function(response)
           {
-            if(response.success)
-            {
-            }
           }
         });
       

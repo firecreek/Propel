@@ -269,7 +269,11 @@
           
           if($this->RequestHandler->isAjax())
           {
-            $this->set(compact('id'));
+            $item = $this->Todo->find('first',array(
+              'conditions' => array('Todo.id'=>$id)
+            ));
+          
+            $this->set(compact('id','item'));
             return $this->render();
           }
           
@@ -360,7 +364,12 @@
           
           if($this->RequestHandler->isAjax())
           {
-            $this->set(compact('id'));
+            $item = $this->Todo->TodoItem->find('first',array(
+              'conditions' => array('TodoItem.id'=>$this->Todo->TodoItem->id),
+              'contain' => array('Todo')
+            ));
+          
+            $this->set(compact('id','item'));
             return $this->render();
           }
           
@@ -389,7 +398,10 @@
 
       if($this->RequestHandler->isAjax())
       {
-        $this->set(compact('todoId','id'));
+        //Total count
+        $completedCount = $this->Todo->TodoItem->projectCompletedCount($this->Authorization->read('Person.id'));
+      
+        $this->set(compact('todoId','id','completedCount'));
         return $this->render();
       }
       
@@ -418,7 +430,12 @@
           
           if($this->RequestHandler->isAjax())
           {
-            $this->set(compact('todoId','id'));
+            $item = $this->Todo->TodoItem->find('first',array(
+              'conditions' => array('TodoItem.id'=>$id),
+              'contain' => array('Todo')
+            ));
+          
+            $this->set(compact('id','item'));
             return $this->render();
           }
           
@@ -473,7 +490,16 @@
         );
       }
       
-      $this->set(compact('todoId','id','completed'));
+      //Load item back in
+      $item = $this->Todo->TodoItem->find('first',array(
+        'conditions' => array('TodoItem.id'=>$id),
+        'contain' => array('Todo')
+      ));
+      
+      //Total count
+      $completedCount = $this->Todo->TodoItem->projectCompletedCount($this->Authorization->read('Project.id'));
+    
+      $this->set(compact('id','item','completed','completedCount'));
     }
     
     

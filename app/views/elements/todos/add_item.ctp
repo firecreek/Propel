@@ -36,6 +36,16 @@
       $submitText = __('Save this item',true);
       $cancelText = __('Cancel',true);
     }
+    
+    if(isset($groupIdent) && !empty($groupIdent))
+    {
+      echo $form->hidden('Group.ident',array('value'=>$groupIdent));
+    }
+    
+    if(isset($todoItemIdent) && !empty($todoItemIdent))
+    {
+      echo $form->hidden('TodoItem.ident',array('value'=>$todoItemIdent));
+    }
   
     echo $form->submit($submitText,array('after'=>__('or',true).' '.$html->link($cancelText,array('action'=>'index') ) ));
     echo $form->end();

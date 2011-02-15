@@ -165,5 +165,23 @@
       return $this->Todo->saveField('todo_items_completed_count',$count);
     }
     
+    
+    /**
+     * Project completed count
+     *
+     * @access public
+     * @return int
+     */
+    public function projectCompletedCount($projectId)
+    {
+      return $this->find('count',array(
+        'conditions' => array(
+          $this->alias.'.project_id' => $projectId,
+          $this->alias.'.completed' => true
+        ),
+        'recursive' => -1
+      ));
+    }
+    
   }
 ?>

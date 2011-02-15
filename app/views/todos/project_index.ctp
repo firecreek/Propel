@@ -33,14 +33,15 @@
           if(!empty($todos))
           {
             echo $this->element('todos/list',array(
-              'records' => $todos
+              'records' => $todos,
+              'showCount' => true
             ));
           }
         ?>
         
         <?php
           echo $javascript->codeBlock("
-            $('.listable .item').listable({
+            $('.listable').listable({
               sortable:true,
               positionUrl:'".$html->url(array('action'=>'update_item_positions'))."'
             });

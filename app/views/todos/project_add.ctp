@@ -47,11 +47,14 @@
           ?>
           
           <?php
-            echo $form->input('milestone_id',array(
-              'label'=>__('Does this list relate to a milestone?',true),
-              'options'=>$milestoneOptions,
-              'empty' => true
-            ));
+            if(!empty($milestoneOptions))
+            {
+              echo $form->input('milestone_id',array(
+                'label'=>__('Does this list relate to a milestone?',true),
+                'options'=>$milestoneOptions,
+                'empty' => true
+              ));
+            }
           ?>
         </fieldset>
         

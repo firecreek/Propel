@@ -6,7 +6,11 @@
   <div class="content">
       
     <?php
-      echo $this->element('todos/add_item',array('todoId'=>$todoId,'edit'=>true));
+      echo $this->element('todos/add_item',array(
+        'todoId'=>$todoId,
+        'edit'=>true,
+        'todoItemIdent' => isset($this->params['url']['objId']) ? $this->params['url']['objId'] : null
+      ));
     ?>
     
   </div>

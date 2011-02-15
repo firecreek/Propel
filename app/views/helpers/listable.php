@@ -45,9 +45,15 @@
                                   <div class="detail">%s</div>
                               </div>
                             ',
+      'label'             => '
+                              <div class="label">
+                                <div class="name">%s</div>
+                                %s
+                                %s
+                              </div>
+                            ',
       'checkbox'          => '<div class="check">%s</div>',
       'extra'             => '<div class="extra">%s</div>',
-      'name'              => '<div class="name">%s%s%s</div>',
       'inline'            => '<div class="inline"></div>',
       'comments'          => '<div class="comment"><span class="icon">%s</span><span class="count">%s</span></div>',
       'maintain'          => '<div class="maintain">%s</div>',
@@ -175,11 +181,11 @@
       //Name
       if(!empty($options['url']))
       {
-        $item .= sprintf($this->tags['name'],$this->Html->link($name,$options['url']),$extra,$comments);
+        $item .= sprintf($this->tags['label'],$this->Html->link($name,$options['url']),$extra,$comments);
       }
       else
       {
-        $item .= sprintf($this->tags['name'],$name,$extra,$comments);
+        $item .= sprintf($this->tags['label'],$name,$extra,$comments);
       }
       
       //Loading
@@ -218,13 +224,8 @@
       //Build output
       $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$options['deleteUrl'],$item,$inline);
       
-      //Highlight
-      if(isset($options['highlight']) && $options['highlight'] == true)
-      {
-        $output .= $this->Javascript->codeBlock("
-          $('".$options['ident']."').effect('highlight',null,3000);
-        ");
-      }
+      //
+      $this->lastIdent = $options['ident'];
       
       return $output;
     }

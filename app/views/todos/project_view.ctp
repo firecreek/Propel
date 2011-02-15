@@ -1,9 +1,8 @@
 <?php
-
   $javascript->link('listable.js', false);
-  $javascript->link('todos.js', false);
-  $html->css('pages/project_todos', null, array('inline'=>false));
   
+  $javascript->link('projects/todos_index.js', false);
+  $html->css('projects/todos_index', null, array('inline'=>false));
 ?>
 <div class="cols">
 
@@ -25,14 +24,14 @@
         <?php
           echo $this->element('todos/list',array(
             'records' => array($todo),
-            'headerLink' => false
+            'headerLink' => false,
+            'showCount' => false
           ));
         ?>
         
-        
         <?php
           echo $javascript->codeBlock("
-            $('.listable .item').listable({
+            $('.listable').listable({
               sortable:true,
               positionUrl:'".$html->url(array('action'=>'update_item_positions'))."'
             });

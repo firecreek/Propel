@@ -69,7 +69,10 @@
           <?php echo $html->link(__('Add an item',true),array('action'=>'item_add',$record['Todo']['id']),array('rel'=>$ident,'class'=>'important')); ?>
         </div>
         <?php
-          echo $this->element('todos/add_item',array('todoId'=>$record['Todo']['id']));
+          echo $this->element('todos/add_item',array(
+            'todoId'      => $record['Todo']['id'],
+            'groupIdent'  => $ident
+          ));
         ?>
         
         <?php if(!empty($record['TodoItemRecent'])): ?>
@@ -88,11 +91,18 @@
         <?php endif; ?>
         
         
-        <?php if(isset($record['TodoItemCountCompleted']) && !empty($record['TodoItemCountCompleted'])): ?>
-          <div class="count">
+        <?php
+          $countDisplay = 'none';
+          if(isset($record['TodoItemCountCompleted']) && !empty($record['TodoItemCountCompleted']))
+          { 
+            $countDisplay = 'block';
+          }
+        ?>
+        <?php if($showCount): ?>
+          <div class="count" style="display:<?php echo $countDisplay; ?>">
             <p><?php
-              $text = sprintf(__('View all %s completed items',true),$record['TodoItemCountCompleted']);
-              echo $html->link($text,array('action'=>'view',$record['Todo']['id']));
+              $text = sprintf(__('View all %s completed items',true),'<span>'.$record['TodoItemCountCompleted'].'</span>');
+              echo $html->link($text,array('action'=>'view',$record['Todo']['id']),array('escape'=>false));
             ?></p>
           </div>
         <?php endif; ?>

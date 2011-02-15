@@ -7,7 +7,7 @@
     return;
   }
   
-  Router::parseExtensions('rss','json','ajax','xml'); 
+  Router::parseExtensions('rss','json','ajax','xml','js'); 
 
   Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
   Router::connect('/users/login', array('controller' => 'users', 'action' => 'login'));

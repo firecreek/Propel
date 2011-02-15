@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * Messages Controller
+   * Posts Controller
    *
    * @category Controller
    * @package  OpenCamp
@@ -10,7 +10,7 @@
    * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
    * @link     http://opencamp.firecreek.co.uk
    */
-  class MessagesController extends AppController
+  class PostsController extends AppController
   {
     /**
      * Helpers
@@ -38,13 +38,14 @@
     
     
     /**
-     * Register new user, account and person
+     * Project list posts
      *
      * @access public
      * @return void
      */
     public function project_index()
     {
+        return $this->render('project_index_new');
     }
   
   }
