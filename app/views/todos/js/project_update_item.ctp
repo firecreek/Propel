@@ -10,6 +10,7 @@
       'checked' => true,
       'prefix' => date('M j',strtotime($item['TodoItem']['completed_date'])),
       'updateUrl'   => $html->url(array('controller'=>'todos','action'=>'update_item',$item['Todo']['id'],$item['TodoItem']['id'])),
+      'deleteUrl' => $html->url(array('controller'=>'todos','action'=>'delete_item',$item['Todo']['id'],$item['TodoItem']['id'])),
     ));
   }
   else
