@@ -20,6 +20,33 @@
     }
     
     
+    
+    public function getResponsibleName(&$model,$modelAlias,$modelId)
+    {
+      $record = ClassRegistry::init($modelAlias)->find('first',array(
+        'conditions' => array('id'=>$modelId),
+        'recursive'  => -1
+      ));
+      
+      $name = false;
+      
+      switch($modelAlias)
+      {
+        case 'Company':
+          $name = $record[$modelAlias]['name'];
+          break;
+        case 'Person':
+          $name = $record[$modelAlias]['full_name'];
+          break;
+      }
+      
+      return $name;
+    }
+    
+    
+    /**
+     * Before find
+     */
     public function beforeFind(&$model, $query)
     {
       if(isset($query['contain']))

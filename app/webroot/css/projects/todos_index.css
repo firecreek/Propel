@@ -3,6 +3,7 @@
 
 .listable .group .header .item { margin-left:0; }
 .listable .group .header .item .maintain { top:-2px; }
+.listable .group .header .item .maintain .position { left:45px; }
 .listable .group .header .item .label { left:60px; font-weight:bold; font-size:16px; color:#000000; }
 .listable .group .header .item .label a { color:#000000; }
 .listable .group .header .item .label a:hover { background-color:transparent; color:#000000; text-decoration:underline; }
@@ -31,7 +32,7 @@
 .recent .item .label strong { color:#666; font-weight:normal; }
 
 .recent .item .check div.input input { top:0; }
-.recent .item .maintain { top:-8px; left:40px; }
+.recent .item .maintain { top:-6px; left:42px; }
 
 .count { margin:10px 0 0 45px; }
 .count p { font-size:10px; }

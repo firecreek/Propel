@@ -174,6 +174,56 @@
       return $results;
     }
     
+    
+    
+    /**
+     * Find active lists
+     *
+     * @access public
+     * @return array
+     */
+    public function findActive($projectId)
+    {
+      return $this->find('all',array(
+        'conditions' => array(
+          'Todo.project_id' => $projectId,
+          'OR' => array(
+            'Todo.todo_items_count' => 0,
+            'NOT' => array(
+              'Todo.todo_items_count = Todo.todo_items_completed_count'
+            )
+          )
+        ),
+        'fields' => array('id','name'),
+        'order' => 'Todo.name ASC',
+        'contain' => false,
+        'items' => false
+      ));
+    }
+    
+    
+    
+    /**
+     * Find completed lists
+     *
+     * @access public
+     * @return array
+     */
+    public function findCompleted($projectId)
+    {
+      return $this->find('all',array(
+        'conditions' => array(
+          'Todo.project_id' => $projectId,
+          'Todo.todo_items_count >' => 0,
+          'Todo.todo_items_count = Todo.todo_items_completed_count',
+        ),
+        'fields' => array('id','name'),
+        'order' => 'Todo.name ASC',
+        'contain' => false,
+        'items' => false
+      ));
+    }
+    
 
   }
 

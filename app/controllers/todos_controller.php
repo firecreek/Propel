@@ -69,7 +69,7 @@
     public function beforeFilter()
     {
       $this->dueOptions = array(
-        'anytime'     => __('Anytime',true),
+        ''            => __('Anytime',true),
         '_0'          => '----------------',
         'today'       => __('Today',true),
         'tomorrow'    => __('Tomorrow',true),
@@ -124,57 +124,36 @@
      */
     public function project_index()
     {
-      //Params
-      $this->data['Todo']['responsible']  = isset($this->params['url']['responsible']) ? $this->params['url']['responsible'] : 'all';
-      $this->data['Todo']['due']          = isset($this->params['url']['due']) ? $this->params['url']['due'] : 'anytime';
-      
-      
-      //Todo lists
-      $todos = $this->Todo->find('all',array(
+      //Total todo lists
+      $total = $this->Todo->find('count',array(
         'conditions' => array(
-          'Todo.project_id' => $this->Authorization->read('Project.id'),
-          'OR' => array(
-            'Todo.todo_items_count' => 0,
-            'NOT' => array(
-              'Todo.todo_items_count = Todo.todo_items_completed_count'
-            )
-          )
+          'Todo.project_id' => $this->Authorization->read('Project.id')
         ),
-        'fields' => array('id','name'),
-        'order' => 'Todo.position ASC',
-        'contain' => false,
-        'items' => array(
-          'conditions' => array(
-            'TodoItem.completed' => false
-          ),
-          'contain' => array(
-            'Responsible'
-          ),
-          'recent' => array('limit'=>3),
-          'count' => true
-        )
-      ));
-      
-      //Todo completed lists
-      $todosCompleted = $this->Todo->find('all',array(
-        'conditions' => array(
-          'Todo.project_id' => $this->Authorization->read('Project.id'),
-          'Todo.todo_items_count >' => 0,
-          'Todo.todo_items_count = Todo.todo_items_completed_count',
-        ),
-        'fields' => array('id','name'),
-        'order' => 'Todo.name ASC',
-        'contain' => false,
-        'items' => false
+        'recursive' => -1
       ));
     
       //Nothing added yet
-      if(empty($todos) && empty($todosCompleted))
+      if(empty($total))
       {
         return $this->render('project_index_new');
       }
       
-      $this->set(compact('todos','todosCompleted'));
+      //Todos
+      $todos = $this->__filterTodos(array(
+        'Todo.project_id' => $this->Authorization->read('Project.id'),
+        'OR' => array(
+          'Todo.todo_items_count' => 0,
+          'NOT' => array(
+            'Todo.todo_items_count = Todo.todo_items_completed_count'
+          )
+        )
+      ));
+      
+      //Todo active/completed lists
+      $todosActive = $this->Todo->findActive($this->Authorization->read('Project.id'));
+      $todosCompleted = $this->Todo->findCompleted($this->Authorization->read('Project.id'));
+      
+      $this->set(compact('todos','todosCompleted','todosActive'));
     }
     
     
@@ -186,32 +165,119 @@
      */
     public function project_view($id)
     {
+      //Todos
+      $todo = $this->__filterTodos(array(
+        'Todo.project_id' => $this->Authorization->read('Project.id'),
+        'Todo.id' => $id
+      ));
+      $todo = $todo[0];
+      
+      //Todo active/completed lists
+      $todosActive = $this->Todo->findActive($this->Authorization->read('Project.id'));
+      $todosCompleted = $this->Todo->findCompleted($this->Authorization->read('Project.id'));
+      
+      
+      $this->set(compact('id','todo','todosCompleted','todosActive'));
+    }
+    
+    
+    /**
+     * Project list todos
+     *
+     * @access public
+     * @return void
+     */
+    private function __filterTodos($conditions)
+    {
       //Params
-      $this->data['Todo']['responsible']  = isset($this->params['url']['responsible']) ? $this->params['url']['responsible'] : 'all';
-      $this->data['Todo']['due']          = isset($this->params['url']['due']) ? $this->params['url']['due'] : 'anytime';
+      $this->data['Todo']['responsible']  = isset($this->params['url']['responsible']) ? $this->params['url']['responsible'] : '';
+      $this->data['Todo']['due']          = isset($this->params['url']['due']) ? $this->params['url']['due'] : '';
+      
+      //Filters
+      $contain = array();
+      $itemConditions = array();
+      
+      //Responsible filter
+      if(!empty($this->data['Todo']['responsible']))
+      {
+        //Item conditions
+        if($this->data['Todo']['responsible'] == 'nobody')
+        {
+          //Nobody
+          $modelAlias       = null;
+          $modelId          = null;
+          $responsibleName  = 'Nobody';
+        }
+        elseif($this->data['Todo']['responsible'] == 'self')
+        {
+          //Self
+          $modelAlias       = 'Person';
+          $modelId          = $this->Authorization->read('Person.id');
+          $responsibleName  = $this->Todo->TodoItem->getResponsibleName($modelAlias,$modelId);
+        }
+        else
+        {
+          //Specified
+          $split            = explode('_',$this->data['Todo']['responsible']);
+          $modelAlias       = Inflector::classify($split[0]);
+          $modelId          = $split[1];
+          $responsibleName  = $this->Todo->TodoItem->getResponsibleName($modelAlias,$modelId);
+        }
+        
+        $itemConditions['TodoItem.responsible_model'] = $modelAlias;
+        $itemConditions['TodoItem.responsible_id'] = $modelId;
+        
+        //Sets
+        $this->set(compact('responsibleName'));
+        
+        //Contain join
+        $contain = array('TodoItemResponsible');
+        
+        //INNER joins
+        $this->Todo->bindModel(array(
+          'belongsTo' => array(
+            'TodoItemResponsible' => array(
+              'className'   => 'TodoItem',
+              'type'        => 'INNER',
+              'foreignKey'  => false,
+              'conditions'  => array(
+                'TodoItemResponsible.todo_id = Todo.id',
+                'TodoItemResponsible.responsible_model' => $modelAlias,
+                'TodoItemResponsible.responsible_id' => $modelId,
+              )
+            )
+          )
+        ));
+      }
+      
+      //Due filter
+      if(!empty($this->data['Todo']['due']))
+      {
+      }
       
       
-      //Todo lists
-      $todo = $this->Todo->find('first',array(
-        'conditions' => array(
-          'Todo.project_id' => $this->Authorization->read('Project.id'),
-          'Todo.id' => $id
-        ),
+      //Todo lists for filter
+      $todos = $this->Todo->find('all',array(
+        'conditions' => $conditions,
         'fields' => array('id','name'),
         'order' => 'Todo.position ASC',
-        'contain' => false,
+        'contain' => $contain,
         'items' => array(
-          'conditions' => array(
-            'TodoItem.completed' => false
-          ),
+          'conditions' => array_merge(array(
+            'TodoItem.completed' => false,
+          ),$itemConditions),
           'contain' => array(
             'Responsible'
           ),
-          'recent' => true
+          'recent' => array(
+            'conditions' => $itemConditions,
+            'limit'=>3
+          ),
+          'count' => true
         )
       ));
       
-      $this->set(compact('id','todo'));
+      return $todos;
     }
     
     

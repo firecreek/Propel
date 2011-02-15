@@ -25,6 +25,8 @@ var Todos = {
         //Show
         self.reorderLists = true;
         
+        $('#todoFilter').hide();
+        
         $(this).addClass('active');
         $(this).html($(this).attr('rel-active'));
       
@@ -38,7 +40,7 @@ var Todos = {
       }
       else
       {
-        //Save
+        //Save        
         var params = {};
         var count = 0;
 
@@ -60,6 +62,8 @@ var Todos = {
       
         //Hide
         self.reorderLists = false;
+        
+        $('#todoFilter').show();
         
         $(this).removeClass('active');
         $(this).html($(this).attr('rel-not-active'));

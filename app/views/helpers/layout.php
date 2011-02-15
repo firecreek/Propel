@@ -109,6 +109,7 @@
       
       $_options = array(
         'anyone'  => true,
+        'nobody'  => true,
         'self'    => true
       );
       $options = array_merge($_options,$options);
@@ -130,7 +131,13 @@
       //Add anyone
       if($options['anyone'])
       {
-        $list[] = array('name'=>__('Anyone',true),'value'=>'anyone');
+        $list[] = array('name'=>__('Anyone',true),'value'=>'');
+      }
+      
+      //Add nobody
+      if($options['nobody'])
+      {
+        $list[] = array('name'=>__('Nobody',true),'value'=>'nobody');
       }
       
       //Add self

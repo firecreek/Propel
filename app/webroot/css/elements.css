@@ -24,6 +24,8 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 .box .banner .button { position:absolute; right:20px; top:10px; }
 
+.box .banner p { padding:5px 0 10px 20px; font-size:12px; }
+
 .box .banner ul.left { position:absolute; top:17px; left:20px; }
 .box .banner ul.left li { float:left; margin-right:15px; }
 .box .banner ul.left li a { font-size:12px; padding:0 1px; }
