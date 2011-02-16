@@ -102,7 +102,7 @@
           'Milestone.deadline <' => date('Y-m-d'),
           'Milestone.completed'  => false
         ),
-        'contain' => array('Responsible','Todo'),
+        'contain' => array('Responsible','Todo','CommentUnread'),
         'order' => 'Milestone.deadline ASC'
       ));
       
@@ -113,7 +113,7 @@
           'Milestone.deadline >=' => date('Y-m-d'),
           'Milestone.completed'   => false
         ),
-        'contain' => array('Responsible','Todo'),
+        'contain' => array('Responsible','Todo','CommentUnread'),
         'order' => 'Milestone.deadline ASC'
       ));
       
@@ -125,7 +125,7 @@
           'Milestone.deadline >=' => date('Y-m-d'),
           'Milestone.deadline <=' => date('Y-m-d',strtotime('+14 days')),
         ),
-        'contain' => array('Responsible','Todo')
+        'contain' => array('Responsible','Todo','CommentUnread'),
       ));
       
       //Completed
@@ -134,7 +134,7 @@
           'Milestone.project_id' => $this->Authorization->read('Project.id'),
           'Milestone.completed'  => true
         ),
-        'contain' => array('Responsible'),
+        'contain' => array('Responsible','Todo','CommentUnread'),
         'order' => 'Milestone.completed_date ASC'
       ));
       

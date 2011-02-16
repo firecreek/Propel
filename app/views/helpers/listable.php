@@ -109,6 +109,7 @@
         'deleteUrl'           => false,
         'comments'            => true,
         'commentCount'        => 0,
+        'commentUnread'       => 0,
         'position'            => false,
         'positionHide'        => false,
         'class'               => array(),
@@ -146,6 +147,9 @@
       if($options['comments'])  { $options['class'][] = 'l-comments'; }
       
       if($options['commentCount'] > 0)  { $options['class'][] = 'l-comments-with'; }
+      else { $options['class'][] = 'l-comments-without'; }
+      
+      if($options['commentUnread'] > 0)  { $options['class'][] = 'l-comments-unread'; }
       
       //Item
       $item = '';

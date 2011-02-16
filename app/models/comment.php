@@ -70,6 +70,14 @@
           'CommentPerson.model = Comment.model',
           'CommentPerson.foreign_id = Comment.foreign_id'
         )
+      ),
+      'CommentRead' => array(
+        'className'   => 'CommentRead',
+        'foreignKey'  => false,
+        'conditions'  => array(
+          'CommentRead.model = Comment.model',
+          'CommentRead.foreign_id = Comment.foreign_id'
+        )
       )
     );
     
@@ -116,6 +124,57 @@
         ),
         'recursive' => -1
       ));
+    }
+    
+    
+    /**
+     * Set as read
+     *
+     * @access public
+     * @return boolean
+     */
+    public function setRead($id,$personId)
+    {
+      //Find out how many
+      $count = $this->find('count',array(
+        'conditions' => array(
+          'model' => $this->associatedAlias,
+          'foreign_id' => $id
+        ),
+        'recursive' => -1
+      ));
+      
+      //Find last update
+      $record = $this->CommentRead->find('first',array(
+        'conditions' => array(
+          'model' => $this->associatedAlias,
+          'foreign_id' => $id,
+          'person_id'  => $personId
+        ),
+        'recursive' => -1
+      ));
+      
+      $check = false;
+      
+      if(!empty($record))
+      {
+        //Update
+        $this->CommentRead->id = $record['CommentRead']['id'];
+        $check = $this->CommentRead->saveField('last_count',$count);
+      }
+      else
+      {
+        //Add
+        $this->CommentRead->create();
+        $check = $this->CommentRead->save(array(
+          'model'       => $this->associatedAlias,
+          'foreign_id'  => $id,
+          'person_id'   => $personId,
+          'last_count'  => $count
+        ));
+      }
+      
+      return $check;
     }
     
     

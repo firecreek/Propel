@@ -130,6 +130,10 @@
         )
       ));
       
+      //Set as read for person
+      $this->Comment->setRead($id,$this->Authorization->read('Person.id'));
+      
+      
       $this->set(compact('id','record'));
     }
     

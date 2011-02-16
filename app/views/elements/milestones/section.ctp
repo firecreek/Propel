@@ -67,6 +67,7 @@
                 'after' => $after,
                 'checked'       => (isset($checked) && $checked) ? true : false,
                 'commentCount'  => $milestone['Milestone']['comment_count'],
+                'commentUnread' => $milestone['Milestone']['comment_unread'],
                 'editUrl'   => $html->url(array('controller'=>'milestones','action'=>'edit',$milestone['Milestone']['id'])),
                 'updateUrl'   => $html->url(array('controller'=>'milestones','action'=>'update',$milestone['Milestone']['id'])),
               )
