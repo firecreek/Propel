@@ -191,9 +191,6 @@
         $this->data['Milestone']['id'] = $id;
         $this->Milestone->set($this->data);
         
-        debug($this->data);
-        exit;
-        
         if($this->Milestone->validates())
         {
           $this->Milestone->save();
