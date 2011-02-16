@@ -140,6 +140,16 @@
         }
       }
       
+      //Associated controller
+      if(
+        !isset($url['associatedController']) &&
+        !isset($url['controller']) &&
+        isset($this->params['associatedController'])
+      )
+      {
+        $url['associatedController'] = $this->params['associatedController'];
+      }
+      
       return parent::redirect($url, $status, $exit);
     }
   

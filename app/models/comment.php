@@ -21,6 +21,14 @@
     public $name = 'Comment';
     
     /**
+     * Behaviors
+     *
+     * @access public
+     * @var array
+     */
+    public $actsAs = array('Auth');
+    
+    /**
      * Validation
      *
      * @access public
@@ -64,6 +72,77 @@
         )
       )
     );
+    
+
+    /**
+     * Add a subscriber to this comment if not already
+     *
+     * @access public
+     * @return void
+     */
+    public function addCommentPerson($personId)
+    {
+      if(!$this->CommentPerson->find('count',array(
+        'conditions' => array(
+          'model'       => $this->associatedAlias,
+          'foreign_id'  => $this->id,
+          'person_id'   => $personId
+        ),
+        'recursive' => -1
+      )))
+      {
+        //add
+        $this->CommentPerson->save(array(
+          'model'       => $this->associatedAlias,
+          'foreign_id'  => $this->id,
+          'person_id'   => $personId
+        ));
+      }    
+    }
+    
+    
+    /**
+     * Find people who are subscribed
+     *
+     * @access public
+     * @return void
+     */
+    public function findCommentPeople($id)
+    {
+      return $model->Comment->CommentPerson->find('count',array(
+        'conditions' => array(
+          'model'       => $model->alias,
+          'foreign_id'  => $id
+        ),
+        'recursive' => -1
+      ));
+    }
+    
+    
+    /**
+     * Update comment_count field
+     *
+     * @access public
+     * @return boolean
+     */
+    public function updateCommentCount($id)
+    {
+      $count = $this->find('count',array(
+        'conditions' => array(
+          'Comment.model' => $this->associatedAlias,
+          'Comment.foreign_id' => $id
+        ),
+        'recursive' => -1
+      ));
+      
+      $model = ClassRegistry::init($this->associatedAlias);
+      $model->recursive = -1;
+      $model->id = $id;
+      
+      return $model->saveField('comment_count',$count);
+    }
+    
+    
     
   }
 

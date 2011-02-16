@@ -10,7 +10,7 @@
           <span><?php echo date('D, j M Y \a\t g:ia',strtotime($record['created'])); ?></span>
         </h4>
         <ul class="right">
-          <li class="delete"><?php echo $html->link(__('Delete',true),array($id,'?'=>array('delete'=>$record['id']))); ?></li>
+          <li class="delete"><?php echo $html->link(__('Delete',true),array('action'=>'delete',$id,$record['id'])); ?></li>
         </ul>
       </div>
       <div class="content">

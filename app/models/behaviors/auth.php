@@ -47,6 +47,31 @@
 
 
     /**
+     * Is owner
+     * 
+     * @access public
+     * @return void
+     */
+    public function isOwner(&$model,$options = array())
+    {
+      $record = $model->find('first',array(
+        'conditions'  => array('id'=>$model->id),
+        'recursive'   => -1,
+        'fields'      => 'person_id'
+      ));
+    
+      if(!empty($record) && $record[$model->alias]['person_id'] == $this->_authRead('Person.id'))
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+
+    /**
      * Check if record can be updated by current person
      * 
      * @access public

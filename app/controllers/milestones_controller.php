@@ -270,42 +270,6 @@
       $this->redirect(array('action'=>'index'));
     }
     
-    
-    /**
-     * Project comments
-     * 
-     * @access public
-     * @return void
-     */
-    public function project_comments($id)
-    {
-      if(!empty($this->data))
-      {
-        $this->Milestone->id = $id;
-        
-        if($this->Milestone->addComment($this->data))
-        {
-          $this->data = null;
-        }
-      }
-    
-      $record = $this->Milestone->find('first',array(
-        'conditions' => array('Milestone.id'=>$id),
-        'contain' => array(
-          'Responsible' => array(),
-          'Comment' => array('Person'),
-          'CommentPerson' => array(
-            'Person' => array(
-              'fields' => array('id','full_name','email','user_id','company_id'),
-              'Company' => array('id','name')
-            )
-          )
-        )
-      ));
-      
-      $this->set(compact('id','record'));
-    }
-    
   
   }
   

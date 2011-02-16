@@ -200,9 +200,6 @@
           $permissions[Inflector::classify($prefix)] = $this->_aroPrefixPermissions($prefix,$modelId,$person['Person']['_aro_id']);
         }
         
-        
-        
-        
         //Load companies added to this prefix
         $modelRootNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId);
         
@@ -232,8 +229,16 @@
         //Check permissions for this person
         $isAllowed = false;
         
+        //Controller name to check
+        $controllerName = $this->controller->name;
+        
+        if(isset($this->controller->associatedController))
+        {
+          $controllerName = $this->controller->associatedController;
+        }
+        
         //Check if this person is allowed to be in this controller and has the correct CRUD access
-        $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controller->name);
+        $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$controllerName);
         if(!empty($permissionNode))
         {
           $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
@@ -250,7 +255,7 @@
         //modelAuthCheck isset then the id passed in the URL will be checked
         if(isset($this->modelAuthCheck[$actionKey]) && $isAllowed == true)
         {
-          $modelAlias = Inflector::classify($this->controller->name);
+          $modelAlias = Inflector::classify($controllerName);
           $fieldKey   = $prefix.'_id';
           
           if(

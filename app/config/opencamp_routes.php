@@ -15,6 +15,13 @@
   Router::connect('/users/register', array('controller' => 'users', 'action' => 'register'));
   
   
+  //Comments
+  Router::connect('/:accountSlug/:projectId/:associatedController/comments/:action/*',
+    array('controller'=>'comments', 'action'=>'index'),
+    array('accountSlug'=>'[a-z0-9\-]+','projectId'=>'[0-9]+','associatedController'=>'[a-z0-9\_\-]+')
+  );
+  
+  
   //Projects
   Router::connect('/:accountSlug/:projectId',
     array('controller'=>'projects', 'action'=>'index', 'prefix'=>'project'),
@@ -35,5 +42,7 @@
     array('controller'=>'accounts', 'action'=>'index', 'prefix'=>'account'),
     array('accountSlug'=>'[a-z0-9\-]+')
   );
+  
+  
 
 ?>

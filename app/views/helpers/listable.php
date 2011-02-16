@@ -162,8 +162,10 @@
       $comments = '';
       if($options['comments'])
       {
-        $commentLink = $this->Html->link(__('Comments',true),array('action'=>'comments',$id),array('title'=>__('Comments',true)));
-        $commentCount = $this->Html->link($options['commentCount'],array('action'=>'comments',$id),array('title'=>__('Comments',true)));
+        $commentUrl = array('associatedController'=>$this->params['controller'],'controller'=>'comments','action'=>'index',$id);
+      
+        $commentLink = $this->Html->link(__('Comments',true),$commentUrl,array('title'=>__('Comments',true)));
+        $commentCount = $this->Html->link($options['commentCount'],$commentUrl,array('title'=>__('Comments',true)));
         $comments = sprintf($this->tags['comments'],$commentLink,$commentCount);
       }
       

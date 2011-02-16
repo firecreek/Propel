@@ -14,7 +14,7 @@
     {
       if(is_array($url) && (!isset($url['prefix']) || $url['prefix'] !== false))
       {
-        //Add account slug
+        //Account slug
         if(
           isset($this->params['accountSlug']) &&
           !isset($url['accountSlug']) &&
@@ -23,7 +23,7 @@
           $url['accountSlug'] = $this->params['accountSlug'];
         }
         
-        //Add project id
+        //Project id
         if(
           isset($this->params['projectId']) &&
           !isset($url['projectId']) &&
@@ -31,7 +31,18 @@
         {
           $url['projectId'] = $this->params['projectId'];
         }
-      } 
+      }
+      
+      //Associated controller
+      if(
+        !isset($url['associatedController']) &&
+        !isset($url['controller']) &&
+        isset($this->params['associatedController'])
+      )
+      {
+        $url['associatedController'] = $this->params['associatedController'];
+      }
+      
       return parent::url($url, $full); 
     }
   
