@@ -465,9 +465,11 @@
       if($this->RequestHandler->isAjax())
       {
         //Total count
-        $completedCount = $this->Todo->TodoItem->projectCompletedCount($this->Authorization->read('Person.id'));
+        $this->Todo->id = $todoId;
+        $this->Todo->recursive = -1;
+        $item = $this->Todo->read('todo_items_completed_count');
       
-        $this->set(compact('todoId','id','completedCount'));
+        $this->set(compact('todoId','id','item'));
         return $this->render();
       }
       
@@ -561,11 +563,8 @@
         'conditions' => array('TodoItem.id'=>$id),
         'contain' => array('Todo')
       ));
-      
-      //Total count
-      $completedCount = $this->Todo->TodoItem->projectCompletedCount($this->Authorization->read('Project.id'));
     
-      $this->set(compact('id','item','completed','completedCount'));
+      $this->set(compact('id','item','completed'));
     }
     
     

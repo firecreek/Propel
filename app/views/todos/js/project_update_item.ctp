@@ -49,7 +49,7 @@ $('#<?php echo $listable->lastIdent; ?> .name').effect('highlight',null,3000);
 $(originalObj).remove();
 
 //Update completed count
-<?php echo $this->element('todos/js_update_count',array('name'=>'group','count'=>$completedCount)); ?>
+<?php echo $this->element('todos/js_update_count',array('name'=>'group','count'=>$item['Todo']['todo_items_completed_count'])); ?>
 
 
 //Make listable

@@ -75,8 +75,8 @@
           ));
         ?>
         
-        <?php if(!empty($record['TodoItemRecent'])): ?>
         <div class="recent">
+          <?php if(!empty($record['TodoItemRecent'])): ?>
           <?php foreach($record['TodoItemRecent'] as $item): ?>
             <?php
               echo $listable->item('Todo',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
@@ -88,8 +88,8 @@
               ));
             ?>
           <?php endforeach; ?>
+          <?php endif; ?>
         </div>
-        <?php endif; ?>
         
         
         <?php
