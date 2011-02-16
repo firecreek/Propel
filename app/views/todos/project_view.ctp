@@ -1,7 +1,7 @@
 <?php
   $javascript->link('listable.js', false);
   
-  $javascript->link('projects/todos_index.js', false);
+  $javascript->link('projects/todos.js', false);
   $html->css('projects/todos_index', null, array('inline'=>false));
 ?>
 <div class="cols">

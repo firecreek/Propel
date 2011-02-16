@@ -7,6 +7,8 @@
     Milestones.refreshUrl = '".$html->url(array('action'=>'index'))."';
   ");
   
+  $html->css('projects/milestones', null, array('inline'=>false));
+  
 ?>
 <div class="cols">
 

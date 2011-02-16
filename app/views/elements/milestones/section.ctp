@@ -45,11 +45,26 @@
           
           $items = array();
           foreach($records as $milestone)
-          {          
+          {
+            //After
+            $after = null;
+            
+            if(!empty($milestone['Todo']))
+            {
+              foreach($milestone['Todo'] as $todo)
+              {
+                $after .= '<li>'.__('To-Do',true).': '.$html->link($todo['name'],array('controller'=>'todos','action'=>'view',$todo['id']),array('class'=>'unimportant')).'</li>';
+              }
+              
+              $after = '<ul class="attached-to">'.$after.'</ul>';
+            }
+          
+            //Make item
             $items[] = array(
               'id'        => $milestone['Milestone']['id'],
               'title'     => $milestone['Milestone']['title'],
               'options'   => array(
+                'after' => $after,
                 'checked'       => (isset($checked) && $checked) ? true : false,
                 'commentCount'  => $milestone['Milestone']['comment_count'],
                 'editUrl'   => $html->url(array('controller'=>'milestones','action'=>'edit',$milestone['Milestone']['id'])),

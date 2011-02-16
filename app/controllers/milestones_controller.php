@@ -80,12 +80,19 @@
         }
       }
     
+      //Total count
       $milestoneCount = $this->Milestone->find('count',array(
         'conditions' => array(
           'Milestone.project_id' => $this->Authorization->read('Project.id')
         ),
         'recursive' => -1
       ));
+    
+      //Nothing added yet
+      if(!$milestoneCount)
+      {
+        return $this->render('project_index_new');
+      }
       
       
       //Overdue
@@ -95,11 +102,8 @@
           'Milestone.deadline <' => date('Y-m-d'),
           'Milestone.completed'  => false
         ),
-        'contain' => array(
-          'Responsible'
-        ),
-        'order' => 'Milestone.deadline ASC',
-        'limit' => 10
+        'contain' => array('Responsible','Todo'),
+        'order' => 'Milestone.deadline ASC'
       ));
       
       //Upcoming
@@ -109,9 +113,8 @@
           'Milestone.deadline >=' => date('Y-m-d'),
           'Milestone.completed'   => false
         ),
-        'contain' => array('Responsible'),
-        'order' => 'Milestone.deadline ASC',
-        'limit' => 5
+        'contain' => array('Responsible','Todo'),
+        'order' => 'Milestone.deadline ASC'
       ));
       
       //Upcoming next 14 days
@@ -122,8 +125,7 @@
           'Milestone.deadline >=' => date('Y-m-d'),
           'Milestone.deadline <=' => date('Y-m-d',strtotime('+14 days')),
         ),
-        'contain' => array('Responsible'),
-        'limit' => 100
+        'contain' => array('Responsible','Todo')
       ));
       
       //Completed
@@ -133,15 +135,8 @@
           'Milestone.completed'  => true
         ),
         'contain' => array('Responsible'),
-        'order' => 'Milestone.completed_date ASC',
-        'limit' => 5
+        'order' => 'Milestone.completed_date ASC'
       ));
-    
-      //Nothing added yet
-      if(!$milestoneCount)
-      {
-        return $this->render('project_index_new');
-      }
       
       $this->set(compact('upcoming','completed','overdue','upcoming14Days'));
     }

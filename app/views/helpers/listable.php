@@ -43,6 +43,7 @@
                                 rel-delete-url="%s">
                                   <div class="overview">%s</div>
                                   <div class="detail">%s</div>
+                                  %s
                               </div>
                             ',
       'label'             => '
@@ -114,6 +115,7 @@
         'checked'             => false,
         'prefix'              => false,
         'append'              => false,
+        'after'               => null,
         'ident'               => $alias.'-'.$id.'-'.rand(10000,99999)
       );
       $options = array_merge($_options,$options);
@@ -223,7 +225,7 @@
       $inline = sprintf($this->tags['inline']);
       
       //Build output
-      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$options['deleteUrl'],$item,$inline);
+      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$options['deleteUrl'],$item,$inline,$options['after']);
       
       //
       $this->lastIdent = $options['ident'];
