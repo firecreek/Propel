@@ -51,14 +51,6 @@
       'update_item_positions' => '_update'
     );
     
-    /**
-     * Due options
-     *
-     * @access public
-     * @var array
-     */
-    public $dueOptions = array();
-    
     
     /**
      * Before Render
@@ -68,19 +60,6 @@
      */
     public function beforeFilter()
     {
-      $this->dueOptions = array(
-        ''            => __('Anytime',true),
-        '_0'          => '----------------',
-        'today'       => __('Today',true),
-        'tomorrow'    => __('Tomorrow',true),
-        'this-week'   => __('This week',true),
-        'next-week'   => __('Next week',true),
-        'later'       => __('Later',true),
-        '_1'          => '----------------',
-        'past'        => __('In the past',true),
-        'no-date'     => __('(No date set)',true),
-      );
-      
       parent::beforeFilter();
     }
     
@@ -93,7 +72,7 @@
      */
     public function beforeRender()
     {
-      $this->set('dueOptions',$this->dueOptions);
+      $this->set('dueOptions',$this->Todo->dueOptions());
       parent::beforeRender();
     }
     
@@ -390,7 +369,7 @@
           {
             $item = $this->Todo->TodoItem->find('first',array(
               'conditions' => array('TodoItem.id'=>$this->Todo->TodoItem->id),
-              'contain' => array('Todo')
+              'contain' => array('Todo','Responsible')
             ));
           
             $this->set(compact('id','item'));
@@ -458,7 +437,7 @@
           {
             $item = $this->Todo->TodoItem->find('first',array(
               'conditions' => array('TodoItem.id'=>$id),
-              'contain' => array('Todo')
+              'contain' => array('Todo','Responsible')
             ));
           
             $this->set(compact('id','item'));

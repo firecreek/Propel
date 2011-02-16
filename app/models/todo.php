@@ -29,7 +29,8 @@
     public $actsAs = array(
       'Containable',
       'Auth',
-      'Responsible'
+      'Responsible',
+      'Due'
     );
     
     /**

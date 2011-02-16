@@ -226,12 +226,14 @@ $.fn.ajaxSubmit = function(e) {
     var self = this;
     $(this).find('div.submit').append('<div class="saving"></div>');
   
-		var params = {};
-		$(this)
-		.find("input[checked], input[type='text'], input[type='hidden'], input[type='password'], input[type='submit'], option[selected], textarea")
-		.each(function() {
-			params[ this.name || this.id || this.parentNode.name || this.parentNode.id ] = this.value;
-		});
+    var params = {};
+    
+    $(this)
+      .find("input[checked], input[type='text'], input[type='hidden'], input[type='password'], input[type='submit'], select, textarea")
+      .each(function() {
+          params[ this.name || this.id || this.parentNode.name || this.parentNode.id ] = this.value;
+      }
+    );
     
     $.ajax({
       type: 'POST',

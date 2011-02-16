@@ -166,6 +166,7 @@
       }
       
       //Extra
+      //@todo Clean this up and standardise
       $extra = '';
       if(!empty($options['extra']))
       {
