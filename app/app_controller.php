@@ -100,15 +100,7 @@
           $this->layout = 'account';
         }
         
-        switch($prefix)
-        {
-          case 'account':
-            $header = $this->Authorization->read('Account.name');
-            break;
-          case 'project':
-            $header = $this->Authorization->read('Project.name');
-            break;
-        }
+        $header = $this->Authorization->read(ucfirst($prefix) . '.name');
         
         $this->set(compact('header'));
       }
