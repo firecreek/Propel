@@ -246,6 +246,16 @@
     public function project_edit($personId)
     {
       $this->account_edit($personId);
+      
+      //Reload companies in which only have access to this project otherwise people might go missing
+      foreach($this->viewVars['companies'] as $companyId => $companyName)
+      {
+        if(!$this->Company->hasPermission($companyId,'Projects',$this->Authorization->read('Project.id')))
+        {
+          unset($this->viewVars['companies'][$companyId]);
+        }
+      }
+      
       return $this->render('account_edit');
     }
     
