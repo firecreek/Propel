@@ -46,9 +46,94 @@
     
     /**
      * Before find
+     * 
+     * @access public
+     * @return string
      */
     public function beforeFind(&$model, $query)
     {
+      //Contain as array
+      if(!isset($query['contain']))
+      {
+        $query['contain'] = array();
+      }
+      elseif(is_string($query['contain']))
+      {
+        $query['contain'] = array($query['contain']);
+      }
+      elseif(!is_array($query['contain']))
+      {
+        $query['contain'] = array();
+      }
+    
+      //Responsible Filter
+      if(isset($query['filter']['Responsible']) && !empty($query['filter']['Responsible']))
+      {
+        $query['recursive'] = 1;
+        
+        //Model to use
+        $responsibleValue = $query['filter']['Responsible']['value'];
+        $responsibleModel = $query['filter']['Responsible']['model'];
+      
+        //Whom
+        if($responsibleValue == 'nobody')
+        {
+          //Nobody
+          $modelAlias       = null;
+          $modelId          = null;
+          $responsibleName  = 'Nobody';
+        }
+        elseif($responsibleValue == 'self')
+        {
+          //Self
+          $modelAlias       = 'Person';
+          $modelId          = $model->authRead('Person.id');
+          $responsibleName  = $model->{$responsibleModel}->getResponsibleName($modelAlias,$modelId);
+        }
+        else
+        {
+          //Specified
+          $split            = explode('_',$this->data['Todo']['responsible']);
+          $modelAlias       = Inflector::classify($split[0]);
+          $modelId          = $split[1];
+          $responsibleName  = $model->{$responsibleModel}->getResponsibleName($modelAlias,$modelId);
+        }
+        
+        //Exception for loading items
+        if(isset($query['items']))
+        {
+          $query['items']['conditions'][$responsibleModel.'.responsible_model'] = $modelAlias;
+          $query['items']['conditions'][$responsibleModel.'.responsible_id'] = $modelId;
+        }
+        
+        //Sets
+        $this->responsibleName = $responsibleName;
+        
+        //Contain join
+        $joinAlias = $responsibleModel.'Responsible';
+        $query['contain'][] = $joinAlias;
+        
+        //INNER joins
+        $model->bindModel(array(
+          'belongsTo' => array(
+            $joinAlias => array(
+              'className'   => $responsibleModel,
+              'type'        => 'INNER',
+              'foreignKey'  => false,
+              'conditions'  => array(
+                $joinAlias.'.'.strtolower($this->alias).'_id = '.$this->alias.'.id',
+                $joinAlias.'.responsible_model' => $modelAlias,
+                $joinAlias.'.responsible_id' => $modelId,
+              )
+            )
+          )
+        ),true);
+        
+      }
+      
+      
+    
+      //Responsible Alias
       if(isset($query['contain']))
       {
         $find = array_search('Responsible',$query['contain']);

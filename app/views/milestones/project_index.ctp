@@ -1,6 +1,11 @@
 <?php
 
   $javascript->link('listable.js', false);
+  $javascript->link('projects/milestones.js', false);
+  
+  echo $javascript->codeBlock("
+    Milestones.refreshUrl = '".$html->url(array('action'=>'index'))."';
+  ");
   
 ?>
 <div class="cols">
@@ -75,7 +80,7 @@
         <?php
           echo $javascript->codeBlock("
             $('form#MilestoneIndex .submit').hide();
-            $('.listable .item').listable();
+            $('.listable').listable();
           ");
         ?>
         

@@ -195,73 +195,31 @@
       
       //Filters
       $contain = array();
+      $filter = array();
       $itemConditions = array();
       
       //Responsible filter
       if(!empty($this->data['Todo']['responsible']))
       {
-        //Item conditions
-        if($this->data['Todo']['responsible'] == 'nobody')
-        {
-          //Nobody
-          $modelAlias       = null;
-          $modelId          = null;
-          $responsibleName  = 'Nobody';
-        }
-        elseif($this->data['Todo']['responsible'] == 'self')
-        {
-          //Self
-          $modelAlias       = 'Person';
-          $modelId          = $this->Authorization->read('Person.id');
-          $responsibleName  = $this->Todo->TodoItem->getResponsibleName($modelAlias,$modelId);
-        }
-        else
-        {
-          //Specified
-          $split            = explode('_',$this->data['Todo']['responsible']);
-          $modelAlias       = Inflector::classify($split[0]);
-          $modelId          = $split[1];
-          $responsibleName  = $this->Todo->TodoItem->getResponsibleName($modelAlias,$modelId);
-        }
-        
-        $itemConditions['TodoItem.responsible_model'] = $modelAlias;
-        $itemConditions['TodoItem.responsible_id'] = $modelId;
-        
-        //Sets
-        $this->set(compact('responsibleName'));
-        
-        //Contain join
-        $contain = array('TodoItemResponsible');
-        
-        //INNER joins
-        $this->Todo->bindModel(array(
-          'belongsTo' => array(
-            'TodoItemResponsible' => array(
-              'className'   => 'TodoItem',
-              'type'        => 'INNER',
-              'foreignKey'  => false,
-              'conditions'  => array(
-                'TodoItemResponsible.todo_id = Todo.id',
-                'TodoItemResponsible.responsible_model' => $modelAlias,
-                'TodoItemResponsible.responsible_id' => $modelId,
-              )
-            )
-          )
-        ));
+        $filter['Responsible'] = array(
+          'value' => $this->data['Todo']['responsible'],
+          'model' => 'TodoItem'
+        );
       }
       
       //Due filter
       if(!empty($this->data['Todo']['due']))
       {
       }
-      
+
       
       //Todo lists for filter
       $todos = $this->Todo->find('all',array(
         'conditions' => $conditions,
         'fields' => array('id','name'),
         'order' => 'Todo.position ASC',
-        'contain' => $contain,
+        'contain' => array(),
+        'filter' => $filter,
         'items' => array(
           'conditions' => array_merge(array(
             'TodoItem.completed' => false,
