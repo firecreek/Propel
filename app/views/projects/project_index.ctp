@@ -6,7 +6,7 @@
       <div class="banner">
         <h2><?php __('Project overview & activity'); ?></h2>
         <ul class="right important">
-          <li><?php echo $html->link(__('New message',true),array('controller'=>'messages','action'=>'add')); ?></li>
+          <li><?php echo $html->link(__('New message',true),array('controller'=>'posts','action'=>'add')); ?></li>
           <li><?php echo $html->link(__('New to-do list',true),array('controller'=>'accounts','action'=>'add')); ?></li>
           <li><?php echo $html->link(__('New milestone',true),array('controller'=>'milestones','action'=>'add')); ?></li>
         </ul>

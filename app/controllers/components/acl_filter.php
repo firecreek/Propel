@@ -175,7 +175,7 @@
           ),
           'recursive' => -1,
           'cache' => array(
-            'name' => 'person_aco_'.$person['Person']['id'],
+            'name' => 'person_aco_'.$account['Account']['id'].'_'.$person['Person']['id'],
             'config' => 'acl',
           )
         ));
@@ -188,6 +188,8 @@
         //Prefix model id
         $modelId = ${$prefix}[Inflector::camelize($prefix)]['id'];
         
+        //
+        $this->accountId = $account['Account']['id'];
         
         //Load account permissions
         $permissions['Account'] = $this->_aroPrefixPermissions('account',$account['Account']['id'],$person['Person']['_aro_id']);
@@ -291,6 +293,7 @@
     /**
      * List of projects this aro has access to
      *
+     * @todo Move this to Model
      * @access private
      * @return array
      */
@@ -345,7 +348,7 @@
      */
     private function _aroPrefixPermissions($prefix,$recordId,$personAroId)
     {
-      $permissions = Cache::read('aro_prefix_'.$prefix.'_'.$personAroId,'acl');
+      $permissions = Cache::read('aro_prefix_'.$prefix.'_'.$this->accountId.'_'.$personAroId,'acl');
    
       if(empty($permissions))
       {

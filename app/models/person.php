@@ -31,7 +31,8 @@
       'Containable',
       'Cached' => array(
         'prefix' => array(
-          'person_'
+          'person_',
+          'people_',
         ),
       ),
     );
@@ -289,6 +290,91 @@
       ));
       
       return $check ? false : true;
+    }
+    
+    
+    /**
+     * Persons project permissions
+     *
+     * @todo Make this generic for any type of aro model and data
+     * @access public
+     * @return boolean
+     */
+    public function projectPermissions($id)
+    {
+      $this->Acl = ClassRegistry::init('Aro');
+      $this->Aco = ClassRegistry::init('Aco');
+    
+      //Find Aros for Person
+      $aro = $this->Aro->find('first', array(
+        'conditions' => array(
+          'Aro.model' => 'Person',
+          'Aro.foreign_key' => $id,
+        ),
+        'recursive' => -1
+      ));
+      $aroId = $aro['Aro']['id'];
+      
+      //Load Acos
+      $records = $this->Aco->Permission->find('all',array(
+        'conditions' => array(
+          'Permission.aro_id' => $aroId,
+          'Permission._read' => true,
+          'Aco.model' => 'Projects',
+        ),
+        'fields' => array('Aco.foreign_key','Permission.*')
+      ));
+      
+      $projects = null;
+      
+      if(!empty($records))
+      {
+        $projects = ClassRegistry::init('Project')->find('all',array(
+          'conditions' => array(
+            'Project.id'      => Set::extract($records,'{n}.Aco.foreign_key'),
+            'Project.status'  => 'active'
+          ),
+          'fields' => array('id','name'),
+          'contain' => false
+        ));
+      }
+      
+      return $projects;
+    }
+    
+    
+    
+    /**
+     * Check if a user has permission
+     *
+     * @todo Make this generic for any type of aro model and data
+     * @access public
+     * @return boolean
+     */
+    public function hasPermission($id,$model,$projectId)
+    {
+      $this->Acl = ClassRegistry::init('Aro');
+      $this->Aco = ClassRegistry::init('Aco');
+    
+      //Find Aros for Person
+      $aro = $this->Aro->find('first', array(
+        'conditions' => array(
+          'Aro.model' => 'Person',
+          'Aro.foreign_key' => $id,
+        ),
+        'recursive' => -1
+      ));
+      $aroId = $aro['Aro']['id'];
+      
+      //Load Acos
+      return $this->Aco->Permission->find('count',array(
+        'conditions' => array(
+          'Permission.aro_id' => $aroId,
+          'Permission._read' => true,
+          'Aco.model' => $model,
+          'Aco.foreign_key' => $projectId
+        )
+      ));
     }
 
   }

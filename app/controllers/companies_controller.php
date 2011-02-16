@@ -206,7 +206,7 @@
       $grantMap = array(
         1 => 'shared msg-file',
         2 => 'shared msg-file-todo',
-        3 => 'shared',
+        3 => 'shared'
       );
       
       //Form post
@@ -267,6 +267,8 @@
         {
           $this->Person->id = $person['id'];
           
+          $grantKey = null;
+          
           if($this->AclManager->check($this->Person, 'projects', $projectId, 'Milestones'))
           {
             $grantKey = 3;
@@ -275,7 +277,7 @@
           {
             $grantKey = 2;
           }
-          else
+          elseif($this->AclManager->check($this->Person, 'projects', $projectId, 'Posts'))
           {
             $grantKey = 1;
           }

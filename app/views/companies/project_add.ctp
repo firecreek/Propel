@@ -34,7 +34,7 @@
     
     
     <?php
-      echo $form->submit(__('Add company',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('controller'=>'companies','action'=>'index') ) ));
+      echo $form->submit(__('Add company',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('controller'=>'companies','action'=>'permissions') ) ));
       echo $form->end();
     ?>
   </div>

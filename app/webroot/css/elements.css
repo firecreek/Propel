@@ -92,6 +92,12 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .area .content ul.nested li { margin-bottom:2px; }
 .area .content ul.nested ul li { margin-left:10px; font-size:11px; }
 
+.area .content form .input { margin-bottom:5px; }
+.area .content form .submit { margin-top:10px; }
+.area .content form .submit input { padding:2px 3px 2px 3px; margin-right:8px; font-size:12px; }
+.area .content form .submit a { color:#333; padding:0 1px; }
+.area .content form .submit a:hover { color:white; background-color:#333; }
+
 .area.plain {  }
 .area.plain .banner { background-color:transparent; border-bottom:none; margin-left:0; margin-bottom:2px; min-height:0; }
 .area.plain .banner h3 { padding:0; }
@@ -106,6 +112,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
  
 .section .banner { background-color:#F0F0F0; margin:0 0 10px 0; min-height:30px; position:relative; }
 .section .banner.tight { margin-bottom:2px; }
+.section .banner.transparent { background-color:transparent; margin-top:5px; margin-bottom:2px; min-height:0; }
  
 .section .banner h3 { font-size:14px; color:#333; padding:4px 0 0 10px; }
 .section .banner h3 a { font-size:14px; color:#333; text-decoration:none; }
@@ -117,6 +124,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 .section .content { padding:0; }
 .section .content p:last-child { margin-bottom:0; }
+.section .content.padded { padding:10px; }
 
 .section.outlined { border:1px solid #CCC; padding:2px; }
 .section.outlined .content { padding:0 10px; margin-bottom:10px; }

@@ -166,15 +166,15 @@
                 
               $dayDisplay = $day - $daysInMonth;
               
-              if($continueDates && $dayDisplay == 1)
-              {
-                $dayDisplay = date('M',$ahead).' '.$dayDisplay;
-              }
-              
               //Ammend date
               $cmonth = date('n',$ahead);
               $cyear = date('Y',$ahead);
               $cday = $dayDisplay;
+              
+              if($continueDates && $dayDisplay == 1)
+              {
+                $dayDisplay = date('M',$ahead).' '.$dayDisplay;
+              }
             }
             
             //Show month appending day
@@ -185,7 +185,7 @@
             }
             
             //Check for events
-            $eventDate = mktime(0,0,0,$cmonth,$cday,$cyear);
+            $eventDate = mktime(0, 0, 0, $cmonth, $cday, $cyear);
             if(isset($events[$eventDate]))
             {
               $class[] = 'with';

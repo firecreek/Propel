@@ -59,8 +59,11 @@
                     <?php
                       $disabled = false;
                       if($person['company_owner']) { $disabled = true; }
+                      
+                      $checked = true;
+                      if($person['_grantKey'] == null) { $checked = false; }
                     
-                      echo $form->input('Person.'.$pid,array('type'=>'checkbox','checked'=>true,'label'=>$person['full_name'],'disabled'=>$disabled));
+                      echo $form->input('Person.'.$pid,array('type'=>'checkbox','checked'=>$checked,'label'=>$person['full_name'],'disabled'=>$disabled));
                     ?>
                   </td>
                   <td class="permissions">
