@@ -1,25 +1,11 @@
 <?php
 
-  //Extras
-  //@todo Clean extras up
-  $extras = array();
-  if(isset($item['Responsible']) && !empty($item['Responsible']))
-  {
-    $extras[] = $item['Responsible']['name'];
-  }
-  if(!empty($item['TodoItem']['deadline']))
-  {
-    $extras[] = date('j M Y',strtotime($item['TodoItem']['deadline']));
-  }
-  $extra = implode(' ',$extras);
   
-  //
   $listHtml = $listable->item('Todo',$item['Todo']['id'],$item['Todo']['name'],array(
     'checkbox'      => false,
     'comments'      => false,
     'position'      => true,
     'positionHide'  => true,
-    'extra'         => $extra,
     'url'           => $html->url(array('controller'=>'todos','action'=>'view',$item['Todo']['id'])),
     'editUrl'       => $html->url(array('controller'=>'todos','action'=>'edit',$item['Todo']['id'])),
     'deleteUrl'     => $html->url(array('controller'=>'todos','action'=>'delete',$item['Todo']['id'])),

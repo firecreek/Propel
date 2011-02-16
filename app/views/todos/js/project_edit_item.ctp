@@ -1,6 +1,18 @@
 <?php
 
-  $extra = array();
+  //Extras
+  //@todo Clean extras up
+  $extras = array();
+  if(isset($item['Responsible']) && !empty($item['Responsible']))
+  {
+    $extras[] = $item['Responsible']['name'];
+  }
+  if(!empty($item['TodoItem']['deadline']))
+  {
+    $extras[] = date('j M Y',strtotime($item['TodoItem']['deadline']));
+  }
+  $extra = implode(' ',$extras);
+  
 
   $listHtml = $listable->item('Todo',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
     'position'  => true,
