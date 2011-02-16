@@ -2,11 +2,14 @@
 .listable .group { border-bottom:none; margin:0 0 15px 0; }
 
 .listable .group .header .item { margin-left:0; }
+.listable .group .header .item .loading { top:-2px; }
 .listable .group .header .item .maintain { top:-2px; }
 .listable .group .header .item .maintain .position { left:45px; }
 .listable .group .header .item .label { left:60px; font-weight:bold; font-size:16px; color:#000000; }
 .listable .group .header .item .label a { color:#000000; }
 .listable .group .header .item .label a:hover { background-color:transparent; color:#000000; text-decoration:underline; }
+
+.listable p.list-description { margin:0 0 0 18px; font-size:12px; font-style:italic; }
 
 .listable .item .check { left:70px; }
 .listable .item .label { left:90px; }
@@ -58,3 +61,12 @@
 .items .inline .box .content { padding:0; }
 .inline .item-add { margin-left:0; }
 .inline .item-add .description label { display:none; }
+
+
+/**
+ * Header inline edit
+ */
+.listable .header .inline .box { background-color:#EFEFEF; border:none; padding:10px; }
+.listable .header .inline .box .content { padding:0; }
+.listable .header .inline .box hr { margin:5px 0; clear:both; }
+.listable .header .inline .submit .saving { background-color:#EFEFEF; }

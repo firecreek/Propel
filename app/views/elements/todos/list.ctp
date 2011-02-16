@@ -35,6 +35,8 @@
         ?>
       </div>
       
+      <p class="list-description"><?php echo $this->element('todos/list_description',array('record'=>$record)); ?></p>
+      
       <div class="item-content">
         
         <div class="items sortable">

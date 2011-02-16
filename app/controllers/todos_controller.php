@@ -197,7 +197,9 @@
         'conditions' => $conditions,
         'fields' => array('id','name'),
         'order' => 'Todo.position ASC',
-        'contain' => array(),
+        'contain' => array(
+          'Milestone' => array('id','title','deadline')
+        ),
         'filter' => $filter,
         'items' => array(
           'conditions' => array_merge(array(
@@ -273,7 +275,8 @@
           if($this->RequestHandler->isAjax())
           {
             $item = $this->Todo->find('first',array(
-              'conditions' => array('Todo.id'=>$id)
+              'conditions' => array('Todo.id'=>$id),
+              'contain' => array('Milestone')
             ));
           
             $this->set(compact('id','item'));
@@ -298,7 +301,10 @@
         ));
       }
       
-      $this->set(compact('id'));
+      //Milestone list
+      $milestoneOptions = $this->Todo->Milestone->findProjectList($this->Authorization->read('Project.id'));
+      
+      $this->set(compact('id','milestoneOptions'));
     }
     
     
