@@ -58,11 +58,20 @@
       {
         $viewType = $cookieViewType;
       }
-    
+      
       //Load records
       $records = $this->Post->find('all',array(
         'conditions' => array(
-          'Post.project_id' => $this->Authorization->read('Project.id')
+          'Post.project_id' => $this->Authorization->read('Project.id'),
+          'OR' => array(
+            array('Post.private' => 0),
+            array(
+              'AND' => array(
+                'Post.private' => 1,
+                'Person.company_id' => $this->Authorization->read('Company.id')
+              )
+            ),
+          )
         ),
         'contain' => array(
           'Person',

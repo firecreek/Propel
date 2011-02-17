@@ -83,30 +83,19 @@
         'className' => 'Project',
         'foreignKey' => 'project_id',
         'counterCache' => true,
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
       ),
       'Person' => array(
         'className' => 'Person',
         'foreignKey' => 'person_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
+        'type' => 'INNER'
       ),
       'Category' => array(
         'className' => 'Category',
         'foreignKey' => 'category_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
       ),
       'Milestone' => array(
         'className' => 'Milestone',
         'foreignKey' => 'milestone_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
       )
     );
 

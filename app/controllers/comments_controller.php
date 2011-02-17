@@ -122,8 +122,9 @@
         
       }
       
-      //Contains
+      //Build statement
       $contain = array();
+      $conditions = array();
       
       //Responsible
       if($this->{$this->modelAlias}->Behaviors->attached('Responsible'))
@@ -137,9 +138,27 @@
         $contain[] = 'Person';
       }
       
+      //Private
+      if($this->{$this->modelAlias}->hasField('private'))
+      {
+        $conditions[] = array(
+          'OR' => array(
+            array('Post.private' => 0),
+            array(
+              'AND' => array(
+                $this->modelAlias.'.private' => 1,
+                'Person.company_id' => $this->Authorization->read('Company.id')
+              )
+            ),
+          )
+        );
+      }
+      
       //Load
       $record = $this->{$this->modelAlias}->find('first',array(
-        'conditions' => array($this->modelAlias.'.id'=>$id),
+        'conditions' => array_merge(array(
+          $this->modelAlias.'.id'=>$id
+        ),$conditions),
         'contain' => array_merge(array(
           'Comment' => array('Person'),
           'CommentPerson' => array(
@@ -150,6 +169,12 @@
           )
         ),$contain)
       ));
+      
+      //No record found
+      if(empty($record))
+      {
+        $this->cakeError('error404');
+      }
       
       //Set as read for person
       $this->Comment->setRead($id,$this->Authorization->read('Person.id'));
