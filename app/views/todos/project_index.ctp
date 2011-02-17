@@ -49,23 +49,37 @@
           ?>
           
         <?php else: ?>
-        
-          <p>
-            <?php
-              if(isset($responsibleName) && isset($dueName))
-              {
-                echo '<strong>'.$responsibleName.'</strong> '.__('isn\'t responsible for any to-do items',true).' <strong>'.__('due',true).' '.$dueName.'</strong>';
-              }
-              elseif(isset($responsibleName))
-              {
-                echo '<strong>'.$responsibleName.'</strong> '.__('isn\'t responsible for any to-do items',true);
-              }
-              elseif(isset($dueName))
-              {
-                echo __('There are no to-do items',true).' <strong>'.__('due',true).' '.$dueName.'</strong>';
-              }
-            ?>
-          </p>
+      
+      
+          <?php if(isset($responsibleName) && isset($dueName)): ?>
+            
+              <strong><?php echo $responsibleName; ?></strong>
+              <?php __('isn\'t responsible for any to-do items'); ?>
+              <strong><?php __('due'); ?> <?php echo $dueName; ?></strong>
+            
+          <?php elseif(isset($responsibleName)): ?>
+          
+              <strong><?php echo $responsibleName; ?></strong> <?php __('isn\'t responsible for any to-do items'); ?>
+            
+          <?php elseif(isset($dueName)): ?>
+          
+              <?php __('There are no to-do items'); ?><strong> <?php __('due'); ?> <?php echo $dueName; ?></strong>
+
+          <?php else: ?>
+          
+            <div class="completed-list">
+              <p><?php __('All the to-do lists in this project are completed.'); ?></p>
+              
+              <ul>
+                <?php foreach($todosCompleted as $todo): ?>
+                  <li><?php echo $html->link($todo['Todo']['name'],array('action'=>'view',$todo['Todo']['id']),array('class'=>'strike')); ?></li>
+                <?php endforeach; ?>
+              </ul>
+              
+              <p class="note"><span><?php __('Hint'); ?>:</span> <?php __('You can always find your completed to-do lists in the right sidebar'); ?></p>
+            </div>
+          
+          <?php endif; ?>
         
         <?php endif; ?>
       </div>

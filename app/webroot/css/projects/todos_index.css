@@ -1,4 +1,15 @@
 
+/**
+ * Completed list
+ */
+.completed-list {}
+.completed-list ul { margin-bottom:20px; }
+.completed-list li { margin-left:10px; }
+ 
+
+/**
+ * Listables
+ */
 .listable .group { border-bottom:none; margin:0 0 15px 0; }
 
 .listable .group .header .item { margin-left:0; }
