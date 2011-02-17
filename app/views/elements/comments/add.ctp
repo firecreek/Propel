@@ -1,7 +1,8 @@
 
-<div class="comment add">
-  <div class="avatar"><?php echo $html->image('avatar.png'); ?></div>
-  <div class="area">
+<div class="comment-add">
+
+  <div class="section plain avatar">
+    <div class="avatar"><?php echo $html->image('avatar.png'); ?></div>
     <div class="banner">
       <h4><?php __('Leave a comment...'); ?></h4>
     </div>
@@ -43,4 +44,5 @@
       ?>
     </div>
   </div>
+  
 </div>

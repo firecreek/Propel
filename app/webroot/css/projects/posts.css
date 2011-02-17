@@ -1,0 +1,23 @@
+
+/**
+ * Post index
+ */
+.post-list {}
+
+
+
+/**
+ * Post detail / view
+ */
+.box .post-detail { padding-bottom:0; }
+
+.post-detail h3 { font-size:18px; margin:0; }
+
+.post-detail .avatar { float:right; }
+
+.post-detail .detail { padding:5px 0; }
+.post-detail .detail p { font-size:12px; margin:0 0 2px 0; }
+.post-detail .detail span { color:#999; display:inline-block; width:50px; }
+
+.post-detail .body { border-top:1px solid #DDD; border-bottom:1px solid #DDD; padding:15px 0; }
+.post-detail .body p { margin:0; }

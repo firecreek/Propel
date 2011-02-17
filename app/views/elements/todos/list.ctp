@@ -71,7 +71,7 @@
         </div>
         
         <div class="add-item-link" style="display:none;">
-          <?php echo $html->link(__('Add an item',true),array('action'=>'item_add',$record['Todo']['id']),array('rel'=>$ident,'class'=>'important')); ?>
+          <?php echo $html->link(__('Add an item',true),array('controller'=>'todos_items','action'=>'add',$record['Todo']['id']),array('rel'=>$ident,'class'=>'important')); ?>
         </div>
         <?php
           echo $this->element('todos/add_item',array(

@@ -39,8 +39,7 @@
       'Containable',
       'Completable',
       'Auth',
-      'Commentable' => array(
-      ),
+      'Commentable',
     );
     
     

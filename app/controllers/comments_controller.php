@@ -122,11 +122,19 @@
         
       }
       
+      //Contains
+      $contain = array();
+      
+      if($this->{$this->modelAlias}->Behaviors->attached('Responsible'))
+      {
+        $contain = 'Responsible';
+      }
+      
       //Load
       $record = $this->{$this->modelAlias}->find('first',array(
         'conditions' => array($this->modelAlias.'.id'=>$id),
-        'contain' => array(
-          'Responsible' => array(),
+        'contain' => array_merge(array(
+          'Person' => array(),
           'Comment' => array('Person'),
           'CommentPerson' => array(
             'Person' => array(
@@ -134,7 +142,7 @@
               'Company' => array('id','name')
             )
           )
-        )
+        ),$contain)
       ));
       
       //Set as read for person

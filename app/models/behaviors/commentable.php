@@ -52,6 +52,15 @@
             ),
             'foreignKey'  => false,
             'dependent'   => true
+          ),
+          'CommentLast' => array(
+            'className'   => 'Comment',
+            'conditions'  => array(
+              'CommentLast.foreign_id = '.$model->alias.'.id',
+              'CommentLast.model'       => $model->alias
+            ),
+            'order'       => 'CommentLast.id DESC',
+            'foreignKey'  => false
           )
         )
       ),false);

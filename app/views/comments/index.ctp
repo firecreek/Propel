@@ -1,20 +1,16 @@
 <?php
   $javascript->link('listable.js', false);
   
-  $controllerLower = strtolower($associatedController);
-  $controllerLink  = Inflector::underscore($associatedController);
+  $html->css('pages/comments', null, array('inline'=>false));
 ?>
 <div class="cols">
 
   <div class="col left">
 
     <div class="box">
-      <div class="banner">
-        <?php
-          echo $this->element($controllerLink.'/comments_banner');
-        ?>
-      </div>
-      
+      <?php
+        echo $this->element(Inflector::underscore($associatedController).'/comments_head');
+      ?>      
       
       <div class="content">
         <?php
