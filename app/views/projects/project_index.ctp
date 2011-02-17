@@ -1,4 +1,8 @@
+<?php
 
+  $html->css('projects/projects_index', null, array('inline'=>false));
+  
+?>
 <div class="cols">
   <div class="col left">
   
@@ -13,6 +17,13 @@
       </div>
       <div class="content">
       
+        <?php if($project['Project']['announcement_show'] && !empty($project['Project']['announcement'])): ?>
+          <p class="announcement">
+            <?php
+              echo $project['Project']['announcement'];
+            ?>
+          </p>
+        <?php endif; ?>
       
       
         <?php if(!empty($overdue) || !empty($upcoming)): ?>

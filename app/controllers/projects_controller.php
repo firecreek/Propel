@@ -36,6 +36,16 @@
      */
     public $uses = array('Project','Company');
     
+    /**
+     * Action map
+     *
+     * @access public
+     * @var array
+     */
+    public $actionMap = array(
+      'start'      => '_read',
+    );
+    
     
     /**
      * Index
@@ -121,6 +131,28 @@
     
     
     /**
+     * Index
+     *
+     * @access public
+     * @return void
+     */
+    public function project_start()
+    {
+      $record = $this->Project->find('first',array(
+        'conditions' => array(
+          'Project.id' => $this->Authorization->read('Project.id')
+        ),
+        'fields' => 'start_controller',
+        'contain' => false
+      ));
+      
+      $controller = empty($record['Project']['start_controller']) ? 'projects' : $record['Project']['start_controller'];
+      
+      $this->redirect(array('controller'=>$controller,'action'=>'index'));
+    }
+    
+    
+    /**
      * Project Index
      *
      * @access public
@@ -140,6 +172,13 @@
         return $this->render('project_index_new');
       }
     
+      //Project
+      $project = $this->Project->find('first',array(
+        'conditions' => array(
+          'Project.id' => $this->Authorization->read('Project.id')
+        ),
+        'contain' => false
+      ));
     
       //Overdue
       $this->loadModel('Milestone');
@@ -167,7 +206,46 @@
         'limit' => 100
       ));
       
-      $this->set(compact('overdue','upcoming'));
+      $this->set(compact('project','overdue','upcoming'));
+    }
+    
+    
+    /**
+     * Project Edit
+     *
+     * @access public
+     * @return void
+     */
+    public function project_edit()
+    {
+      if(isset($this->data))
+      {
+        $this->Project->id = $this->Authorization->read('Project.id');
+        $this->Project->set($this->data);
+        
+        if($this->Project->validates())
+        {
+          $this->Project->save();
+          $this->Session->setFlash(__('Project settings have been updated',true),'default',array('class'=>'success'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Problem saving the form',true),'default',array('class'=>'error'));
+        }
+      }
+      else
+      {
+        $this->data = $this->Project->find('first',array(
+          'conditions' => array('Project.id'=>$this->Authorization->read('Project.id')),
+          'contain' => false
+        ));
+      }
+      
+      //List of all companies
+      $companies = $this->Authorization->read('Companies');
+      $companies = Set::combine($companies,'{n}.Company.id','{n}.Company.name');
+      
+      $this->set(compact('companies'));
     }
     
   

@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-02-17 09:02:27 : 1297909827*/
+/* App schema generated on: 2011-02-17 19:02:41 : 1297945781*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -263,12 +263,15 @@ class AppSchema extends CakeSchema {
 		'company_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'name' => array('type' => 'string', 'null' => false, 'length' => 90, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'description' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'announcement' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'announcement_show' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'status' => array('type' => 'string', 'null' => false, 'default' => 'active', 'length' => 10, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'start_controller' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'todo_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'milestone_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'post_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+		'template' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),

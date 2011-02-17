@@ -24,7 +24,7 @@
   
   //Projects
   Router::connect('/:accountSlug/:projectId',
-    array('controller'=>'projects', 'action'=>'index', 'prefix'=>'project'),
+    array('controller'=>'projects', 'action'=>'start', 'prefix'=>'project'),
     array('accountSlug'=>'[a-z0-9\-]+','projectId'=>'[0-9]+')
   );
   Router::connect('/:accountSlug/:projectId/:controller/:action/*',
