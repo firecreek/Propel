@@ -110,6 +110,7 @@
         'comments'            => true,
         'commentCount'        => 0,
         'commentUnread'       => 0,
+        'commentController'   => $this->params['controller'],
         'position'            => false,
         'positionHide'        => false,
         'class'               => array(),
@@ -166,7 +167,7 @@
       $comments = '';
       if($options['comments'])
       {
-        $commentUrl = array('associatedController'=>$this->params['controller'],'controller'=>'comments','action'=>'index',$id);
+        $commentUrl = array('associatedController'=>$options['commentController'],'controller'=>'comments','action'=>'index',$id);
       
         $commentLink = $this->Html->link(__('Comments',true),$commentUrl,array('title'=>__('Comments',true)));
         $commentCount = $this->Html->link($options['commentCount'],$commentUrl,array('title'=>__('Comments',true)));
@@ -211,7 +212,7 @@
       
       if($options['edit'])
       {
-        $maintain .= sprintf($this->tags['edit'],$this->Html->link(__('Edit',true),array('action'=>'edit',$id)));
+        $maintain .= sprintf($this->tags['edit'],$this->Html->link(__('Edit',true),$options['editUrl']));
       }
       
       if($options['position'])

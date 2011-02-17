@@ -12,6 +12,12 @@
    */
   class CommentableBehavior extends ModelBehavior
   {
+    /**
+     * Settings
+     */
+    public $settings = array(
+    );
+  
 
     /**
      * Setup
@@ -21,6 +27,8 @@
      */
     public function setup(&$model, $config = array())
     {
+      $this->settings = $config;
+    
       $model->bindModel(array(
         'hasMany' => array(
           'Comment' => array(
@@ -77,6 +85,18 @@
       }
       
       return $results;
+    }
+    
+    
+    /**
+     * Comment settings return
+     *
+     * @access public
+     * @return array
+     */
+    public function commentSettings(&$model)
+    {
+      return $this->settings;
     }
     
   }

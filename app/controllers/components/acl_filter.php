@@ -230,15 +230,20 @@
         $isAllowed = false;
         
         //Controller name to check
-        $controllerName = $this->controller->name;
-        
-        if(isset($this->controller->associatedController))
+        if(!isset($this->controllerName))
         {
-          $controllerName = $this->controller->associatedController;
+          if(isset($this->controller->associatedController))
+          {
+            $this->controllerName = $this->controller->associatedController;
+          }
+          else
+          {
+            $this->controllerName = $this->controller->name;
+          }
         }
         
         //Check if this person is allowed to be in this controller and has the correct CRUD access
-        $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$controllerName);
+        $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
         if(!empty($permissionNode))
         {
           $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
@@ -255,29 +260,37 @@
         //modelAuthCheck isset then the id passed in the URL will be checked
         if(isset($this->modelAuthCheck[$actionKey]) && $isAllowed == true)
         {
-          $modelAlias = Inflector::classify($controllerName);
-          $fieldKey   = $prefix.'_id';
-          
-          if(
-            isset($this->controller->params['pass'][0]) &&
-            is_numeric($this->controller->params['pass'][0]) &&
-            isset($this->controller->{$modelAlias}) &&
-            is_object($this->controller->{$modelAlias}) &&
-            $this->controller->{$modelAlias}->hasField($fieldKey)
-          )
+          if(!isset($this->modelId))
           {
-            //Model exists, and the record has to match up with the prefix
-            if(!$this->controller->{$modelAlias}->find('count',array(
-              'conditions' => array(
-                'id'        => $this->controller->params['pass'][0],
-                $fieldKey   => $modelId
-              ),
-              'recursive' => -1
-            )))
+            $this->modelId = isset($this->controller->params['pass'][0]) ? $this->controller->params['pass'][0] : null;
+          }
+        
+          if(!empty($this->modelId) && is_numeric($this->modelId))
+          {
+            $modelAlias = Inflector::classify($this->controllerName);
+            $fieldKey   = $prefix.'_id';
+            
+            if(
+              isset($this->modelId) &&
+              is_numeric($this->modelId) &&
+              isset($this->controller->{$modelAlias}) &&
+              is_object($this->controller->{$modelAlias}) &&
+              $this->controller->{$modelAlias}->hasField($fieldKey)
+            )
             {
-              //Failed to match prefix and updating record together
-              $isAllowed = false;
-            }            
+              //Model exists, and the record has to match up with the prefix
+              if(!$this->controller->{$modelAlias}->find('count',array(
+                'conditions' => array(
+                  'id'        => $this->modelId,
+                  $fieldKey   => $modelId
+                ),
+                'recursive' => -1
+              )))
+              {
+                //Failed to match prefix and updating record together
+                $isAllowed = false;
+              }            
+            }
           }
         }
         

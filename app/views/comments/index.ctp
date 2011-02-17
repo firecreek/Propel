@@ -10,29 +10,11 @@
 
     <div class="box">
       <div class="banner">
-        <h2>
-          <?php __('Comments on this'); ?> <?php echo $controllerLower; ?>
-          <?php echo $html->link(__('(Back to all milestones)',true),array('controller'=>$controllerLink,'action'=>'index')); ?>
-        </h2>
-        
-        <div class="record">
-          <div class="wrapper listable"><?php
-            echo $listable->item($modelAlias,$id,$record[$modelAlias]['title'],array(
-              'delete'    => false,
-              'edit'      => false,
-              'comments'  => false,
-              'prefix'    => isset($record['Responsible']['name']) ? $record['Responsible']['name'] : null,
-              'updateUrl' => $html->url(array('controller'=>$controllerLink,'action'=>'update',$id))
-            ));
-          ?></div>
-        </div>
+        <?php
+          echo $this->element($controllerLink.'/comments_banner');
+        ?>
       </div>
       
-      <?php
-        echo $javascript->codeBlock("
-          $('.listable .item').listable();
-        ");
-      ?>
       
       <div class="content">
         <?php

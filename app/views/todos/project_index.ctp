@@ -43,7 +43,7 @@
             echo $javascript->codeBlock("
               $('.listable').listable({
                 sortable:true,
-                positionUrl:'".$html->url(array('action'=>'update_item_positions'))."'
+                positionUrl:'".$html->url(array('controller'=>'todos_items','action'=>'update_positions'))."'
               });
             ");
           ?>

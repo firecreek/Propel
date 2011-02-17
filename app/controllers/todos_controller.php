@@ -43,12 +43,7 @@
      * @var array
      */
     public $actionMap = array(
-      'add_item'              => '_create',
-      'delete_item'           => '_delete',
-      'edit_item'             => '_update',
       'update_positions'      => '_update',
-      'update_item'           => '_update',
-      'update_item_positions' => '_update'
     );
     
     
@@ -198,7 +193,7 @@
         'fields' => array('id','name'),
         'order' => 'Todo.position ASC',
         'contain' => array(
-          'Milestone' => array('id','title','deadline')
+          'Milestone' => array('id','title','deadline'),
         ),
         'filter' => $filter,
         'items' => array(
@@ -206,7 +201,8 @@
             'TodoItem.completed' => false,
           ),$itemConditions),
           'contain' => array(
-            'Responsible'
+            'Responsible',
+            'CommentUnread'
           ),
           'recent' => array(
             'conditions' => $itemConditions,
@@ -345,196 +341,6 @@
         $this->Todo->TodoItem->updateAll(
           array('Todo.position' => $position),
           array('Todo.id'=>$todoId)
-        );
-        
-      }
-    }
-    
-    
-    /**
-     * Add todo item
-     *
-     * @access public
-     * @return void
-     */
-    public function project_add_item($id)
-    {
-      if(!empty($this->data))
-      {
-        $this->data['TodoItem']['todo_id'] = $id;
-        $this->data['TodoItem']['project_id'] = $this->Authorization->read('Project.id');
-        $this->data['TodoItem']['person_id'] = $this->Authorization->read('Person.id');
-        
-        $this->Todo->TodoItem->set($this->data);
-
-        if($this->Todo->TodoItem->validates())
-        {
-          $this->Todo->TodoItem->save();
-          
-          if($this->RequestHandler->isAjax())
-          {
-            $item = $this->Todo->TodoItem->find('first',array(
-              'conditions' => array('TodoItem.id'=>$this->Todo->TodoItem->id),
-              'contain' => array('Todo','Responsible')
-            ));
-          
-            $this->set(compact('id','item'));
-            return $this->render();
-          }
-          
-          $this->Session->setFlash(__('Todo item added',true),'default',array('class'=>'success'));
-          $this->redirect(array('action'=>'index'));
-        }
-        else
-        {
-          $this->Session->setFlash(__('Failed to save the record, please check the form',true),'default',array('class'=>'error'));
-        }
-        
-        $this->redirect(array('action'=>'index'));
-      }
-    }
-    
-    
-    /**
-     * Project delete todo item
-     * 
-     * @access public
-     * @return void
-     */
-    public function project_delete_item($todoId,$id)
-    {
-      $this->Todo->TodoItem->delete($id);
-
-      if($this->RequestHandler->isAjax())
-      {
-        //Total count
-        $this->Todo->id = $todoId;
-        $this->Todo->recursive = -1;
-        $item = $this->Todo->read('todo_items_completed_count');
-      
-        $this->set(compact('todoId','id','item'));
-        return $this->render();
-      }
-      
-      $this->Session->setFlash(__('Todo item deleted',true),'default',array('class'=>'success'));
-      $this->redirect(array('action'=>'index'));
-    }
-    
-    
-    /**
-     * Edit todo item
-     *
-     * @access public
-     * @return void
-     */
-    public function project_edit_item($todoId,$id)
-    {
-      if(!empty($this->data))
-      {
-        $this->data['TodoItem']['id'] = $id;
-        
-        $this->Todo->TodoItem->set($this->data);
-
-        if($this->Todo->TodoItem->validates())
-        {
-          $this->Todo->TodoItem->save();
-          
-          if($this->RequestHandler->isAjax())
-          {
-            $item = $this->Todo->TodoItem->find('first',array(
-              'conditions' => array('TodoItem.id'=>$id),
-              'contain' => array('Todo','Responsible')
-            ));
-          
-            $this->set(compact('id','item'));
-            return $this->render();
-          }
-          
-          $this->Session->setFlash(__('Todo item updated',true),'default',array('class'=>'success'));
-          $this->redirect(array('action'=>'index'));
-        }
-        else
-        {
-          $this->Session->setFlash(__('Failed to save the record, please check the form',true),'default',array('class'=>'error'));
-        }
-      }
-      else
-      {
-        $this->data = $this->Todo->TodoItem->find('first',array(
-          'conditions' => array(
-            'TodoItem.id' => $id
-          ),
-          'contain' => array(
-            'Responsible'
-          )
-        ));
-      }
-      
-      $this->set(compact('todoId','id'));
-    }
-    
-    
-    /**
-     * Project update todo item completed
-     * 
-     * @access public
-     * @return void
-     */
-    public function project_update_item($todoId,$id,$completed = false)
-    {
-      if($completed == 'true')
-      {
-        $this->Todo->TodoItem->updateAll(
-          array(
-            'completed' => '1',
-            'completed_date' => '"'.date('Y-m-d').'"',
-            'completed_person_id' => $this->Authorization->read('Person.id')
-          ),
-          array('TodoItem.id'=>$id)
-        );
-      }
-      else
-      {
-        $this->Todo->TodoItem->updateAll(
-          array('completed' => '0'),
-          array('TodoItem.id'=>$id)
-        );
-      }
-      
-      //Load item back in
-      $item = $this->Todo->TodoItem->find('first',array(
-        'conditions' => array('TodoItem.id'=>$id),
-        'contain' => array('Todo')
-      ));
-    
-      $this->set(compact('id','item','completed'));
-    }
-    
-    
-    /**
-     * Project update todo item positions
-     * 
-     * @access public
-     * @return void
-     */
-    public function project_update_item_positions()
-    {
-      foreach($this->params['form'] as $key => $data)
-      {
-        $datasplit = explode('-',$data);
-        
-        $todoId = $datasplit[0];
-        $position = $datasplit[1];
-        
-        $todoItemId = str_replace('TodoItem','',$key);
-        
-        
-        $this->Todo->TodoItem->updateAll(
-          array(
-            'TodoItem.todo_id' => $todoId,
-            'TodoItem.position' => $position
-          ),
-          array('TodoItem.id'=>$todoItemId)
         );
         
       }

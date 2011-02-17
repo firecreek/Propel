@@ -9,11 +9,11 @@
 <div class="item-add">
   <?php
   
-    $url = array('controller'=>'todos','action'=>'add_item',$todoId);
+    $url = array('controller'=>'todos_items','action'=>'add',$todoId);
   
     if($edit)
     {
-      $url = array('controller'=>'todos','action'=>'edit_item',$todoId,$id);
+      $url = array('controller'=>'todos_items','action'=>'edit',$id);
     }
   
     echo $form->create('TodoItem',array('id'=>false,'url'=>$url));

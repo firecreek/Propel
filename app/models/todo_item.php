@@ -1,8 +1,24 @@
 <?php
 
+  /**
+   * Todo Item Model
+   *
+   * @category Model
+   * @package  OpenCamp
+   * @version  1.0
+   * @author   Darren Moore <darren.m@firecreek.co.uk>
+   * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+   * @link     http://opencamp.firecreek.co.uk
+   */
   class TodoItem extends AppModel
   {
-    var $useTable = 'todos_items';
+    /**
+     * Model to use
+     *
+     * @access public
+     * @var string
+     */
+    public $useTable = 'todos_items';
     
     /**
      * Name of model
@@ -22,8 +38,9 @@
       'Responsible',
       'Containable',
       'Completable',
-      'Commentable',
-      'Auth'
+      'Auth',
+      'Commentable' => array(
+      ),
     );
     
     

@@ -54,7 +54,7 @@ class GrantData {
 		),
 		array(
 			'id' => '7',
-			'name' => 'Project Person, Messages and Files',
+			'name' => 'Project Person, Posts + Files',
 			'alias' => 'shared msg-file',
 			'aco_alias' => 'projects',
 			'updated' => '2010-12-29 06:25:35',
@@ -62,7 +62,7 @@ class GrantData {
 		),
 		array(
 			'id' => '8',
-			'name' => 'Project Person, Messages and Files and To-Dos',
+			'name' => 'Project Person, Posts + Files + To-Dos',
 			'alias' => 'shared msg-file-todo',
 			'aco_alias' => 'projects',
 			'updated' => '2010-12-29 06:25:35',

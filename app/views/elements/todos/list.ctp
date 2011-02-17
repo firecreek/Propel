@@ -19,7 +19,7 @@
             'positionHide'  => true,
             'url'           => $html->url(array('controller'=>'todos','action'=>'view',$record['Todo']['id'])),
             'editUrl'       => $html->url(array('controller'=>'todos','action'=>'edit',$record['Todo']['id'])),
-            'deleteUrl'   => $html->url(array('controller'=>'todos','action'=>'delete',$record['Todo']['id'])),
+            'deleteUrl'     => $html->url(array('controller'=>'todos','action'=>'delete',$record['Todo']['id'])),
           );
         
           if(isset($headerLink) && $headerLink == false)
@@ -59,9 +59,12 @@
               echo $listable->item('Todo',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
                 'position'  => true,
                 'extra'     => $extra,
-                'editUrl'   => $html->url(array('controller'=>'todos','action'=>'edit_item',$record['Todo']['id'],$item['TodoItem']['id'])),
-                'updateUrl'   => $html->url(array('controller'=>'todos','action'=>'update_item',$record['Todo']['id'],$item['TodoItem']['id'])),
-                'deleteUrl'   => $html->url(array('controller'=>'todos','action'=>'delete_item',$record['Todo']['id'],$item['TodoItem']['id'])),
+                'commentCount'  => $item['TodoItem']['comment_count'],
+                'commentUnread' => $item['TodoItem']['comment_unread'],
+                'commentController' => 'todos_items',
+                'editUrl'   => $html->url(array('controller'=>'todos_items','action'=>'edit',$item['TodoItem']['id'])),
+                'updateUrl'   => $html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id'])),
+                'deleteUrl'   => $html->url(array('controller'=>'todos_items','action'=>'delete',$item['TodoItem']['id'])),
               ));
             ?>
           <?php endforeach; ?>
@@ -85,8 +88,8 @@
                 'edit' => false,
                 'checked' => true,
                 'prefix' => date('M j',strtotime($item['TodoItem']['completed_date'])),
-                'updateUrl'   => $html->url(array('controller'=>'todos','action'=>'update_item',$record['Todo']['id'],$item['TodoItem']['id'])),
-                'deleteUrl'   => $html->url(array('controller'=>'todos','action'=>'delete_item',$record['Todo']['id'],$item['TodoItem']['id'])),
+                'updateUrl'   => $html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id'])),
+                'deleteUrl'   => $html->url(array('controller'=>'todos_items','action'=>'delete',$item['TodoItem']['id'])),
               ));
             ?>
           <?php endforeach; ?>

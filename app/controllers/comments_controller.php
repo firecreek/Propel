@@ -46,10 +46,15 @@
     public function beforeFilter()
     {
       $this->associatedController = Inflector::pluralize(Inflector::classify($this->params['associatedController']));
-      $this->modelAlias = Inflector::classify($this->params['associatedController']);
       
+      //Model
+      //@todo Create inflector for model names
+      $modelAlias = $this->params['associatedController'];
+      $modelAlias = str_replace('s_','_',$modelAlias);
+      $this->modelAlias = Inflector::classify($modelAlias);
       $this->loadModel($this->modelAlias);
       
+      //
       $this->Comment->associatedAlias = $this->modelAlias;
       
       $this->params['prefix'] = 'project';
@@ -110,6 +115,8 @@
             
             //Update count
             $this->Comment->updateCommentCount($id);
+            
+            $this->data = null;
           }
         }
         
@@ -133,8 +140,11 @@
       //Set as read for person
       $this->Comment->setRead($id,$this->Authorization->read('Person.id'));
       
+      //Settings
+      $commentSettings = $this->{$this->modelAlias}->commentSettings();
       
-      $this->set(compact('id','record'));
+      
+      $this->set(compact('id','record','commentSettings'));
     }
     
     

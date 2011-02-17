@@ -216,7 +216,7 @@ class GrantsSetData {
 		array(
 			'id' => '20',
 			'grant_id' => '2',
-			'acos_alias' => 'Messages',
+			'acos_alias' => 'Posts',
 			'_create' => '1',
 			'_read' => '1',
 			'_update' => '1',
@@ -258,15 +258,26 @@ class GrantsSetData {
 			'created' => '2010-12-29 06:58:22'
 		),
 		array(
-			'id' => '24',
+			'id' => '25',
 			'grant_id' => '6',
 			'acos_alias' => 'Milestones',
 			'_create' => '1',
 			'_read' => '1',
 			'_update' => '1',
 			'_delete' => '1',
-			'updated' => '2010-12-29 06:58:22',
-			'created' => '2010-12-29 06:58:22'
+			'updated' => '2011-02-16 07:29:46',
+			'created' => '2011-02-16 07:29:46'
+		),
+		array(
+			'id' => '26',
+			'grant_id' => '2',
+			'acos_alias' => 'TodosItems',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1',
+			'updated' => '2011-02-17 06:04:20',
+			'created' => '2011-02-17 06:04:20'
 		),
 	);
 
