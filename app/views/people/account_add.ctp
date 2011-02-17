@@ -1,4 +1,6 @@
-
+<?php
+  $this->set('activeMenu','companies');
+?>
 <div class="cols">
 
   <div class="col left">

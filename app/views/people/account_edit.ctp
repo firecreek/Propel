@@ -1,5 +1,6 @@
 <?php
-
+  $this->set('activeMenu','companies');
+  
   //My account?
   $personal = false;
   if($personId == $session->read('Auth.Person.id'))
