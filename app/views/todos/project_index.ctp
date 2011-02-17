@@ -14,7 +14,7 @@
       <div class="banner">
         <h2><?php __('To-do lists'); ?></h2>
         
-        <?php echo $this->element('todos/banner_responsible'); ?>
+        <?php echo $this->element('todos/banner_filters'); ?>
         
         <ul class="right important">
           <li><?php
@@ -50,7 +50,22 @@
           
         <?php else: ?>
         
-          <p><strong><?php echo $responsibleName; ?></strong> <?php __('isn\'t responsible for any to-do items'); ?></p>
+          <p>
+            <?php
+              if(isset($responsibleName) && isset($dueName))
+              {
+                echo '<strong>'.$responsibleName.'</strong> '.__('isn\'t responsible for any to-do items',true).' <strong>'.__('due',true).' '.$dueName.'</strong>';
+              }
+              elseif(isset($responsibleName))
+              {
+                echo '<strong>'.$responsibleName.'</strong> '.__('isn\'t responsible for any to-do items',true);
+              }
+              elseif(isset($dueName))
+              {
+                echo __('There are no to-do items',true).' <strong>'.__('due',true).' '.$dueName.'</strong>';
+              }
+            ?>
+          </p>
         
         <?php endif; ?>
       </div>

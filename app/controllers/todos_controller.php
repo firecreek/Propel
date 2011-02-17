@@ -26,7 +26,7 @@
      * @access public
      * @var array
      */
-    public $components = array();
+    public $components = array('Cookie');
     
     /**
      * Uses
@@ -195,9 +195,27 @@
      */
     private function __filterTodos($conditions)
     {
-      //Params
-      $this->data['Todo']['responsible']  = isset($this->params['url']['responsible']) ? $this->params['url']['responsible'] : '';
-      $this->data['Todo']['due']          = isset($this->params['url']['due']) ? $this->params['url']['due'] : '';
+      //Responsible filter
+      if(isset($this->params['url']['responsible']))
+      {
+        $this->data['Todo']['responsible'] = $this->params['url']['responsible'];
+        $this->Cookie->write('Todos.responsible',$this->params['url']['responsible']);
+      }
+      elseif($cookieResponsible = $this->Cookie->read('Todos.responsible'))
+      {
+        $this->data['Todo']['responsible'] = $cookieResponsible;
+      }
+      
+      //Due filter
+      if(isset($this->params['url']['due']))
+      {
+        $this->data['Todo']['due'] = $this->params['url']['due'];
+        $this->Cookie->write('Todos.due',$this->params['url']['due']);
+      }
+      elseif($cookieDue = $this->Cookie->read('Todos.due'))
+      {
+        $this->data['Todo']['due'] = $cookieDue;
+      }
       
       //Filters
       $contain = array();
@@ -205,7 +223,7 @@
       $itemConditions = array();
       
       //Responsible filter
-      if(!empty($this->data['Todo']['responsible']))
+      if(isset($this->data['Todo']['responsible']) && !empty($this->data['Todo']['responsible']))
       {
         $filter['Responsible'] = array(
           'value' => $this->data['Todo']['responsible'],
@@ -214,11 +232,14 @@
       }
       
       //Due filter
-      if(!empty($this->data['Todo']['due']))
+      if(isset($this->data['Todo']['due']) && !empty($this->data['Todo']['due']))
       {
+        $filter['Due'] = array(
+          'value' => $this->data['Todo']['due'],
+          'model' => 'TodoItem'
+        );
       }
 
-      
       //Todo lists for filter
       $todos = $this->Todo->find('all',array(
         'conditions' => $conditions,
@@ -244,6 +265,16 @@
           'count' => true
         )
       ));
+      
+      if(isset($this->Todo->responsibleName))
+      {
+        $this->set('responsibleName',$this->Todo->responsibleName);
+      }
+      
+      if(isset($this->Todo->dueName))
+      {
+        $this->set('dueName',$this->Todo->dueName);
+      }
       
       return $todos;
     }

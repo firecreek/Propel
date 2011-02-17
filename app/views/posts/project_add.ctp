@@ -2,6 +2,9 @@
 
   $javascript->link('projects/posts_add.js', false);
   
+  $html->css('rte', null, array('inline'=>false));
+  $javascript->link('jquery/jquery.rte.js', false);
+  
 ?>
 <div class="cols">
   <div class="col left">
@@ -24,7 +27,7 @@
         <fieldset class="light details">
         <?php
           echo $form->input('title',array('label'=>__('Title',true),'div'=>'input text full-width'));
-          echo $form->input('body',array('label'=>false,'div'=>'input textarea full-width'));
+          echo $form->input('body',array('label'=>false,'div'=>'input textarea full-width','class'=>'wysiwyg'));
           echo $form->input('private',array(
             'label' => __('Private',true).' <span>('.__('Visible only to your company',true).')</span>'
           ));

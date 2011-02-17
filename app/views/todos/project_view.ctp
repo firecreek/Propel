@@ -12,7 +12,7 @@
       <div class="banner">
         <h2><?php echo $html->link(__('See all to-do lists',true),array('action'=>'index')); ?></h2>
         
-        <?php echo $this->element('todos/banner_responsible'); ?>
+        <?php echo $this->element('todos/banner_filters'); ?>
         
         <ul class="right important">
           <li><?php

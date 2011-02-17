@@ -93,7 +93,7 @@
         else
         {
           //Specified
-          $split            = explode('_',$this->data['Todo']['responsible']);
+          $split            = explode('_',$responsibleValue);
           $modelAlias       = Inflector::classify($split[0]);
           $modelId          = $split[1];
           $responsibleName  = $model->{$responsibleModel}->getResponsibleName($modelAlias,$modelId);
@@ -107,11 +107,12 @@
         }
         
         //Sets
-        $this->responsibleName = $responsibleName;
+        $model->responsibleName = $responsibleName;
         
         //Contain join
         $joinAlias = $responsibleModel.'Responsible';
         $query['contain'][] = $joinAlias;
+        $query['group'][] = 'Todo.id';
         
         //INNER joins
         $model->bindModel(array(
@@ -121,9 +122,10 @@
               'type'        => 'INNER',
               'foreignKey'  => false,
               'conditions'  => array(
-                $joinAlias.'.'.strtolower($this->alias).'_id = '.$this->alias.'.id',
+                $joinAlias.'.todo_id = Todo.id',
                 $joinAlias.'.responsible_model' => $modelAlias,
                 $joinAlias.'.responsible_id' => $modelId,
+                $joinAlias.'.completed' => false,
               )
             )
           )
