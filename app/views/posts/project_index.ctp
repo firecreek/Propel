@@ -9,19 +9,14 @@
     <div class="box">
       <div class="banner">
         <h2><?php __('All Messages'); ?></h2>
-                
         <?php
-
           $menu = array(
             'expanded'  => array('name'=>__('Expanded view',true),'url'=>array('action'=>'index','?'=>array('view'=>'expanded'))),
             'list'      => array('name'=>__('List view',true),'url'=>array('action'=>'index','?'=>array('view'=>'list')))
           );
           
           echo $layout->menu($menu,array('active'=>$viewType),array('class'=>'right'));
-          
         ?>
-
-        
       </div>
       <div class="content post-list">
         
