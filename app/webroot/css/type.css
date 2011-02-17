@@ -37,6 +37,7 @@ a.unimportant:hover, .unimportant a:hover { background-color:#333; text-decorati
 .success a { color:#529214; }
 
 p.highlight, label.highlight { background-color:#FFC; }
+.private { background-color:#FFE6EA !important; }
 
 /** Remove */
 a.red { color:red; background-color:red; border:10px solid red; padding:0 1px; }

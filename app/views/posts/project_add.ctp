@@ -1,4 +1,8 @@
+<?php
 
+  $javascript->link('projects/posts_add.js', false);
+  
+?>
 <div class="cols">
   <div class="col left">
 
@@ -17,7 +21,7 @@
           echo $form->create('Post',array('url'=>$this->here,'class'=>'block'));
         ?>
         
-        <fieldset class="light">
+        <fieldset class="light details">
         <?php
           echo $form->input('title',array('label'=>__('Title',true),'div'=>'input text full-width'));
           echo $form->input('body',array('label'=>false,'div'=>'input textarea full-width'));
