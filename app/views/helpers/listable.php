@@ -62,6 +62,7 @@
       'edit'              => '<span class="edit important">%s</span>',
       'position'          => '<span class="position"%s></span>',
       'loading'           => '<span class="loading" style="display:none;"></span>',
+      'private'           => '<span class="private-pop" style="display:none;"><p>%s</p></span>',
     );
     
     
@@ -101,6 +102,7 @@
       $_options = array(
         'url'                 => false,
         'extra'               => false,
+        'extraPrepend'        => null,
         'checkbox'            => true,
         'delete'              => true,
         'edit'                => true,
@@ -175,13 +177,20 @@
         $comments = sprintf($this->tags['comments'],$commentLink,$commentCount);
       }
       
+      //Private
+      if($options['private'])
+      {
+        $options['extraPrepend'] = sprintf($this->tags['private'],__('Visible only to your company',true));
+        $options['extra'] = __('Private',true);
+      }
+      
       //Extra
       //@todo Clean this up and standardise
       $extra = '';
       if(!empty($options['extra']))
       {
         $extraClass = $options['private'] ? 'private' : null;
-        $extra = sprintf($this->tags['extra'],$extraClass,$options['extra']);
+        $extra = sprintf($this->tags['extra'],$extraClass,$options['extra']).$options['extraPrepend'];
       }
       
       //Name prefix

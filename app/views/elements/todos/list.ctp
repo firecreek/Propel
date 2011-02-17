@@ -34,7 +34,6 @@
           if($record['Todo']['private'])
           {
             $headerOptions['private'] = true;
-            $headerOptions['extra'] = 'Private';
           }
         
           echo $listable->item('Todo',$record['Todo']['id'],$record['Todo']['name'],$headerOptions);

@@ -41,6 +41,10 @@
       //Edit
       this.editElems = this.listElements.find('.edit')
         .bind('click.listable', this._edit);
+      
+      //Private
+      this.privateElems = this.listElements.find('.extra.private')
+        .bind('mouseenter.listable mouseleave.listable', this._privatePop);
     },
     
     
@@ -64,6 +68,7 @@
       this.checkElems.unbind(".listable");
       this.deleteElems.unbind(".listable");
       this.editElems.unbind(".listable");
+      this.privateElems.unbind(".listable");
       
       $(this.element).find('.sortable').sortable('destroy');
     },
@@ -170,7 +175,22 @@
       {
         $(this).removeClass('ui-state-active');
       }
-    }
+    },
+    
+    
+    _privatePop: function(e)
+    {
+      var popElem = $(this).closest('.item').find('.private-pop');
+    
+      if(e.type == 'mouseenter')
+      {
+        $(popElem).show();
+      }
+      else
+      {
+        $(popElem).hide();
+      }
+    },
     
     
   
