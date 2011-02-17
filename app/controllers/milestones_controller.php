@@ -93,7 +93,17 @@
       {
         return $this->render('project_index_new');
       }
+
       
+      //Standard contains for each
+      //@todo Figure out how to hide private messages in Post
+      //       - Containable won't do it, nor will Joins, maybe Linkable
+      $contain = array(
+        'CommentUnread',
+        'Responsible',
+        'Todo',
+        'Post'
+      );
       
       //Overdue
       $overdue = $this->Milestone->find('all',array(
@@ -102,7 +112,7 @@
           'Milestone.deadline <' => date('Y-m-d'),
           'Milestone.completed'  => false
         ),
-        'contain' => array('Responsible','Todo','CommentUnread'),
+        'contain' => $contain,
         'order' => 'Milestone.deadline ASC'
       ));
       
@@ -113,7 +123,7 @@
           'Milestone.deadline >=' => date('Y-m-d'),
           'Milestone.completed'   => false
         ),
-        'contain' => array('Responsible','Todo','CommentUnread'),
+        'contain' => $contain,
         'order' => 'Milestone.deadline ASC'
       ));
       
@@ -125,7 +135,7 @@
           'Milestone.deadline >=' => date('Y-m-d'),
           'Milestone.deadline <=' => date('Y-m-d',strtotime('+14 days')),
         ),
-        'contain' => array('Responsible','Todo','CommentUnread'),
+        'contain' => $contain,
       ));
       
       //Completed
@@ -134,7 +144,7 @@
           'Milestone.project_id' => $this->Authorization->read('Project.id'),
           'Milestone.completed'  => true
         ),
-        'contain' => array('Responsible','Todo','CommentUnread'),
+        'contain' => $contain,
         'order' => 'Milestone.completed_date ASC'
       ));
       

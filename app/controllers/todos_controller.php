@@ -112,13 +112,28 @@
         return $this->render('project_index_new');
       }
       
-      //Todos
+      //Todos with privacy check
       $todos = $this->__filterTodos(array(
-        'Todo.project_id' => $this->Authorization->read('Project.id'),
-        'OR' => array(
-          'Todo.todo_items_count' => 0,
-          'NOT' => array(
-            'Todo.todo_items_count = Todo.todo_items_completed_count'
+        'AND' => array(
+          array(
+            'Todo.project_id' => $this->Authorization->read('Project.id'),
+            'OR' => array(
+              'Todo.todo_items_count' => 0,
+              'NOT' => array(
+                'Todo.todo_items_count = Todo.todo_items_completed_count'
+              )
+            )
+          ),
+          array(
+            'OR' => array(
+              array('Todo.private' => 0),
+              array(
+                'AND' => array(
+                  'Todo.private' => 1,
+                  'Person.company_id' => $this->Authorization->read('Company.id')
+                )
+              ),
+            )
           )
         )
       ));
@@ -142,8 +157,25 @@
       //Todos
       $todo = $this->__filterTodos(array(
         'Todo.project_id' => $this->Authorization->read('Project.id'),
-        'Todo.id' => $id
+        'Todo.id' => $id,
+        'OR' => array(
+          array('Todo.private' => 0),
+          array(
+            'AND' => array(
+              'Todo.private' => 1,
+              'Person.company_id' => $this->Authorization->read('Company.id')
+            )
+          ),
+        )
       ));
+      
+      //No record found
+      if(empty($todo))
+      {
+        $this->cakeError('error404');
+      }
+      
+      //
       $todo = $todo[0];
       
       //Todo active/completed lists
@@ -190,9 +222,10 @@
       //Todo lists for filter
       $todos = $this->Todo->find('all',array(
         'conditions' => $conditions,
-        'fields' => array('id','name'),
+        'fields' => array('id','name','private','person_id'),
         'order' => 'Todo.position ASC',
         'contain' => array(
+          'Person' => array('id','company_id'),
           'Milestone' => array('id','title','deadline'),
         ),
         'filter' => $filter,

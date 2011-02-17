@@ -67,33 +67,37 @@
       ),
     );
     
-
-    var $belongsTo = array(
+    /**
+     * Belongs to
+     *
+     * @access public
+     * @var array
+     */
+    public $belongsTo = array(
       'Project' => array(
         'className' => 'Project',
         'foreignKey' => 'project_id',
         'counterCache' => true,
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
       ),
       'Milestone' => array(
         'className' => 'Milestone',
         'foreignKey' => 'milestone_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
       ),
       'Person' => array(
         'className' => 'Person',
         'foreignKey' => 'person_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
+        'type' => 'INNER'
       )
     );
 
-    var $hasMany = array(
+    
+    /**
+     * Has many
+     *
+     * @access public
+     * @var array
+     */
+    public $hasMany = array(
       'TodoItem' => array(
       )
     );
@@ -182,6 +186,8 @@
     /**
      * Find active lists
      *
+     * With privacy checks
+     *
      * @access public
      * @return array
      */
@@ -189,17 +195,32 @@
     {
       return $this->find('all',array(
         'conditions' => array(
-          'Todo.project_id' => $projectId,
-          'OR' => array(
-            'Todo.todo_items_count' => 0,
-            'NOT' => array(
-              'Todo.todo_items_count = Todo.todo_items_completed_count'
+          'AND' => array(
+            array(
+              'Todo.project_id' => $projectId,
+              'OR' => array(
+                'Todo.todo_items_count' => 0,
+                'NOT' => array(
+                  'Todo.todo_items_count = Todo.todo_items_completed_count'
+                )
+              )
+            ),
+            array(
+              'OR' => array(
+                array('Todo.private' => 0),
+                array(
+                  'AND' => array(
+                    'Todo.private' => 1,
+                    'Person.company_id' => $this->authRead('Company.id')
+                  )
+                ),
+              )
             )
           )
         ),
         'fields' => array('id','name'),
         'order' => 'Todo.name ASC',
-        'contain' => false,
+        'contain' => array('Person'=>array('id')),
         'items' => false
       ));
     }
@@ -219,10 +240,21 @@
           'Todo.project_id' => $projectId,
           'Todo.todo_items_count >' => 0,
           'Todo.todo_items_count = Todo.todo_items_completed_count',
+          array(
+            'OR' => array(
+              array('Todo.private' => 0),
+              array(
+                'AND' => array(
+                  'Todo.private' => 1,
+                  'Person.company_id' => $this->authRead('Company.id')
+                )
+              ),
+            )
+          )
         ),
         'fields' => array('id','name'),
         'order' => 'Todo.name ASC',
-        'contain' => false,
+        'contain' => array('Person'=>array('id')),
         'items' => false
       ));
     }

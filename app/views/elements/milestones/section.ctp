@@ -49,13 +49,26 @@
             //After
             $after = null;
             
+            //Posts
+            if(!empty($milestone['Post']))
+            {
+              foreach($milestone['Post'] as $afterRecord)
+              {
+                $after .= '<li>'.__('Message',true).': '.$html->link($afterRecord['title'],array('associatedController'=>'posts','controller'=>'comments','action'=>'index',$afterRecord['id']),array('class'=>'unimportant')).'</li>';
+              }
+            }
+            
+            //Todos
             if(!empty($milestone['Todo']))
             {
-              foreach($milestone['Todo'] as $todo)
+              foreach($milestone['Todo'] as $afterRecord)
               {
-                $after .= '<li>'.__('To-Do',true).': '.$html->link($todo['name'],array('controller'=>'todos','action'=>'view',$todo['id']),array('class'=>'unimportant')).'</li>';
+                $after .= '<li>'.__('To-Do',true).': '.$html->link($afterRecord['name'],array('controller'=>'todos','action'=>'view',$afterRecord['id']),array('class'=>'unimportant')).'</li>';
               }
-              
+            }
+            
+            if(!empty($after))
+            {
               $after = '<ul class="attached-to">'.$after.'</ul>';
             }
           

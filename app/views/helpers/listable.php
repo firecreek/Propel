@@ -54,7 +54,7 @@
                               </div>
                             ',
       'checkbox'          => '<div class="check">%s</div>',
-      'extra'             => '<div class="extra">%s</div>',
+      'extra'             => '<div class="extra %s">%s</div>',
       'inline'            => '<div class="inline"></div>',
       'comments'          => '<div class="comment"><span class="icon">%s</span><span class="count">%s</span></div>',
       'maintain'          => '<div class="maintain">%s</div>',
@@ -113,6 +113,7 @@
         'commentController'   => $this->params['controller'],
         'position'            => false,
         'positionHide'        => false,
+        'private'             => false,
         'class'               => array(),
         'checked'             => false,
         'prefix'              => false,
@@ -179,13 +180,21 @@
       $extra = '';
       if(!empty($options['extra']))
       {
-        $extra = sprintf($this->tags['extra'],$options['extra']);
+        $extraClass = $options['private'] ? 'private' : null;
+        $extra = sprintf($this->tags['extra'],$extraClass,$options['extra']);
       }
       
       //Name prefix
+      //@todo remove the strong tags
       if($options['prefix'] !== false && !empty($options['prefix']))
       {
         $name = '<strong>'.$options['prefix'].':</strong> '.$name;
+      }
+      
+      //Name append
+      if($options['append'] !== false && !empty($options['append']))
+      {
+        $name = $name.$options['append'];
       }
       
       //Name

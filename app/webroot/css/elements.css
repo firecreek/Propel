@@ -15,8 +15,8 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box { margin:0px 0px 0px 0px; background: #fff;  }
 .box { -webkit-box-shadow:#BBB 3px 3px 4px; -moz-box-shadow:#BBB 3px 3px 4px; }
 
-.box .private { background:url(/img/icons/padlock-red-16.png) transparent no-repeat 20px 5px; }
-.box .private p { padding:5px 0; font-size:12px; margin:0 0 0 45px; }
+.box>.private { background:url(/img/icons/padlock-red-16.png) transparent no-repeat 20px 5px; }
+.box>.private p { padding:5px 0; font-size:12px; margin:0 0 0 45px; }
 
 .box .banner { border-bottom:none; position:relative; background-color:#EDF3FE;  min-height:48px; }
 .box .banner h2 { font-size:14px; margin:0; padding:15px 0 0 20px; }

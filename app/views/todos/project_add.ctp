@@ -1,5 +1,7 @@
 <?php
 
+  $javascript->link('projects/todos_add.js', false);
+  
   $html->css('projects/todos_add', null, array('inline'=>false));
   
 ?>

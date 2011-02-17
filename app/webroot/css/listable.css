@@ -41,6 +41,8 @@
 .listable .item .extra.hover { background-color:#C9C9C9; cursor:pointer; }
 .listable .item .extra.active { background-color:#000104; color:white; cursor:pointer; }
 
+.listable .item .extra.private { background-color:#D00 !important; color:white; font-weight:normal; border-radius:0; font-size:9px; padding:2px 4px; position:relative; top:-2px; }
+
 
 /**
  * Comments, after name
