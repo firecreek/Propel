@@ -125,16 +125,22 @@
       //Contains
       $contain = array();
       
+      //Responsible
       if($this->{$this->modelAlias}->Behaviors->attached('Responsible'))
       {
-        $contain = 'Responsible';
+        $contain[] = 'Responsible';
+      }
+      
+      //Person
+      if(isset($this->{$this->modelAlias}->belongsTo['Person']))
+      {
+        $contain[] = 'Person';
       }
       
       //Load
       $record = $this->{$this->modelAlias}->find('first',array(
         'conditions' => array($this->modelAlias.'.id'=>$id),
         'contain' => array_merge(array(
-          'Person' => array(),
           'Comment' => array('Person'),
           'CommentPerson' => array(
             'Person' => array(
@@ -148,11 +154,9 @@
       //Set as read for person
       $this->Comment->setRead($id,$this->Authorization->read('Person.id'));
       
-      //Settings
-      $commentSettings = $this->{$this->modelAlias}->commentSettings();
-      
-      
-      $this->set(compact('id','record','commentSettings'));
+      //
+      $this->set('activeMenu',Inflector::underscore($this->associatedController));
+      $this->set(compact('id','record'));
     }
     
     

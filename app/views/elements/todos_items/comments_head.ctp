@@ -1,4 +1,6 @@
-
+<?php
+  $this->set('activeMenu','todos');
+?>
 <div class="banner">
   <h2>
     <?php __('Comments on this To-Do Item'); ?>

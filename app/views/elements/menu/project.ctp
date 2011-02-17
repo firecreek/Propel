@@ -1,6 +1,9 @@
 
 <?php
-  $active = $this->name;
+  if(!isset($activeMenu))
+  {
+    $activeMenu = Inflector::underscore($this->name);
+  }
 ?>
 
 <nav class="main top tabs">
@@ -11,7 +14,7 @@
       'todos'       => array('name'=>__('To-Dos',true),'url'=>array('controller'=>'todos','action'=>'index')),
       'milestones'  => array('name'=>__('Milestones',true),'url'=>array('controller'=>'milestones','action'=>'index')),
     );
-    echo $layout->menu($menu,array('permissions'=>'Project'));
+    echo $layout->menu($menu,array('permissions'=>'Project','active'=>$activeMenu));
   ?>
 </nav>
 
@@ -21,6 +24,6 @@
       'companies'   => array('name'=>__('People & Permissions',true),'url'=>array('controller'=>'companies','action'=>'index')),
       'search'      => array('name'=>__('Search',true),'url'=>array('controller'=>'search','action'=>'index'))
     );
-    echo $layout->menu($menu,array('permissions'=>'Project'));
+    echo $layout->menu($menu,array('permissions'=>'Project','active'=>$activeMenu));
   ?>
 </nav>
