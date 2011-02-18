@@ -1,7 +1,12 @@
 <?php
   $javascript->link('listable.js', false);
+  $javascript->link('accounts/comments.js', false);
+  $javascript->link('jquery/jquery-countdown.js', false);
+  $javascript->link('jquery/jquery-rte.js', false);
   
   $html->css('pages/comments', null, array('inline'=>false));
+  $html->css('rte', null, array('inline'=>false));
+  
 ?>
 <div class="cols">
 
@@ -13,9 +18,6 @@
       ?>      
       
       <div class="content">
-        <?php
-          echo $session->flash();
-        ?>
         <div class="comments">
           <?php
             echo $this->element('comments/list',array('comments'=>$record['Comment']));

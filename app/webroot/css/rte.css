@@ -1,6 +1,6 @@
 
 
-.rte-toolbar {}
+.rte-toolbar { height:30px; margin-top:10px; }
 
 .rte-toolbar a {
 	border:0;

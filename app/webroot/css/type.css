@@ -36,7 +36,7 @@ a.unimportant:hover, .unimportant a:hover { background-color:#333; text-decorati
 .message a { color:#817134; }
 .success a { color:#529214; }
 
-p.highlight, label.highlight { background-color:#FFC; }
+p.highlight, label.highlight, h4.highlight { background-color:#FFC; }
 
 p.overdue { color:#C00; }
 p.upcoming { color:#C93; }

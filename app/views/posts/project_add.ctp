@@ -3,7 +3,7 @@
   $javascript->link('projects/posts_add.js', false);
   
   $html->css('rte', null, array('inline'=>false));
-  $javascript->link('jquery/jquery.rte.js', false);
+  $javascript->link('jquery/jquery-rte.js', false);
   
 ?>
 <div class="cols">

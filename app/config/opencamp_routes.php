@@ -16,6 +16,10 @@
   
   
   //Comments
+  Router::connect('/:accountSlug/:projectId/:associatedController/comments/edit/*',
+    array('controller'=>'comments', 'action'=>'index', 'edit'=>true),
+    array('accountSlug'=>'[a-z0-9\-]+','projectId'=>'[0-9]+','associatedController'=>'[a-z0-9\_\-]+')
+  );
   Router::connect('/:accountSlug/:projectId/:associatedController/comments/:action/*',
     array('controller'=>'comments', 'action'=>'index'),
     array('accountSlug'=>'[a-z0-9\-]+','projectId'=>'[0-9]+','associatedController'=>'[a-z0-9\_\-]+')

@@ -93,6 +93,7 @@ var Todos = {
     $('.add-item-link a').live('click',function(e){
       $('#'+$(this).attr('rel')).find('.add-item-link').hide();
       $('#'+$(this).attr('rel')).find('.item-add').show();
+      $('#'+$(this).attr('rel')).find('textarea').focus();
       
       return false;
     });

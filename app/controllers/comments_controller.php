@@ -18,7 +18,7 @@
      * @access public
      * @access public
      */
-    public $helpers = array('Listable');
+    public $helpers = array('Listable','Textile');
     
     /**
      * Components
@@ -83,6 +83,7 @@
     /**
      * Comments list
      * 
+     * @todo Clean this function up?
      * @access public
      * @return void
      */
@@ -105,18 +106,41 @@
             $this->Comment->addCommentPerson($this->Authorization->read('Person.id'));
             
             //Add checked
-            /*if(isset($data['CommentPeople']['person_id']) && !empty($data['CommentPeople']['person_id']))
+            if(isset($data['CommentPeople']['person_id']) && !empty($data['CommentPeople']['person_id']))
             {
               foreach($data['CommentPeople']['person_id'] as $personId)
               {
                 $this->addCommentPerson($model, $personId);
               }
-            }*/
+            }
             
             //Update count
             $this->Comment->updateCommentCount($id);
-            
             $this->data = null;
+            
+            //Comment id
+            $commentId = $this->Comment->id;
+            
+            //If ajax call
+            /*if($this->RequestHandler->isAjax())
+            {
+              $record = $this->Comment->find('first',array(
+                'conditions' => array('Comment.id'=>$commentId),
+                'contain' => array(
+                  'CommentPerson' => array(
+                    'Person' => array(
+                      'fields' => array('id','full_name','email','user_id','company_id'),
+                      'Company' => array('id','name')
+                    )
+                  )
+                )
+              ));
+            
+              $this->set(compact('id','record'));
+              return $this->render();
+            }*/
+            
+            $this->redirect(array('action'=>'index',$id,'#Comment'.$commentId));
           }
         }
         
@@ -138,29 +162,16 @@
         $contain[] = 'Person';
       }
       
-      //Private
-      if($this->{$this->modelAlias}->hasField('private'))
-      {
-        $conditions[] = array(
-          'OR' => array(
-            array('Post.private' => 0),
-            array(
-              'AND' => array(
-                $this->modelAlias.'.private' => 1,
-                'Person.company_id' => $this->Authorization->read('Company.id')
-              )
-            ),
-          )
-        );
-      }
-      
       //Load record
       $record = $this->{$this->modelAlias}->find('first',array(
         'conditions' => array_merge(array(
           $this->modelAlias.'.id'=>$id
         ),$conditions),
         'contain' => array_merge(array(
-          'Comment' => array('Person'),
+          'Comment' => array(
+            'order' => 'Comment.id ASC',
+            'Person'
+          ),
           'CommentPerson' => array(
             'Person' => array(
               'fields' => array('id','full_name','email','user_id','company_id'),
@@ -170,11 +181,37 @@
         ),$contain)
       ));
       
-      //No record found
-      if(empty($record))
+      
+      //Edit record
+      if(isset($this->params['edit']) && $this->params['edit'] == true && isset($this->params['pass'][1]))
       {
-        $this->cakeError('error404');
+        $commentId = $this->params['pass'][1];
+        
+        //Load this record
+        $comment = $this->Comment->find('first',array(
+          'conditions' => array('Comment.id'=>$commentId),
+          'contain' => false
+        ));
+        
+        //Check valid
+        if($comment['Comment']['person_id'] != $this->Authorization->read('Person.id'))
+        {
+          //Not owner
+          $this->Session->setFlash(__('You do not have permission to edit this comment',true),'default',array('class'=>'error'));
+        }
+        elseif(strtotime($comment['Comment']['created']) < strtotime('-15 minutes'))
+        {
+          //Expired
+          $this->Session->setFlash(__('You can no longer edit this record',true),'default',array('class'=>'error'));
+        }
+        else
+        {
+          //OK
+          $this->data = $comment;
+          $this->set('edit',$commentId);
+        }
       }
+      
       
       //Set as read for person
       $this->Comment->setRead($id,$this->Authorization->read('Person.id'));
@@ -200,6 +237,13 @@
       {
         $this->Comment->recursive = -1;
         $this->Comment->delete($commentId);
+        
+        if($this->RequestHandler->isAjax())
+        {
+          $this->set(compact('commentId'));
+          return $this->render();
+        }
+        
         $this->Session->setFlash(__('Comment deleted',true),'default',array('class'=>'success'));
       }
       else

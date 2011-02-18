@@ -14,6 +14,7 @@
     echo $javascript->link(array(
       'jquery/jquery',
       'jquery/jquery-ui',
+      'jquery/jquery-ajaxsubmit',
       'account'
     ));
     echo $scripts_for_layout;
