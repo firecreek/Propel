@@ -110,6 +110,7 @@
       {
         $this->Session->write('Auth.'.$model,$data);
       }
+      
     }
     
     

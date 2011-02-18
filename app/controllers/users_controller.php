@@ -117,7 +117,7 @@
      */
     public function login()
     {
-      $this->_checkUser();
+      //$this->_checkUser();
     
       //Attempting to login
       if(!empty($this->data) && $this->Authorization->login($this->data))

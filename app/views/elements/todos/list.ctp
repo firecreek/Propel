@@ -75,15 +75,17 @@
           <?php endforeach; ?>
         </div>
         
-        <div class="add-item-link" style="display:none;">
-          <?php echo $html->link(__('Add an item',true),array('controller'=>'todos_items','action'=>'add',$record['Todo']['id']),array('rel'=>$ident,'class'=>'important')); ?>
+        <div class="add-item-container">
+          <div class="add-item-link" style="display:none;">
+            <?php echo $html->link(__('Add an item',true),array('controller'=>'todos_items','action'=>'add',$record['Todo']['id']),array('rel'=>$ident,'class'=>'important')); ?>
+          </div>
+          <?php
+            echo $this->element('todos/add_item',array(
+              'todoId'      => $record['Todo']['id'],
+              'groupIdent'  => $ident
+            ));
+          ?>
         </div>
-        <?php
-          echo $this->element('todos/add_item',array(
-            'todoId'      => $record['Todo']['id'],
-            'groupIdent'  => $ident
-          ));
-        ?>
         
         <div class="recent">
           <?php if(!empty($record['TodoItemRecent'])): ?>

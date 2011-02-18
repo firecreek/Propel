@@ -1,5 +1,5 @@
 
-<div class="area plain" id="todoFilter">
+<div class="area plain" id="TodoFilter">
   <div class="content">
     <?php
       $responsibleOptions = $layout->permissionList($auth->read('People'));

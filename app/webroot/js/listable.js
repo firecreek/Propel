@@ -20,7 +20,7 @@
         update: function(event,ui){
           self._positions(self.options.positionUrl);
         }
-      }).disableSelection();
+      });
       
       
       //Items
@@ -115,6 +115,7 @@
       var url = $(item).attr('rel-edit-url')+'?container=true&objId='+$(item).attr('id');
       
       $(loading).show();
+      $(item).addClass('ui-state-loading');
       
       $(inline).load(url,function(response,status,xhr){
         //Element visibilities
@@ -122,6 +123,7 @@
         $(overview).hide();
         $(inline).show();
         $(self).removeClass('ui-state-active');
+        $(item).removeClass('ui-state-loading');
         
         //Submit
         $(inline).find('form').ajaxSubmit();

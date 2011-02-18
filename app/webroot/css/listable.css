@@ -78,6 +78,9 @@
 .listable .item.ui-state-active .maintain { display:block; }
 .listable .item.ui-state-active .comment { display:inline-block; }
 
+.listable .item.ui-state-loading .maintain { display:none;  }
+.listable .item.ui-state-loading .comment { display:none; }
+
 /**
  * Maintain record
  */

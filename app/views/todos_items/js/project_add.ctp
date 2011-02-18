@@ -34,8 +34,14 @@ $('#<?php echo $this->data['Group']['ident']; ?> .items').append('<?php echo $li
 //Highlight this item
 $('#<?php echo $listable->lastIdent; ?> .name').effect('highlight',null,3000);
 
+//Empty text area
+$('#<?php echo $this->data['Group']['ident']; ?> .item-add textarea').val('')
+
 //Item add reset
-$('#<?php echo $this->data['Group']['ident']; ?> .item-add textarea').val('').focus();
+if($("*:focus").attr('type') != 'textarea')
+{
+  $('#<?php echo $this->data['Group']['ident']; ?> .item-add textarea').focus();
+}
 
 //Reset listable
 $('.listable').data('listable').reset();

@@ -33,9 +33,11 @@
 
 
 .reorder-todos {}
+.reorder-todos .group { margin:0; }
+.reorder-todos .item { padding:10px 0; }
 .reorder-todos .item-content { display:none; }
 .reorder-todos .list-description { display:none; }
-.reorder-todos .header .maintain { background-color:transparent; left:-15px !important; }
+.reorder-todos .header .maintain { background-color:transparent; top:8px !important; left:-15px !important; }
 .reorder-todos .header .maintain .delete { display:none; }
 .reorder-todos .header .maintain .edit { display:none; }
 .reorder-todos .header .maintain .position { display:block !important; }
