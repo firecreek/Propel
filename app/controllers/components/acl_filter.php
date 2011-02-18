@@ -74,6 +74,8 @@
     /**
      * Check and set auths
      *
+     * @todo Use Try{} to exit out of the checking if errors found before
+     * @todo Put more code into individual methods
      * @access public
      * @return void
      */
@@ -103,8 +105,7 @@
       elseif(!$this->Authorization->user())
       {
         //Not logged in
-        $this->Session->setFlash(__('You must be logged in to do that action', true),'default',array('class'=>'error'));
-        $this->controller->redirect($this->Authorization->loginAction);
+        $this->cakeError('notLoggedIn');
       }
       else
       {
@@ -133,6 +134,11 @@
           )
         ));
         
+        if(empty($account))
+        {
+          $this->cakeError('accountNotFound');
+        }
+        
         //Load project     
         if($prefix == 'project')
         {
@@ -149,6 +155,11 @@
               'config' => 'acl',
             )
           ));
+          
+          if(empty($project))
+          {
+            $this->cakeError('prefixNotFound');
+          }
         }
         
         
@@ -166,6 +177,11 @@
           )
         ));
         
+        if(empty($person))
+        {
+          $this->cakeError('personNotFound');
+        }
+        
         
         //Find Person aro
         $aro = $this->Acl->Aro->find('first', array(
@@ -180,6 +196,11 @@
           )
         ));
         $person['Person']['_aro_id'] = $aro['Aro']['id'];
+        
+        if(empty($aro))
+        {
+          $this->cakeError('personNoAro');
+        }
         
         
         //Load projects this person has access too
@@ -242,6 +263,7 @@
           }
         }
         
+        
         //Check if this person is allowed to be in this controller and has the correct CRUD access
         $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
         if(!empty($permissionNode))
@@ -254,50 +276,79 @@
               'Permission.'.$actionKey => true
             )
           ));
+          
+          if(!$isAllowed)
+          {
+            $this->cakeError('badCrudAccess');
+          }
         }
         
-        //If handling individual records then check they can update this record
-        //modelAuthCheck isset then the id passed in the URL will be checked
-        if(isset($this->modelAuthCheck[$actionKey]) && $isAllowed == true)
+        
+        //Check record
+        //This will force set the isAllowed variable to false if problems are found
+        //Loads in more data so correct error messages can be given
+        if(isset($this->modelId) || (isset($this->controller->params['pass'][0]) && is_numeric($this->controller->params['pass'][0])))
         {
           if(!isset($this->modelId))
           {
             $this->modelId = isset($this->controller->params['pass'][0]) ? $this->controller->params['pass'][0] : null;
           }
-        
-          if(!empty($this->modelId) && is_numeric($this->modelId))
+          
+          $fieldKey   = $prefix.'_id';
+          $modelAlias = Inflector::classify($this->controllerName);
+          
+          if(
+            isset($this->controller->{$modelAlias}) &&
+            is_object($this->controller->{$modelAlias}) &&
+            $this->controller->{$modelAlias}->hasField($fieldKey)
+          )
           {
-            $modelAlias = Inflector::classify($this->controllerName);
-            $fieldKey   = $prefix.'_id';
+            //Check individual record belongs to this prefix and privacy settings
+            $fields = array('id',$fieldKey);
             
-            if(
-              isset($this->modelId) &&
-              is_numeric($this->modelId) &&
-              isset($this->controller->{$modelAlias}) &&
-              is_object($this->controller->{$modelAlias}) &&
-              $this->controller->{$modelAlias}->hasField($fieldKey)
-            )
+            if($this->controller->{$modelAlias}->hasField('private'))
             {
-              //Model exists, and the record has to match up with the prefix
-              if(!$this->controller->{$modelAlias}->find('count',array(
-                'conditions' => array(
-                  'id'        => $this->modelId,
-                  $fieldKey   => $modelId
-                ),
-                'recursive' => -1
-              )))
-              {
-                //Failed to match prefix and updating record together
-                $isAllowed = false;
-              }            
+              $fields[] = 'private';
             }
+            
+            //Load record
+            $modelRecord = $this->controller->{$modelAlias}->find('first',array(
+              'conditions' => array(
+                $modelAlias.'.id' => $this->modelId
+              ),
+              'contain' => array(
+                'Person' => array('id','company_id')
+              ),
+              'fields' => $fields
+            ));
+            
+            //Check if private
+            if(empty($modelRecord))
+            {
+              //No record found
+              $this->cakeError('recordNotFound');
+            }
+            elseif($modelRecord[$modelAlias][$fieldKey] != $modelId)
+            {
+              //Record not matching the prefix
+              $this->cakeError('recordWrongPrefix');
+            }
+            elseif(isset($modelRecord[$modelAlias]['private']) && $modelRecord[$modelAlias]['private'] == true)
+            {
+              //No permission
+              if($modelRecord['Person']['company_id'] != $this->Authorization->read('Company.id'))
+              {
+                $this->cakeError('recordIsPrivate');
+              }
+            }
+            
           }
         }
-        
+      
         //Throw error
         if(!$isAllowed)
         {
-          $this->_throwError(__('You do not have access to do that action',true),5);
+          $this->cakeError('unknownAclError');
         }
         
         //Allow auth
@@ -492,25 +543,6 @@
       return $people;
     }
     
-    
-    
-    /** 
-     * Handles requests to unauthorized actions 
-     * 
-     * @param Controller $controller 
-     * @access private
-     * @return boolean 
-     */ 
-    private function _throwError($error,$errorNumber = null)
-    {
-      if($errorNumber)
-      {
-        $error .= ' (E'.$errorNumber.')';
-      }
-    
-      $this->Session->setFlash($error, 'default', array('class' => 'error'));
-      $this->controller->redirect($this->controller->referer(), null, true); 
-    }
     
   }
   

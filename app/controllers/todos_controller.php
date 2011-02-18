@@ -17,7 +17,7 @@
      *
      * @access public
      * @var array
-     */
+     */ 
     public $helpers = array('Listable');
     
     /**
@@ -156,17 +156,7 @@
     {
       //Todos
       $todo = $this->__filterTodos(array(
-        'Todo.project_id' => $this->Authorization->read('Project.id'),
-        'Todo.id' => $id,
-        'OR' => array(
-          array('Todo.private' => 0),
-          array(
-            'AND' => array(
-              'Todo.private' => 1,
-              'Person.company_id' => $this->Authorization->read('Company.id')
-            )
-          ),
-        )
+        'Todo.id' => $id
       ));
       
       //No record found

@@ -95,7 +95,7 @@
       
       if($prefix && !$this->RequestHandler->isAjax())
       {
-        if($this->layout !== false)
+        if($this->layout !== false && $this->layout == 'default')
         {
           $this->layout = 'account';
         }

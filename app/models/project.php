@@ -18,11 +18,6 @@
      */
     public $actsAs = array(
       'Containable',
-      'Sanitizer' => array(
-        'fields' => array(
-          'announcement'
-        )
-      ),
       'Cached' => array(
         'prefix' => array(
           'projects_',

@@ -154,7 +154,7 @@
         );
       }
       
-      //Load
+      //Load record
       $record = $this->{$this->modelAlias}->find('first',array(
         'conditions' => array_merge(array(
           $this->modelAlias.'.id'=>$id
