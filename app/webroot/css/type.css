@@ -38,6 +38,10 @@ a.unimportant:hover, .unimportant a:hover { background-color:#333; text-decorati
 
 p.highlight, label.highlight { background-color:#FFC; }
 
+p.overdue { color:#C00; }
+p.upcoming { color:#C93; }
+p.completed { color:#090; }
+
 .private { background-color:#FFE6EA !important; }
 
 .strike { text-decoration:line-through; }

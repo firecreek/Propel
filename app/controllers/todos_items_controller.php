@@ -242,12 +242,12 @@
       }
       
       //Load item back in
-      $item = $this->Todo->TodoItem->find('first',array(
+      $record = $this->Todo->TodoItem->find('first',array(
         'conditions' => array('TodoItem.id'=>$id),
         'contain' => array('Todo')
       ));
     
-      $this->set(compact('id','item','completed'));
+      $this->set(compact('id','record','completed'));
     }
     
     

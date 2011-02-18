@@ -315,7 +315,14 @@
         );
       }
       
-      $this->set(compact('id','completed'));
+      $record = $this->Milestone->find('first',array(
+        'conditions' => array('Milestone.id'=>$id),
+        'contain' => array(
+          'Responsible'
+        )
+      ));
+      
+      $this->set(compact('id','completed','record'));
     }
     
     

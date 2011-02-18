@@ -129,7 +129,8 @@
       $aliasAco = Inflector::pluralize($alias);
       
       //Depending on Person permissions
-      if(!$this->Auth->check('Project.'.$aliasAco,'update'))
+      //@todo Enable this when working fine
+      /*if(!$this->Auth->check('Project.'.$aliasAco,'update'))
       {
         $options['checkbox'] = false;
         $options['edit'] = false;
@@ -139,7 +140,7 @@
       if(!$this->Auth->check('Project.'.$aliasAco,'delete'))
       {
         $options['delete'] = false;
-      }
+      }*/
 
       //Style
       if(!is_array($options['class'])) { $options['class'] = array($options['class']); }

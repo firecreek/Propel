@@ -1,7 +1,8 @@
 <?php
   $this->set('activeMenu','todos');
+  $html->css('projects/todos', null, array('inline'=>false));
 ?>
-<div class="banner">
+<div class="banner todositems-comment-head">
   <h2>
     <?php __('Comments on this To-Do Item'); ?>
     <?php
@@ -11,18 +12,13 @@
 
   <div class="record">
     <div class="wrapper listable"><?php
-      echo $listable->item($modelAlias,$id,$record[$modelAlias]['description'],array(
-        'delete'    => false,
-        'edit'      => false,
-        'comments'  => false,
-        'prefix'    => isset($record['Responsible']['name']) ? $record['Responsible']['name'] : null,
-        'updateUrl' => $html->url(array('controller'=>'todos_items','action'=>'update',$id))
-      ));
+      echo $this->element('todos_items/comments_record');
     ?></div>
   </div>
-  <?php
-    echo $javascript->codeBlock("
-      $('.listable .item').listable();
-    ");
-  ?>
 </div>
+
+<?php
+  echo $javascript->codeBlock("
+    $('.listable').listable();
+  ");
+?>

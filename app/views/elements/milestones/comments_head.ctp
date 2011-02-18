@@ -1,4 +1,8 @@
-<div class="banner">
+<?php
+  $this->set('activeMenu','milestones');
+  $html->css('projects/milestones', null, array('inline'=>false));
+?>
+<div class="banner milestone-comment-head">
   <h2>
     <?php __('Comments on this Milestone'); ?>
     <?php
@@ -8,18 +12,13 @@
 
   <div class="record">
     <div class="wrapper listable"><?php
-      echo $listable->item($modelAlias,$id,$record[$modelAlias]['title'],array(
-        'delete'    => false,
-        'edit'      => false,
-        'comments'  => false,
-        'prefix'    => isset($record['Responsible']['name']) ? $record['Responsible']['name'] : null,
-        'updateUrl' => $html->url(array('controller'=>'milestones','action'=>'update',$id))
-      ));
+      echo $this->element('milestones/comments_record');
     ?></div>
   </div>
-  <?php
-    echo $javascript->codeBlock("
-      $('.listable .item').listable();
-    ");
-  ?>
 </div>
+
+<?php
+  echo $javascript->codeBlock("
+    $('.listable').listable();
+  ");
+?>
