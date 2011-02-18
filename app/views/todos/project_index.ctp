@@ -30,8 +30,6 @@
         </ul>
       </div>
       <div class="content">
-        <?php echo $session->flash(); ?>
-        
         <?php if(!empty($todos)): ?>
         
           <?php
