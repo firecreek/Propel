@@ -285,7 +285,15 @@
         //Check record
         //This will force set the isAllowed variable to false if problems are found
         //Loads in more data so correct error messages can be given
-        if(isset($this->modelId) || (isset($this->controller->params['pass'][0]) && is_numeric($this->controller->params['pass'][0])))
+        if(
+          $actionKey !== '_create' &&
+          (
+            isset($this->modelId) || 
+            (
+              isset($this->controller->params['pass'][0]) && 
+              is_numeric($this->controller->params['pass'][0]))
+            )
+          )
         {
           if(!isset($this->modelId))
           {
