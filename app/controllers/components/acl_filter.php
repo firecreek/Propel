@@ -182,7 +182,6 @@
           $this->cakeError('personNotFound');
         }
         
-        
         //Find Person aro
         $aro = $this->Acl->Aro->find('first', array(
           'conditions' => array(
@@ -201,7 +200,6 @@
         {
           $this->cakeError('personNoAro');
         }
-        
         
         //Load projects this person has access too
         $projects = $this->_aroProjects($person['Person']['_aro_id']);
@@ -294,16 +292,18 @@
             $this->modelId = isset($this->controller->params['pass'][0]) ? $this->controller->params['pass'][0] : null;
           }
           
-          $fieldKey   = $prefix.'_id';
+          //Check individual record belongs to this prefix and privacy settings
           $modelAlias = Inflector::classify($this->controllerName);
+          $fieldKey   = $prefix.'_id';
           
+          //Check record
           if(
             isset($this->controller->{$modelAlias}) &&
             is_object($this->controller->{$modelAlias}) &&
             $this->controller->{$modelAlias}->hasField($fieldKey)
           )
           {
-            //Check individual record belongs to this prefix and privacy settings
+            //Build fields
             $fields = array('id',$fieldKey);
             
             if($this->controller->{$modelAlias}->hasField('private'))
@@ -341,8 +341,8 @@
                 $this->cakeError('recordIsPrivate');
               }
             }
-            
           }
+          
         }
       
         //Throw error

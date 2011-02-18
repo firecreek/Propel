@@ -36,6 +36,16 @@
      */
     public $uses = array('Milestone','Company');
     
+    /**
+     * Action map
+     *
+     * @access public
+     * @var array
+     */
+    public $actionMap = array(
+      'add_multiple'     => '_create'
+    );
+    
     
     /**
      * Index
@@ -182,6 +192,55 @@
     
     
     /**
+     * Project add multiple
+     *
+     * @access public
+     * @return void
+     */
+    public function project_add_multiple()
+    {
+      if(!empty($this->data))
+      {
+        //
+        $save = array();
+      
+        //Build array
+        foreach($this->data['Milestone'] as $key => $data)
+        {
+          if(!empty($data['title']))
+          {
+            $save[] = array(
+              'Milestone' => array_merge(array(
+                  'project_id' => $this->Authorization->read('Project.id'),
+                  'person_id'  => $this->Authorization->read('Person.id')
+               ),$data)
+            );
+          }
+        }
+        
+        //Save
+        if(!empty($save))
+        {
+          if($this->Milestone->saveAll($save))
+          {
+            $this->Session->setFlash(sprintf(__('Added %s milestones',true),count($save)),'default',array('class'=>'success'));
+            $this->redirect(array('action'=>'index'));
+          }
+          else
+          {
+            $this->Session->setFlash(__('There was an error, please check the fields',true),'default',array('class'=>'error'));
+          }
+        }
+        else
+        {
+          $this->Session->setFlash(__('No milestone data to save',true),'default',array('class'=>'error'));
+        }
+
+      }
+    }
+    
+    
+    /**
      * Project edit milestone
      * 
      * @access public
@@ -268,15 +327,15 @@
      */
     public function project_delete($id)
     {
-      if($this->Milestone->delete($id))
+      $this->Milestone->delete($id);
+      
+      if($this->RequestHandler->isAjax())
       {
-        $this->Session->setFlash(__('Milestone record deleted',true),'default',array('class'=>'success'));
-      }
-      else
-      {
-        $this->Session->setFlash(__('Failed to delete Milestone record',true),'default',array('class'=>'error'));
+        $this->set(compact('id'));
+        return $this->render();
       }
       
+      $this->Session->setFlash(__('Milestone deleted',true),'default',array('class'=>'success'));
       $this->redirect(array('action'=>'index'));
     }
     

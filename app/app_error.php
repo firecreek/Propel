@@ -116,6 +116,17 @@
      * @access public
      * @return void
      */
+    public function recordWrongAccount($params)
+    {
+      $this->_outputMessage('record_wrong_account');
+    }
+
+    /**
+     * xx
+     *
+     * @access public
+     * @return void
+     */
     public function unknownAclError($params)
     {
       $this->_outputMessage('unknown_acl_error');

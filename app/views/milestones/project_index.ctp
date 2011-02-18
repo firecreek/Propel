@@ -19,7 +19,6 @@
         <h2><?php __('Milestones'); ?> <span>(<?php echo __('Today is ',true).date('j F'); ?>)</span></h2>
       </div>
       <div class="content">
-        <?php echo $session->flash(); ?>
         
         <?php echo $form->create('Milestone',array('url'=>$this->here,'id'=>'MilestoneIndex')); ?>
         
@@ -98,6 +97,8 @@
       if($auth->check('Project.Milestones','create'))
       {
         echo $layout->button(__('Add a new milestone',true),array('action'=>'add'),'large add');
+        
+        echo $layout->button(__('Add ten at a time',true),array('action'=>'add_multiple'),'inline add-grey');
       }
     ?>
     

@@ -43,7 +43,7 @@
      * @var array
      */
     public $actionMap = array(
-      'update_positions'      => '_update',
+      'update_positions' => '_update',
     );
     
     

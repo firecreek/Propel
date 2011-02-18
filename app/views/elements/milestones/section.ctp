@@ -83,6 +83,7 @@
                 'commentUnread' => $milestone['Milestone']['comment_unread'],
                 'editUrl'   => $html->url(array('controller'=>'milestones','action'=>'edit',$milestone['Milestone']['id'])),
                 'updateUrl'   => $html->url(array('controller'=>'milestones','action'=>'update',$milestone['Milestone']['id'])),
+                'deleteUrl'   => $html->url(array('controller'=>'milestones','action'=>'delete',$milestone['Milestone']['id']))
               )
             );
           }

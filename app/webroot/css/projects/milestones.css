@@ -1,4 +1,22 @@
-
+/**
+ * Index
+ */
 .listable .attached-to { margin:0 0 2px 75px; }
 .listable .attached-to li { color:#666; }
 .listable .attached-to a {}
+
+
+/**
+ * Add multiple
+ */
+table.add-multiple {}
+table.add-multiple tbody td { padding-right:20px; }
+table.add-multiple .input.text input { width:100%; padding:2px; font-weight:normal; }
+
+table.add-multiple td.title { width:60%; }
+table.add-multiple td.due { white-space:nowrap ; }
+table.add-multiple td.responsible { white-space:nowrap ; }
+table.add-multiple td.reminder { width:40%; white-space:nowrap ; }
+
+table.add-multiple td.reminder div {}
+table.add-multiple td.reminder div label { margin-left:2px; font-size:10px; position:relative; top:1px; }

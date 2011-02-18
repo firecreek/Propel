@@ -8,6 +8,17 @@ var Milestones = {
   {
   },
   
+  checkSections: function()
+  {
+    $('.section').each(function(){
+      console.log($(this).find('.item').length);
+      if($(this).find('.item').length == 0)
+      {
+        $(this).fadeOut();
+      }
+    });
+  },
+  
   refresh: function()
   {
     var self = this;

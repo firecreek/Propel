@@ -366,7 +366,9 @@ form .input.textarea.full-width textarea { width:95%; }
 .button:hover {
  background-color: #8fb53c;
  color: white;
+ padding: 5px 15px 6px;
 }
+
 
 .button.action {
   background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5));
@@ -379,21 +381,29 @@ form .input.textarea.full-width textarea { width:95%; }
   color:#3D3D3D;
 }
 
+.button.margin { margin-bottom:20px; }
+
 .button.action.large {
  font-size: 14px;
  padding: 6px 19px 6px;
 }
 
-.button.action.add span { background:url(/img/icons/add.png) no-repeat 0 1px; margin-left:-14px; padding-left:25px; top:-1px; position:relative; }
+.button.action.add span { background:url(/img/icons/add-16.png) no-repeat 0 1px; margin-left:-14px; padding-left:25px; top:-1px; position:relative; }
 
-.button.margin { margin-bottom:20px; }
+.button.action.add-grey span { background:url(/img/icons/add-grey-16.png) no-repeat 0 1px; margin-left:-14px; padding-left:25px; top:-1px; position:relative; }
+
+.button.action.inline { background:none; border:none; border-radius:0; -webkit-box-shadow:none; box-shadow:none; padding:5px 15px 6px; margin-left:4px; }
+.button.action.inline span { font-weight:normal; font-size:12px; color:#666; font-family:"Lucida Grande", verdana; padding-top:2px; padding-bottom:3px; }
+
 
 
 /**
  * Tables
  */
-table.std { width:100%; border-collapse:collapse; margin:0 0 25px 0; }
+table .input { margin:0; }
+table .text input { font-size:14px; }
 
+table.std { width:100%; border-collapse:collapse; margin:0 0 25px 0; }
 table.std thead { }
 table.std thead th { background-color:#F0F0F0; padding:4px 5px; font-size:14px; text-align:left; font-family:arial; color:#333; }
 table.std thead th h3 a { color:#333; text-decoration:none; }
@@ -408,6 +418,14 @@ table.std td:last-child { padding-right:5px; }
 table.std tfoot {}
 table.std tfoot td { font-weight:normal; text-align:left; font-size:11px;  }
 table.std tfoot td {}
+ 
+
+table.zebra { width:100%; border-collapse:collapse; margin:0 0 25px 0; }
+table.zebra thead { }
+table.zebra thead th { border-bottom:1px solid #F0F0F0; padding:4px 5px 0 5px; font-size:14px; text-align:left; font-family:arial; color:#333; }
+
+table.zebra tbody td { padding:8px 0 8px 5px; }
+table.zebra tbody tr:nth-child(even) { background-color:#F0F0F0; }
 
 
 /**

@@ -201,6 +201,11 @@
         'contain' => array()
       ));
       
+      if(empty($record))
+      {
+        $this->cakeError('recordWrongAccount');
+      }
+      
       //Save
       if(!empty($this->data))
       {
