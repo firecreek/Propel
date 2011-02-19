@@ -64,6 +64,7 @@ nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient
  */
 .col.right p { margin:0 0 10px 0; }
 .col.right p a { font-size:11px; }
+.col.right p a.normal { font-size:12px; }
 .col.right .area { margin-bottom:20px; }
 .col.right .button { margin-bottom:20px; }
 .col.right .account-image { margin-bottom:20px; }

@@ -6,7 +6,7 @@ h1, h2, h3, h4, h5 { font-family:Arial; }
 
 h3.sub { font-size:12px; border-bottom:1px solid black; margin:15px 0 5px; padding-bottom:2px; }
 
-p.important { color:#C00; }
+p.important, h3.important, h4.important { color:#C00; }
 
 p.note { color:#666; font-size:12px; }
 p.note span { text-transform:uppercase; font-weight:bold; }
@@ -49,3 +49,11 @@ p.completed { color:#090; }
 /** Remove */
 a.red { color:red; background-color:red; border:10px solid red; padding:0 1px; }
 a.red:hover { background-color:red; text-decoration:none; color:white; padding:0 1px; }
+
+
+
+/** Paddings */
+.pad5 { padding:5px; }
+.pad10 { padding:10px; }
+.pad15 { padding:15px; }
+.pad20 { padding:20px; }

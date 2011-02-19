@@ -1,11 +1,37 @@
 
 
-<?php if(!empty($record['CommentPerson'])): ?>
-  <div class="area">
-    <div class="banner">
-      <h3><?php __('Comment Notification'); ?></h3>
-    </div>
-    <div class="content">
+<div class="area">
+  <div class="banner">
+    <h3><?php __('Comment Notification'); ?></h3>
+  </div>
+  <div class="content">
+    <?php
+      //Check if person is subscribed if not then show subscribe link
+      $subscribed = false;
+      
+      if(!empty($record['CommentPerson']))
+      {
+        foreach($record['CommentPerson'] as $cprecord)
+        {
+          if($cprecord['Person']['id'] == $this->Auth->read('Person.id'))
+          {
+            $subscribed = true;
+            break;
+          }
+        }
+      }
+    ?>
+    
+    <?php if(!$subscribed): ?>
+    
+      <p class="highlight pad5"><strong><?php echo $html->link(__('Subscribe to this message',true),array('action'=>'subscribe',$id),array('class'=>'normal')); ?></strong> <?php __('to receive an email when new comments are posted.'); ?></p>
+
+      <p><?php __('If you post a comment you\'ll automatically be subscribed to receive email notifications.'); ?></p>
+    
+    <?php endif; ?>
+  
+  
+    <?php if(!empty($record['CommentPerson'])): ?>
       <p><?php __('These people are subscribed to receive email notifications when new comments are posted.'); ?><p>
       <?php
         //Sort by company
@@ -29,7 +55,7 @@
                 <?php
                   if($person['id'] == $this->Auth->read('Person.id'))
                   {
-                    echo __('You',true).' ('.$html->link(__('Unsubscribe',true),array($id,'?'=>array('unsubscribe'=>true))).')';
+                    echo __('You',true).' ('.$html->link(__('Unsubscribe',true),array('action'=>'unsubscribe',$id)).')';
                   }
                   else
                   {
@@ -42,11 +68,10 @@
           </li>
         <?php endforeach; ?>
       </ul>
-      
-      
-    </div>
+    <?php endif; ?>
+    
   </div>
-<?php endif; ?>
+</div>
 
 
 <?php if(!empty($record['Comment'])): ?>

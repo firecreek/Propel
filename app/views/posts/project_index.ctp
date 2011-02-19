@@ -19,6 +19,38 @@
         ?>
       </div>
       <div class="content post-list">
+      
+      
+        <?php if(!empty($activeRecords)): ?>
+          <div class="post-active">
+            <div class="wrapper">
+              <h4 class="important"><?php __('Most active discussions'); ?></h4>
+              
+              <?php foreach($activeRecords as $record): ?>
+                <?php
+                  $url = array('associatedController'=>'posts','controller'=>'comments','action'=>'index',$record['Post']['id']);
+                ?>
+                <div class="section plain">
+                  <div class="banner">
+                    <h3><?php echo $html->link($record['Post']['title'],$url); ?></h3>
+                  </div>
+                  <div class="content">
+                    <div class="avatar"><?php echo $html->image('avatar-small.png'); ?></div>
+                    <p class="detail  ">
+                      <?php
+                        echo $html->link(__('Latest comment',true).' '.$time->timeAgoInWords($record['CommentLast']['created'],array('end'=>false)),$url);
+                      ?>
+                      <?php __('by'); ?> 
+                      <?php echo $record['CommentLast']['Person']['full_name']; 
+                    ?></p>
+                    <p class="comments"><?php echo $record['Post']['comment_count']; ?> <?php __('comments posted'); ?></p>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        <?php endif; ?>
+      
         
         <?php foreach($records as $record): ?>
         

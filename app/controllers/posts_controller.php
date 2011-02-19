@@ -59,20 +59,24 @@
         $viewType = $cookieViewType;
       }
       
+      //
+      $conditions = array(
+        'Post.project_id' => $this->Authorization->read('Project.id'),
+        'OR' => array(
+          array('Post.private' => 0),
+          array(
+            'AND' => array(
+              'Post.private' => 1,
+              'Person.company_id' => $this->Authorization->read('Company.id')
+            )
+          ),
+        )
+      );
+      
+      
       //Load records
       $records = $this->Post->find('all',array(
-        'conditions' => array(
-          'Post.project_id' => $this->Authorization->read('Project.id'),
-          'OR' => array(
-            array('Post.private' => 0),
-            array(
-              'AND' => array(
-                'Post.private' => 1,
-                'Person.company_id' => $this->Authorization->read('Company.id')
-              )
-            ),
-          )
-        ),
+        'conditions' => $conditions,
         'contain' => array(
           'Person',
           'CommentLast' => array(
@@ -84,6 +88,29 @@
         'group' => 'Post.id',
         'order' => 'Post.id DESC'
       ));
+      
+      
+      //Most active records
+      $activeRecords = array();
+      if(count($records) > 2)
+      {
+        $activeRecords = $this->Post->find('all',array(
+          'conditions' => array_merge(array(
+            'Post.comment_count >=' => 2
+          ),$conditions),
+          'contain' => array(
+            'Person',
+            'CommentLast' => array(
+              'order' => 'CommentLast.id DESC',
+              'Person'
+            ),
+            'CommentUnread'
+          ),
+          'group' => 'Post.id',
+          'order' => 'Post.comment_count DESC',
+          'limit' => 2
+        ));
+      }
     
       //Empty
       if(empty($records))
@@ -92,7 +119,7 @@
       }
       
       //
-      $this->set(compact('records','viewType'));
+      $this->set(compact('records','viewType','activeRecords'));
     }
     
     

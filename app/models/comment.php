@@ -111,6 +111,22 @@
       }    
     }
     
+
+    /**
+     * Remove subscriber to this comment
+     *
+     * @access public
+     * @return void
+     */
+    public function removeCommentPerson($id,$personId)
+    {
+      $this->CommentPerson->deleteAll(array(
+        'model'       => $this->associatedAlias,
+        'foreign_id'  => $id,
+        'person_id'   => $personId
+      ));
+    }
+    
     
     /**
      * Find people who are subscribed

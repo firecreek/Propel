@@ -36,6 +36,17 @@
      */
     public $uses = array('Comment');
     
+    /**
+     * Action map
+     *
+     * @access public
+     * @var array
+     */
+    public $actionMap = array(
+      'unsubscribe' => '_read',
+      'subscribe'   => '_read',
+    );
+    
     
     /**
      * Before filter
@@ -250,6 +261,38 @@
       {
         $this->Session->setFlash(__('Failed to delete Comment record',true),'default',array('class'=>'error'));
       }
+      
+      $this->redirect($this->referer());
+    }
+    
+    
+    /**
+     * Subscribe
+     * 
+     * @access public
+     * @return void
+     */
+    public function subscribe($id)
+    {
+      $this->Comment->addCommentPerson($id,$this->Authorization->read('Person.id'));
+    
+      $this->Session->setFlash(__('You will now receive comments on this message by email',true),'default',array('class'=>'success'));
+      
+      $this->redirect($this->referer());
+    }
+    
+
+    /**
+     * Unsubscribe
+     * 
+     * @access public
+     * @return void
+     */
+    public function unsubscribe($id)
+    {
+      $this->Comment->removeCommentPerson($id,$this->Authorization->read('Person.id'));
+      
+      $this->Session->setFlash(__('You will no longer receive comments on this message by email',true),'default',array('class'=>'success'));
       
       $this->redirect($this->referer());
     }
