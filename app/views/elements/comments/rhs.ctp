@@ -1,4 +1,5 @@
 
+
 <?php if(!empty($record['CommentPerson'])): ?>
   <div class="area">
     <div class="banner">

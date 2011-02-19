@@ -91,12 +91,12 @@
      * @access public
      * @return void
      */
-    public function addCommentPerson($personId)
+    public function addCommentPerson($id,$personId)
     {
       if(!$this->CommentPerson->find('count',array(
         'conditions' => array(
           'model'       => $this->associatedAlias,
-          'foreign_id'  => $this->id,
+          'foreign_id'  => $id,
           'person_id'   => $personId
         ),
         'recursive' => -1
@@ -105,7 +105,7 @@
         //add
         $this->CommentPerson->save(array(
           'model'       => $this->associatedAlias,
-          'foreign_id'  => $this->id,
+          'foreign_id'  => $id,
           'person_id'   => $personId
         ));
       }    

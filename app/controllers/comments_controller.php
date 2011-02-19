@@ -103,14 +103,14 @@
           if($this->Comment->save())
           {
             //Add self to subscribers
-            $this->Comment->addCommentPerson($this->Authorization->read('Person.id'));
+            $this->Comment->addCommentPerson($id,$this->Authorization->read('Person.id'));
             
             //Add checked
             if(isset($data['CommentPeople']['person_id']) && !empty($data['CommentPeople']['person_id']))
             {
               foreach($data['CommentPeople']['person_id'] as $personId)
               {
-                $this->addCommentPerson($model, $personId);
+                $this->Comment->addCommentPerson($id,$personId);
               }
             }
             
