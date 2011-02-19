@@ -64,6 +64,8 @@
           )
         )
       ),false);
+      
+      $model->Comment->associatedAlias = $model->alias;
     }
     
     
@@ -94,6 +96,19 @@
       }
       
       return $results;
+    }
+    
+    
+    /**
+     * After save
+     *
+     * @access public
+     * @return array
+     */
+    public function afterSave(&$model)
+    {
+      //Subscribe this person automatically to the record
+      $model->Comment->addCommentPerson($model->id,$model->personId);
     }
     
     
