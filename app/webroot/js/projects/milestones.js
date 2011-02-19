@@ -6,6 +6,25 @@ var Milestones = {
 
   load: function()
   {
+    //Add new
+    $('#MilestoneList .col.right a.add').live('click',function(e){
+      $('#MilestoneList').hide();
+      $('#MilestoneAdd').show();
+      return false;
+    });
+    
+    $('#MilestoneAdd div.submit a').live('click',function(e){
+      $('#MilestoneList').show();
+      $('#MilestoneAdd').hide();
+      
+      $(':input','#MilestoneAdd')
+       .not(':button, :submit, :reset, :hidden')
+       .val('')
+       .removeAttr('checked')
+       .removeAttr('selected');
+      
+      return false;
+    });
   },
   
   checkSections: function()

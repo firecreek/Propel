@@ -7,7 +7,7 @@ var Todos = {
   {
     var self = this;
 
-    //Add new list
+    //Add new
     $('#TodoList .col.right a.add').bind('click',function(e){
       $('#TodoList').hide();
       $('#TodoAdd').show();
@@ -70,7 +70,6 @@ var Todos = {
         $('.listable').addClass('reorder-todos');
         
         $('.listable .header .maintain').show();
-        $('.listable .header .item').attr('rel-maintain-lock','true');
         
         //Sortable
         $('.listable').sortable({ disabled: false });
@@ -108,7 +107,6 @@ var Todos = {
         $('.listable').removeClass('reorder-todos');
         
         $('.listable .header .maintain').hide();
-        $('.listable .header .item').removeAttr('rel-maintain-lock');
         
         //Sortable
         $('.listable').sortable({ disabled: true });

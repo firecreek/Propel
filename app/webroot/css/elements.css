@@ -9,6 +9,20 @@ ul.bullet { margin-bottom:20px; }
 ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 
+
+/**
+ * Dialog
+ */
+.dialog { position:absolute; top:200px; left:200px; width:450px; z-index:999;   }
+.dialog .wrapper { padding:10px; }
+
+.dialog.default { background-color:white; -webkit-box-shadow:black 0px 0px 10px; -moz-box-shadow:black 0px 0px 10px; border-radius:12px; }
+.dialog.default .wrapper { padding:15px; }
+
+.dialog.default .close-button { background-color:white; position:absolute; right:15px; top:15px; width:16px; height:16px; background:url(/img/icons/close-16.png) transparent no-repeat; cursor:pointer; text-indent:-9000px }
+.dialog.default .close-button span { display:block; width:100%; height:100%; }
+
+
 /**
  * Box
  */
@@ -462,19 +476,67 @@ table.calendar.short td.weekend { background-color:#F0F0F0; border:1px solid #F0
 table.calendar.short td.today { border:none; }
 table.calendar.short td.today .day { color:#333; background-color:transparent; padding:0; }
  
+ 
+/** Small */
 table.calendar.small { width:200px; border-collapse:collapse; }
 table.calendar.small th { background-color:#CCC; color:#666; font-size:10px; padding:3px 0 3px 0; }
 table.calendar.small td { background-color:transparent; border:1px solid transparent !important; padding:0; width:22px; height:22px; }
 table.calendar.small td .day { color:black; float:none; width:100%; text-align:center; margin:3px 0 0 0; }
 table.calendar.small td.weekend .day { color:#999; }
-table.calendar.small td.today { background-color:#FC0; border:1px solid #69C !important; }
+table.calendar.small td.today { background-color:#FC0; }
 table.calendar.small td.today .day { padding:0; float:none; background-color:transparent; font-weight:bold !important; }
 
-table.calendar.small th.month { width:36px; font-size:10px; }
+table.calendar.small th.month { width:36px; font-size:10px; text-transform:inherit; }
+table.calendar.small th.month:after { content:":" }
 
 table.calendar.small td.with { background-color:#FC0 !important; }
 table.calendar.small td.with .day { font-weight:normal; color:black; }
 
+table.calendar.small td.with.overdue { background-color:#C00 !important; }
+table.calendar.small td.with.overdue .day { color:white; }
+
+table.calendar.small td.with.completed { background-color:#090 !important; }
+table.calendar.small td.with.completed .day { color:white; }
+
+table.calendar.small td.with.completed.upcoming { background:url(/img/milestone-upcoming-complete.gif) transparent center center !important; }
+table.calendar.small td.with.completed.upcoming .day { color:white; }
+
+
+/** Select */
+.ui-datepicker {}
+ 
+.ui-datepicker-inline { display:inline-block; }
+ 
+.ui-datepicker th, .ui-datepicker td { font-size:11px; }
+.ui-datepicker .ui-datepicker-header { margin:0 0 5px 0; }
+ 
+.ui-datepicker .ui-datepicker-header a { cursor:pointer; color:black; font-size:11px; padding:5px 5px; }
+.ui-datepicker .ui-datepicker-header a:hover { background-color:#EDF3FE; }
+.ui-datepicker .ui-datepicker-header a span {}
+
+.ui-datepicker .ui-datepicker-header .ui-datepicker-prev { float:left; margin-left:10px; }
+.ui-datepicker .ui-datepicker-header .ui-datepicker-next { float:right; margin-right:10px; }
+.ui-datepicker .ui-datepicker-header .ui-datepicker-title { text-align:center; padding:2px 0 0 0; }
+ 
+.ui-datepicker .ui-datepicker-header .ui-datepicker-month {}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-year {}
+ 
+.ui-datepicker .ui-datepicker-calendar {}
+ 
+.ui-datepicker .ui-datepicker-calendar thead tr {}
+.ui-datepicker .ui-datepicker-calendar thead th { font-weight:normal; color:#999; }
+ 
+.ui-datepicker .ui-datepicker-calendar tbody tr {}
+.ui-datepicker .ui-datepicker-calendar tbody td { text-align:center; width:30px; }
+.ui-datepicker .ui-datepicker-calendar tbody td a { background-color:#EDF3FE; color:black; text-decoration:none; display:block; width:100%; height:100%; padding:2px 0; }
+.ui-datepicker .ui-datepicker-calendar tbody td a:hover { background-color:#c6d6ee; }
+ 
+.ui-datepicker .ui-datepicker-calendar .ui-datepicker-other-month a { background-color:white; color:#666; }
+
+.ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day {  }
+.ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day a { background-color:black; color:white; }
+
+.ui-current-date { margin:5px 0 0 0; text-align:center; font-weight:bold; width:224px; }
  
 
 /**

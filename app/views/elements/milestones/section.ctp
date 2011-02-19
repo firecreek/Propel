@@ -77,6 +77,7 @@
               'id'        => $milestone['Milestone']['id'],
               'title'     => $milestone['Milestone']['title'],
               'options'   => array(
+                'ident' => 'Milestone-'.$milestone['Milestone']['id'],
                 'after' => $after,
                 'checked'       => (isset($checked) && $checked) ? true : false,
                 'commentCount'  => $milestone['Milestone']['comment_count'],

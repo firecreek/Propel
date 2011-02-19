@@ -62,6 +62,25 @@
     
     $dayHeader = array('M','T','W','T','F','S','S');
   }
+  elseif($type == 'select')
+  {
+    //Small calendar
+    $showMonth = false;
+    $todayText = false;
+    $showEvents = false;
+    
+    $dayList = array(
+      __('Mon',true),
+      __('Tue',true),
+      __('Wed',true),
+      __('Thu',true),
+      __('Fri',true),
+      __('Sat',true),
+      __('Sun',true)
+    );
+    
+    $dayHeader = array('M','T','W','T','F','S','S');
+  }
   elseif($type == 'short')
   {
     //14 days ahead short calendar with trailing days
@@ -89,9 +108,19 @@
       
       if(!isset($events[$date])) { $events[$date] = array(); }
       
+      /*$events[$date][] = array(
+        'title' => $record['Milestone']['title'],
+        'url'   => array(
+          'controller'  => 'milestones',
+          'action'      => 'index',
+          'projectId'   => $record['Milestone']['project_id'],
+          '#Milestone-'.$record['Milestone']['id']
+        ),
+      );*/
       $events[$date][] = array(
         'title' => $record['Milestone']['title'],
-        'url'   => array('controller'=>'milestones','action'=>'index','projectId'=>$record['Milestone']['project_id']),
+        'url'   => '#Milestone-'.$record['Milestone']['id'],
+        'class' => isset($record['class']) ? $record['class'] : null
       );
     }
   }
@@ -189,11 +218,15 @@
             if(isset($events[$eventDate]))
             {
               $class[] = 'with';
-              
-              if($showEvents)
+              $cell = '';
+            
+              foreach($events[$eventDate] as $event)
               {
-                $cell = '';
-                foreach($events[$eventDate] as $event)
+                if(isset($event['class']))
+                {
+                  $class[] = $event['class'];
+                }
+                if($showEvents)
                 {
                   $cell .= '<div class="event">'.$html->link($event['title'],$event['url']).'</div>';
                 }

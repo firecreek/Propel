@@ -3,7 +3,14 @@
 (function($) {
   $.widget("oc.listable",{
     
-    options: { sortable:false },
+    options: { 
+      sortable:false, 
+      edit: {
+        ajaxSubmit: {
+          stickyLoad:false
+        }
+      }
+    },
     
     _create: function()
     {

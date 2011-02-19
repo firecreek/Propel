@@ -15,6 +15,8 @@
       'jquery/jquery',
       'jquery/jquery-ui',
       'jquery/jquery-ajaxsubmit',
+      'jquery/jquery-oc-calendar',
+      'jquery/jquery-oc-dialog',
       'account'
     ));
     echo $scripts_for_layout;

@@ -7,6 +7,21 @@
 
 
 /**
+ * Add
+ */
+#MilestoneAdd {}
+#MilestoneAdd form .cols { height:225px; }
+#MilestoneAdd form .col {  }
+
+#MilestoneAdd form .calendar { border-right:1px solid #CCC; width:250px; float:left; }
+#MilestoneAdd form .calendar label { margin:0 0 10px 0; }
+
+#MilestoneAdd form .detail { margin-left:280px; }
+#MilestoneAdd form .detail div.input { margin:0 0 20px 0; }
+#MilestoneAdd form .detail div.input.text input { width:8   0%; }
+
+ 
+/**
  * Add multiple
  */
 table.add-multiple {}
