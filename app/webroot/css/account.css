@@ -13,6 +13,7 @@
 
 header { height:80px; background-color:#195D00; color:#fff; position:relative; }
 header h1 { margin:0 0 0 30px; padding:10px 0 0 0; font-size:24px; font-weight:normal; font-family:arial; }
+header h1 span { font-size:16px; font-weight:normal; margin-left:5px; }
 
 
 /**

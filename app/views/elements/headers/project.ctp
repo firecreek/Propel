@@ -8,7 +8,7 @@
 
 
 <header>
-  <h1><?php echo $header; ?></h1>
+  <h1><?php echo $header; ?> <span><?php echo $auth->read('Company.name'); ?></span></h1>
 
   <nav id="account">
       <ul>
