@@ -39,6 +39,10 @@
   
   //Accounts
   Router::connect('/:accountSlug',
+    array('controller'=>'users', 'action'=>'login'),
+    array('accountSlug'=>'[a-z0-9\-]+')
+  );
+  Router::connect('/:accountSlug/index',
     array('controller'=>'accounts', 'action'=>'index', 'prefix'=>'account'),
     array('accountSlug'=>'[a-z0-9\-]+')
   );

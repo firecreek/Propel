@@ -34,7 +34,7 @@
      * @access public
      * @access public
      */
-    public $uses = array('User');
+    public $uses = array('User','Account');
     
     
     /**
@@ -117,16 +117,35 @@
      */
     public function login()
     {
-      //$this->_checkUser();
+      //Account set?
+      if(isset($this->params['accountSlug']))
+      {
+        $account = $this->Account->find('first',array(
+          'conditions' => array(
+            'Account.slug' => $this->params['accountSlug']
+          ),
+          'contain' => false
+        ));
+        $this->set(compact('account'));
+      }
     
       //Attempting to login
       if(!empty($this->data) && $this->Authorization->login($this->data))
       {
+        $accountSlug = $this->Session->read('Auth.Account.slug');
+      
+        //Check account to log into
+        if(isset($account) && $this->Account->hasAccess($account['Account']['id'],$this->Session->read('Auth')))
+        {
+          $accountSlug = $account['Account']['slug'];
+        }
+      
+        //Redirect
         $this->redirect(array(
           'controller'  => 'accounts',
           'action'      => 'index',
           'prefix'      => 'account',
-          'accountSlug' => $this->Session->read('Auth.Account.slug')
+          'accountSlug' => $accountSlug
         ));
       }
     }

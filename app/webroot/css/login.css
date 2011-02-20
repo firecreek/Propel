@@ -1,0 +1,4 @@
+
+.box { width:550px; margin:0 auto; border-radius:12px; }
+.box .banner { border-top-left-radius:12px; border-top-right-radius:12px; }
+.box input { width:60%; }

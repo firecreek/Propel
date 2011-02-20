@@ -85,6 +85,9 @@
       ),
       'Scheme' => array(
         'className' => 'Scheme'
+      ),
+      'Person' => array(
+        'className' => 'Person'
       )
     );
 
