@@ -17,6 +17,8 @@
       'jquery/jquery-ajaxsubmit',
       'jquery/jquery-oc-calendar',
       'jquery/jquery-oc-dialog',
+      'jquery/superfish',
+      'jquery/supersubs',
       'account'
     ));
     echo $scripts_for_layout;

@@ -117,6 +117,7 @@
         $account  = null;
         $project  = null;
         $userId   = $this->Authorization->user('id');
+        $permissionCheck = true;
         
         
         //Load account
@@ -261,23 +262,33 @@
           }
         }
         
+        //Method is allowed by controller $authAllow
+        if(isset($this->controller->authAllow) && in_array($this->controller->action,$this->controller->authAllow))
+        {
+          $isAllowed = true;
+          $permissionCheck = false;
+        }
+        
         
         //Check if this person is allowed to be in this controller and has the correct CRUD access
-        $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
-        if(!empty($permissionNode))
+        if($permissionCheck)
         {
-          $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
-            'conditions' => array(
-              'Aro.model' => 'Person',
-              'Permission.aco_id' => $permissionNode[0]['Aco']['id'],
-              'Permission.aro_id' => $person['Person']['_aro_id'],
-              'Permission.'.$actionKey => true
-            )
-          ));
-          
-          if(!$isAllowed)
+          $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
+          if(!empty($permissionNode))
           {
-            $this->cakeError('badCrudAccess');
+            $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
+              'conditions' => array(
+                'Aro.model' => 'Person',
+                'Permission.aco_id' => $permissionNode[0]['Aco']['id'],
+                'Permission.aro_id' => $person['Person']['_aro_id'],
+                'Permission.'.$actionKey => true
+              )
+            ));
+            
+            if(!$isAllowed)
+            {
+              $this->cakeError('badCrudAccess');
+            }
           }
         }
         

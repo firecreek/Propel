@@ -2,14 +2,23 @@
 /**
  * Header
  */
-#launchbar { width:100%; background-color:#000000; color:#fff; height:25px; }
-#launchbar ul { margin:0 0 0 30px; padding:4px 0 0 0; }
-#launchbar li { float:left; font-size:11px; font-family:'Lucida Grande', Verdana; margin:0 20px 0 0; }
-#launchbar a { text-decoration:none; color:#DDD; }
+#launchbar { width:100%; background-color:#000000; color:#fff; height:24px; }
+#launchbar ul { margin:0 0 0 30px; padding:0 0 0 0; }
+#launchbar li { float:left; font-size:11px; font-family:'Lucida Grande', Verdana; margin:0 10px 0 0; padding:0; }
+#launchbar a { text-decoration:none; color:#DDD; display:inline-block; padding:4px 10px 4px 0; margin:0; border-right:1px solid #222; }
 #launchbar a:hover { background-color:transparent; color:white; }
+
+#launchbar ul ul { display:none; z-index:19; position:absolute; background-color:black; margin:0 0 0 -10px; padding:0; }
+#launchbar ul ul li { float:none; margin:0; min-width:220px; }
+#launchbar ul ul li a { display:block; padding:0; border:none; padding:5px 5px 5px 10px; color:#999; }
+#launchbar ul ul li a:hover { background-color:#222; color:white; }
+#launchbar ul ul li.active a:before { content:"• " }
 
 #launchbar li.first a { color:#999; }
 #launchbar li.first a:hover { background-color:transparent; color:#EEE; }
+
+#launchbar li.project>a { padding-right:25px; background:url(/img/icons/arrow-grey-launchbar.png) transparent no-repeat top right; }
+#launchbar li.project>a:hover { background-position:bottom right; }
 
 header { height:80px; background-color:#195D00; color:#fff; position:relative; }
 header h1 { margin:0 0 0 30px; padding:10px 0 0 0; font-size:24px; font-weight:normal; font-family:arial; }
@@ -32,7 +41,7 @@ header nav a, header nav li { color:#D1EEFF; font-size:10px; }
 header nav a:hover { background-color: #054700; color:white; text-decoration:none; }
 
 nav#account ul { position:absolute; right:30px; top:0; }
-nav#account li { float:left; padding:6px 5px 6px 4px; margin:0; display:inline; }
+nav#account li { float:left; padding:6px 0px 6px 4px; margin:0; display:inline; }
 
 nav#account li a { padding:6px 4px 6px 4px; }
 nav#account li span { padding:6px 6px 6px 4px; }

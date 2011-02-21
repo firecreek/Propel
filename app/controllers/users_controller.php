@@ -15,7 +15,7 @@
     /**
      * Helpers
      *
-     * @access public
+     * @var array
      * @access public
      */
     public $helpers = array();
@@ -23,7 +23,7 @@
     /**
      * Components
      *
-     * @access public
+     * @var array
      * @access public
      */
     public $components = array();
@@ -31,10 +31,20 @@
     /**
      * Uses
      *
-     * @access public
+     * @var array
      * @access public
      */
     public $uses = array('User','Account');
+    
+    /**
+     * Auth allow
+     *
+     * @var array
+     * @access public
+     */
+    public $authAllow = array(
+      'account_edit'
+    );
     
     
     /**
@@ -198,6 +208,20 @@
       
       return false;
     }
+    
+    
+    /**
+     * Account edit your user
+     *
+     * @access public
+     * @return void
+     */
+    public function account_edit()
+    {      
+      //$this->data = $this->Authorization->read();
+      
+    }
+    
   
   }
   

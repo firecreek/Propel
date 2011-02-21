@@ -80,6 +80,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 .box .content { padding:20px; }
 .box .content h2 { margin:0; font-size:22px; font-weight:normal; padding:10px 0 10px 0; }
+.box .content h3 { font-size:14px; margin:0 0 15px 0; padding:0 0 0 0; }
 .box .content p { margin:0 0 1em 0; }
 .box .content p a.active { color:black; text-decoration:none; font-weight:bold; }
 
@@ -123,7 +124,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .area.plain .banner h3 { padding:0; }
 .area.plain .content { margin:0; }
 .area.plain .content li { margin-bottom:2px; }
- 
+
 
 /**
  * Section
@@ -222,6 +223,21 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
  .section.avatar .content,
  .section.avatar .foot
  { margin-left:75px; }
+
+
+/**
+ * Card
+ */
+.card { border-radius:12px; width:250px; -webkit-box-shadow:#BBB 0px 0px 8px; -moz-box-shadow:#BBB 0px 0px 8px; }
+.card .banner { background-color:#444; margin:0; padding:0; min-height:0; border-top-left-radius:12px; border-top-right-radius:12px; }
+.card .banner h2 { color:white;  margin:0; padding:5px 0 5px 10px; font-size:11px; }
+.card .content {  padding:5px 10px; background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5)); }
+.card .content .avatar { float:left; margin:2px 0 0 0; }
+.card .content .avatar img { border:1px solid #EEE;  background-color:white; }
+.card .content .detail { margin-left:45px; }
+.card .content .detail h3 { margin:0; font-size:12px; }
+.card .content .detail p { margin:0; padding:0; font-size:11px; }
+.card .content .detail p.username { font-size:10px; }
 
 
 /**

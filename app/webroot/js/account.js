@@ -3,6 +3,11 @@ var Account = {
   
   load: function()
   {
+    $("ul.sf-menu").superfish({
+      autoArrows: false,
+      speed: 'fast'
+    });
+    
     this._wysiwyg();
   },
   

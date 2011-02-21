@@ -7,6 +7,8 @@
   {
     $personal = true;
   }
+  
+  $html->css('accounts/user_edit', null, array('inline'=>false));
 
 ?>
 <div class="cols">
@@ -15,18 +17,22 @@
 
     <div class="box">
       <div class="banner">
-        <h2><?php
+        <?php
           if($personal)
           {
-            echo __('Your contact information for this account',true);
+            echo $this->element('people/personal_banner');
           }
           else
           {
-            echo __('Edit',true).' '.$record['Person']['full_name'];
+            echo '<h2>'.__('Edit',true).' '.$record['Person']['full_name'].'</h2>';
           }
-        ?></h2>
+        ?>
       </div>
       <div class="content">
+      
+        <?php if($personal): ?>
+          <h3><?php echo __('Your contact information for this account',true); ?></h3>
+        <?php endif; ?>
       
         <?php if($record['Person']['status'] == 'invited'): ?>
           <div class="section outlined">
@@ -45,7 +51,6 @@
       
       
         <?php
-          echo $session->flash();
           echo $form->create('Person',array('url'=>$this->here,'class'=>'basic'));
         ?>
         

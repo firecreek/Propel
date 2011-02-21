@@ -1,14 +1,43 @@
 
 <div id="launchbar">
-  <ul>
+  <ul class="sf-menu">
     <li class="first"><?php echo $html->link('Opencamp','/'); ?></li>
-    <li><?php echo $html->link(__('Back to Projects',true),array('project'=>false,'controller'=>'accounts','action'=>'index')); ?></li>
+    <li class="account"><?php echo $html->link($auth->read('Account.name'),array('project'=>false,'controller'=>'accounts','action'=>'index')); ?></li>
+    <li class="project">
+      <?php
+        echo $html->link(__('Project',true).': '.$auth->read('Project.name'),array('project'=>false,'controller'=>'accounts','action'=>'index'));
+      ?>
+      <?php
+        $authProjects = $auth->read('Projects');
+        
+        if(!empty($authProjects))
+        {
+          echo '<ul>';
+          foreach($authProjects as $authProject)
+          {
+            $class = null;
+            if($authProject['Project']['id'] == $auth->read('Project.id'))
+            {
+              $class = 'active';
+            }
+          
+            echo '<li class="'.$class.'">'.$html->link($authProject['Project']['name'],array(
+              'accountSlug' => $authProject['Account']['slug'],
+              'projectId' => $authProject['Project']['id'],
+              'controller' => 'projects',
+              'action' => 'index'
+            )).'</li>';
+          }
+          echo '</ul>';
+        }
+      ?>
+    </li>
   </ul>
 </div>
 
 
 <header>
-  <h1><?php echo $header; ?> <span><?php echo $auth->read('Company.name'); ?></span></h1>
+  <h1><?php echo $auth->read('Project.name'); ?> <span><?php echo $auth->read('Company.name'); ?></span></h1>
 
   <nav id="account">
       <ul>
