@@ -107,7 +107,21 @@
           <h4><strong><?php echo $company; ?></strong></h4>
           <ul>
             <?php foreach($people as $person): ?>
-              <li><?php echo $person['Person']['full_name']; ?></li>
+              <li>
+                <?php echo $person['Person']['full_name']; ?>
+                <br />
+                <small>
+                  <?php if($person['Person']['id'] == $this->Auth->read('Person.id')): ?>
+                    <?php echo __('You are currently signed in',true); ?>
+                  <?php elseif( ((time() - strtotime($person['User']['last_activity']))/60) < 10 ): ?>
+                    <?php echo __('Logged in right now',true); ?>
+                  <?php elseif(empty($person['User']['last_activity'])): ?>
+                    <?php echo __('No recent activity',true); ?>
+                  <?php else: ?>
+                    <?php echo __('Latest activity',true).' '.$time->timeAgoInWords($person['User']['last_activity'],array('end'=>false)); ?>
+                  <?php endif; ?>
+                </small>
+              </li>
             <?php endforeach; ?>
           </ul>
         <?php endforeach; ?>

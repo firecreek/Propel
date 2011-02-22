@@ -53,7 +53,8 @@
       'Form',
       'Javascript',
       'Auth',
-      'Layout'
+      'Layout',
+      'Time'
     );
     
     

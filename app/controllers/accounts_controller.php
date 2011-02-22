@@ -74,7 +74,7 @@
         $logRecords = $this->Log->find('all',array(
           'conditions' => array(
             'Log.project_id' => $project['Project']['id'],
-            'Log.created'    => strtotime('-30 days')
+            'Log.created >'  => date('Y-m-d',strtotime('-30 days'))
           ),
           'order' => 'Log.created DESC',
           'limit' => 25,

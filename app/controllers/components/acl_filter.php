@@ -175,7 +175,9 @@
             'Person.user_id'    => $userId
           ),
           'fields' => array('id','first_name','last_name','full_name','email','company_owner'),
-          'contain' => false,
+          'contain' => array(
+            'User' => array('id','last_activity')
+          ),
           'cache' => array(
             'name' => 'person_'.$account['Account']['id'].'_'.$userId,
             'config' => 'acl',
@@ -185,6 +187,19 @@
         if(empty($person))
         {
           $this->cakeError('personNotFound');
+        }
+        
+        //Update activity time
+        //@todo When caching is recoded then clear the person cache here
+        if(
+          empty($person['User']['last_activity']) ||
+          ((time() - strtotime($person['User']['last_activity'])) / 60) > 5
+        )
+        {
+          $this->controller->User->id = $person['User']['id'];
+          $this->controller->User->saveField('last_activity',date('Y-m-d H:i:s'));
+          
+          $person['User']['last_activity'] = date('Y-m-d H:i:s');
         }
         
         //Find Person aro
@@ -554,7 +569,7 @@
           'fields' => array('id','full_name','first_name','last_name','email','title','company_owner'),
           'contain' => array(
             'Company' => array('id','name'),
-            'User' => array('id')
+            'User' => array('id','last_activity')
           ),
           'cache' => array(
             'name' => 'people_aco_'.$acoId,

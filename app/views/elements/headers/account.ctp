@@ -1,7 +1,15 @@
 
 <div id="launchbar">
-  <ul>
+  <ul class="sf-menu">
     <li class="first"><?php echo $html->link('Opencamp','/'); ?></li>
+    <li class="project">
+      <?php
+        echo $html->link(__('Projects',true).': '.$auth->read('Account.name'),'#');
+      ?>
+      <?php
+        echo $this->element('headers/_projects');
+      ?>
+    </li>
   </ul>
 </div>
 
