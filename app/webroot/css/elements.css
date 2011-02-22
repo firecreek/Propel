@@ -447,7 +447,13 @@ table .text input { font-size:14px; }
 table.std { width:100%; border-collapse:collapse; margin:0 0 25px 0; }
 table.std thead { }
 table.std thead th { background-color:#F0F0F0; padding:4px 5px; font-size:14px; text-align:left; font-family:arial; color:#333; }
-table.std thead th h3 a { color:#333; text-decoration:none; }
+table.std thead th h3 { margin:0 !important; padding:0; }
+
+table.std thead th h3 a { color:#333; text-decoration:none; font-family: "Lucida Grande", verdana; font-size:12px; }
+table.std thead th h3 a span { color:#666; font-size:10px; font-weight:bold; }
+
+table.std thead th h3 a:hover { background-color:#03C; color:white; }
+table.std thead th h3 a:hover span { color:white; }
 
 table.std thead th.links { text-align:right; }
 table.std thead th.links a { font-size:11px; font-weight:normal; }
@@ -581,13 +587,15 @@ table.logs td.action { white-space:nowrap; color:#999; text-align:right; }
 table.logs td.person { white-space:nowrap; }
 table.logs td.date { white-space:nowrap; border-left:1px solid #F0F0F0; padding-left:5px; }
 
+table.logs td.date .highlight-bright { padding:1px 2px; color:black; font-weight:bold; text-transform:uppercase; font-size:9px; }
+
 table.logs.dated { }
 table.logs.dated tr:first-child h4 { margin-top:0; }
 table.logs.dated tr.date td { border-bottom:0; }
 table.logs.dated td h4 { font-size:10px; text-transform:uppercase; color:#666; margin:20px 0 5px -25px; }
 table.logs.dated td h4 span { border-bottom:1px solid #E5E5E5; padding:2px 4px 2px 24px; }
  
-table.logs.dated tr.today span { background-color:#FFF000; border-bottom:0; color:black; }
+table.logs.dated .today span { background-color:#FFF000; border-bottom:0; color:black; }
 
 /**
  * Badges

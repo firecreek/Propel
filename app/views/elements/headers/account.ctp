@@ -7,7 +7,7 @@
 
 
 <header>
-  <h1><?php echo $header; ?></h1>
+  <h1><?php echo $auth->read('Account.name'); ?></h1>
 
   <nav id="account">
       <ul>

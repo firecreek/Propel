@@ -217,11 +217,6 @@
       );
       $logs = $this->paginate('Log');
       
-      //Helpers
-      //@todo Clean this up when using plugins, automatically find and load
-      $this->helpers[] = 'TodoItem';
-      $this->helpers[] = 'Comment';
-      
       $this->set(compact('project','overdue','upcoming','logs'));
     }
     

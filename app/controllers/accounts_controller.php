@@ -34,7 +34,7 @@
      * @access public
      * @access public
      */
-    public $uses = array('Project');
+    public $uses = array('Project','Log');
     
     
     /**
@@ -64,7 +64,31 @@
         'recursive' => -1
       ));
       
-      $this->set(compact('activeProjectCount'));
+      //Logs      
+      //For each project load recent log files
+      $projects = $this->Authorization->read('Projects');
+      $logs = array();
+      
+      foreach($projects as $project)
+      {
+        $logRecords = $this->Log->find('all',array(
+          'conditions' => array(
+            'Log.project_id' => $project['Project']['id'],
+            'Log.created'    => strtotime('-30 days')
+          ),
+          'order' => 'Log.created DESC',
+          'limit' => 25,
+          'contain' => array(
+            'Person' => array('first_name','last_name')
+          )
+        ));
+      
+        $logs[] = array_merge(array(
+          'Log' => $logRecords
+        ),$project);
+      }
+      
+      $this->set(compact('activeProjectCount','logs'));
     }
   
   }

@@ -99,10 +99,6 @@
         {
           $this->layout = 'account';
         }
-        
-        $header = $this->Authorization->read(ucfirst($prefix) . '.name');
-        
-        $this->set(compact('header'));
       }
       
       $this->set(compact('prefix'));

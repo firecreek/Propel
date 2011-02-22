@@ -1,9 +1,19 @@
-
 <?php
+  if(!isset($pagination)) { $pagination = true; }
+  if(!isset($dateHeader)) { $dateHeader = true; }
+  if(!isset($dateColumn)) { $dateColumn = false; }
+
   $lastDate = null;
 ?>
 
 <table class="std logs dated">
+  <?php if(isset($header)): ?>
+    <thead>
+      <tr>
+        <th colspan="5"><h3><?php echo $header; ?></h3></td>
+      </tr>
+    </thead>
+  <?php endif; ?>
   <tbody>
     <?php foreach($logs as $log): ?>
     
@@ -18,7 +28,7 @@
         }
       ?>
     
-      <?php if(empty($lastDate) || $lastDate != date('Y-m-d',$createdTs)): ?>
+      <?php if($dateHeader && (empty($lastDate) || $lastDate != date('Y-m-d',$createdTs))): ?>
         <?php $lastDate = date('Y-m-d',$createdTs); ?>
         <tr class="date<?php if($today) { echo ' today'; } ?>">
           <td colspan="5">
@@ -89,13 +99,27 @@
         <td class="description"><?php echo $options['description']; ?></td>
         <td class="action"><?php echo $options['action']; ?></td>
         <td class="person"><?php echo $options['person']; ?></td>
+        <?php if($dateColumn): ?>
+          <td class="date"><?php
+            if($today)
+            {
+              echo '<span class="highlight-bright">'.__('Today',true).'</span>';
+            }
+            else
+            {
+              echo date('M j',$createdTs);
+            }
+          ?></td>
+        <?php endif; ?>
       </tr>
     <?php endforeach; ?>
 </table>
 
-<p class="pagination">
-  <?php echo $this->Paginator->prev('Previous page', null, null, array('class' => 'disabled')); ?>
-  |
-  <?php echo $this->Paginator->next('Next page', null, null, array('class' => 'disabled')); ?> 
-</p>
+<?php if($pagination): ?>
+  <p class="pagination">
+    <?php echo $this->Paginator->prev('Previous page', null, null, array('class' => 'disabled')); ?>
+    |
+    <?php echo $this->Paginator->next('Next page', null, null, array('class' => 'disabled')); ?> 
+  </p>
+<?php endif; ?>
 

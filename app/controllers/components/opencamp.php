@@ -54,13 +54,29 @@
       if(isset($this->controller->params['prefix']))
       {
         $this->_layoutScheme();
+        $this->_helpers();
       }
+    }
+    
+
+    /**
+     * Load helpers
+     *
+     * @todo Clean this up when using plugins, automatically find and load
+     * @access public
+     * @return void
+     */
+    public function _helpers()
+    {
+      $this->controller->helpers[] = 'TodoItem';
+      $this->controller->helpers[] = 'Comment';
     }
     
 
     /**
      * Initialize component
      *
+     * @todo Is this used anymore?
      * @access public
      * @return void
      */

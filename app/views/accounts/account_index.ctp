@@ -6,7 +6,7 @@
     <div class="box">
       <div class="banner">
         <h2><?php
-          if($projects = 1)
+          if($activeProjectCount == 1)
           {
             echo __('Latest activity in your project',true);
           }
@@ -22,7 +22,7 @@
         ?>
         
         
-        <?php if($projects == 1): ?>
+        <?php if($activeProjectCount == 1): ?>
           <?php
             $project = $auth->read('Projects.0');
           ?>
@@ -39,6 +39,25 @@
             <?php __('After you begin posting messages, comments, milestones or to-dos, you\'ll see a log of recent activity on this page.'); ?>
           </p>
         <?php endif; ?>
+        
+        
+        
+        <div class="section">
+          <div class="content">
+            <?php
+              foreach($logs as $log)
+              {
+                echo $this->element('logs/display',array(
+                  'logs'        => $log['Log'],
+                  'pagination'  => false,
+                  'dateHeader'  => false,
+                  'dateColumn'  => true,
+                  'header'      => $html->link($log['Project']['name'].' — <span>'.$log['Company']['name'].'</span>',array('projectId'=>$log['Project']['id'],'controller'=>'projects','action'=>'index'),array('class'=>'unimportant','escape'=>false))
+                ));
+              }
+            ?>
+          </div>
+        </div>
         
         
         <?php
