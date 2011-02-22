@@ -26,9 +26,11 @@
   <div class="section plain avatar" id="Comment<?php echo $record['id']; ?>" rel-id=<?php echo $record['id']; ?>>
     <div class="avatar"><?php echo $html->image('avatar.png'); ?></div>
     <div class="banner">
-      <h4 class="<?php echo $class; ?>">
-        <?php echo $record['Person']['full_name']; ?>
-        <span><?php echo date('D, j M Y \a\t g:ia',$created); ?></span>
+      <h4 class="<?php echo $class; ?>">      
+        <?php
+          echo $html->link($record['Person']['full_name'].' <span>'.date('D, j M Y \a\t g:ia',$created).'</span>','#Comment'.$record['id'],array('escape'=>false));
+        ?>
+        
         <?php if($canEdit): ?>
           <span class="edit"> | 
             <?php echo $html->link(__('Edit',true),array('action'=>'edit',$id,$record['id'],'#comment-add')); ?>
