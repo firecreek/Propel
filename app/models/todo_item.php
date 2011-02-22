@@ -40,73 +40,51 @@
       'Completable',
       'Auth',
       'Commentable',
+      'Loggable' => array(
+        'titleField' => 'description'
+      )
     );
     
-    
-    
-    var $validate = array(
+
+    /**
+     * Belongs to
+     *
+     * @access public
+     * @var array
+     */
+    public $validate = array(
       'project_id' => array(
         'numeric' => array(
-          'rule' => array('numeric'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('numeric')
         ),
       ),
       'todo_id' => array(
         'numeric' => array(
-          'rule' => array('numeric'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('numeric')
         ),
       ),
       'position' => array(
         'numeric' => array(
-          'rule' => array('numeric'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('numeric')
         ),
       ),
       'comment_count' => array(
         'numeric' => array(
-          'rule' => array('numeric'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('numeric')
         ),
       ),
       'completed' => array(
         'boolean' => array(
-          'rule' => array('boolean'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('boolean')
         ),
       ),
       'person_id' => array(
         'numeric' => array(
-          'rule' => array('numeric'),
-          //'message' => 'Your custom message here',
-          //'allowEmpty' => false,
-          //'required' => false,
-          //'last' => false, // Stop validation after this rule
-          //'on' => 'create', // Limit validation to 'create' or 'update' operations
+          'rule' => array('numeric')
         ),
       ),
     );
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
+    
 
     /**
      * Belongs to
@@ -177,6 +155,8 @@
       
       //Update
       $this->Todo->id = $todoId;
+      
+      $this->Todo->disableLog();
       
       return $this->Todo->saveField('todo_items_completed_count',$count);
     }

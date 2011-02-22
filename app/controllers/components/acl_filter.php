@@ -140,6 +140,8 @@
           $this->cakeError('accountNotFound');
         }
         
+        $company = $account['CompanyOwner'];
+        
         //Load project     
         if($prefix == 'project')
         {
@@ -156,6 +158,8 @@
               'config' => 'acl',
             )
           ));
+        
+          $company = $project['Company'];
           
           if(empty($project))
           {
@@ -229,7 +233,7 @@
         //Sets
         $this->Authorization->write('Account',$account['Account']);
         $this->Authorization->write('Project',$project['Project']);
-        $this->Authorization->write('Company',$account['CompanyOwner']);
+        $this->Authorization->write('Company',$company);
         $this->Authorization->write('Person',$person['Person']);
         
         $this->Authorization->write('Permissions',$permissions);

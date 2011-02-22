@@ -91,32 +91,49 @@ class AppModel extends LazyModel {
         }
         return false;
     }
-/**
- * Updates multiple model records based on a set of conditions.
- *
- * call afterSave() callback after successful update.
- *
- * @param array $fields     Set of fields and values, indexed by fields.
- *                          Fields are treated as SQL snippets, to insert literal values manually escape your data.
- * @param mixed $conditions Conditions to match, true for all records
- * @return boolean True on success, false on failure
- * @access public
- */
-    public function updateAll($fields, $conditions = true) {
-        $args = func_get_args();
-        $output = call_user_func_array(array('parent', 'updateAll'), $args);
-        if ($output) {
-            $created = false;
-            $options = array();
-            $this->Behaviors->trigger($this, 'afterSave', array(
-                $created,
-                $options,
-            ));
-            $this->afterSave($created);
-            $this->_clearCache();
-            return true;
-        }
-        return false;
+    
+    
+    /**
+     * Updates multiple model records based on a set of conditions.
+     *
+     * call afterSave() callback after successful update.
+     *
+     * @param array $fields     Set of fields and values, indexed by fields.
+     *                          Fields are treated as SQL snippets, to insert literal values manually escape your data.
+     * @param mixed $conditions Conditions to match, true for all records
+     * @return boolean True on success, false on failure
+     * @access public
+     */
+    public function updateAll($fields, $conditions = true)
+    {
+      $args = func_get_args();
+      $output = call_user_func_array(array('parent', 'updateAll'), $args);
+      if ($output)
+      {
+          if(!empty($conditions[$this->alias.'.id']))
+          {
+            $this->id = $conditions[$this->alias.'.id'];
+          }
+          elseif(!empty($conditions['id']))
+          {
+            $this->id = $conditions['id'];
+          }
+          else
+          {
+            $this->id = false;
+          }
+      
+          $created = false;
+          $options = array();
+          $this->Behaviors->trigger($this, 'afterSave', array(
+              $created,
+              $options,
+          ));
+          $this->afterSave($created);
+          $this->_clearCache();
+          return true;
+      }
+      return false;
     }
 }
 ?>

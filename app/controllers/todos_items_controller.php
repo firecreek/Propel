@@ -105,16 +105,16 @@
         $this->data['TodoItem']['project_id'] = $this->Authorization->read('Project.id');
         $this->data['TodoItem']['person_id'] = $this->Authorization->read('Person.id');
         
-        $this->Todo->TodoItem->set($this->data);
+        $this->TodoItem->set($this->data);
 
-        if($this->Todo->TodoItem->validates())
+        if($this->TodoItem->validates())
         {
-          $this->Todo->TodoItem->save();
+          $this->TodoItem->save();
           
           if($this->RequestHandler->isAjax())
           {
-            $item = $this->Todo->TodoItem->find('first',array(
-              'conditions' => array('TodoItem.id'=>$this->Todo->TodoItem->id),
+            $item = $this->TodoItem->find('first',array(
+              'conditions' => array('TodoItem.id'=>$this->TodoItem->id),
               'contain' => array('Todo','Responsible')
             ));
           
