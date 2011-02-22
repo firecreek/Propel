@@ -69,7 +69,7 @@
           $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'shared'));
           
           //Message and redirect
-          $this->Session->setFlash(__('Person added to company',true));
+          $this->Session->setFlash(__('Person added to company',true),'default',array('class'=>'success'));
           $this->redirect(array('controller'=>'companies','action'=>'index'));
         }
         else
@@ -89,7 +89,7 @@
      * @return void
      */
     public function account_edit($personId)
-    {    
+    {
       $record = $this->Person->find('first',array(
         'conditions' => array(
           'Person.id' => $personId,

@@ -323,8 +323,8 @@ form select { font-size:14px; padding:1px; color:#000;}
 form hr { border:none; height:1px; border-top:1px dashed #CCC; margin:20px 0 20px 0; }
 form h3 { font-size:14px; font-family:"Lucida Grande", Verdana; }
 
-form .input.checkbox input { float:left; margin:2px 5px 0 0; }
-form .input.checkbox label { width:auto; margin:0 0 0 8px; }
+form .input.checkbox input { float:left; margin:2px 5px 0 130px; }
+form .input.checkbox label { float:none; width:auto; margin:0 0 0 2px; }
 
 form .input.radio input { float:left; margin:2px 0 0 0; }
 form .input.radio label { width:auto; margin:0 0 0 8px; }
@@ -371,6 +371,8 @@ form.larger label { font-size:14px; }
 
 form .input.text.full-width input { width:95%; }
 form .input.textarea.full-width textarea { width:95%; }
+
+form .input input.dummy { color:#888; }
 
 
 /**

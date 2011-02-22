@@ -34,7 +34,7 @@
      * @var array
      * @access public
      */
-    public $uses = array('User','Account');
+    public $uses = array('User','Person','Account');
     
     /**
      * Auth allow
@@ -217,8 +217,43 @@
      * @return void
      */
     public function account_edit()
-    {      
-      //$this->data = $this->Authorization->read();
+    {
+      if(!empty($this->data))
+      {
+        if(empty($this->data['User']['password']) || $this->data['User']['password_confirm'] == 'password')
+        {
+          unset($this->data['User']['password']);
+          unset($this->data['User']['password_confirm']);
+        }
+        
+        $this->data['User']['id'] = $this->Authorization->read('User.id');
+        $this->User->set($this->data['User']);
+        
+        if($this->User->validates())
+        {
+          $this->User->save();
+          
+          $this->Person->Behaviors->detach('Acl');
+          
+          //Update all people
+          $this->Person->updateAll(
+            array(
+              'first_name' => '"'.$this->data['Person']['first_name'].'"',
+              'last_name' => '"'.$this->data['Person']['last_name'].'"',
+            ),
+            array('Person.user_id'=>$this->Authorization->read('User.id'))
+          );
+        }
+        
+        $this->Session->setFlash(__('Your information has been updated',true),'default',array('class'=>'success'));
+        
+        $this->redirect(array('controller'=>'people','action'=>'edit',$this->Authorization->read('Person.id')));
+      }
+    
+      $this->data = array(
+        'Person' => $this->Authorization->read('Person'),
+        'User' => $this->Authorization->read('User'),
+      );
       
     }
     

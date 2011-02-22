@@ -1,12 +1,6 @@
 <?php
-  $this->set('activeMenu','companies');
   
-  //My account?
-  $personal = false;
-  if($personId == $session->read('Auth.Person.id'))
-  {
-    $personal = true;
-  }
+  $javascript->link('accounts/user_edit.js', false);
   
   $html->css('accounts/user_edit', null, array('inline'=>false));
 
@@ -28,18 +22,23 @@
         
       
         <?php
-          
-          if(!$personal)
-          {
-            echo $form->input('company_id',array('label'=>__('Company',true)));
-          }
         
-          echo $form->input('email',array('label'=>__('Email',true)));
-          echo $form->input('title');
-          echo $form->input('phone_number_office',array('label'=>__('Office',true).' #'));
-          echo $form->input('phone_number_mobile',array('label'=>__('Mobile',true).' #'));
-          echo $form->input('phone_number_fax',array('label'=>__('Fax',true).' #'));
-          echo $form->input('phone_number_home',array('label'=>__('Home',true).' #'));
+          echo $form->input('Person.first_name',array('label'=>__('First name',true)));
+          echo $form->input('Person.last_name',array('label'=>__('Last name',true)));
+          echo $form->input('User.email',array('label'=>__('Email',true)));
+          echo $form->input('User.username');
+          echo $form->input('User.password');
+          echo $form->input('User.password_confirm',array('type'=>'password','label'=>__('Confirm password',true)));
+        ?>
+        
+        <?php
+          $formats = array(
+            'html' => 'HTML',
+            'text' => 'Plain text'
+          );
+        
+          echo $form->input('User.email_format',array('label'=>__('Email format',true),'options'=>$formats));
+          echo $form->input('User.email_send',array('label'=>__('Receive emails from Opencamp',true)));
         ?>
       
         <hr />
@@ -55,7 +54,21 @@
   </div>
   
   <div class="col right">
-   
+  
+    <?php
+      $accountRecords = $this->Auth->read('Accounts');
+      if(count($accountRecords) > 1):
+    ?>
+    
+      <p><?php __('Changes to your personal information will be made in the following accounts as well:'); ?></p>
+      
+      <ul>
+        <?php foreach($accountRecords as $accountRecord): ?>
+          <li><?php echo $accountRecord['Account']['name']; ?></li>
+        <?php endforeach; ?>
+      </ul>
+  
+    <?php endif; ?>
       
   </div>
   

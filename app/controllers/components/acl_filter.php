@@ -176,7 +176,7 @@
           ),
           'fields' => array('id','first_name','last_name','full_name','email','company_owner'),
           'contain' => array(
-            'User' => array('id','last_activity')
+            'User' => array('id','username','email','email_format','email_send','last_activity')
           ),
           'cache' => array(
             'name' => 'person_'.$account['Account']['id'].'_'.$userId,
@@ -221,6 +221,9 @@
           $this->cakeError('personNoAro');
         }
         
+        //Load accounts this person has access too
+        $accounts = $this->_aroAccounts($person['Person']['_aro_id']);
+        
         //Load projects this person has access too
         $projects = $this->_aroProjects($person['Person']['_aro_id']);
        
@@ -250,10 +253,12 @@
         $this->Authorization->write('Project',$project['Project']);
         $this->Authorization->write('Company',$company);
         $this->Authorization->write('Person',$person['Person']);
+        $this->Authorization->write('User',$person['User']);
         
         $this->Authorization->write('Permissions',$permissions);
         $this->Authorization->write('People',$people);
         $this->Authorization->write('Projects',$projects);
+        $this->Authorization->write('Accounts',$accounts);
         $this->Authorization->write('Companies',$companies);
         
         
@@ -343,10 +348,17 @@
           {
             //Build fields
             $fields = array('id',$fieldKey);
+            $contain = array();
             
             if($this->controller->{$modelAlias}->hasField('private'))
             {
               $fields[] = 'private';
+            }
+            
+            //@todo Fix this, change to normalized method check
+            if(isset($this->controller->{$modelAlias}->belongsTo['Person']))
+            {
+              $contain['Person'] = array('id','company_id');
             }
             
             //Load record
@@ -354,9 +366,7 @@
               'conditions' => array(
                 $modelAlias.'.id' => $this->modelId
               ),
-              'contain' => array(
-                'Person' => array('id','company_id')
-              ),
+              'contain' => $contain,
               'fields' => $fields
             ));
             
@@ -444,6 +454,49 @@
       }
       
       return $projects;
+    }
+    
+    
+    
+    /**
+     * List of accounts this aro has access to
+     *
+     * @todo Move this to Model
+     * @access private
+     * @return array
+     */
+    private function _aroAccounts($aroId)
+    {
+      $accounts = $this->controller->Account->findCached('accounts_'.$aroId, 'acl');
+   
+      if(empty($accounts))
+      {
+        $records = $this->controller->Acl->Aco->Permission->find('all',array(
+          'conditions' => array(
+            'Permission.aro_id' => $aroId,
+            'Permission._read' => true,
+            'Aco.model' => 'Accounts',
+          ),
+          'fields' => array('Aco.foreign_key','Permission.*')
+        ));
+        
+        if(!empty($records))
+        {
+          $accounts = $this->controller->Account->find('all',array(
+            'conditions' => array(
+              'Account.id'      => Set::extract($records,'{n}.Aco.foreign_key')
+            ),
+            'contain' => false,
+            'fields' => array('id','name','slug'),
+            'cache' => array(
+              'name' => 'accounts_'.$aroId,
+              'config' => 'acl',
+            )
+          ));
+        }
+      }
+      
+      return $accounts;
     }
     
     
