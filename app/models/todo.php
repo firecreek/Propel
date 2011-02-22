@@ -30,10 +30,7 @@
       'Containable',
       'Auth',
       'Responsible',
-      'Due',
-      'Loggable' => array(
-        'titleField' => 'name'
-      )
+      'Due'
     );
     
     /**

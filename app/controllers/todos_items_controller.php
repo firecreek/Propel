@@ -101,6 +101,8 @@
     {
       if(!empty($this->data))
       {
+        $this->TodoItem->disableLog();
+      
         $this->data['TodoItem']['todo_id'] = $id;
         $this->data['TodoItem']['project_id'] = $this->Authorization->read('Project.id');
         $this->data['TodoItem']['person_id'] = $this->Authorization->read('Person.id');
@@ -111,13 +113,23 @@
         {
           $this->TodoItem->save();
           
-          if($this->RequestHandler->isAjax())
-          {
-            $item = $this->TodoItem->find('first',array(
-              'conditions' => array('TodoItem.id'=>$this->TodoItem->id),
-              'contain' => array('Todo','Responsible')
-            ));
+          $todoItemId = $this->TodoItem->id;
+        
+          $item = $this->TodoItem->find('first',array(
+            'conditions' => array('TodoItem.id'=>$todoItemId),
+            'contain' => array('Todo','Responsible')
+          ));
           
+          //Save log
+          $this->TodoItem->customLog('assigned',$todoItemId,array(
+            'extra1' => $item['Todo']['name'],
+            'extra2' => $item['Todo']['id'],
+            'extra3' => isset($item['Responsible']['name']) ? $item['Responsible']['name'] : null
+          ));
+          
+          //
+          if($this->RequestHandler->isAjax())
+          {          
             $this->set(compact('id','item'));
             return $this->render();
           }
@@ -222,9 +234,11 @@
      */
     public function project_update($id,$completed = false)
     {
+      $this->TodoItem->disableLog();
+    
       if($completed == 'true')
       {
-        $this->Todo->TodoItem->updateAll(
+        $this->TodoItem->updateAll(
           array(
             'completed' => '1',
             'completed_date' => '"'.date('Y-m-d').'"',
@@ -232,17 +246,29 @@
           ),
           array('TodoItem.id'=>$id)
         );
+        
+        //@todo Read record once
+        $record = $this->TodoItem->find('first',array(
+          'conditions' => array('TodoItem.id'=>$id),
+          'contain' => array('Todo','Responsible')
+        ));
+        
+        $this->TodoItem->customLog('completed',$id,array(
+          'extra1' => $record['Todo']['name'],
+          'extra2' => $record['Todo']['id'],
+          'extra3' => isset($record['Responsible']['name']) ? $record['Responsible']['name'] : null
+        ));
       }
       else
       {
-        $this->Todo->TodoItem->updateAll(
+        $this->TodoItem->updateAll(
           array('completed' => '0'),
           array('TodoItem.id'=>$id)
         );
       }
       
       //Load item back in
-      $record = $this->Todo->TodoItem->find('first',array(
+      $record = $this->TodoItem->find('first',array(
         'conditions' => array('TodoItem.id'=>$id),
         'contain' => array('Todo')
       ));

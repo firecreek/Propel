@@ -75,6 +75,13 @@
         <?php endif; ?>
         
         
+        <div class="section">
+          <div class="content">
+            <?php echo $this->element('logs/display',array('logs'=>$logs)); ?>
+          </div>
+        </div>
+        
+        
       
       </div>
     </div>

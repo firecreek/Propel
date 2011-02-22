@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-02-18 22:02:51 : 1298044371*/
+/* App schema generated on: 2011-02-22 13:02:11 : 1298356871*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -96,13 +96,14 @@ class AppSchema extends CakeSchema {
 	);
 	var $comments = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'foreign_id' => array('type' => 'integer', 'null' => false),
 		'body' => array('type' => 'text', 'null' => false, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'format' => array('type' => 'string', 'null' => false, 'default' => 'textile', 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'model' => array('column' => array('model', 'foreign_id'), 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $comments_people = array(
@@ -163,7 +164,7 @@ class AppSchema extends CakeSchema {
 	);
 	var $grants_sets = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'grant_id' => array('type' => 'integer', 'null' => false),
+		'grant_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'acos_alias' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'_create' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'_read' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -176,17 +177,16 @@ class AppSchema extends CakeSchema {
 	);
 	var $logs = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'account_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'model_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'type' => array('type' => 'string', 'null' => false, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'description' => array('type' => 'text', 'null' => false, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'action' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 90, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'link' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'strike_through' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'extra1' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'extra2' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'extra3' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'person_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'person_name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
@@ -340,9 +340,9 @@ class AppSchema extends CakeSchema {
 	var $todos_items = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'project_id' => array('type' => 'integer', 'null' => false),
-		'todo_id' => array('type' => 'integer', 'null' => false),
+		'todo_id' => array('type' => 'integer', 'null' => false, 'key' => 'index'),
 		'time_total' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 5),
-		'responsible_model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'responsible_model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'responsible_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'description' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'deadline' => array('type' => 'date', 'null' => true, 'default' => NULL),
@@ -354,7 +354,7 @@ class AppSchema extends CakeSchema {
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'todo_id' => array('column' => 'todo_id', 'unique' => 0), 'responsible_model' => array('column' => array('responsible_model', 'responsible_id'), 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $users = array(

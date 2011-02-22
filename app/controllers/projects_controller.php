@@ -34,7 +34,7 @@
      * @access public
      * @access public
      */
-    public $uses = array('Project','Company');
+    public $uses = array('Project','Company','Log');
     
     /**
      * Action map
@@ -206,7 +206,23 @@
         'limit' => 100
       ));
       
-      $this->set(compact('project','overdue','upcoming'));
+      //Paginated logs
+      $this->paginate['Log'] = array(
+        'conditions' => array('Log.project_id'=>$this->Authorization->read('Project.id')),
+        'order' => 'Log.created DESC',
+        'limit' => 100,
+        'contain' => array(
+          'Person' => array('first_name','last_name')
+        )
+      );
+      $logs = $this->paginate('Log');
+      
+      //Helpers
+      //@todo Clean this up when using plugins, automatically find and load
+      $this->helpers[] = 'TodoItem';
+      $this->helpers[] = 'Comment';
+      
+      $this->set(compact('project','overdue','upcoming','logs'));
     }
     
     

@@ -31,7 +31,10 @@
       'Containable',
       'Completable',
       'Commentable',
-      'Auth'
+      'Auth',
+      'Loggable' => array(
+        'titleField' => 'title'
+      )
     );
     
     /**

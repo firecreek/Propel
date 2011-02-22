@@ -99,64 +99,7 @@
      * @return void
      */
     public function index($id)
-    {
-      //Add comment
-      if(!empty($this->data))
-      {
-        $this->data['Comment']['model'] = $this->modelAlias;
-        $this->data['Comment']['foreign_id'] = $id;
-        $this->data['Comment']['person_id'] = $this->Authorization->read('Person.id');
-        
-        $this->Comment->set($this->data);
-        
-        if($this->Comment->validates())
-        {
-          if($this->Comment->save())
-          {
-            //Add self to subscribers
-            $this->Comment->addCommentPerson($id,$this->Authorization->read('Person.id'));
-            
-            //Add checked
-            if(isset($data['CommentPeople']['person_id']) && !empty($data['CommentPeople']['person_id']))
-            {
-              foreach($data['CommentPeople']['person_id'] as $personId)
-              {
-                $this->Comment->addCommentPerson($id,$personId);
-              }
-            }
-            
-            //Update count
-            $this->Comment->updateCommentCount($id);
-            $this->data = null;
-            
-            //Comment id
-            $commentId = $this->Comment->id;
-            
-            //If ajax call
-            /*if($this->RequestHandler->isAjax())
-            {
-              $record = $this->Comment->find('first',array(
-                'conditions' => array('Comment.id'=>$commentId),
-                'contain' => array(
-                  'CommentPerson' => array(
-                    'Person' => array(
-                      'fields' => array('id','full_name','email','user_id','company_id'),
-                      'Company' => array('id','name')
-                    )
-                  )
-                )
-              ));
-            
-              $this->set(compact('id','record'));
-              return $this->render();
-            }*/
-            
-            $this->redirect(array('action'=>'index',$id,'#Comment'.$commentId));
-          }
-        }
-        
-      }
-      
+    {      
       //Build statement
       $contain = array();
       $conditions = array();
@@ -191,6 +134,80 @@
           )
         ),$contain)
       ));
+      
+
+      //Add comment
+      if(!empty($this->data))
+      {
+        $this->data['Comment']['model'] = $this->modelAlias;
+        $this->data['Comment']['foreign_id'] = $id;
+        $this->data['Comment']['person_id'] = $this->Authorization->read('Person.id');
+        
+        $this->Comment->set($this->data);
+        
+        if($this->Comment->validates())
+        {
+          if($this->Comment->save())
+          {
+            //Comment id
+            $commentId = $this->Comment->id;
+            
+            //Add self to subscribers
+            $this->Comment->addCommentPerson($id,$this->Authorization->read('Person.id'));
+            
+            //Add checked
+            if(isset($data['CommentPeople']['person_id']) && !empty($data['CommentPeople']['person_id']))
+            {
+              foreach($data['CommentPeople']['person_id'] as $personId)
+              {
+                $this->Comment->addCommentPerson($id,$personId);
+              }
+            }
+            
+            //Add custom log
+            if(isset($record[$this->modelAlias]['title']))
+            {
+              $description = $record[$this->modelAlias]['title'];
+            }
+            elseif(isset($record[$this->modelAlias]['description']))
+            {
+              $description = $record[$this->modelAlias]['description'];
+            }
+            
+            $this->Comment->customLog('add',$id,array(
+              'description' => $description,
+              'extra1'      => $this->params['associatedController'],
+              'extra2'      => $commentId
+            ));
+            
+            //Update count
+            $this->Comment->updateCommentCount($id);
+            $this->data = null;
+            
+            //If ajax call
+            /*if($this->RequestHandler->isAjax())
+            {
+              $record = $this->Comment->find('first',array(
+                'conditions' => array('Comment.id'=>$commentId),
+                'contain' => array(
+                  'CommentPerson' => array(
+                    'Person' => array(
+                      'fields' => array('id','full_name','email','user_id','company_id'),
+                      'Company' => array('id','name')
+                    )
+                  )
+                )
+              ));
+            
+              $this->set(compact('id','record'));
+              return $this->render();
+            }*/
+            
+            $this->redirect(array('action'=>'index',$id,'#Comment'.$commentId));
+          }
+        }
+        
+      }
       
       
       //Edit record

@@ -41,7 +41,11 @@
       'Auth',
       'Commentable',
       'Loggable' => array(
-        'titleField' => 'description'
+        'titleField' => 'description',
+        'create' => true,
+        'edit' => false,
+        'delete' => false,
+        'complete' => true
       )
     );
     
@@ -155,8 +159,6 @@
       
       //Update
       $this->Todo->id = $todoId;
-      
-      $this->Todo->disableLog();
       
       return $this->Todo->saveField('todo_items_completed_count',$count);
     }

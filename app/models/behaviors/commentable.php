@@ -108,7 +108,7 @@
     public function afterSave(&$model)
     {
       //Subscribe this person automatically to the record
-      if(isset($model->id) && is_numeric($model->id))
+      if(isset($model->id) && is_numeric($model->id) && isset($model->personId))
       {
         $model->Comment->addCommentPerson($model->id,$model->personId);
       }

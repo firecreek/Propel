@@ -28,7 +28,10 @@
      */
     public $actsAs = array(
       'Auth',
-      'Containable'
+      'Containable',
+      'Loggable' => array(
+        'enabled' => false
+      )
     );
     
     /**
@@ -216,6 +219,8 @@
       $model = ClassRegistry::init($this->associatedAlias);
       $model->recursive = -1;
       $model->id = $id;
+      
+      $model->disableLog();
       
       return $model->saveField('comment_count',$count);
     }

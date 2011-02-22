@@ -29,7 +29,10 @@
     public $actsAs = array(
       'Containable',
       'Auth',
-      'Commentable'
+      'Commentable',
+      'Loggable' => array(
+        'titleField' => 'title'
+      )
     );
     
     /**

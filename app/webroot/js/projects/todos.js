@@ -69,8 +69,6 @@ var Todos = {
       
         $('.listable').addClass('reorder-todos');
         
-        $('.listable .header .maintain').show();
-        
         //Sortable
         $('.listable').sortable({ disabled: false });
       }
@@ -105,8 +103,6 @@ var Todos = {
         $(this).html($(this).attr('rel-not-active'));
       
         $('.listable').removeClass('reorder-todos');
-        
-        $('.listable .header .maintain').hide();
         
         //Sortable
         $('.listable').sortable({ disabled: true });

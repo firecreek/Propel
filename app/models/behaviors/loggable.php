@@ -17,12 +17,10 @@
     public $dueOptions = array();
     
     public $defaults = array(
-      'actions' => array(
-        'create' => true,
-        'edit' => true,
-        'delete' => true,
-        'complete' => true
-      ),
+      'create' => true,
+      'edit' => true,
+      'delete' => true,
+      'complete' => true,
       'enabled' => true,
       'titleField' => 'title'
     );
@@ -79,7 +77,7 @@
       {
         return true;
       }
-      elseif(!$this->settings[$model->alias]['actions']['delete'])
+      elseif(!$this->settings[$model->alias]['delete'])
       {
         return true;
       }
@@ -104,7 +102,7 @@
       {
         return true;
       }
-      elseif(!$this->settings[$model->alias]['actions']['delete'])
+      elseif(!$this->settings[$model->alias]['delete'])
       {
         return true;
       }
@@ -143,7 +141,7 @@
       }
       
       //Skip
-      if(!$this->settings[$model->alias]['actions'][$action])
+      if(!$this->settings[$model->alias][$action])
       {
         return true;
       }
@@ -165,11 +163,12 @@
      * @access public
      * @return string
      */
-    public function customLog(&$model, $action, $id, $options = array())
+    public function customLog(&$model, $action, $id, $logData = array(), $options = array())
     {
-      $logData = array(
+      $_logData = array(
         'action'      => $action,
       );
+      $logData = array_merge($_logData,$logData);
       
       $model->id = $id;
       

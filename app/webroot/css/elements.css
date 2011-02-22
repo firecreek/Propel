@@ -258,6 +258,13 @@ ul.overdue li:last-child { margin-bottom:0; }
 ul.overdue li strong { color:#C00; }
 
 
+/**
+ * Pagination
+ */
+p.pagination { color:#222; }
+p.pagination span { font-size:11px; }
+p.pagination span a {}
+
 
 /**
  * Blank slate
@@ -569,7 +576,7 @@ table.logs thead { border-bottom:5px solid white; }
 table.logs td { font-size:10px; }
 
 table.logs td.type { white-space:nowrap; padding-right:10px; }
-table.logs td.description { font-size:11px; width:100%; }
+table.logs td.description { font-size:12px; width:100%; }
 table.logs td.action { white-space:nowrap; color:#999; text-align:right; }
 table.logs td.person { white-space:nowrap; }
 table.logs td.date { white-space:nowrap; border-left:1px solid #F0F0F0; padding-left:5px; }
@@ -580,12 +587,12 @@ table.logs.dated tr.date td { border-bottom:0; }
 table.logs.dated td h4 { font-size:10px; text-transform:uppercase; color:#666; margin:20px 0 5px -25px; }
 table.logs.dated td h4 span { border-bottom:1px solid #E5E5E5; padding:2px 4px 2px 24px; }
  
-
+table.logs.dated tr.today span { background-color:#FFF000; border-bottom:0; color:black; }
 
 /**
  * Badges
  */
-.badge { color:white; display:block; font-size:10px; padding:3px 4px; white-space:nowrap; width:70px; text-align:right; }
+.badge { color:white; display:block; font-size:10px; padding:2px 4px; white-space:nowrap; width:70px; text-align:right; }
 .badge.todo { background-color:#C87800; }
 .badge.milestone { background-color:#5F6E43; }
 .badge.comment { background-color:#6492AC; }
