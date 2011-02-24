@@ -134,15 +134,15 @@ if(typeof $.fn.rte === "undefined") {
         function disableDesignMode(submit) {
             var content = $(iframe).contents().find("body").html();
             
-            content = toTextile(content);
-
             if($(iframe).is(":visible")) {
                 textarea.val(content);
             }
-
+            
             if(submit !== true) {
                 textarea.show();
                 $(iframe).hide();
+                
+                textarea.val(toTextile(content));
                 changeFormat('textile');
             }
         }

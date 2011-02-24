@@ -18,7 +18,7 @@
      * @access public
      * @access public
      */
-    public $helpers = array('Time');
+    public $helpers = array('Time','Textile');
     
     /**
      * Components

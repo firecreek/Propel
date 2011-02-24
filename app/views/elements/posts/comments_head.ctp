@@ -26,7 +26,16 @@
     <p><span><?php __('From'); ?>:</span> <?php echo $record['Person']['full_name']; ?></p>
     <p><span><?php __('Date'); ?>:</span> <?php echo date('D, j M Y \a\t g:ma',strtotime($record['Post']['created'])); ?></p>
   </div>
-  <div class="body">
-    <p><?php echo $record['Post']['body']; ?></p>
+  <div class="body restore-html">
+    <?php
+      if($record['Post']['format'] == 'textile')
+      {
+        echo $textile->parse($record['Post']['body']);
+      }
+      else
+      {
+        echo $record['Post']['body'];
+      }
+    ?>
   </div>
 </div>

@@ -80,8 +80,17 @@
                 <p><strong><?php echo $record['Person']['full_name']; ?></strong> <?php __('posted this message'); ?> <?php echo $time->timeAgoInWords($record['Post']['created'],array('end'=>false)); ?>.</p>
                 <h3><?php echo $html->link($record['Post']['title'],$url); ?></h3>
               </div>
-              <div class="content">
-                <p><?php echo $record['Post']['body']; ?></p>
+              <div class="content restore-html">
+                <?php
+                  if($record['Post']['format'] == 'textile')
+                  {
+                    echo $textile->parse($record['Post']['body']);
+                  }
+                  else
+                  {
+                    echo $record['Post']['body'];
+                  }
+                ?>
               </div>
               <div class="foot">
                 <ul>

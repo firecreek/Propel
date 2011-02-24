@@ -42,8 +42,17 @@
         <li class="delete"><?php echo $html->link(__('Delete',true),array('action'=>'delete',$id,$record['id'])); ?></li>
       </ul>
     </div>
-    <div class="content">
-      <?php echo $textile->parse($record['body']); ?>
+    <div class="content restore-html">
+      <?php
+        if($record['format'] == 'textile')
+        {
+          echo $textile->parse($record['body']);
+        }
+        else
+        {
+          echo $record['body'];
+        }
+      ?>
     </div>
   </div>
   

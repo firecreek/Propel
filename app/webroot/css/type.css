@@ -64,3 +64,16 @@ a.red:hover { background-color:red; text-decoration:none; color:white; padding:0
 .pad10 { padding:10px; }
 .pad15 { padding:15px; }
 .pad20 { padding:20px; }
+
+
+
+/** Restore HTML */
+.restore-html p,
+	.restore-html ul,
+	.restore-html ol { margin-bottom:1em !important; }
+
+.restore-html ul { margin-left:1em; }
+.restore-html ul li { list-style-type:disc; margin-left:1em; }
+.restore-html ol { margin-left:1em; }
+.restore-html ol { list-style-type:disc; margin-left:1em; }
+

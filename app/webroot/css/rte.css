@@ -26,6 +26,9 @@
 .rte-toolbar .bold.active { font-weight:bold !important; }
 .rte-toolbar .italic { font-style:italic; }
 
+/*.rte-toolbar .unorderedlist { background-image:url(/img/icons/list-unordered-14.png) #DDD no-repeat 6px 6px; padding-left:25px; }
+.rte-toolbar .orderedlist { background:url(/img/icons/list-ordered-14.png) #DDD no-repeat 6px 6px; padding-left:25px; }*/
+
 .format-options { position:absolute; right:15px; bottom:-30px; }
 .format-options a { font-size:10px; }
 
