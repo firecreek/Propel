@@ -1,10 +1,13 @@
-/*
-* jQuery RTE plugin 0.5.1 - create a rich text form for Mozilla, Opera, Safari and Internet Explorer
-*
-* Copyright (c) 2009 Batiste Bieler
-* Distributed under the GPL Licenses.
-* Distributed under the MIT License.
-*/
+/**
+ * jQuery RTE plugin 0.5.1 - create a rich text form for Mozilla, Opera, Safari and Internet Explorer
+ *
+ * Modifications by Darren Moore for Opencamp 
+ * @todo Clean up all JS and fix any bad HTML (e.g. toolbar)
+ *
+ * Copyright (c) 2009 Batiste Bieler
+ * Distributed under the GPL Licenses.
+ * Distributed under the MIT License.
+ */
 
 // define the rte light plugin
 (function($) {
@@ -37,20 +40,26 @@ if(typeof $.fn.rte === "undefined") {
         function enableDesignMode() {
 
             var content = textarea.val();
+            
 
             // Mozilla needs this to display caret
             if($.trim(content)=='') {
-                content = '<br />';
+                content = '<div></div>';
+            }
+            else
+            {
+                content = content.replace(/\n/g,'<br>');
             }
 
             // already created? show/hide
             if(iframe) {
-                console.log("already created");
+                //console.log("already created");
                 textarea.hide();
                 $(iframe).contents().find("body").html(content);
                 $(iframe).show();
                 $("#toolbar-" + element_id).remove();
                 textarea.before(toolbar());
+                textarea.after(footer());
                 return true;
             }
 
@@ -76,11 +85,12 @@ if(typeof $.fn.rte === "undefined") {
 
             var doc = "<html><head>"+css+"</head><body class='frameBody'>"+content+"</body></html>";
             tryEnableDesignMode(doc, function() {
+                changeFormat('richtext');
                 $("#toolbar-" + element_id).remove();
                 textarea.before(toolbar());
+                textarea.after(footer());
                 // hide textarea
                 textarea.hide();
-
             });
 
         }
@@ -112,9 +122,26 @@ if(typeof $.fn.rte === "undefined") {
             setTimeout(function(){tryEnableDesignMode(doc, callback)}, 500);
             return false;
         }
+        
+        
+        function changeFormat(format)
+        {
+            var formatInput = $(textarea).closest('form').find('input[id*=Format]');
+            formatInput.val(format);
+        }
+        
 
         function disableDesignMode(submit) {
             var content = $(iframe).contents().find("body").html();
+            
+            //Clean text
+            //content = content.replace(/<div>/ig,"\n");
+            content = content.replace(/<\/div>/ig,"\n");
+            content = content.replace(/<br>/ig,"\n");
+            
+            var tmp = document.createElement("DIV");
+            tmp.innerHTML = content;
+            content = tmp.textContent||tmp.innerText;
 
             if($(iframe).is(":visible")) {
                 textarea.val(content);
@@ -123,6 +150,7 @@ if(typeof $.fn.rte === "undefined") {
             if(submit !== true) {
                 textarea.show();
                 $(iframe).hide();
+                changeFormat('textile');
             }
         }
 
@@ -140,37 +168,6 @@ if(typeof $.fn.rte === "undefined") {
             $('.italic', tb).click(function(){ formatText('italic','italic');return false; });
             $('.unorderedlist', tb).click(function(){ formatText('insertunorderedlist','unorderedlist');return false; });
             $('.orderedlist', tb).click(function(){ formatText('insertorderedlist','orderedlist');return false; });
-            
-            /*$('select', tb).change(function(){
-                var index = this.selectedIndex;
-                if( index!=0 ) {
-                    var selected = this.options[index].value;
-                    formatText("formatblock", '<'+selected+'>');
-                }
-            });*/
-            /*$('.link', tb).click(function(){
-                var p=prompt("URL:");
-                if(p)
-                    formatText('CreateLink', p);
-                return false; });*/
-            /*$('.image', tb).click(function(){
-                var p=prompt("image URL:");
-                if(p)
-                    formatText('InsertImage', p);
-                return false; });*/
-
-            $('.disable', tb).click(function() {
-                disableDesignMode();
-                var edm = $('<a class="rte-edm" href="#">Enable design mode</a>');
-                tb.empty().append(edm);
-                edm.click(function(e){
-                    e.preventDefault();
-                    enableDesignMode();
-                    // remove, for good measure
-                    $(this).remove();
-                });
-                return false;
-            });
 
             // .NET compatability
             if(opts.dot_net_button_class) {
@@ -187,14 +184,17 @@ if(typeof $.fn.rte === "undefined") {
 
             var iframeDoc = $(iframe.contentWindow.document);
 
-            var select = $('select', tb)[0];
+            /*var select = $('select', tb)[0];
             iframeDoc.mouseup(function(){
                 setSelectedType(getSelectionElement(), select);
                 return true;
-            });
+            });*/
 
             iframeDoc.keyup(function() {
-                setSelectedType(getSelectionElement(), select);
+                //setSelectedType(getSelectionElement(), select);
+                
+                //console.log(getSelectionElement());
+                
                 var body = $('body', iframeDoc);
                 if(body.scrollTop() > 0) {
                     var iframe_height = parseInt(iframe.style['height'])
@@ -208,6 +208,32 @@ if(typeof $.fn.rte === "undefined") {
 
             return tb;
         };
+        
+        
+
+        // create footer
+        function footer() {
+            var tb = $("<p class='format-options'><a href='#' class='format-switch unimportant'>Switch to Textile/HTML</a></p>");
+            //var tb = $('<div class="format-switch">Switch to Textile/HTML</div>');
+
+            $('.format-switch', tb).click(function() {
+                disableDesignMode();
+                $('.rte-toolbar').remove();
+                var edm = $('<a href="#" class="format-switch unimportant">Go back to easy formatting</a>');
+                tb.empty().append(edm);
+                edm.click(function(e){
+                    e.preventDefault();
+                    enableDesignMode();
+                    // remove, for good measure
+                    $(this).remove();
+                    return false;
+                });
+                return false;
+            });
+
+            return tb;
+        };
+        
 
         function formatText(command, option, dom) {
             iframe.contentWindow.focus();
