@@ -1,5 +1,12 @@
 <?php
 
+  $after = false;
+
+  if(!empty($item['Todo']['description']))
+  {
+    $after = nl2br($item['Todo']['description']);
+  }
+  
   //List item
   $listHtml = $listable->item('Todo',$item['Todo']['id'],$item['Todo']['name'],array(
     'checkbox'      => false,
@@ -9,6 +16,7 @@
     'url'           => $html->url(array('controller'=>'todos','action'=>'view',$item['Todo']['id'])),
     'editUrl'       => $html->url(array('controller'=>'todos','action'=>'edit',$item['Todo']['id'])),
     'deleteUrl'     => $html->url(array('controller'=>'todos','action'=>'delete',$item['Todo']['id'])),
+    'after'         => $after
   ));
   $listHtml = $javascript->escapeString($listHtml);
 

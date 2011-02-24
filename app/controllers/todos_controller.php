@@ -233,7 +233,7 @@
       //Todo lists for filter
       $todos = $this->Todo->find('all',array(
         'conditions' => $conditions,
-        'fields' => array('id','name','private','person_id'),
+        'fields' => array('id','name','description','private','person_id'),
         'order' => 'Todo.position ASC',
         'contain' => array(
           'Person' => array('id','company_id'),

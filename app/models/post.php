@@ -110,21 +110,6 @@
      * @var array
      */
     public $hasAndBelongsToMany = array(
-      'People' => array(
-        'className' => 'Person',
-        'joinTable' => 'posts_peoples',
-        'foreignKey' => 'post_id',
-        'associationForeignKey' => 'people_id',
-        'unique' => true,
-        'conditions' => '',
-        'fields' => '',
-        'order' => '',
-        'limit' => '',
-        'offset' => '',
-        'finderQuery' => '',
-        'deleteQuery' => '',
-        'insertQuery' => ''
-      )
     );
 
   }

@@ -31,6 +31,12 @@
             $headerOptions['url'] = false;
           }
           
+          if(!empty($record['Todo']['description']))
+          {
+            $headerOptions['after'] = nl2br($record['Todo']['description']);
+          }
+          
+          
           if($record['Todo']['private'])
           {
             $headerOptions['private'] = true;

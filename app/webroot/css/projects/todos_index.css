@@ -20,6 +20,9 @@
 .listable .group .header .item .label a { color:#000000; }
 .listable .group .header .item .label a:hover { background-color:transparent; color:#000000; text-decoration:underline; }
 
+
+.listable .group .header .after { margin-left:62px; font-style: italic; }
+
 .listable p.list-description { margin:0 0 0 18px; font-size:12px; font-style:italic; }
 
 .listable .item .check { left:70px; }

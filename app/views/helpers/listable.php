@@ -61,6 +61,7 @@
       'delete'            => '<span class="delete">%s</span>',
       'edit'              => '<span class="edit important">%s</span>',
       'position'          => '<span class="position"%s></span>',
+      'after'             => '<div class="after">%s</div>',
       'loading'           => '<span class="loading" style="display:none;"></span>',
       'private'           => '<span class="private-pop" style="display:none;"><p>%s</p></span>',
     );
@@ -249,6 +250,12 @@
       
       //Inline
       $inline = sprintf($this->tags['inline']);
+      
+      //After
+      if(!empty($options['after']))
+      {
+        $options['after'] = sprintf($this->tags['after'],$options['after']);
+      }
       
       //Build output
       $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$options['deleteUrl'],$item,$inline,$options['after']);
