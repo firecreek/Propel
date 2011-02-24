@@ -1,6 +1,7 @@
 <?php
 
   if(!isset($edit)) { $edit = false; }
+  if(!isset($class)) { $class = null; }
   
   $responsibleOptions = $layout->permissionList($auth->read('People'),array('anyone'=>false));
 
@@ -16,7 +17,7 @@
       $url = array('controller'=>'todos_items','action'=>'edit',$id);
     }
   
-    echo $form->create('TodoItem',array('id'=>false,'url'=>$url));
+    echo $form->create('TodoItem',array('id'=>false,'url'=>$url,'class'=>$class));
     echo $form->input('description',array('div'=>'input textarea description','id'=>false,'label'=>__('Enter a to-do item',true)));
   ?>
   <div class="options">
@@ -29,7 +30,11 @@
   <?php
   
     $submitText = __('Add this item',true);
-    $cancelText = __('I\'m done adding items',true);
+    
+    if(!isset($cancelText))
+    {
+      $cancelText = __('I\'m done adding items',true);
+    }
       
     if($edit)
     {
@@ -47,7 +52,7 @@
       echo $form->hidden('TodoItem.ident',array('value'=>$todoItemIdent));
     }
   
-    echo $form->submit($submitText,array('after'=>__('or',true).' '.$html->link($cancelText,array('action'=>'index') ) ));
+    echo $form->submit($submitText,array('after'=>__('or',true).' '.$html->link($cancelText,array('controller'=>'todos','action'=>'index') ) ));
     echo $form->end();
   ?>
 </div>

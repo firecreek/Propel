@@ -135,15 +135,22 @@
           }
           
           $this->Session->setFlash(__('Todo item added',true),'default',array('class'=>'success'));
-          $this->redirect(array('action'=>'index'));
+          $this->redirect(array('controller'=>'todos','action'=>'index'));
         }
         else
         {
           $this->Session->setFlash(__('Failed to save the record, please check the form',true),'default',array('class'=>'error'));
         }
-        
-        $this->redirect(array('action'=>'index'));
       }
+      
+      $record = $this->TodoItem->Todo->find('first',array(
+        'conditions' => array(
+          'Todo.id' => $id
+        ),
+        'contain' => false
+      ));
+      
+      $this->set(compact('id','record'));
     }
     
     
