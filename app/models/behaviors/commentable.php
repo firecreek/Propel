@@ -56,13 +56,19 @@
           'CommentLast' => array(
             'className'   => 'Comment',
             'conditions'  => array(
-              'CommentLast.foreign_id = '.$model->alias.'.id',
-              'CommentLast.model'       => $model->alias
+              'CommentLast.id =
+                (
+                  SELECT MAX(id)
+                    FROM comments as CommentLastJoin
+                    WHERE
+                      CommentLastJoin.foreign_id = '.$model->alias.'.id AND
+                      CommentLastJoin.model = "'.$model->alias.'"
+                )
+              '
             ),
-            'order'       => 'CommentLast.id DESC',
             'foreignKey'  => false
           )
-        )
+        ),
       ),false);
       
       $model->Comment->associatedAlias = $model->alias;

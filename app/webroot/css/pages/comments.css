@@ -4,8 +4,8 @@
  */
 .comments .banner ul.right { top:0; }
 
-.comments h4 a { color:#333; text-decoration:none; }
-.comments h4 a:hover { color:#333; background-color:transparent; text-decoration:none; }
+.comments h4>a { color:#333; text-decoration:none; }
+.comments h4>a:hover { color:#333; background-color:transparent; text-decoration:none; }
 
 .comments .delete { margin:2px 0 0 6px; width:16px; height:11px; display:inline-block !important; text-indent:-9000px; background:url(/img/icons/delete-10.png) transparent no-repeat top right; }
 .comments .delete a { display:block; width:100%; height:100%; }

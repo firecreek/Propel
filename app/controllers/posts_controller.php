@@ -80,7 +80,6 @@
         'contain' => array(
           'Person',
           'CommentLast' => array(
-            'order' => 'CommentLast.id DESC',
             'Person'
           ),
           'CommentUnread'

@@ -134,14 +134,7 @@ if(typeof $.fn.rte === "undefined") {
         function disableDesignMode(submit) {
             var content = $(iframe).contents().find("body").html();
             
-            //Clean text
-            //content = content.replace(/<div>/ig,"\n");
-            content = content.replace(/<\/div>/ig,"\n");
-            content = content.replace(/<br>/ig,"\n");
-            
-            var tmp = document.createElement("DIV");
-            tmp.innerHTML = content;
-            content = tmp.textContent||tmp.innerText;
+            content = toTextile(content);
 
             if($(iframe).is(":visible")) {
                 textarea.val(content);
@@ -153,6 +146,29 @@ if(typeof $.fn.rte === "undefined") {
                 changeFormat('textile');
             }
         }
+        
+        
+        function toRichtext(content)
+        {
+            return content;
+        }
+        
+        
+        function toTextile(content)
+        {
+            content = content.replace(/<\/div>/ig,"\n");
+            content = content.replace(/<\/li>/ig,"\n");
+            content = content.replace(/<\/ul>/ig,"\n");
+            content = content.replace(/<\/ol>/ig,"\n");
+            content = content.replace(/<br>/ig,"\n");
+            
+            var tmp = document.createElement("DIV");
+            tmp.innerHTML = content;
+            content = tmp.textContent||tmp.innerText;
+            
+            return content;
+        }
+        
 
         // create toolbar and bind events to it's elements
         function toolbar() {
