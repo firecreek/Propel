@@ -158,10 +158,10 @@ if(typeof $.fn.rte === "undefined") {
         function toolbar() {
             var tb = $("<div class='rte-toolbar' id='toolbar-"+ element_id +"'><div>\
                 <p>\
-                    <a href='#' class='bold'>Bold</a>\
-                    <a href='#' class='italic'>Italic</a>\
-                    <a href='#' class='unorderedlist'>Bullets</a>\
-                    <a href='#' class='orderedlist'>Numbers</a>\
+                    <a href='#' class='bold' rel-tag='b'>Bold</a>\
+                    <a href='#' class='italic' rel-tag='i'>Italic</a>\
+                    <a href='#' class='unorderedlist' rel-tag='ul'>Bullets</a>\
+                    <a href='#' class='orderedlist' rel-tag='ol'>Numbers</a>\
                 </p></div></div>");
 
             $('.bold', tb).click(function(){ formatText('bold','bold');return false; });
@@ -183,17 +183,14 @@ if(typeof $.fn.rte === "undefined") {
             }
 
             var iframeDoc = $(iframe.contentWindow.document);
-
-            /*var select = $('select', tb)[0];
+            
             iframeDoc.mouseup(function(){
-                setSelectedType(getSelectionElement(), select);
+                setActiveType(getSelectionElement());
                 return true;
-            });*/
+            });
 
             iframeDoc.keyup(function() {
-                //setSelectedType(getSelectionElement(), select);
-                
-                //console.log(getSelectionElement());
+                setActiveType(getSelectionElement());
                 
                 var body = $('body', iframeDoc);
                 if(body.scrollTop() > 0) {
@@ -246,20 +243,22 @@ if(typeof $.fn.rte === "undefined") {
             iframe.contentWindow.focus();
         };
 
-        function setSelectedType(node, select) {
-            /*while(node.parentNode) {
+
+        function setActiveType(node, select)
+        {
+            $('#toolbar-'+element_id+' a').removeClass('active');
+        
+            while(node.parentNode)
+            {
                 var nName = node.nodeName.toLowerCase();
-                for(var i=0;i<select.options.length;i++) {
-                    if(nName==select.options[i].value){
-                        select.selectedIndex=i;
-                        return true;
-                    }
-                }
+                $('#toolbar-'+element_id+' a[rel-tag='+nName+']').addClass('active');
+                
                 node = node.parentNode;
             }
-            select.selectedIndex=0;*/
+            
             return true;
         };
+
 
         function getSelectionElement() {
             if (iframe.contentWindow.document.selection) {

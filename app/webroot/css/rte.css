@@ -14,7 +14,7 @@
 	padding:5px 5px;
 }
 .rte-toolbar a:hover { background-color:#DDD; border:1px solid #777; }
-.rte-toolbar a.active { background-color:red; }
+.rte-toolbar a.active { font-weight:normal !important; background-color:#999; background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#E5E5E5), to(#FDFDFD)); }
 
 .rte-toolbar p {
     float:left;
@@ -23,6 +23,7 @@
 }
 
 .rte-toolbar .bold { font-weight:bold; }
+.rte-toolbar .bold.active { font-weight:bold !important; }
 .rte-toolbar .italic { font-style:italic; }
 
 .format-options { position:absolute; right:15px; bottom:-30px; }
