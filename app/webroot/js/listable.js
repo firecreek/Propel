@@ -47,7 +47,7 @@
         
       //Edit
       this.editElems = this.listElements.find('.edit')
-        .bind('click.listable', this._edit);
+        .bind('click.listable', function() { return self._edit(self,this); });
       
       //Private
       this.privateElems = this.listElements.find('.extra.private')
@@ -110,13 +110,15 @@
     /**
      * Inline edit
      */
-    _edit: function()
-    {
+    _edit: function(ui,element)
+    {    
       var self = this;
-      
-      var item      = $(this).closest('.item');
+    
+      var item      = $(element).closest('.item');
+      var group     = $(element).closest('.group');
       var inline    = $(item).find('.inline');
       var loading   = $(item).find('.loading');
+      var after     = $(item).find('.after');
       var overview  = $(item).find('.overview');
       
       var url = $(item).attr('rel-edit-url')+'?container=true&objId='+$(item).attr('id');
@@ -129,20 +131,32 @@
         $(loading).hide();
         $(overview).hide();
         $(inline).show();
-        $(self).removeClass('ui-state-active');
+        $(element).removeClass('ui-state-active');
         $(item).removeClass('ui-state-loading');
+        
+        $(item).addClass('ui-state-edit');
+        $(group).addClass('ui-state-edit');
+        
+        //Trigger
+        self._trigger("edit", element, {
+          element: element,
+          item: item
+        });
         
         //Submit
         $(inline).find('form').ajaxSubmit();
         
         //Cancel link
         $(inline).find('.submit a').bind('click',function(e){
+          $(item).removeClass('ui-state-edit');
+          $(group).removeClass('ui-state-edit');
           e.preventDefault();
           $(inline).html('').hide();
           $(overview).show();
         });
         
       });
+      
       
       return false;
     },

@@ -17,6 +17,7 @@
 .listable .item { min-height:15px; margin:2px 0px; position:relative; left:-45px; }
 .listable .item.ui-sortable-helper { left:5px !important; }
 
+
 /**
  * Checkbox
  */
@@ -74,6 +75,8 @@
  */
 .listable .item .maintain { display:none; }
 .listable .item.l-comments-without .comment { display:none; }
+
+.listable .item.ui-state-edit .after { display:none; }
 
 .listable .item.ui-state-active .maintain { display:block; }
 .listable .item.ui-state-active .comment { display:inline-block; }

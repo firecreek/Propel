@@ -27,6 +27,7 @@
 
 //
 var originalObj = $('#<?php echo $this->data['Todo']['ident']; ?>');
+var group = $(originalObj).closest('.group');
 
 //Append the item
 $(originalObj).after('<?php echo $listHtml; ?>');
@@ -39,6 +40,9 @@ $('#<?php echo $listable->lastIdent; ?>').closest('.group').find('.list-descript
 
 //Delete original object
 $(originalObj).remove();
+
+//
+$(group).removeClass('ui-state-edit');
 
 //Make listable
 $('.listable').data('listable').reset();
