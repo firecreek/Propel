@@ -121,7 +121,7 @@
         'prefix'              => false,
         'append'              => false,
         'after'               => null,
-        'ident'               => $alias.'-'.$id.'-'.rand(10000,99999)
+        'ident'               => $alias.$id
       );
       $options = array_merge($_options,$options);
       
