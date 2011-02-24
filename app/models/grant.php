@@ -12,10 +12,28 @@
    */
   class Grant extends AppModel
   {
+    /**
+     * Model name
+     *
+     * @access public
+     * @var string
+     */
     public $name = 'Grant';
     
+    /**
+     * Behaviors
+     *
+     * @access public
+     * @var array
+     */
     public $actsAs = array('Containable');
     
+    /**
+     * Has many
+     *
+     * @access public
+     * @var array
+     */
     public $hasMany = array(
       'GrantSet'
     );
