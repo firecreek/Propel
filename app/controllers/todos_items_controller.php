@@ -241,37 +241,44 @@
      */
     public function project_update($id,$completed = false)
     {
-      $this->TodoItem->disableLog();
-    
-      if($completed == 'true')
+      //Check current status
+      $this->TodoItem->id;
+      
+      if((int)$this->TodoItem->field('completed') !== ($completed == 'false' ? 0 : 1))
       {
-        $this->TodoItem->updateAll(
-          array(
-            'completed' => '1',
-            'completed_date' => '"'.date('Y-m-d').'"',
-            'completed_person_id' => $this->Authorization->read('Person.id')
-          ),
-          array('TodoItem.id'=>$id)
-        );
-        
-        //@todo Read record once
-        $record = $this->TodoItem->find('first',array(
-          'conditions' => array('TodoItem.id'=>$id),
-          'contain' => array('Todo','Responsible')
-        ));
-        
-        $this->TodoItem->customLog('completed',$id,array(
-          'extra1' => $record['Todo']['name'],
-          'extra2' => $record['Todo']['id'],
-          'extra3' => isset($record['Responsible']['name']) ? $record['Responsible']['name'] : null
-        ));
-      }
-      else
-      {
-        $this->TodoItem->updateAll(
-          array('completed' => '0'),
-          array('TodoItem.id'=>$id)
-        );
+        //Make update
+        $this->TodoItem->disableLog();
+      
+        if($completed == 'true')
+        {
+          $this->TodoItem->updateAll(
+            array(
+              'completed' => '1',
+              'completed_date' => '"'.date('Y-m-d').'"',
+              'completed_person_id' => $this->Authorization->read('Person.id')
+            ),
+            array('TodoItem.id'=>$id)
+          );
+          
+          //@todo Read record once
+          $record = $this->TodoItem->find('first',array(
+            'conditions' => array('TodoItem.id'=>$id),
+            'contain' => array('Todo','Responsible')
+          ));
+          
+          $this->TodoItem->customLog('completed',$id,array(
+            'extra1' => $record['Todo']['name'],
+            'extra2' => $record['Todo']['id'],
+            'extra3' => isset($record['Responsible']['name']) ? $record['Responsible']['name'] : null
+          ));
+        }
+        else
+        {
+          $this->TodoItem->updateAll(
+            array('completed' => '0'),
+            array('TodoItem.id'=>$id)
+          );
+        }
       }
       
       //Load item back in
