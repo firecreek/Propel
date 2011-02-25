@@ -113,6 +113,35 @@
     
     
     /**
+     * Before save
+     *
+     * @access public
+     * @return boolean
+     */
+    public function beforeSave($options)
+    {
+      
+      if(isset($this->data[$this->alias]) && !isset($this->data[$this->alias]['position']))
+      {
+        //Get last record, add position
+        if($lastRecord = $this->find('first',array(
+          'conditions' => array(
+            'todo_id' => $this->data[$this->alias]['todo_id']
+          ),
+          'fields' => 'position',
+          'contain' => false,
+          'order' => 'position DESC'
+        )))
+        {
+          $this->data[$this->alias]['position'] = $lastRecord[$this->alias]['position'] + 1;
+        }
+      }
+    
+      return true;
+    }
+    
+    
+    /**
      * Update
      *
      * @todo Passing the ID
