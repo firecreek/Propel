@@ -21,7 +21,7 @@
       echo $form->input('responsible',array('options'=>$responsibleOptions,'empty'=>true,'label'=>__('Who\'s responsible?',true)));
       echo $form->input('email',array('label'=>__('Email 48 hours before it\'s due',true)));
       
-      echo $form->hidden('ident',array('value'=>$this->params['url']['objId']));
+      echo $form->hidden('ident',array('value'=>$this->params['form']['objId']));
     ?>
     
     <?php /*

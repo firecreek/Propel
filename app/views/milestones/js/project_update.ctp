@@ -6,7 +6,7 @@
   <?php
     $listHtml = $javascript->escapeString($this->element('milestones/comments_record'));
   ?>
-  var originalObj = $('#<?php echo $this->params['url']['objId']; ?>');
+  var originalObj = $('#<?php echo $this->params['form']['objId']; ?>');
   
   //Delete previous status
   $('#milestoneStatus').remove();

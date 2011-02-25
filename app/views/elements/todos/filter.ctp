@@ -4,7 +4,7 @@
     <?php
       $responsibleOptions = $layout->permissionList($auth->read('People'));
       
-      echo $form->create('Todos',array('url'=>$this->here,'type'=>'get','class'=>'block'));
+      echo $form->create('Todo',array('url'=>$this->here,'type'=>'get','class'=>'block'));
       echo $form->input('responsible',array(
         'label'     => __('Show to-dos assigned to',true),
         'options'   => $responsibleOptions,

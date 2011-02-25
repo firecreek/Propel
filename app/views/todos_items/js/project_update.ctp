@@ -1,12 +1,13 @@
 <?php
   $referer = Controller::referer();
-  if(strpos($referer,'/comments/') !== false):
 ?>
+
+<?php if(strpos($referer,'/comments/') !== false): ?>
 
   <?php
     $listHtml = $javascript->escapeString($this->element('todos_items/comments_record'));
   ?>
-  var originalObj = $('#<?php echo $this->params['url']['objId']; ?>');
+  var originalObj = $('#<?php echo $this->params['form']['objId']; ?>');
 
   //Append the item
   $(originalObj).after('<?php echo $listHtml; ?>');
@@ -16,6 +17,18 @@
 
   //Make listable
   $('.listable').data('listable').reset();
+
+
+<?php elseif(isset($this->params['form']['from']) && $this->params['form']['from'] == 'account'): ?>
+
+
+  $('#<?php echo $this->params['form']['objId']; ?>').remove();
+  
+  if($('.section.todos .item').length == 0)
+  {
+    $('.section.todos').hide();
+    $('#noRecords').show();
+  }
 
 
 <?php else: ?>
@@ -54,7 +67,7 @@
   ?>
 
   //
-  var originalObj = $('#<?php echo $this->params['url']['objId']; ?>');
+  var originalObj = $('#<?php echo $this->params['form']['objId']; ?>');
   var group = $(originalObj).closest('.group');
   var recent = $(group).find('.recent');
 

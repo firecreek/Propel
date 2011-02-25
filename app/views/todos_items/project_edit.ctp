@@ -9,7 +9,7 @@
       echo $this->element('todos/add_item',array(
         'todoId'=>$todoId,
         'edit'=>true,
-        'todoItemIdent' => isset($this->params['url']['objId']) ? $this->params['url']['objId'] : null
+        'todoItemIdent' => isset($this->params['form']['objId']) ? $this->params['form']['objId'] : null
       ));
     ?>
     

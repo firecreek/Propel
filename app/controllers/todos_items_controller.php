@@ -219,7 +219,7 @@
       }
       else
       {
-        $this->data = $this->Todo->TodoItem->find('first',array(
+        $this->data = $this->TodoItem->find('first',array(
           'conditions' => array(
             'TodoItem.id' => $id
           ),
@@ -240,12 +240,12 @@
      * @return void
      */
     public function project_update($id,$completed = false)
-    {
+    {    
       //Check current status
       $this->TodoItem->id;
       
-      if((int)$this->TodoItem->field('completed') !== ($completed == 'false' ? 0 : 1))
-      {
+      //if((int)$this->TodoItem->field('completed') !== ($completed == 'false' ? 0 : 1))
+      //{
         //Make update
         $this->TodoItem->disableLog();
       
@@ -263,7 +263,10 @@
           //@todo Read record once
           $record = $this->TodoItem->find('first',array(
             'conditions' => array('TodoItem.id'=>$id),
-            'contain' => array('Todo','Responsible')
+            'contain' => array(
+              'Todo' => array('Person'),
+              'Responsible'
+            )
           ));
           
           $this->TodoItem->customLog('completed',$id,array(
@@ -279,12 +282,16 @@
             array('TodoItem.id'=>$id)
           );
         }
-      }
+      //}
       
       //Load item back in
       $record = $this->TodoItem->find('first',array(
         'conditions' => array('TodoItem.id'=>$id),
-        'contain' => array('Todo')
+        'contain' => array(
+          'Todo' => array(
+            'Person'
+          )
+        )
       ));
     
       $this->set(compact('id','record','completed'));

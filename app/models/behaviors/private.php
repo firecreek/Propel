@@ -28,6 +28,33 @@
      */
     public function beforeFind(&$model, $query)
     {
+      if($query['fields'] == 'COUNT(*) AS `count`')
+      {
+        return $query;
+      }
+      
+      //Only do if Person is in contain
+      if(isset($query['contain']['Person']))
+      {
+        $query['conditions'] = array(
+          'AND' => array(
+            $query['conditions'],
+            array(
+              'OR' => array(
+                array($model->alias.'.private' => 0),
+                array(
+                  'AND' => array(
+                    $model->alias.'.private' => 1,
+                    'Person.company_id' => $model->authRead('Company.id')
+                  )
+                ),
+              )
+            )
+          )
+        );
+      }
+      
+      return $query;
     }
     
 

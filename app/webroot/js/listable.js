@@ -100,8 +100,24 @@
     {
       var item = $(this).closest('.item');
       var checked = $(this).is(':checked');
+      var url = item.attr('rel-update-url');
+      var data = {};
       
-      __scriptCall(item.attr('rel-update-url')+'/'+checked,{ element:item,loading:true });
+      //@todo Centralise this code
+      if(url.indexOf('?') !== -1)
+      {
+        var split = url.substr(url.indexOf('?')).split('&');
+        
+        for(var ii = 0; ii < split.length; ii++)
+        {
+          var keyVal = split[ii].split('=');
+          data[keyVal[0].replace('?','')] = keyVal[1];
+        }
+        
+        url = url.substr(0,url.indexOf('?'));
+      }
+      
+      __scriptCall(url+'/'+checked,{ element:item, loading:true, data:data });
       
       return false;
     },
@@ -121,12 +137,27 @@
       var after     = $(item).find('.after');
       var overview  = $(item).find('.overview');
       
-      var url = $(item).attr('rel-edit-url')+'?container=true&objId='+$(item).attr('id');
-      
+      //@todo Centralise this code
+      var url = $(item).attr('rel-edit-url');
+      var data = { objId:$(item).attr('id') };
+      if(url.indexOf('?') !== -1)
+      {
+        var split = url.substr(url.indexOf('?')).split('&');
+        
+        for(var ii = 0; ii < split.length; ii++)
+        {
+          var keyVal = split[ii].split('=');
+          data[keyVal[0].replace('?','')] = keyVal[1];
+        }
+        
+        url = url.substr(0,url.indexOf('?'));
+      }
+
       $(loading).show();
       $(item).addClass('ui-state-loading');
       
-      $(inline).load(url,function(response,status,xhr){
+      //@todo Move this to __scriptCall
+      $(inline).load(url,data,function(response,status,xhr){
         //Element visibilities
         $(loading).hide();
         $(overview).hide();
@@ -134,8 +165,8 @@
         $(element).removeClass('ui-state-active');
         $(item).removeClass('ui-state-loading');
         
-        $(item).addClass('ui-state-edit');
-        $(group).addClass('ui-state-edit');
+        //$(item).addClass('ui-state-edit');
+        //$(group).addClass('ui-state-edit');
         
         //Trigger
         self._trigger("edit", element, {
@@ -148,8 +179,8 @@
         
         //Cancel link
         $(inline).find('.submit a').bind('click',function(e){
-          $(item).removeClass('ui-state-edit');
-          $(group).removeClass('ui-state-edit');
+          //$(item).removeClass('ui-state-edit');
+          //$(group).removeClass('ui-state-edit');
           e.preventDefault();
           $(inline).html('').hide();
           $(overview).show();
@@ -237,20 +268,15 @@ function __scriptCall(url, options)
     options.data = {};
   }
   
-  //
   if(options.element)
   {
-    url = url + '.js?objId='+$(options.element).attr('id');
-  }
-  else
-  {
-    url = url + '.js';
+    options.data['objId'] = $(options.element).attr('id');
   }
 
   //
   $.ajax({
     type: 'POST',
-    url: url,
+    url: url+'.js',
     dataType: 'script',
     cache: false,
     data: options.data,

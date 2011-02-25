@@ -610,3 +610,22 @@ table.logs.dated .today span { background-color:#FFF000; border-bottom:0; color:
 .badge.post { background-color:#334E7D; }
 .badge.private { background-color:#FF0000; }
 
+
+
+/**
+ * Fix floats
+ */
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+.clearfix {display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+

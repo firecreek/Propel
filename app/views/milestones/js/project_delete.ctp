@@ -1,5 +1,5 @@
 
-$('#<?php echo $this->params['url']['objId']; ?>').fadeOut(400, function(){
+$('#<?php echo $this->params['form']['objId']; ?>').fadeOut(400, function(){
   $(this).remove();
   Milestones.checkSections();
 });

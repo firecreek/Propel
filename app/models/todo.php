@@ -30,7 +30,8 @@
       'Containable',
       'Auth',
       'Responsible',
-      'Due'
+      'Due',
+      'Private'
     );
     
     /**

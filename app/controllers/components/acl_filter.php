@@ -361,6 +361,12 @@
               $contain['Person'] = array('id','company_id');
             }
             
+            //Set auth data
+            if($this->controller->{$modelAlias}->Behaviors->enabled('Auth'))
+            {
+              $this->controller->{$modelAlias}->setAuthState($this->Session->read('AuthAccount'));
+            }
+            
             //Load record
             $modelRecord = $this->controller->{$modelAlias}->find('first',array(
               'conditions' => array(
@@ -439,7 +445,7 @@
             'fields' => array('id','name'),
             'contain' => array(
               'Account' => array(
-                'fields' => array('id','slug')
+                'fields' => array('id','name','slug')
               ),
               'Company' => array(
                 'fields' => array('id','name')

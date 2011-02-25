@@ -80,13 +80,34 @@
      */
     public function account_index()
     {
-      //Params
-      $this->data['Todo']['responsible']  = isset($this->params['url']['responsible']) ? $this->params['url']['responsible'] : 'all';
-      $this->data['Todo']['due']          = isset($this->params['url']['due']) ? $this->params['url']['due'] : 'anytime';
+      //Todos
+      $authProjects = $this->Authorization->read('Projects');
       
-      $responsible = $this->Opencamp->findResponsible();
+      $projects = array();
       
-      $this->set(compact('responsible','records'));
+      foreach($authProjects as $key => $project)
+      {
+        if($project['Project']['id'] == 27) { continue; }
+        
+        $todos = $this->__filterTodos(array(
+          array(
+            'Todo.project_id' => $project['Project']['id'],
+            'OR' => array(
+              'Todo.todo_items_count' => 0,
+              'NOT' => array(
+                'Todo.todo_items_count = Todo.todo_items_completed_count'
+              )
+            )
+          )
+        ));
+        
+        if(!empty($todos))
+        {
+          $projects[] = array_merge($project,array('Todo'=>$todos));
+        }
+      }
+      
+      $this->set(compact('projects'));
     }
     
     
@@ -103,6 +124,7 @@
         'conditions' => array(
           'Todo.project_id' => $this->Authorization->read('Project.id')
         ),
+        'contain' => array('Person'),
         'recursive' => -1
       ));
     
@@ -112,27 +134,14 @@
         return $this->render('project_index_new');
       }
       
-      //Todos with privacy check
+      //Todos
       $todos = $this->__filterTodos(array(
-        'AND' => array(
-          array(
-            'Todo.project_id' => $this->Authorization->read('Project.id'),
-            'OR' => array(
-              'Todo.todo_items_count' => 0,
-              'NOT' => array(
-                'Todo.todo_items_count = Todo.todo_items_completed_count'
-              )
-            )
-          ),
-          array(
-            'OR' => array(
-              array('Todo.private' => 0),
-              array(
-                'AND' => array(
-                  'Todo.private' => 1,
-                  'Person.company_id' => $this->Authorization->read('Company.id')
-                )
-              ),
+        array(
+          'Todo.project_id' => $this->Authorization->read('Project.id'),
+          'OR' => array(
+            'Todo.todo_items_count' => 0,
+            'NOT' => array(
+              'Todo.todo_items_count = Todo.todo_items_completed_count'
             )
           )
         )
