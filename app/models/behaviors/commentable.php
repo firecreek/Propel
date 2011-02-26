@@ -33,13 +33,13 @@
         'hasMany' => array(
           'Comment' => array(
             'conditions'    => array('Comment.model' => $model->alias),
-            'foreignKey'    => 'foreign_id',
+            'foreignKey'    => 'model_id',
             'dependent'     => true,
             'order'         => 'Comment.created DESC'
           ),
           'CommentPerson' => array(
             'conditions'  => array('CommentPerson.model' => $model->alias),
-            'foreignKey'  => 'foreign_id',
+            'foreignKey'  => 'model_id',
             'dependent'   => true
           )
         ),
@@ -47,7 +47,7 @@
           'CommentUnread' => array(
             'className'   => 'CommentRead',
             'conditions'  => array(
-              'CommentUnread.foreign_id = '.$model->alias.'.id',
+              'CommentUnread.model_id = '.$model->alias.'.id',
               'CommentUnread.model'       => $model->alias
             ),
             'foreignKey'  => false,
@@ -61,7 +61,7 @@
                   SELECT MAX(id)
                     FROM comments as CommentLastJoin
                     WHERE
-                      CommentLastJoin.foreign_id = '.$model->alias.'.id AND
+                      CommentLastJoin.model_id = '.$model->alias.'.id AND
                       CommentLastJoin.model = "'.$model->alias.'"
                 )
               '

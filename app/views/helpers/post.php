@@ -14,6 +14,16 @@
   {
     
     /**
+     * Before log output
+     *
+     * @access public
+     * @return boolean
+     */
+    public function beforeLog($data)
+    {
+    }
+    
+    /**
      * Before search output
      *
      * @access public

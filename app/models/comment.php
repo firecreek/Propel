@@ -37,7 +37,7 @@
         'description' => 'body',
         'extra' => array(
           'model',
-          'foreign_id',
+          'model_id',
         )
       )
     );
@@ -82,7 +82,7 @@
         'foreignKey'  => false,
         'conditions'  => array(
           'CommentPerson.model = Comment.model',
-          'CommentPerson.foreign_id = Comment.foreign_id'
+          'CommentPerson.model_id = Comment.model_id'
         )
       ),
       'CommentRead' => array(
@@ -90,7 +90,7 @@
         'foreignKey'  => false,
         'conditions'  => array(
           'CommentRead.model = Comment.model',
-          'CommentRead.foreign_id = Comment.foreign_id'
+          'CommentRead.model_id = Comment.model_id'
         )
       )
     );
@@ -107,7 +107,7 @@
       if(!$this->CommentPerson->find('count',array(
         'conditions' => array(
           'model'       => $this->associatedAlias,
-          'foreign_id'  => $id,
+          'model_id'  => $id,
           'person_id'   => $personId
         ),
         'recursive' => -1
@@ -116,7 +116,7 @@
         //add
         $this->CommentPerson->save(array(
           'model'       => $this->associatedAlias,
-          'foreign_id'  => $id,
+          'model_id'  => $id,
           'person_id'   => $personId
         ));
       }    
@@ -133,7 +133,7 @@
     {
       $this->CommentPerson->deleteAll(array(
         'model'       => $this->associatedAlias,
-        'foreign_id'  => $id,
+        'model_id'  => $id,
         'person_id'   => $personId
       ));
     }
@@ -150,7 +150,7 @@
       return $model->Comment->CommentPerson->find('count',array(
         'conditions' => array(
           'model'       => $model->alias,
-          'foreign_id'  => $id
+          'model_id'  => $id
         ),
         'recursive' => -1
       ));
@@ -169,7 +169,7 @@
       $count = $this->find('count',array(
         'conditions' => array(
           'model' => $this->associatedAlias,
-          'foreign_id' => $id
+          'model_id' => $id
         ),
         'recursive' => -1
       ));
@@ -178,7 +178,7 @@
       $record = $this->CommentRead->find('first',array(
         'conditions' => array(
           'model' => $this->associatedAlias,
-          'foreign_id' => $id,
+          'model_id' => $id,
           'person_id'  => $personId
         ),
         'recursive' => -1
@@ -198,7 +198,7 @@
         $this->CommentRead->create();
         $check = $this->CommentRead->save(array(
           'model'       => $this->associatedAlias,
-          'foreign_id'  => $id,
+          'model_id'  => $id,
           'person_id'   => $personId,
           'last_count'  => $count
         ));
@@ -219,7 +219,7 @@
       $count = $this->find('count',array(
         'conditions' => array(
           'Comment.model' => $this->associatedAlias,
-          'Comment.foreign_id' => $id
+          'Comment.model_id' => $id
         ),
         'recursive' => -1
       ));

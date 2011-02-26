@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-02-26 20:02:10 : 1298727370*/
+/* App schema generated on: 2011-02-26 21:02:03 : 1298728803*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -99,19 +99,19 @@ class AppSchema extends CakeSchema {
 		'account_id' => array('type' => 'integer', 'null' => false),
 		'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'foreign_id' => array('type' => 'integer', 'null' => false),
+		'model_id' => array('type' => 'integer', 'null' => false),
 		'body' => array('type' => 'text', 'null' => false, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'format' => array('type' => 'string', 'null' => false, 'default' => 'textile', 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'model' => array('column' => array('model', 'foreign_id'), 'unique' => 0)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'model' => array('column' => array('model', 'model_id'), 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $comments_people = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'foreign_id' => array('type' => 'integer', 'null' => false),
+		'model_id' => array('type' => 'integer', 'null' => false),
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'unsubscribed' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
@@ -120,7 +120,7 @@ class AppSchema extends CakeSchema {
 	var $comments_reads = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'foreign_id' => array('type' => 'integer', 'null' => false),
+		'model_id' => array('type' => 'integer', 'null' => false),
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'last_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'created' => array('type' => 'datetime', 'null' => false),
@@ -215,7 +215,7 @@ class AppSchema extends CakeSchema {
 	var $people = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'account_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'company_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'company_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'company_owner' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'first_name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -233,12 +233,12 @@ class AppSchema extends CakeSchema {
 		'status' => array('type' => 'string', 'null' => false, 'default' => 'active', 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'company_id' => array('column' => 'company_id', 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $posts = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'project_id' => array('type' => 'integer', 'null' => false),
+		'project_id' => array('type' => 'integer', 'null' => false, 'key' => 'index'),
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'category_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'milestone_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
@@ -250,7 +250,7 @@ class AppSchema extends CakeSchema {
 		'format' => array('type' => 'string', 'null' => false, 'default' => 'textile', 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'project_id' => array('column' => 'project_id', 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $projects = array(
