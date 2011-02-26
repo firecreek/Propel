@@ -1,5 +1,11 @@
+<?php
 
-<div class="box">
+  $javascript->link('projects/companies_add.js', false);
+  $html->css('projects/companies_add', null, array('inline'=>false));
+  
+?>
+
+<div class="box" id="CompanyAdd">
   <div class="banner">
     <h2><?php __('Which company do you want to add to the project?'); ?></h2>
   </div>
@@ -9,23 +15,35 @@
     
     <?php
       echo $form->create('Company',array('url'=>$this->here,'class'=>'block'));
+      echo $form->hidden('Permission.option',array('value'=>'select'));
     ?>
-      
-    <?php
-      //Create
-      echo $form->input('name',array('label'=>__('Enter a new company name',true),'div'=>'input text strong'));
-    ?>
-      
+    
+    <div id="CompanyAddNew" class="option">
+      <p>
+        <strong><?php __('New company name') ?></strong>
+        <span>(<?php __('or') ?> <?php echo $html->link(__('select an existing company',true),'#'); ?>)</span>
+      </p>
+
+      <?php
+        //Create
+        echo $form->input('name',array('label'=>false,'div'=>'input text strong'));
+      ?>
+    </div>
       
     <?php if(!empty($companies)): ?>
-    
-      <p><?php __('..or choose an existing company'); ?></p>
-    
-      <?php
-        //Choose
-        echo $form->input('id',array('options'=>$companies,'empty'=>true,'label'=>__('Choose a company',true),'div'=>'input text strong'));
-      ?>
-      
+      <div id="CompanyAddExisting" class="option">
+        <p>
+          <strong><?php __('Choose a company') ?></strong>
+          <span>(<?php __('or') ?> <?php echo $html->link(__('create a new company',true),'#'); ?>)</span>
+        </p>
+        <?php
+          //Choose
+          echo $form->input('id',array('options'=>$companies,'empty'=>true,'label'=>false,'div'=>'input text strong'));
+          
+          //
+          echo $form->input('Permission.add_people',array('checked'=>true,'type'=>'checkbox','label'=>__('Give everyone from this company access to this project now.',true)));
+        ?>
+      </div>
     <?php endif; ?>
     
     

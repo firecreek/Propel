@@ -1,6 +1,8 @@
 <?php
 
-  $html->css('pages/project_permissions', null, array('inline'=>false));
+  $javascript->link('projects/companies_permissions.js', false);
+  
+  $html->css('projects/companies_permissions', null, array('inline'=>false));
   
 ?>
 
@@ -12,7 +14,7 @@
       <div class="banner">
         <h2><?php __('Add people, remove people, and change permissions'); ?></h2>
       </div>
-      <div class="content">
+      <div class="content" id="CompanyPermissions">
       
         <?php
           echo $layout->button(__('Add another company to this project',true),array('action'=>'add'),'large add margin');
@@ -37,7 +39,7 @@
             <thead>
               <tr>
                 <th><?php echo $company['Company']['name']; ?></th>
-                <th class="links">
+                <th class="links" colspan="2">
                   <?php if(!$myCompany): ?>
                     <?php echo $html->link(__('Remove company from this project',true),array('action'=>'delete',$company['Company']['id']),array('class'=>'unimportant','confirm'=>__('Are you sure you want to remove this company and every person from this project?',true))); ?>
                   <?php endif; ?>
@@ -50,7 +52,7 @@
                 <?php
                   $pid = $person['id'];
                 ?>
-                <tr>
+                <tr rel-person-id="<?php echo $pid; ?>">
                   <td class="name">
                     <?php
                       $disabled = false;
@@ -63,16 +65,19 @@
                     ?>
                   </td>
                   <td class="permissions">
+                    <div class="permission-options" style="<?php if(!$checked) { echo 'display:none;'; } ?>">
                     <?php
                       if(!$person['company_owner'])
                       {
                         echo $form->hidden('GrantOriginal.'.$pid,array('value'=>$person['_grantKey']));
                       
                         echo $form->input('Grant.'.$pid,array(
-                          'type'    => 'radio',
-                          'label'   => false,
-                          'legend'  => false,
-                          'value'   => $person['_grantKey'],
+                          'type'      => 'radio',
+                          'label'     => false,
+                          'legend'    => false,
+                          'value'     => $person['_grantKey'],
+                          'rel-person' => $pid,
+                          'rel-group'   => $pid,
                           'options' => array(
                             1 => __('Messages & Files',true),
                             2 => __('...plus To-Dos',true),
@@ -81,13 +86,15 @@
                         ));
                       }
                     ?>
+                    </div>
                   </td>
+                  <td class="loading"><div style="display:none;"></div></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
             <?php endif; ?>
             <tfoot>
-              <td class="important" colspan="2">
+              <td class="important" colspan="3">
                 <?php
                   echo $html->link(__('Add a new person',true),array(
                     'controller'=>'people',

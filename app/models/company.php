@@ -113,7 +113,7 @@
      * @var array
      */
     public $hasMany = array(
-      'People' => array(
+      'Person' => array(
         'className' => 'Person',
         'foreignKey' => 'company_id',
         'dependent' => true

@@ -70,7 +70,7 @@
             
               <div id="PermissionSelectCompany" class="option" style="display:none;">
                 <p>
-                  <strong><?php __('Which company?') ?></strong>
+                  <strong><?php __('Choose a company') ?></strong>
                   <span>(<?php __('or') ?> <?php echo $html->link(__('create a new company',true),'#'); ?>)</span>
                 </p>
                 <?php echo $form->input('Permission.company_id',array('label'=>false,'empty'=>true,'options'=>$companyOptions)); ?>

@@ -155,7 +155,7 @@
           if($this->Person->validates() && isset($companies[$this->data['Person']['company_id']]))
           {
             $this->Person->save();
-            $this->Session->setFlash(__('Persons details have been updated',true));
+            $this->Session->setFlash(__('Persons details have been updated',true),'default',array('class'=>'success'));
             $this->redirect(array('controller'=>'companies','action'=>'index'));
           }
           else
@@ -227,7 +227,7 @@
           $this->AclManager->allow($this->Person, 'projects', $this->Authorization->read('Project.id'), array('set' => 'shared'));
           
           //Message and redirect
-          $this->Session->setFlash(__('Person added to company',true));
+          $this->Session->setFlash(__('Person added to company',true),'default',array('class'=>'success'));
           $this->redirect(array('controller'=>'companies','action'=>'permissions'));
         }
         else
