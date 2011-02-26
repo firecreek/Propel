@@ -70,6 +70,7 @@
     {
       $this->controller->helpers[] = 'TodoItem';
       $this->controller->helpers[] = 'Comment';
+      $this->controller->helpers[] = 'Post';
     }
     
 

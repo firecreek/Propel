@@ -21,6 +21,14 @@
     public $name = 'Milestone';
     
     /**
+     * Display field
+     *
+     * @access public
+     * @var string
+     */
+    public $displayField = 'title';
+    
+    /**
      * Behaviors
      *
      * @access public
@@ -34,6 +42,10 @@
       'Auth',
       'Loggable' => array(
         'titleField' => 'title'
+      ),
+      'Searchable' => array(
+        'title' => 'title',
+        'description' => false
       )
     );
     

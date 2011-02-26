@@ -31,6 +31,14 @@
       'Containable',
       'Loggable' => array(
         'enabled' => false
+      ),
+      'Searchable' => array(
+        'title' => null,
+        'description' => 'body',
+        'extra' => array(
+          'model',
+          'foreign_id',
+        )
       )
     );
     

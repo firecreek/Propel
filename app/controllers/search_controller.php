@@ -1,6 +1,4 @@
 <?php
-
-  App::import('Sanitize');
   
   /**
    * Search Controller
@@ -28,7 +26,19 @@
      * @access public
      * @var array
      */
-    public $components = array();
+    public $components = array('Authorization');
+    
+    /**
+     * Search
+     *
+     * @access public
+     * @var array
+     */
+    public $search = array(
+      'terms'   => null,
+      'scope'   => null,
+      'global'  => false
+    );
     
     /**
      * Uses
@@ -36,7 +46,7 @@
      * @access public
      * @var array
      */
-    public $uses = array();
+    public $uses = array('SearchIndex');
     
     /**
      * Models that can be searched
@@ -66,22 +76,48 @@
     
     
     /**
+     * Before Filter
+     *
+     * @access public
+     * @return void
+     */
+    public function beforeFilter()
+    {
+      //Models that can be searched
+      $this->modelScopes = array(
+        'messages'    => array('name'=>__('Messages',true),'models'=>array('Post')),
+        'comments'    => array('name'=>__('Comments',true),'models'=>array('Comment')),
+        'todos'       => array('name'=>__('To-Dos',true),'models'=>array('Todo','TodoItem')),
+        'milestones'  => array('name'=>__('Milestones',true),'models'=>array('Milestone')),
+      );
+      
+      //Parameters
+      foreach($this->search as $key => $default)
+      {
+        if(isset($this->params['url'][$key]))
+        {
+          $this->search[$key] = $this->params['url'][$key];
+        }
+      }
+      
+      parent::beforeFilter();
+    }
+    
+    
+    /**
      * Before Render
      *
      * @access public
      * @return void
      */
     public function beforeRender()
-    {
-      $this->modelScopes = array(
-        'messages'    => __('Messages',true),
-        'comments'    => __('Comments',true),
-        'todos'       => __('To-Dos',true),
-        /*'files'     => __('Files',true),*/
-        'milestones'  => __('Milestones',true)
-      );
-    
+    {    
       $this->set('modelScopes',$this->modelScopes);
+      
+      foreach($this->search as $key => $val)
+      {
+        $this->set($key,$val);
+      }
       
       parent::beforeRender();
     }
@@ -95,23 +131,47 @@
      */
     public function account_index()
     {
-      $search = false;
-      $terms  = isset($this->params['url']['terms']) ? $this->params['url']['terms'] : null;
-      $scope  = isset($this->params['url']['scope']) ? $this->params['url']['scope'] : 'all';
-      
-      if(!empty($terms))
+      if(!empty($this->search['terms']))
       {
-        $search = true;
+        $this->_searchSave('global');
         
-        $this->_searchSave('global',$terms,$scope);
-        
-        $results = array();
-        $this->set(compact('results'));
+        //Search across all my accounts
+        $conditions = array('SearchIndex.account_id' => Set::extract($this->Authorization->read('Accounts'),'{n}.Account.id'));
+        $this->set('records',$this->_search($conditions));
       }
       
-      $recentSearches = $this->_searchRecent('global');
+      $this->set('recentSearches',$this->_searchRecent('global'));
+    }
+    
+    
+    /**
+     * Project Index
+     *
+     * @access public
+     * @return void
+     */
+    public function project_index()
+    {
+      $key = 'project_'.$this->Authorization->read('Project.id');
+    
+      if(!empty($this->search['terms']))
+      {
+        $this->_searchSave($key);
+        
+        //Search
+        if($this->search['global'])
+        {
+          $conditions = array('SearchIndex.account_id' => Set::extract($this->Authorization->read('Accounts'),'{n}.Account.id'));
+        }
+        else
+        {
+          $conditions = array('SearchIndex.project_id' => $this->Authorization->read('Project.id'));
+        }
+        
+        $this->set('records',$this->_search($conditions));
+      }
       
-      $this->set(compact('terms','scope','search','recentSearches'));
+      $this->set('recentSearches',$this->_searchRecent($key));
     }
     
     
@@ -129,14 +189,45 @@
     
     
     /**
-     * Project Index
+     * Forget history
      *
      * @access public
      * @return void
      */
-    public function project_index()
+    public function project_forget()
     {
-           
+      $this->_searchForget('project_'.$this->Authorization->read('Project.id'));
+      $this->redirect(array('action'=>'index'));
+    }
+    
+    
+    /**
+     * Do the search
+     *
+     * @access private
+     * @return void
+     */
+    private function _search($conditions,$options = array())
+    {
+      $this->paginate['conditions'] = array_merge(array(
+        'SearchIndex.keywords LIKE' => '%'.$this->search['terms'].'%'
+      ),$conditions);
+      
+      $this->paginate['contain'] = array(
+        'Person' => array('id','first_name','last_name','full_name'),
+        'Account' => array('id','name','slug'),
+        'Project' => array('id','name')
+      );
+      
+      $this->paginate['order'] = 'SearchIndex.model_created DESC';
+      
+      //Scope
+      if(!empty($this->search['scope']) && $this->search['scope'] !== 'all')
+      {
+        $this->paginate['conditions']['model'] = $this->modelScopes[$this->search['scope']]['models'];
+      }
+      
+      return $this->paginate();
     }
     
     
@@ -146,9 +237,13 @@
      * @access private
      * @return boolean
      */
-    private function _searchSave($type, $terms, $scope)
+    private function _searchSave($type)
     {
       $current = $this->Session->read('Searches.'.$type);
+      
+      $terms  = $this->search['terms'];
+      $scope  = $this->search['scope'];
+      $global = $this->search['global'];
       
       if(!empty($current))
       {
@@ -158,7 +253,7 @@
         }
       }
       
-      $current[] = array('terms'=>$terms,'scope'=>$scope);
+      $current[] = array('terms'=>$terms,'scope'=>$scope,'global'=>$global);
       
       if(count($current) > $this->searchHistoryLimit)
       {

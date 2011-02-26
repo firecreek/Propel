@@ -35,6 +35,32 @@
       return $options;
     }
     
+    
+    /**
+     * Before search output
+     *
+     * @access public
+     * @return boolean
+     */
+    public function beforeSearch($data)
+    {
+      $options = array();
+      
+      $options['url'] = array(
+        'accountSlug' => $data['Account']['slug'],
+        'projectId'   => $data['Project']['id'],
+        'associatedController' => Inflector::tableize($data['SearchIndex']['extra1']),
+        'controller' => 'comments',
+        'action' => 'index',
+        $data['SearchIndex']['extra2'],
+        '#Comment'.$data['SearchIndex']['model_id']
+      );
+      
+      $options['date'] = __('Posted by',true).' '.$data['Person']['full_name'].', '.date('j M Y',strtotime($data['SearchIndex']['model_created']));
+      
+      return $options;
+    }
+    
   }
   
 ?>

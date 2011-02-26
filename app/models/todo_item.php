@@ -29,6 +29,14 @@
     public $name = 'TodoItem';
     
     /**
+     * Display field
+     *
+     * @access public
+     * @var string
+     */
+    public $displayField = 'description';
+    
+    /**
      * Behaviors
      *
      * @access public
@@ -40,6 +48,12 @@
       'Completable',
       'Auth',
       'Commentable',
+      'Searchable' => array(
+        'title' => array('model'=>'Todo','field'=>'name','associatedKey'=>'todo_id'),
+        'extra' => array(
+          array('model'=>'Todo','field'=>'id','associatedKey'=>'todo_id')
+        )
+      ),
       'Loggable' => array(
         'titleField' => 'description',
         'create' => true,

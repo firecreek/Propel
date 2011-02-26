@@ -135,6 +135,15 @@
         ),$contain)
       ));
       
+      //Title
+      $title = $record[$this->modelAlias][$this->{$this->modelAlias}->displayField];
+      
+      $this->Comment->searchSetting('title',array(
+        'model'           => $this->modelAlias,
+        'associatedKey'   => 'foreign_id',
+        'field'           => $this->{$this->modelAlias}->displayField
+      ));
+      
 
       //Add comment
       if(!empty($this->data))
@@ -142,6 +151,8 @@
         $this->data['Comment']['model'] = $this->modelAlias;
         $this->data['Comment']['foreign_id'] = $id;
         $this->data['Comment']['person_id'] = $this->Authorization->read('Person.id');
+        $this->data['Comment']['account_id'] = $this->Authorization->read('Account.id');
+        $this->data['Comment']['project_id'] = $this->Authorization->read('Project.id');
         
         $this->Comment->set($this->data);
         

@@ -16,10 +16,8 @@
     public $helpers = array('Html');
     
     /**
-     * Check permission
+     * Before log output
      *
-     * @param string $alias ACO alias
-     * @param string $type create, update, permission type
      * @access public
      * @return boolean
      */
@@ -60,6 +58,31 @@
           $options['description'] = $data['Log']['description'].' '.$listLink;
         }
       }
+      
+      return $options;
+    }
+    
+    
+    /**
+     * Before search output
+     *
+     * @access public
+     * @return boolean
+     */
+    public function beforeSearch($data)
+    {
+      $options = array();
+      
+      $options['badge'] = 'todo';
+      $options['name'] = 'Todo';
+      
+      $options['url'] = array(
+        'accountSlug' => $data['Account']['slug'],
+        'projectId'   => $data['Project']['id'],
+        'controller'  => 'todos',
+        'action'      => 'view',
+        $data['SearchIndex']['extra1'],
+      );
       
       return $options;
     }

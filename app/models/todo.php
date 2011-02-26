@@ -31,7 +31,10 @@
       'Auth',
       'Responsible',
       'Due',
-      'Private'
+      'Private',
+      'Searchable' => array(
+        'title' => 'name'
+      )
     );
     
     /**

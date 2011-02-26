@@ -1,0 +1,20 @@
+
+p.scopes a.active:hover { color:white; }
+
+.box .banner h2 {}
+.box .banner h2 span { margin:0; }
+.box .banner h2 span a { font-size:12px; }
+
+#searchResults {}
+
+#searchResults .banner { margin-bottom:0; }
+#searchResults .banner .badge { float:left; margin-right:5px; }
+#searchResults .banner h3 {  }
+#searchResults .banner h3 a { color:#03C; text-decoration:underline; font-size:14px; }
+#searchResults .banner h3 a:hover { background-color:#03C; color:white; text-decoration:none; }
+
+#searchResults .content {}
+#searchResults .content p { margin:0 0 2px 0; }
+#searchResults .content p.account { font-size:11px; font-weight:bold; font-family: "Lucida Grande", arial; }
+#searchResults .content p.description { font-size:12px; color:#333; }
+#searchResults .content p.date { font-size:11px; color:#666 }

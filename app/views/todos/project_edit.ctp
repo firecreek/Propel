@@ -52,7 +52,7 @@
     <hr />
       
     <?php
-      echo $form->hidden('ident',array('value'=>$this->params['url']['objId']));
+      echo $form->hidden('ident',array('value'=>$this->params['form']['objId']));
       echo $form->submit(__('Save changes',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('action'=>'index') ) ));
       echo $form->end();
     ?>
