@@ -8,10 +8,6 @@
         <h2><?php __('Welcome to your Opencamp'); ?></h2>
       </div>
       <div class="content">
-        <?php
-          echo $session->flash();
-        ?>
-        
         
         <div class="start-bar">
           <h2><?php echo $html->link(__('Create your first project',true),array('controller'=>'projects','action'=>'add')); ?></h2>

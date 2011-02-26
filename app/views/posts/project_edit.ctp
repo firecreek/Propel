@@ -13,10 +13,6 @@
       <div class="content">
         
         <?php
-          echo $session->flash();
-        ?>
-        
-        <?php
           echo $form->create('Post',array('url'=>$this->here,'class'=>'block'));
         ?>
         

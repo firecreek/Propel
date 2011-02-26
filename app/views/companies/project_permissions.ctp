@@ -17,10 +17,6 @@
         <?php
           echo $layout->button(__('Add another company to this project',true),array('action'=>'add'),'large add margin');
         ?>
-      
-        <?php
-          echo $session->flash();
-        ?>
         
         <?php
           echo $form->create('Permissions',array('url'=>$this->here));

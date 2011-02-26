@@ -7,9 +7,7 @@
     
     <p><?php __('After you add a company you\'ll be able to add people to that company.'); ?></p>
   
-    <?php
-      echo $session->flash();
-      
+    <?php      
       echo $form->create('Company',array('url'=>$this->here,'class'=>'block'));
       
       echo $form->input('name',array('label'=>__('Enter a new company name',true),'div'=>'input text strong'));

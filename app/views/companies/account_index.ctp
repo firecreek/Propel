@@ -5,10 +5,6 @@
     <?php echo $layout->button(__('Add a new company',true),array('action'=>'add'),'add large'); ?>
   </div>
   <div class="content">
-  
-    <?php
-      echo $session->flash();
-    ?>
     
     <?php foreach($records as $company): ?>
     

@@ -26,7 +26,6 @@
       <div class="content">
       
         <?php
-          echo $session->flash();
           echo $form->create('Account',array('url'=>$this->here,'class'=>'block','type'=>'file'));
         ?>
         

@@ -17,7 +17,6 @@
       <div class="content">
       
         <?php
-          echo $session->flash();
           echo $form->create('Project',array('url'=>$this->here,'class'=>'block larger'));
         ?>
         

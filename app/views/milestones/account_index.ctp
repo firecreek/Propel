@@ -13,8 +13,6 @@
 
   </div>
   <div class="content">
-  
-    <?php echo $session->flash(); ?>
     
     <p>list of late milestones</p>
     

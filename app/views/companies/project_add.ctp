@@ -6,10 +6,6 @@
   <div class="content">
     
     <p><?php __('After you add a company you\'ll be able to specify which people from this company can access the project.'); ?></p>
-  
-    <?php
-      echo $session->flash();
-    ?>
     
     <?php
       echo $form->create('Company',array('url'=>$this->here,'class'=>'block'));

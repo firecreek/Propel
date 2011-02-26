@@ -17,10 +17,6 @@
         ?></h2>
       </div>
       <div class="content">
-        <?php
-          echo $session->flash();
-        ?>
-        
         
         <?php if($activeProjectCount == 1): ?>
           <?php

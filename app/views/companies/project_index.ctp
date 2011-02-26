@@ -4,10 +4,6 @@
     <h2><?php __('People on this project'); ?> <?php echo $html->link(__('Add people, remove people, change permissions',true),array('action'=>'permissions')); ?></h2>
   </div>
   <div class="content">
-  
-    <?php
-      echo $session->flash();
-    ?>
     
 
     <?php foreach($records as $company): ?>

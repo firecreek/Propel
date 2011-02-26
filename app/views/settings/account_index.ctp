@@ -14,11 +14,8 @@
       <div class="content">
       
         <?php
-          echo $session->flash();
           echo $form->create('Account',array('url'=>$this->here,'class'=>'basic'));
         ?>
-        
-        
         
         <h3><?php __('Your logo'); ?></h3>
         

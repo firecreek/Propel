@@ -21,8 +21,6 @@
         </ul>
       </div>
       <div class="content">
-        <?php echo $session->flash(); ?>
-        
         
         <?php
           echo $this->element('todos/list',array(

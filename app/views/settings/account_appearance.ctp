@@ -12,10 +12,7 @@
   <div class="banner">
     <?php echo $this->element('settings/menu'); ?>
   </div>
-  <div class="content">
-  
-    <?php echo $session->flash(); ?>
-    
+  <div class="content">    
     
     <div id="schemeExample">
       <header>

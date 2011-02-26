@@ -12,9 +12,7 @@
     
     <p><?php __('Only the company name is required here, but the rest will come in handy when you want to take your communication offline'); ?></p>
   
-    <?php
-      echo $session->flash();
-      
+    <?php      
       echo $form->create('Company',array('url'=>$this->here,'class'=>'basic'));
       
       echo '<fieldset>';

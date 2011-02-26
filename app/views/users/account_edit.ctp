@@ -16,7 +16,6 @@
       <div class="content">
       
         <?php
-          echo $session->flash();
           echo $form->create('Person',array('url'=>$this->here,'class'=>'basic'));
         ?>
         

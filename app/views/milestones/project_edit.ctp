@@ -6,10 +6,6 @@
   <div class="content">
     
     <?php
-      echo $session->flash();
-    ?>
-    
-    <?php
       $responsibleOptions = $layout->permissionList($auth->read('People'),array('anyone'=>false));
     ?>
     

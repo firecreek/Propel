@@ -29,9 +29,6 @@
       ?>
       
       <div class="content">
-        <?php
-          echo $session->flash();
-        ?>
         <div class="comments">
           <?php
             echo $this->element('comments/list',array('comments'=>$record['Comment']));
