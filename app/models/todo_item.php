@@ -141,7 +141,7 @@
     public function beforeSave($options)
     {
       
-      if(isset($this->data[$this->alias]) && !isset($this->data[$this->alias]['position']))
+      if(isset($this->data[$this->alias]) && !isset($this->data[$this->alias]['position']) && isset($this->data[$this->alias]['todo_id']))
       {
         //Get last record, add position
         if($lastRecord = $this->find('first',array(
