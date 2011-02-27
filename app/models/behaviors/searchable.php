@@ -76,9 +76,9 @@
      */
     public function beforeDelete(&$model)
     {
-      if(isset($model->id) && is_numeric($this->id))
+      if(isset($model->id) && is_numeric($model->id))
       {
-        $model->data[$model->alias]['id'] = $this->id;
+        $model->data[$model->alias]['id'] = $model->id;
       }
       
       return true;
