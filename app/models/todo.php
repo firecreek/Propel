@@ -34,6 +34,11 @@
       'Private',
       'Searchable' => array(
         'title' => 'name'
+      ),
+      'Cached' => array(
+        'prefix' => array(
+          'todo',
+        ),
       )
     );
     
@@ -225,7 +230,11 @@
         'fields' => array('id','name'),
         'order' => 'Todo.name ASC',
         'contain' => array('Person'=>array('id')),
-        'items' => false
+        'items' => false,
+        'cache' => array(
+          'name' => 'todo_active',
+          'config' => 'system',
+        )
       ));
     }
     
@@ -259,7 +268,11 @@
         'fields' => array('id','name'),
         'order' => 'Todo.name ASC',
         'contain' => array('Person'=>array('id')),
-        'items' => false
+        'items' => false,
+        'cache' => array(
+          'name' => 'todo_completed',
+          'config' => 'system',
+        )
       ));
     }
     

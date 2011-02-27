@@ -137,7 +137,11 @@
       $style = $this->controller->Account->Scheme->SchemeStyle->find('list',array(
         'conditions' => array('scheme_id' => $this->Authorization->read('Account.scheme_id')),
         'fields'  => array('SchemeStyle.key','SchemeStyle.value'),
-        'recursive' => -1
+        'recursive' => -1,
+        'cache' => array(
+          'name' => 'scheme',
+          'config' => 'system',
+        )
       ));
       
       return $this->Session->write('Style',$style);

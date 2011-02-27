@@ -125,6 +125,10 @@
           'Todo.project_id' => $this->Authorization->read('Project.id')
         ),
         'contain' => array('Person'),
+        'cache' => array(
+          'name' => 'todo_total',
+          'config' => 'system',
+        ),
         'recursive' => -1
       ));
     
@@ -261,6 +265,10 @@
             'limit'=>3
           ),
           'count' => true
+        ),
+        'cache' => array(
+          'name' => 'todo_'.md5(serialize($filter)),
+          'config' => 'system',
         )
       ));
       

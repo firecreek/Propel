@@ -220,6 +220,26 @@
       ));
     }
     
+    
+    /**
+     * Cache Aco Node
+     *
+     * @access public
+     * @return array
+     */
+    public function acoNode($path)
+    {
+      $cacheKey = str_replace('/','.',$path);
+    
+      if(!$node = Cache::read($cacheKey,'acl'))
+      {
+        $node = $this->Acl->Aco->node($path);
+        Cache::write($cacheKey,$node,'acl');
+      }
+      
+      return $node;
+    }
+    
 
     /**
      * List all controllers (including plugin controllers)

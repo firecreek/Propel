@@ -27,7 +27,12 @@
      * @var array
      */
     public $actsAs = array(
-      'Containable'
+      'Containable',
+      'Cached' => array(
+        'prefix' => array(
+          'scheme',
+        ),
+      )
     );
     
     /**

@@ -45,29 +45,38 @@ class CachedBehavior extends ModelBehavior {
     public function afterDelete(&$model) {
         $this->_deleteCachedFiles($model);
     }
-/**
- * Delete cache files matching prefix
- *
- * @param object $model
- * @return void
- */
-    protected function _deleteCachedFiles(&$model) {
     
-        $directories = array('queries','acl');
-    
-        foreach ($this->settings[$model->alias]['prefix'] AS $prefix) {
-        
-            foreach($directories as $dir)
-            {
-              $files = glob(TMP.'cache'.DS.$dir.DS.'cake_'.$prefix.'*');
-              if (is_array($files) && count($files) > 0) {
-                  foreach ($files AS $file) {
-                      unlink($file);
-                  }
-              }
-            }
-            
+    /**
+     * Delete cache files matching prefix
+     *
+     * @param object $model
+     * @return void
+     */
+    protected function _deleteCachedFiles(&$model)
+    {
+      foreach ($this->settings[$model->alias]['prefix'] AS $prefix)
+      {  
+        //Defaults
+        $files = glob(TMP.'cache'.DS.'queries'.DS.'cake_'.$prefix.'*');
+        if(is_array($files) && count($files) > 0)
+        {
+          foreach ($files AS $file) {
+            unlink($file);
+          }
         }
+  
+        //System prefix
+        $cachePrefix = Cache::config('system');
+        $cachePrefix = $cachePrefix['settings']['prefix'];
+        
+        $files = glob(TMP.'cache'.DS.'queries'.DS.$cachePrefix.$prefix.'*');
+        if(is_array($files) && count($files) > 0)
+        {
+          foreach ($files AS $file) {
+            unlink($file);
+          }
+        }
+      }
     }
 
 }

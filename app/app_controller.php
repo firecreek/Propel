@@ -66,8 +66,22 @@
      */
     public function beforeFilter()
     {
+      //Set cache prefix
+      $prefix = array();
+      if(!empty($this->params['accountSlug'])) { $prefix[] = $this->params['accountSlug']; }
+      if(!empty($this->params['projectId'])) { $prefix[] = $this->params['projectId']; }
+      
+      if(!empty($prefix))
+      {
+        Cache::config('system', array(
+          'prefix' => implode('_',$prefix).'_'
+        ));
+      }
+      
+      
       //Auth settings
       $this->AclFilter->auth();
+      
       
       foreach($this->uses as $model)
       {

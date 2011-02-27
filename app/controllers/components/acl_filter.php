@@ -26,7 +26,7 @@
      * @access public
      * @var object
      */
-    public $components = array('Authorization','Acl','Session');
+    public $components = array('Authorization','AclManager','Acl','Session');
     
     /**
      * CRUD permission map
@@ -130,8 +130,8 @@
             'CompanyOwner' => array('id','name')
           ),
           'cache' => array(
-            'name' => 'account_'.$accountSlug,
-            'config' => 'acl',
+            'name' => 'account',
+            'config' => 'system',
           )
         ));
         
@@ -154,8 +154,8 @@
               'Person' => array('id','user_id','full_name','email','user_id')
             ),
             'cache' => array(
-              'name' => 'project_'.$this->controller->params['projectId'],
-              'config' => 'acl',
+              'name' => 'project',
+              'config' => 'system',
             )
           ));
         
@@ -179,8 +179,8 @@
             'User' => array('id','username','email','email_format','email_send','last_activity')
           ),
           'cache' => array(
-            'name' => 'person_'.$account['Account']['id'].'_'.$userId,
-            'config' => 'acl',
+            'name' => 'person_'.$userId,
+            'config' => 'system',
           )
         ));
         
@@ -198,8 +198,6 @@
         {
           $this->controller->User->id = $person['User']['id'];
           $this->controller->User->saveField('last_activity',date('Y-m-d H:i:s'));
-          
-          $person['User']['last_activity'] = date('Y-m-d H:i:s');
         }
         
         //Find Person aro
@@ -210,7 +208,7 @@
           ),
           'recursive' => -1,
           'cache' => array(
-            'name' => 'person_aco_'.$account['Account']['id'].'_'.$person['Person']['id'],
+            'name' => 'person_aco_'.$person['Person']['id'],
             'config' => 'acl',
           )
         ));
@@ -243,7 +241,7 @@
         }
         
         //Load companies added to this prefix
-        $modelRootNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId);
+        $modelRootNode = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId);
         
         $companies = $this->_loadPrefixCompanies($modelRootNode[0]['Aco']['id']);
         $people = $this->_loadPrefixPeople($modelRootNode[0]['Aco']['id']);
@@ -297,7 +295,9 @@
         //Check if this person is allowed to be in this controller and has the correct CRUD access
         if($permissionCheck)
         {
-          $permissionNode = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
+          $isAllowed = true;
+          
+          $permissionNode = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
           if(!empty($permissionNode))
           {
             $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
@@ -306,6 +306,10 @@
                 'Permission.aco_id' => $permissionNode[0]['Aco']['id'],
                 'Permission.aro_id' => $person['Person']['_aro_id'],
                 'Permission.'.$actionKey => true
+              ),
+              'cache' => array(
+                'name' => 'permission_'.$permissionNode[0]['Aco']['id'].'_'.$person['Person']['_aro_id'].'_'.$actionKey,
+                'config' => 'acl',
               )
             ));
             
@@ -432,7 +436,11 @@
             'Permission._read' => true,
             'Aco.model' => 'Projects',
           ),
-          'fields' => array('Aco.foreign_key','Permission.*')
+          'fields' => array('Aco.foreign_key','Permission.*'),
+          'cache' => array(
+            'name' => 'projects_aro_'.$aroId,
+            'config' => 'acl',
+          )
         ));
         
         if(!empty($records))
@@ -483,7 +491,11 @@
             'Permission._read' => true,
             'Aco.model' => 'Accounts',
           ),
-          'fields' => array('Aco.foreign_key','Permission.*')
+          'fields' => array('Aco.foreign_key','Permission.*'),
+          'cache' => array(
+            'name' => 'accounts_aro_'.$aroId,
+            'config' => 'acl',
+          )
         ));
         
         if(!empty($records))
@@ -514,12 +526,13 @@
      */
     private function _aroPrefixPermissions($prefix,$recordId,$personAroId)
     {
-      $permissions = Cache::read('aro_prefix_'.$prefix.'_'.$this->accountId.'_'.$personAroId,'acl');
+      $cacheKey = 'prefix_'.$prefix.'_'.$this->accountId.'_'.$personAroId;
+      $permissions = Cache::read($cacheKey,'acl');
    
       if(empty($permissions))
       {
         //Load project permissions
-        $node = $this->controller->Acl->Aco->node('opencamp/'.Inflector::pluralize($prefix).'/'.$recordId);
+        $node = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$recordId);
 
         $controllers = $this->controller->Acl->Aco->find('list',array(
           'conditions' => array(
@@ -552,7 +565,7 @@
           );
         }
         
-        Cache::write('aro_prefix_'.$prefix.'_'.$personAroId,$permissions,'acl');
+        Cache::write($cacheKey,$permissions,'acl');
       }
       
       return $permissions;
@@ -567,7 +580,8 @@
      */
     private function _loadPrefixCompanies($acoId)
     {
-      $companies = $this->controller->User->Company->findCached('companies_aco_'.$acoId,'acl');
+      $cacheKey = 'companies_aco_'.$acoId;
+      $companies = Cache::read($cacheKey,'acl');
 
       if(empty($companies))
       {
@@ -588,10 +602,12 @@
           'order' => 'Company.created DESC',
           'contain' => false,
           'cache' => array(
-            'name' => 'companies_aco_'.$acoId,
+            'name' => 'companies_'.$acoId,
             'config' => 'acl',
           )
         ));
+        
+        Cache::write($cacheKey,$companies,'acl');
       }
       
       return $companies;
@@ -606,7 +622,8 @@
      */
     private function _loadPrefixPeople($acoId)
     {
-      $people = $this->controller->Person->findCached('people_aco_'.$acoId,'acl');
+      $cacheKey = 'people_aco_'.$acoId;
+      $people = Cache::read($cacheKey,'acl');
 
       if(empty($people))
       {
@@ -635,6 +652,8 @@
             'config' => 'acl',
           )
         ));
+        
+        Cache::write($cacheKey,$people,'acl');
       }
       
       return $people;

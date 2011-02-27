@@ -60,7 +60,13 @@
         'edit' => false,
         'delete' => false,
         'complete' => true
-      )
+      ),
+      'Cached' => array(
+        'prefix' => array(
+          'todo',
+          'todo_item',
+        ),
+      ),
     );
     
 
