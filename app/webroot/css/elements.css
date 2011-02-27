@@ -181,7 +181,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 .section.other {}
 .section.other .banner { background-color:transparent; border-bottom:1px dotted #CCC; min-height:0; }
-.section.other .banner h3 { color:#900; padding-left:0; }
+.section.other .banner h3 { color:#C00; padding-left:0; }
 .section.other h4 { color:#090; }
 .section.other ul { margin:0 0 20px 0; }
 .section.other li { font-size:14px; margin:0 0 10px 0; }
@@ -503,6 +503,14 @@ table.calendar td.today .day { text-transform:uppercase; color:white; background
 table.calendar td.with { border:1px solid black !important; background-color:white !important; }
 table.calendar td.with .day { color:black; font-weight:bold; }
 
+
+table.calendar.weekends td { width:14%; }
+table.calendar.weekends td.weekend { width:14%; }
+
+table.calendar .event { margin-right:20px; }
+table.calendar .event h4 { font-family: "Lucida Grande", verdana; }
+table.calendar .event h4 a { font-size:10px; }
+table.calendar .event p { font-size:10px; color:#666; }
 
 table.calendar.short { border-collapse:separate; background-color:#E0E0E0; border-spacing:1px 1px; }
 table.calendar.short th { color:#666; background-color:#E0E0E0; text-transform:capitalize; text-align:left; font-size:10px; padding:2px 5px; }

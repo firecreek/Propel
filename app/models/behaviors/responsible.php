@@ -73,7 +73,7 @@
         
         //Model to use
         $responsibleValue = $query['filter']['Responsible']['value'];
-        $responsibleModel = $query['filter']['Responsible']['model'];
+        $responsibleModel = isset($query['filter']['Responsible']['model']) ? $query['filter']['Responsible']['model'] : null;
       
         //Whom
         if($responsibleValue == 'nobody')
@@ -88,7 +88,7 @@
           //Self
           $modelAlias       = 'Person';
           $modelId          = $model->authRead('Person.id');
-          $responsibleName  = $model->{$responsibleModel}->getResponsibleName($modelAlias,$modelId);
+          $responsibleName  = $this->getResponsibleName($model,$modelAlias,$modelId);
         }
         else
         {
@@ -96,43 +96,53 @@
           $split            = explode('_',$responsibleValue);
           $modelAlias       = Inflector::classify($split[0]);
           $modelId          = $split[1];
-          $responsibleName  = $model->{$responsibleModel}->getResponsibleName($modelAlias,$modelId);
+          $responsibleName  = $this->getResponsibleName($model,$modelAlias,$modelId);
         }
-        
-        //Exception for loading items
-        if(isset($query['items']))
-        {
-          $query['items']['conditions'][$responsibleModel.'.responsible_model'] = $modelAlias;
-          $query['items']['conditions'][$responsibleModel.'.responsible_id'] = $modelId;
-        }
-        
+          
         //Sets
         $model->responsibleName = $responsibleName;
         
-        //Contain join
-        $joinAlias = $responsibleModel.'Responsible';
-        $query['contain'][] = $joinAlias;
-        $query['group'][] = 'Todo.id';
-        
-        //INNER joins
-        $model->bindModel(array(
-          'belongsTo' => array(
-            $joinAlias => array(
-              'className'   => $responsibleModel,
-              'type'        => 'INNER',
-              'foreignKey'  => false,
-              'conditions'  => array(
-                $joinAlias.'.todo_id = Todo.id',
-                $joinAlias.'.responsible_model' => $modelAlias,
-                $joinAlias.'.responsible_id' => $modelId,
-                $joinAlias.'.completed' => false,
+        //
+        if(!$responsibleModel)
+        {
+          $query['conditions'][] = array(
+            'responsible_model' => $modelAlias,
+            'responsible_id' => $modelId,
+          );
+        }
+        else
+        {
+          //Exception for loading items
+          if(isset($query['items']))
+          {
+            $query['items']['conditions'][$responsibleModel.'.responsible_model'] = $modelAlias;
+            $query['items']['conditions'][$responsibleModel.'.responsible_id'] = $modelId;
+          }
+          
+          //Contain join
+          $joinAlias = $responsibleModel.'Responsible';
+          $query['contain'][] = $joinAlias;
+          $query['group'][] = 'Todo.id';
+          
+          //INNER joins
+          $model->bindModel(array(
+            'belongsTo' => array(
+              $joinAlias => array(
+                'className'   => $responsibleModel,
+                'type'        => 'INNER',
+                'foreignKey'  => false,
+                'conditions'  => array(
+                  $joinAlias.'.todo_id = Todo.id',
+                  $joinAlias.'.responsible_model' => $modelAlias,
+                  $joinAlias.'.responsible_id' => $modelId,
+                  $joinAlias.'.completed' => false,
+                )
               )
             )
-          )
-        ),true);
+          ),true);
+        }
         
       }
-      
       
     
       //Responsible Alias

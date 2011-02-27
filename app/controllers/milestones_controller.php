@@ -26,7 +26,7 @@
      * @access public
      * @access public
      */
-    public $components = array();
+    public $components = array('Cookie');
     
     /**
      * Uses
@@ -55,9 +55,71 @@
      */
     public function account_index()
     {
-      $responsible = $this->Opencamp->findResponsible();
+      //Responsible filter
+      if(isset($this->params['url']['responsible']))
+      {
+        $this->data['Milestone']['responsible'] = $this->params['url']['responsible'];
+        $this->Cookie->write('Milestone.responsible',$this->params['url']['responsible']);
+      }
+      elseif($cookieResponsible = $this->Cookie->read('Milestone.responsible'))
+      {
+        $this->data['Milestone']['responsible'] = $cookieResponsible;
+      }
       
-      $this->set(compact('responsible','records'));
+      //Projects
+      $projects = $this->Authorization->read('Projects');
+      $projects = Set::extract($projects,'{n}.Project.id');
+      
+      
+      //Responsible filter
+      $filter = array();
+      if(isset($this->data['Milestone']['responsible']) && !empty($this->data['Milestone']['responsible']))
+      {
+        $filter['Responsible'] = array(
+          'value' => $this->data['Milestone']['responsible']
+        );
+      }
+      
+      
+      //All upcoming
+      $records = $this->Milestone->find('all',array(
+        'conditions' => array(
+          'Milestone.project_id'  => $projects,
+          'Milestone.deadline >=' => date('Y-m-d',mktime(0,0,0,date('n'),1,date('Y'))),
+          'Milestone.completed'   => false
+        ),
+        'contain' => array(
+          'Project' => array('id','account_id','name','status'),
+          'Account' => array('id','name','slug'),
+          'Responsible'
+        ),
+        'filter' => $filter
+      ));
+      
+      //Overdue
+      $overdue = $this->Milestone->find('all',array(
+        'conditions' => array(
+          'Milestone.project_id' => $projects,
+          'Milestone.deadline <' => date('Y-m-d'),
+          'Milestone.completed'  => false
+        ),
+        'order' => 'Milestone.deadline ASC',
+        'contain' => array(
+          'Project' => array('id','account_id','name','status'),
+          'Account' => array('id','name','slug'),
+          'Responsible'
+        ),
+        'filter' => $filter
+      ));
+      
+      
+      if(isset($this->Milestone->responsibleName))
+      {
+        $this->set('responsibleName',$this->Milestone->responsibleName);
+      }
+      
+      
+      $this->set(compact('records','overdue'));
     }
     
     
@@ -109,6 +171,8 @@
       //@todo Figure out how to hide private messages in Post
       //       - Containable won't do it, nor will Joins, maybe Linkable
       $contain = array(
+        'Project' => array('id','account_id','name','status'),
+        'Account' => array('id','name','slug'),
         'CommentUnread',
         'Responsible',
         'Todo',
@@ -174,6 +238,7 @@
       {
         //Fill in missing data
         if(empty($this->data['Milestone']['title'])) { $this->data['Milestone']['title'] = __('Untitled milestone',true); }
+        $this->data['Milestone']['account_id'] = $this->Authorization->read('Account.id');
         $this->data['Milestone']['project_id'] = $this->Authorization->read('Project.id');
         $this->data['Milestone']['person_id'] = $this->Authorization->read('Person.id');
 
@@ -211,6 +276,7 @@
           {
             $save[] = array(
               'Milestone' => array_merge(array(
+                  'account_id' => $this->Authorization->read('Account.id'),
                   'project_id' => $this->Authorization->read('Project.id'),
                   'person_id'  => $this->Authorization->read('Person.id')
                ),$data)

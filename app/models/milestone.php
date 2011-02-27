@@ -91,6 +91,10 @@
      * @var array
      */
     public $belongsTo = array(
+      'Account' => array(
+        'className' => 'Account',
+        'foreignKey' => 'account_id'
+      ),
       'Project' => array(
         'className' => 'Project',
         'foreignKey' => 'project_id',

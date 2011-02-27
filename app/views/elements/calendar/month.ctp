@@ -1,5 +1,7 @@
 <?php
 
+  //@todo Move this to a helper
+
   //Settings
   if(!isset($class)) { $class = array(); }
   elseif(is_string($class)) { $class = array($class); }
@@ -105,23 +107,33 @@
     foreach($records as $record)
     {
       $date = strtotime($record['Milestone']['deadline']);
+      $text = null;
+      
+      if(isset($eventAccount) && $eventAccount)
+      {
+        $text = $record['Project']['name'];
+        if(isset($record['Responsible']['name']) && !empty($record['Responsible']['name']))
+        {
+          $text .= ' — '.$record['Responsible']['name'];
+        }
+      }
       
       if(!isset($events[$date])) { $events[$date] = array(); }
       
-      /*$events[$date][] = array(
-        'title' => $record['Milestone']['title'],
-        'url'   => array(
-          'controller'  => 'milestones',
-          'action'      => 'index',
-          'projectId'   => $record['Milestone']['project_id'],
-          '#Milestone-'.$record['Milestone']['id']
-        ),
-      );*/
       $events[$date][] = array(
         'title' => $record['Milestone']['title'],
-        'url'   => '#Milestone-'.$record['Milestone']['id'],
-        'class' => isset($record['class']) ? $record['class'] : null
+        'text'  => $text,
+        'class' => isset($record['class']) ? $record['class'] : null,
+        'url'   => array(
+          'accountSlug' => $record['Account']['slug'],
+          'projectId'   => $record['Project']['id'],
+          'controller'  => 'milestones',
+          'action'      => 'index',
+          '#Milestone-'.$record['Milestone']['id']
+        ),
       );
+      
+      $class[] = 'weekends';
     }
   }
   
@@ -226,9 +238,15 @@
                 {
                   $class[] = $event['class'];
                 }
+                
                 if($showEvents)
                 {
-                  $cell .= '<div class="event">'.$html->link($event['title'],$event['url']).'</div>';
+                  $eventHtml = '<div class="event">';
+                  $eventHtml .= '<h4>'.$html->link($event['title'],$event['url']).'</h4>';
+                  if(!empty($event['text'])) { $eventHtml .= '<p>'.$event['text'].'</p>'; }
+                  $eventHtml .= '</div>';
+                
+                  $cell .= $eventHtml;
                 }
               }
             }
