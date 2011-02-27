@@ -246,6 +246,7 @@
         {
           $this->Project->save();
           $this->Session->setFlash(__('Project settings have been updated',true),'default',array('class'=>'success'));
+          $this->redirect(array('action'=>'edit'));
         }
         else
         {
