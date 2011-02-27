@@ -73,7 +73,7 @@
       }
       
       //Account id?
-      if(!isset($options['accountId']))
+      if(!isset($options['accountId']) && !isset($options['userId']))
       {
         $options['accountId'] = $this->Authorization->read('Account.id');
       }
@@ -103,11 +103,17 @@
       {
         $dir .= DS.'accounts'.DS.$options['accountId'];
       }
+      elseif(isset($options['userId']) && is_numeric($options['userId']))
+      {
+        $dir .= DS.'users'.DS.$options['userId'];
+      }
       
-      $dir .= DS.$type;
-      
-      //Check dir
+      //Check dirs
       $this->checkDir($dir);
+      $this->checkDir($dir.DS.$type);
+      
+      //
+      $dir .= DS.$type;
       
       //Save
       move_uploaded_file($data['tmp_name'],$dir.DS.$options['filename']);

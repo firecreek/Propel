@@ -38,7 +38,10 @@
           <table class="std">
             <thead>
               <tr>
-                <th><?php echo $company['Company']['name']; ?></th>
+                <th>
+                  <?php echo $company['Company']['name']; ?>
+                  <?php if($myCompany) { echo '('.__('Your company',true).')'; } ?>
+                </th>
                 <th class="links" colspan="2">
                   <?php if(!$myCompany): ?>
                     <?php echo $html->link(__('Remove company from this project',true),array('action'=>'delete',$company['Company']['id']),array('class'=>'unimportant','confirm'=>__('Are you sure you want to remove this company and every person from this project?',true))); ?>
@@ -55,13 +58,19 @@
                 <tr rel-person-id="<?php echo $pid; ?>">
                   <td class="name">
                     <?php
+                      $label = $person['full_name'];
+                    
                       $disabled = false;
-                      if($person['company_owner']) { $disabled = true; }
+                      if($person['company_owner'])
+                      {
+                        $disabled = true;
+                        $label .= ' ('.__('Account owner',true).')';
+                      }
                       
                       $checked = true;
                       if($person['_grantKey'] == null) { $checked = false; }
                     
-                      echo $form->input('Person.'.$pid,array('type'=>'checkbox','checked'=>$checked,'label'=>$person['full_name'],'disabled'=>$disabled));
+                      echo $form->input('Person.'.$pid,array('type'=>'checkbox','checked'=>$checked,'label'=>$label,'disabled'=>$disabled));
                     ?>
                   </td>
                   <td class="permissions">

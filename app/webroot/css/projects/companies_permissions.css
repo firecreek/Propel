@@ -11,3 +11,5 @@ table td.permissions label { font-size:11px; padding-right:15px; position:relati
 
 table td.loading { width:20px; }
 table td.loading div { background:url(/img/icons/loader-small-horizontal.gif) white no-repeat center left; width:16px; height:11px; }
+
+table tfoot td { color:#777; }

@@ -26,7 +26,7 @@
      * @var array
      * @access public
      */
-    public $components = array();
+    public $components = array('Assets');
     
     /**
      * Uses
@@ -90,8 +90,10 @@
             //Give this company permission for this account
             $this->AclManager->allow($this->User->Company, 'accounts', $this->User->Account->id, array('set' => 'company'));
             
-            //Create assets directory for saving files
+            //Create directories for saving files
+            //@todo Move this
             mkdir(ASSETS_DIR.DS.'accounts'.DS.$this->User->Account->id, 0700);
+            mkdir(ASSETS_DIR.DS.'users'.DS.$this->User->id, 0700);
             
             //Automatically login and redirect
             $this->Authorization->login($this->data);
@@ -231,6 +233,12 @@
         
         if($this->User->validates())
         {
+          //Save avatar
+          if(!empty($this->data['User']['avatar']))
+          {
+            $this->Assets->save('avatar',$this->data['User']['avatar'],array('userId'=>$this->Authorization->read('User.id'),'filename'=>'avatar.png'));
+          }
+        
           $this->User->save();
           
           $this->Person->Behaviors->detach('Acl');

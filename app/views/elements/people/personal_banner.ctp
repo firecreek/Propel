@@ -9,13 +9,13 @@
     </div>
     <div class="content">
       <div class="avatar">
-        <?php echo $html->image('avatar-small.png'); ?>
+        <?php echo $this->Layout->avatar($this->Auth->read('Person.user_id'),'small'); ?>
       </div>
       <div class="detail">
-        <h3><?php echo $auth->read('Person.full_name'); ?></h3>
-        <p class="email"><?php echo $auth->read('Person.email'); ?></p>
+        <h3><?php echo $this->Auth->read('Person.full_name'); ?></h3>
+        <p class="email"><?php echo $this->Auth->read('Person.email'); ?></p>
         <p class="username">
-        Username: <?php echo $session->read('Auth.User.username'); ?><br />
+        Username: <?php echo $this->Session->read('Auth.User.username'); ?><br />
         Password: ••••••
         </p>
       </div>

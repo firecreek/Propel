@@ -24,10 +24,19 @@ class ImageHelper extends Helper {
         $types = array(1 => "gif", "jpeg", "png", "swf", "psd", "wbmp"); // used to determine image type
         if(empty($htmlAttributes['alt'])) $htmlAttributes['alt'] = 'thumb';  // Ponemos alt default
 
-        $uploadsDir = 'uploads';
+        $uploadsDir = 'img';
 
         $fullpath = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$uploadsDir.DS;
-        $url = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$path;
+        
+        //if(substr($path,0,1) == DS)
+        //{
+            $url = $path;
+        //}
+        //else
+       // {
+            //$url = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$path;
+        //}
+        
 
         if (!($size = getimagesize($url)))
             return; // image doesn't exist
@@ -38,9 +47,12 @@ class ImageHelper extends Helper {
             else
                 $height = ceil($width / ($size[0]/$size[1]));
         }
+        
+        //Extension
+        $ext = substr($path,strpos($path,'.'));
 
-        $relfile = $this->webroot.$uploadsDir.'/'.$this->cacheDir.'/'.$width.'x'.$height.'_'.basename($path); // relative file
-        $cachefile = $fullpath.$this->cacheDir.DS.$width.'x'.$height.'_'.basename($path);  // location on server
+        $relfile = $this->webroot.$uploadsDir.'/'.$this->cacheDir.'/'.$width.'x'.$height.'_'.md5($path).$ext; // relative file
+        $cachefile = $fullpath.$this->cacheDir.DS.$width.'x'.$height.'_'.md5($url).$ext;  // location on server
 
         if (file_exists($cachefile)) {
             $csize = getimagesize($cachefile);
@@ -59,12 +71,15 @@ class ImageHelper extends Helper {
 
         if ($resize) {
             $image = call_user_func('imagecreatefrom'.$types[$size[2]], $url);
+        
             if (function_exists("imagecreatetruecolor") && ($temp = imagecreatetruecolor ($width, $height))) {
                 imagecopyresampled ($temp, $image, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
             } else {
                 $temp = imagecreate ($width, $height);
                 imagecopyresized ($temp, $image, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
             }
+            
+            
             call_user_func("image".$types[$size[2]], $temp, $cachefile);
             imagedestroy ($image);
             imagedestroy ($temp);

@@ -151,7 +151,7 @@
             ),
             'contain' => array(
               'Company' => array('id','name','private'),
-              'Person' => array('id','user_id','full_name','email')
+              'Person' => array('id','user_id','full_name','email','user_id')
             ),
             'cache' => array(
               'name' => 'project_'.$this->controller->params['projectId'],
@@ -174,7 +174,7 @@
             'Person.account_id' => $account['Account']['id'],
             'Person.user_id'    => $userId
           ),
-          'fields' => array('id','first_name','last_name','full_name','email','company_owner'),
+          'fields' => array('id','first_name','last_name','full_name','email','company_owner','user_id'),
           'contain' => array(
             'User' => array('id','username','email','email_format','email_send','last_activity')
           ),
@@ -625,7 +625,7 @@
           'conditions' => array(
             'Person.id' => $records
           ),
-          'fields' => array('id','full_name','first_name','last_name','email','title','company_owner'),
+          'fields' => array('id','full_name','first_name','last_name','email','title','company_owner','user_id'),
           'contain' => array(
             'Company' => array('id','name'),
             'User' => array('id','last_activity')

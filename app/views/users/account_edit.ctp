@@ -16,12 +16,19 @@
       <div class="content">
       
         <?php
-          echo $form->create('Person',array('url'=>$this->here,'class'=>'basic'));
+          echo $form->create('Person',array('url'=>$this->here,'class'=>'basic','type'=>'file','id'=>'UserEdit'));
         ?>
+        
+        <div class="avatar">
+          <div class="image"><?php echo $layout->avatar($this->Auth->read('Person'));?></div>
+          <div class="upload">
+            <p><?php __('Upload your photo') ?></p>
+            <?php echo $form->input('User.avatar',array('type'=>'file','label'=>false)); ?>
+          </div>
+        </div>
         
       
         <?php
-        
           echo $form->input('Person.first_name',array('label'=>__('First name',true)));
           echo $form->input('Person.last_name',array('label'=>__('Last name',true)));
           echo $form->input('User.email',array('label'=>__('Email',true)));

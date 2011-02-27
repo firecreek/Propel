@@ -2,7 +2,7 @@
 <div id="comment-add">
 
   <div class="section plain avatar">
-    <div class="avatar"><?php echo $html->image('avatar.png'); ?></div>
+    <div class="avatar"><?php echo $layout->avatar($this->Auth->read('Person.user_id')); ?></div>
     <div class="banner">
       <h4><?php
         if(isset($edit))

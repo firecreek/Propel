@@ -20,7 +20,7 @@
 </div>
 
 <div class="content post-detail">
-  <div class="avatar"><?php echo $html->image('avatar.png'); ?></div>
+  <div class="avatar"><?php echo $layout->avatar($record['Person']['user_id']); ?></div>
   <h3><?php echo $record['Post']['title']; ?></h3>
   <div class="detail">
     <p><span><?php __('From'); ?>:</span> <?php echo $record['Person']['full_name']; ?></p>

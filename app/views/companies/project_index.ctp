@@ -39,7 +39,7 @@
             </li>
             <?php foreach($company['People'] as $person): ?>
               <li class="person">
-                <?php echo $html->image('avatar.png'); ?>
+                <?php echo $layout->avatar($person['user_id']); ?>
                 <div class="detail">
                   <h4><?php echo $person['full_name']; ?></h4>
                   <?php

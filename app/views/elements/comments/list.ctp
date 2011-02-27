@@ -24,7 +24,7 @@
   ?>
 
   <div class="section plain avatar" id="Comment<?php echo $record['id']; ?>" rel-id=<?php echo $record['id']; ?>>
-    <div class="avatar"><?php echo $html->image('avatar.png'); ?></div>
+    <div class="avatar"><?php echo $layout->avatar($record['Person']['user_id']); ?></div>
     <div class="banner">
       <h4 class="<?php echo $class; ?>">      
         <?php

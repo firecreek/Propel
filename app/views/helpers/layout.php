@@ -18,7 +18,7 @@
      * @access public
      * @var array
      */
-    public $helpers = array('Html', 'Auth');
+    public $helpers = array('Html', 'Auth','Image');
     
     
     /**
@@ -92,6 +92,46 @@
       $output = $this->Html->tag('ul', $output, $menuOptions);
       
       return $output;
+    }
+    
+    
+    /**
+     * Persons avatar
+     *
+     * @access public
+     * @return void
+     */
+    public function avatar($person,$size = 'large')
+    {
+      if($size == 'large')
+      {
+        $size = 55;
+      }
+      elseif($size == 'small')
+      {
+        $size = 32;
+      }
+      
+      if(is_array($person))
+      {
+        $userId = $person['user_id'];
+      }
+      elseif(is_numeric($person))
+      {
+        $userId = $person;
+      }
+    
+      if(isset($userId) && !empty($userId))
+      {
+        $dir = ASSETS_DIR.DS.'users'.DS.$userId.DS.'avatar';
+        
+        if(file_exists($dir.DS.'avatar.png'))
+        {
+          return $this->Image->resize($dir.DS.'avatar.png', $size, $size, true);
+        }
+      }
+      
+      return $this->Html->image('avatar-'.$size.'.png');
     }
     
     
