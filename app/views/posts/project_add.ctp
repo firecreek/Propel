@@ -35,19 +35,17 @@
         
         <hr />
       
-        <?php
-          if(!empty($milestoneOptions))
-          {
+        <?php if(!empty($milestoneOptions)): ?>
+          <?php
             echo $form->input('milestone_id',array(
               'label'=>__('Does this list relate to a milestone?',true),
               'options'=>$milestoneOptions,
               'empty' => true
             ));
-          }
-        ?>
-          
-        <hr />
-          
+          ?>
+          <hr />
+        <?php endif; ?>
+        
         <?php
           echo $form->submit(__('Post this message',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('action'=>'index') ) ));
           echo $form->end();
