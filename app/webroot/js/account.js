@@ -5,7 +5,9 @@ var Account = {
   {
     $("ul.sf-menu").superfish({
       autoArrows: false,
-      speed: 'fast'
+      speed: 400,
+      delay: 500,
+      delayShow: 300
     });
     
     this._wysiwyg();

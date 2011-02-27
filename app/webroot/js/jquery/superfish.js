@@ -17,9 +17,12 @@
 			c = sf.c,
 			$arrow = $(['<span class="',c.arrowClass,'"> &#187;</span>'].join('')),
 			over = function(){
-				var $$ = $(this), menu = getMenu($$);
+				var $$ = $(this), menu = getMenu($$), o = sf.op;
 				clearTimeout(menu.sfTimer);
-				$$.showSuperfishUl().siblings().hideSuperfishUl();
+				
+				menu.sfTimer=setTimeout(function(){
+					$$.showSuperfishUl().siblings().hideSuperfishUl();
+				},o.delayShow);
 			},
 			out = function(){
 				var $$ = $(this), menu = getMenu($$), o = sf.op;
@@ -86,6 +89,7 @@
 		pathClass	: 'overideThisToUse',
 		pathLevels	: 1,
 		delay		: 800,
+		delayShow: 0,
 		animation	: {opacity:'show'},
 		speed		: 'normal',
 		autoArrows	: true,

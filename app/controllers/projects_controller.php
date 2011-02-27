@@ -189,7 +189,11 @@
           'Milestone.deadline <' => date('Y-m-d'),
           'Milestone.completed'  => false
         ),
-        'contain' => array('Responsible'),
+        'contain' => array(
+          'Responsible',
+          'Account' => array('id','name','slug'),
+          'Project' => array('id','name'),
+        ),
         'order' => 'Milestone.deadline ASC',
         'limit' => 10
       ));
@@ -202,7 +206,11 @@
           'Milestone.deadline >=' => date('Y-m-d'),
           'Milestone.deadline <=' => date('Y-m-d',strtotime('+14 days')),
         ),
-        'contain' => array('Responsible'),
+        'contain' => array(
+          'Responsible',
+          'Account' => array('id','name','slug'),
+          'Project' => array('id','name'),
+        ),
         'limit' => 100
       ));
       
