@@ -18,7 +18,7 @@
      * @access public
      * @access public
      */
-    public $helpers = array();
+    public $helpers = array('Image');
     
     /**
      * Components
@@ -123,6 +123,7 @@
       {
         $this->data = $record;
       }
+            $this->Session->setFlash(__('Account settings updated',true), 'default', array('class'=>'success'));
       
       $this->set(compact('record'));
     }

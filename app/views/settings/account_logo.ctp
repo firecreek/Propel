@@ -72,41 +72,42 @@
   <div class="col right image">
 
     <?php
-      $image = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.$type.'.png';
+      $imageFile = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.$type.'.png';
       
       switch($type)
       {
         case 'account':
-          $size = '300x300';
+          $width = 300;
+          $height = 300;
           $type = 'resize';
           $ext = 'png';
           break;
         case 'apple':
-          $size = '114x114';
+          $width = 114;
+          $height = 114;
           $type = 'resizeCrop';
           $ext = 'png';
           break;
         case 'shortcut':
-          $size = '16x16';
+          $width = 16;
+          $height = 16;
           $type = 'resizeCrop';
           $ext = 'ico';
           break;
       }
+    ?>
       
-      if(file_exists($image)):
-    ?>
+    <?php if(file_exists($imageFile)): ?>
     
-    <div class="area">
-      <div class="banner"><h3><?php __('Current image'); ?></h3></div>
-      <div class="content">
-        <?php echo $html->image('/'.$auth->read('Account.slug').'/assets/image/logo/'.$type.'.'.$ext.'/size:'.$size.'/type:'.$type); ?>
-        <p><?php echo $html->link(__('Delete image',true),array('action'=>'logo',$type,'?'=>array('delete'=>'true')),array('class'=>'important')); ?></p>
+      <div class="area">
+        <div class="banner"><h3><?php __('Current image'); ?></h3></div>
+        <div class="content">
+          <?php echo $image->resize($imageFile,$width,$height); ?>
+          <p><?php echo $html->link(__('Delete image',true),array('action'=>'logo',$type,'?'=>array('delete'=>'true')),array('class'=>'important')); ?></p>
+        </div>
       </div>
-    </div>
     
-    <?php
-      endif;
-    ?>
+    <?php endif; ?>
   
   </div>
 </div>

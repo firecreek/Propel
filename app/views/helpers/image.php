@@ -79,12 +79,11 @@ class ImageHelper extends Helper {
                 imagecopyresized ($temp, $image, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
             }
             
-            
             call_user_func("image".$types[$size[2]], $temp, $cachefile);
             imagedestroy ($image);
             imagedestroy ($temp);
         } else {
-            //copy($url, $cachefile);
+            copy($url, $cachefile);
         }
 
         return $this->output(sprintf($this->Html->tags['image'], $relfile, $this->Html->_parseAttributes($htmlAttributes, null, '', ' ')), $return);

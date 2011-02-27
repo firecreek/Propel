@@ -23,12 +23,12 @@
         
           <div class="col account">
             <div class="image"><?php
-              $image = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'account.png';
+              $imageFile = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'account.png';
               $logoAction = __('Upload logo',true);
               
-              if(file_exists($image))
+              if(file_exists($imageFile))
               {
-                echo $html->image('/'.$auth->read('Account.slug').'/assets/image/logo/account.png/size:230x110');
+                echo $image->resize($imageFile,230,110);
                 $logoAction = __('Change',true);
               }
               else
@@ -42,11 +42,11 @@
           
           <div class="col apple">
             <div class="image"><?php
-              $image = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'apple.png';
+              $imageFile = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'apple.png';
               
-              if(file_exists($image))
+              if(file_exists($imageFile))
               {
-                echo $html->image('/'.$auth->read('Account.slug').'/assets/image/logo/apple.png/size:114x114/type:resizeCrop');
+                echo $image->resize($imageFile,114,114);
               }
               else
               {
@@ -59,15 +59,15 @@
           
           <div class="col shortcut">
             <div class="image"><?php
-              $image = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'shortcut.ico';
+              $imageFile = ASSETS_DIR.DS.'accounts'.DS.$auth->read('Account.id').DS.'logo'.DS.'shortcut.ico';
               
-              if(file_exists($image))
+              if(file_exists($imageFile))
               {
-                echo $html->image('/'.$auth->read('Account.slug').'/assets/image/logo/shortcut.ico/size:16x16/type:resizeCrop');
+                echo $image->resize($imageFile,16,16);
               }
               else
               {
-                echo $html->image('/favicon.ico');
+                echo $html->image('/favicon-16.ico');
               }
             ?></div>
             <p class="type"><strong><?php __('Shortcut icon'); ?></strong> (<?php echo $html->link(__('Change',true),array('action'=>'logo','shortcut')); ?>)</p>

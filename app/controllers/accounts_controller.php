@@ -18,7 +18,7 @@
      * @access public
      * @access public
      */
-    public $helpers = array();
+    public $helpers = array('Image');
     
     /**
      * Components
