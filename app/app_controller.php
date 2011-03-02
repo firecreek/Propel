@@ -57,7 +57,6 @@
       'Time'
     );
     
-    
     /**
      * Before Filter
      *

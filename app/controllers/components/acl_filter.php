@@ -106,7 +106,7 @@
       {
         /**
          * Permission checking
-         */
+         */        
         $isAllowed  = false;
         $prefix     = isset($this->controller->params['prefix']) ? $this->controller->params['prefix'] : null;
         $modelId    = $this->Authorization->read('Prefix.id');
@@ -130,7 +130,6 @@
           }
         }
         
-        
         //Check if this person is allowed to be in this controller and has the correct CRUD access
         $permissionNode = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
         
@@ -144,7 +143,7 @@
               'Permission.'.$actionKey => true
             ),
             'cache' => array(
-              'name' => 'permission_'.$permissionNode[0]['Aco']['id'].'_'.$this->Authorization->read('Person._aro_id').'_'.$actionKey,
+              'name' => 'permission_'.$permissionNode[0]['Aco']['id'].'_'.$this->Authorization->read('Person._aro_id').$actionKey,
               'config' => 'acl',
             )
           ));

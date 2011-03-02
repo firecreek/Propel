@@ -51,7 +51,7 @@ class ImageHelper extends Helper {
         //Extension
         $ext = substr($path,strpos($path,'.'));
 
-        $relfile = $this->webroot.$uploadsDir.'/'.$this->cacheDir.'/'.$width.'x'.$height.'_'.md5($path).$ext; // relative file
+        $relfile = $this->webroot.$uploadsDir.'/'.$this->cacheDir.'/'.$width.'x'.$height.'_'.md5($url).$ext; // relative file
         $cachefile = $fullpath.$this->cacheDir.DS.$width.'x'.$height.'_'.md5($url).$ext;  // location on server
 
         if (file_exists($cachefile)) {
@@ -65,6 +65,7 @@ class ImageHelper extends Helper {
 
         if (!$cached) {
             $resize = ($size[0] > $width || $size[1] > $height) || ($size[0] < $width || $size[1] < $height);
+            $resize = true;
         } else {
             $resize = false;
         }

@@ -79,13 +79,15 @@
         'conditions' => $conditions,
         'contain' => array(
           'Person',
-          'CommentLast' => array(
-            'Person'
-          ),
+          'CommentLast',
           'CommentUnread'
         ),
         'group' => 'Post.id',
-        'order' => 'Post.id DESC'
+        'order' => 'Post.id DESC',
+        'cache' => array(
+          'name' => 'post',
+          'config' => 'system'
+        )
       ));
       
       

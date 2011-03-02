@@ -51,12 +51,22 @@
     {
       $this->controller =& $controller;
       parent::initialize($controller, $settings);
-      
+    
       //Load person, etc..
       if($this->user('id') && isset($this->controller->params['accountSlug']))
       {
         $this->accountSlug  = $this->controller->params['accountSlug'];
-        $this->prefix       = isset($this->controller->params['prefix']) ? $this->controller->params['prefix'] : null;
+        
+        $this->prefix = null;
+        
+        if(isset($this->controller->params['prefix']))
+        {
+          $this->prefix = $this->controller->params['prefix'];
+        }
+        elseif(isset($this->controller->authPrefix))
+        {
+          $this->prefix = $this->controller->authPrefix;
+        }
         
         $this->_loadUser();
       }
@@ -116,8 +126,8 @@
           'CompanyOwner' => array('id','name')
         ),
         'cache' => array(
-          'name' => 'account',
-          'config' => 'system',
+          'name' => 'account_'.$this->accountSlug,
+          'config' => 'auth',
         )
       ));
       
@@ -148,8 +158,8 @@
         'fields' => array('id','name'),
         'contain' => false,
         'cache' => array(
-          'name' => 'company',
-          'config' => 'system',
+          'name' => 'company_'.$this->read('Account.id'),
+          'config' => 'auth',
         )
       ));
       
@@ -182,7 +192,7 @@
         ),
         'cache' => array(
           'name' => 'project_'.$this->controller->params['projectId'],
-          'config' => 'system',
+          'config' => 'auth',
         )
       ));
       
@@ -216,7 +226,7 @@
         ),
         'cache' => array(
           'name' => 'person_'.$this->user('id'),
-          'config' => 'system',
+          'config' => 'auth',
         )
       ));
       
@@ -234,7 +244,7 @@
         'recursive' => -1,
         'cache' => array(
           'name' => 'person_aco_'.$person['Person']['id'],
-          'config' => 'acl',
+          'config' => 'auth',
         )
       ));
       $person['Person']['_aro_id'] = $aro['Aro']['id'];
@@ -270,7 +280,7 @@
     private function __loadPersonAccounts()
     {
       $aroId = $this->read('Person._aro_id');
-      $accounts = $this->controller->Account->findCached('accounts_'.$aroId, 'acl');
+      $accounts = $this->controller->Account->findCached('accounts_'.$aroId, 'auth');
    
       if(empty($accounts))
       {
@@ -283,7 +293,7 @@
           'fields' => array('Aco.foreign_key','Permission.*'),
           'cache' => array(
             'name' => 'accounts_aro_'.$aroId,
-            'config' => 'acl',
+            'config' => 'auth',
           )
         ));
         
@@ -297,7 +307,7 @@
             'fields' => array('id','name','slug'),
             'cache' => array(
               'name' => 'accounts_'.$aroId,
-              'config' => 'acl',
+              'config' => 'auth',
             )
           ));
         }
@@ -318,7 +328,7 @@
     private function __loadPersonProjects()
     {
       $aroId = $this->read('Person._aro_id');
-      $projects = $this->controller->Account->Project->findCached('projects_'.$aroId, 'acl');
+      $projects = $this->controller->Account->Project->findCached('projects_'.$aroId, 'auth');
    
       if(empty($projects))
       {
@@ -331,7 +341,7 @@
           'fields' => array('Aco.foreign_key','Permission.*'),
           'cache' => array(
             'name' => 'projects_aro_'.$aroId,
-            'config' => 'acl',
+            'config' => 'auth',
           )
         ));
         
@@ -353,7 +363,7 @@
             ),
             'cache' => array(
               'name' => 'projects_'.$aroId,
-              'config' => 'acl',
+              'config' => 'auth',
             )
           ));
         }
@@ -377,7 +387,7 @@
       $recordId = $this->read($name.'.id');
     
       $cacheKey = 'prefix_'.$prefix.'_'.$this->read('Account.id').'_'.$this->read('Person._aro_id');
-      $permissions = Cache::read($cacheKey,'acl');
+      $permissions = Cache::read($cacheKey,'auth');
    
       if(empty($permissions))
       {
@@ -415,7 +425,7 @@
           );
         }
         
-        Cache::write($cacheKey,$permissions,'acl');
+        Cache::write($cacheKey,$permissions,'auth');
       }
       
       $this->write('Permissions.'.$name,$permissions);
@@ -433,7 +443,7 @@
     private function __loadPrefixCompanies()
     {
       $cacheKey = 'companies_aco_'.$this->prefixAco;
-      $companies = Cache::read($cacheKey,'acl');
+      $companies = Cache::read($cacheKey,'auth');
 
       if(empty($companies))
       {
@@ -455,11 +465,11 @@
           'contain' => false,
           'cache' => array(
             'name' => 'companies_'.$this->prefixAco,
-            'config' => 'acl',
+            'config' => 'auth',
           )
         ));
         
-        Cache::write($cacheKey,$companies,'acl');
+        Cache::write($cacheKey,$companies,'auth');
       }
       
       $this->write('Companies',$companies);
@@ -475,7 +485,7 @@
     private function __loadPrefixPeople()
     {
       $cacheKey = 'people_aco_'.$this->prefixAco;
-      $people = Cache::read($cacheKey,'acl');
+      $people = Cache::read($cacheKey,'auth');
 
       if(empty($people))
       {
@@ -501,11 +511,11 @@
           ),
           'cache' => array(
             'name' => 'people_aco_'.$this->prefixAco,
-            'config' => 'acl',
+            'config' => 'auth',
           )
         ));
         
-        Cache::write($cacheKey,$people,'acl');
+        Cache::write($cacheKey,$people,'auth');
       }
       
       $this->write('People',$people);

@@ -302,5 +302,6 @@
  */
 	Cache::config('default', array('engine' => 'File'));
   
-	Cache::config('acl', array('engine' => 'File','path'=>CACHE.DS.'acl'));
+	Cache::config('auth', array('engine' => 'File','path'=>CACHE.DS.'auth','prefix'=>null));
+	Cache::config('acl', array('engine' => 'File','path'=>CACHE.DS.'acl','prefix'=>null));
 	Cache::config('system', array('engine' => 'File','path'=>CACHE.DS.'queries'));

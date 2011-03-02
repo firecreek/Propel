@@ -47,6 +47,8 @@
       'subscribe'   => '_read',
     );
     
+    public $authPrefix = 'project';
+    
     
     /**
      * Before filter

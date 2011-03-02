@@ -39,6 +39,12 @@
           'model',
           'model_id',
         )
+      ),
+      'Cached' => array(
+        'prefix' => array(
+          'comment',
+          'post',
+        ),
       )
     );
     

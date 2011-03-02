@@ -44,6 +44,11 @@
       'Searchable' => array(
         'title' => 'title',
         'description' => 'body'
+      ),
+      'Cached' => array(
+        'prefix' => array(
+          'post'
+        ),
       )
     );
     

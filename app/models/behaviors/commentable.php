@@ -83,6 +83,7 @@
      */
     public function afterFind(&$model,$results, $primary)
     {
+      //Total unread messages
       if(!empty($results) && isset($results[0]['CommentUnread']))
       {
         foreach($results as $key => $record)
@@ -100,6 +101,29 @@
           }
         }
       }
+      
+      
+      //CommentLast person name
+      //@todo A containable join within CommentLast breaks, can this be fixed?
+      if(!empty($results) && isset($results[0]['CommentLast']))
+      {
+        foreach($results as $key => $record)
+        {
+          if(empty($record['CommentLast']['person_id'])) { continue; }
+        
+          $lastPerson = $model->CommentLast->Person->find('first',array(
+            'conditions' => array('Person.id'=>$record['CommentLast']['person_id']),
+            'fields' => array('id','full_name','email','user_id'),
+            'recursive' => -1,
+            'cache' => array(
+              'name' => 'person_last_'.$record['CommentLast']['person_id'],
+              'config' => 'system'
+            )
+          ));
+          
+          $results[$key]['CommentLast']['Person'] = $lastPerson['Person'];
+        }
+      }      
       
       return $results;
     }
