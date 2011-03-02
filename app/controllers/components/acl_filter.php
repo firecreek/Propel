@@ -68,208 +68,54 @@
     public function initialize(&$controller, $settings = array())
     {
       $this->controller =& $controller;
-    }
-
-
-    /**
-     * Check and set auths
-     *
-     * @todo Use Try{} to exit out of the checking if errors found before
-     * @todo Put more code into individual methods
-     * @access public
-     * @return void
-     */
-    public function auth()
-    {
-      if(isset($this->controller->actionMap))
-      {
-        $this->actionMap = array_merge($this->actionMap,$this->controller->actionMap);
-      }
-    
-      //Configure AuthComponent
-      $this->Authorization->authorize = 'crud';
+      
+      $this->Authorization->authorize = 'controller';
       $this->Authorization->autoRedirect = false;
       $this->Authorization->loginAction = array('prefix' => false, 'controller' => 'users', 'action' => 'login');
       $this->Authorization->logoutRedirect = array('prefix' => false, 'controller' => 'users', 'action' => 'login');
       $this->Authorization->userScope = array('User.status' => 1);
       $this->Authorization->actionPath = 'openbase/';
       
-      $prefix = isset($this->controller->params['prefix']) ? $this->controller->params['prefix'] : null;
+      //Extended action map
+      if(isset($this->controller->actionMap))
+      {
+        $this->actionMap = array_merge($this->actionMap,$this->controller->actionMap);
+      }
+    }
+
+
+    /**
+     * Check authorization
+     *
+     * @access public
+     * @return void
+     */
+    public function check()
+    {
       $userRoleId = $this->Authorization->user('role_id');
 
-      if(empty($prefix))
+      if(!isset($this->controller->params['prefix']))
       {
-        //Front end pages, no auth required
-        $this->Authorization->allowedActions = array('*');
+        return true;
       }
       elseif(!$this->Authorization->user())
       {
-        //Not logged in
         $this->cakeError('notLoggedIn');
       }
       else
       {
-        //Load Person based on account slug and user id
-        $permissions = array('Account'=>array(),'Project'=>array());
-        
-        $accountSlug = $this->controller->params['accountSlug'];
-        
-        $account  = null;
-        $project  = null;
-        $userId   = $this->Authorization->user('id');
-        $permissionCheck = true;
-        
-        
-        //Load account
-        $account = $this->controller->Account->find('first',array(
-          'conditions' => array(
-            'Account.slug' => $accountSlug
-          ),
-          'fields' => array('id','name','slug','scheme_id'),
-          'contain' => array(
-            'CompanyOwner' => array('id','name')
-          ),
-          'cache' => array(
-            'name' => 'account',
-            'config' => 'system',
-          )
-        ));
-        
-        if(empty($account))
-        {
-          $this->cakeError('accountNotFound');
-        }
-        
-        $company = $account['CompanyOwner'];
-        
-        //Load project     
-        if($prefix == 'project')
-        {
-          $project = $this->controller->Account->Project->find('first',array(
-            'conditions' => array(
-              'Project.id' => $this->controller->params['projectId']
-            ),
-            'contain' => array(
-              'Company' => array('id','name','private'),
-              'Person' => array('id','user_id','full_name','email','user_id')
-            ),
-            'cache' => array(
-              'name' => 'project',
-              'config' => 'system',
-            )
-          ));
-        
-          $company = $project['Company'];
-          
-          if(empty($project))
-          {
-            $this->cakeError('prefixNotFound');
-          }
-        }
-        
-        
-        //Load current person
-        $person = $this->controller->Person->find('first',array(
-          'conditions' => array(
-            'Person.account_id' => $account['Account']['id'],
-            'Person.user_id'    => $userId
-          ),
-          'fields' => array('id','first_name','last_name','full_name','email','company_owner','user_id'),
-          'contain' => array(
-            'User' => array('id','username','email','email_format','email_send','last_activity')
-          ),
-          'cache' => array(
-            'name' => 'person_'.$userId,
-            'config' => 'system',
-          )
-        ));
-        
-        if(empty($person))
-        {
-          $this->cakeError('personNotFound');
-        }
-        
-        //Update activity time
-        //@todo When caching is recoded then clear the person cache here
-        if(
-          empty($person['User']['last_activity']) ||
-          ((time() - strtotime($person['User']['last_activity'])) / 60) > 5
-        )
-        {
-          $this->controller->User->id = $person['User']['id'];
-          $this->controller->User->saveField('last_activity',date('Y-m-d H:i:s'));
-        }
-        
-        //Find Person aro
-        $aro = $this->Acl->Aro->find('first', array(
-          'conditions' => array(
-            'Aro.model' => 'Person',
-            'Aro.foreign_key' => $person['Person']['id'],
-          ),
-          'recursive' => -1,
-          'cache' => array(
-            'name' => 'person_aco_'.$person['Person']['id'],
-            'config' => 'acl',
-          )
-        ));
-        $person['Person']['_aro_id'] = $aro['Aro']['id'];
-        
-        if(empty($aro))
-        {
-          $this->cakeError('personNoAro');
-        }
-        
-        //Load accounts this person has access too
-        $accounts = $this->_aroAccounts($person['Person']['_aro_id']);
-        
-        //Load projects this person has access too
-        $projects = $this->_aroProjects($person['Person']['_aro_id']);
-       
-        //Prefix model id
-        $modelId = ${$prefix}[Inflector::camelize($prefix)]['id'];
-        
-        //
-        $this->accountId = $account['Account']['id'];
-        
-        //Load account permissions
-        $permissions['Account'] = $this->_aroPrefixPermissions('account',$account['Account']['id'],$person['Person']['_aro_id']);
-        
-        //Load prefix permissions
-        if($prefix != 'account')
-        {
-          $permissions[Inflector::classify($prefix)] = $this->_aroPrefixPermissions($prefix,$modelId,$person['Person']['_aro_id']);
-        }
-        
-        //Load companies added to this prefix
-        $modelRootNode = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId);
-        
-        $companies = $this->_loadPrefixCompanies($modelRootNode[0]['Aco']['id']);
-        $people = $this->_loadPrefixPeople($modelRootNode[0]['Aco']['id']);
-        
-        //Sets
-        $this->Authorization->write('Account',$account['Account']);
-        $this->Authorization->write('Project',$project['Project']);
-        $this->Authorization->write('Company',$company);
-        $this->Authorization->write('Person',$person['Person']);
-        $this->Authorization->write('User',$person['User']);
-        
-        $this->Authorization->write('Permissions',$permissions);
-        $this->Authorization->write('People',$people);
-        $this->Authorization->write('Projects',$projects);
-        $this->Authorization->write('Accounts',$accounts);
-        $this->Authorization->write('Companies',$companies);
-        
-        
         /**
          * Permission checking
          */
+        $isAllowed  = false;
+        $prefix     = isset($this->controller->params['prefix']) ? $this->controller->params['prefix'] : null;
+        $modelId    = $this->Authorization->read('Prefix.id');
+        $accountId  = $this->Authorization->read('Account.id');
+        $personAro  = $this->Authorization->read('Person._aro_id');
         
-        //Fix action map
-        $action = str_replace($prefix.'_','',$this->controller->action);
-        $actionKey = $this->actionMap[$action];
-        
-        //Check permissions for this person
-        $isAllowed = false;
+        //Action map
+        $action     = str_replace($prefix.'_','',$this->controller->action);
+        $actionKey  = $this->actionMap[$action];
         
         //Controller name to check
         if(!isset($this->controllerName))
@@ -284,42 +130,30 @@
           }
         }
         
-        //Method is allowed by controller $authAllow
-        if(isset($this->controller->authAllow) && in_array($this->controller->action,$this->controller->authAllow))
-        {
-          $isAllowed = true;
-          $permissionCheck = false;
-        }
-        
         
         //Check if this person is allowed to be in this controller and has the correct CRUD access
-        if($permissionCheck)
+        $permissionNode = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
+        
+        if(!empty($permissionNode))
         {
-          $isAllowed = true;
+          $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
+            'conditions' => array(
+              'Aro.model' => 'Person',
+              'Permission.aco_id' => $permissionNode[0]['Aco']['id'],
+              'Permission.aro_id' => $this->Authorization->read('Person._aro_id'),
+              'Permission.'.$actionKey => true
+            ),
+            'cache' => array(
+              'name' => 'permission_'.$permissionNode[0]['Aco']['id'].'_'.$this->Authorization->read('Person._aro_id').'_'.$actionKey,
+              'config' => 'acl',
+            )
+          ));
           
-          $permissionNode = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
-          if(!empty($permissionNode))
+          if(!$isAllowed)
           {
-            $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
-              'conditions' => array(
-                'Aro.model' => 'Person',
-                'Permission.aco_id' => $permissionNode[0]['Aco']['id'],
-                'Permission.aro_id' => $person['Person']['_aro_id'],
-                'Permission.'.$actionKey => true
-              ),
-              'cache' => array(
-                'name' => 'permission_'.$permissionNode[0]['Aco']['id'].'_'.$person['Person']['_aro_id'].'_'.$actionKey,
-                'config' => 'acl',
-              )
-            ));
-            
-            if(!$isAllowed)
-            {
-              $this->cakeError('badCrudAccess');
-            }
+            $this->cakeError('badCrudAccess');
           }
         }
-        
         
         //Check record
         //This will force set the isAllowed variable to false if problems are found
@@ -403,260 +237,16 @@
           
         }
       
+      
         //Throw error
         if(!$isAllowed)
         {
           $this->cakeError('unknownAclError');
         }
         
-        //Allow auth
-        $this->Authorization->allowedActions = array('*');
+        return true;
       }
       
-    }
-    
-    
-    
-    /**
-     * List of projects this aro has access to
-     *
-     * @todo Move this to Model
-     * @access private
-     * @return array
-     */
-    private function _aroProjects($aroId)
-    {
-      $projects = $this->controller->Account->Project->findCached('projects_'.$aroId, 'acl');
-   
-      if(empty($projects))
-      {
-        $records = $this->controller->Acl->Aco->Permission->find('all',array(
-          'conditions' => array(
-            'Permission.aro_id' => $aroId,
-            'Permission._read' => true,
-            'Aco.model' => 'Projects',
-          ),
-          'fields' => array('Aco.foreign_key','Permission.*'),
-          'cache' => array(
-            'name' => 'projects_aro_'.$aroId,
-            'config' => 'acl',
-          )
-        ));
-        
-        if(!empty($records))
-        {
-          $projects = $this->controller->Account->Project->find('all',array(
-            'conditions' => array(
-              'Project.id'      => Set::extract($records,'{n}.Aco.foreign_key'),
-              'Project.status'  => 'active'
-            ),
-            'fields' => array('id','name'),
-            'contain' => array(
-              'Account' => array(
-                'fields' => array('id','name','slug')
-              ),
-              'Company' => array(
-                'fields' => array('id','name')
-              )
-            ),
-            'cache' => array(
-              'name' => 'projects_'.$aroId,
-              'config' => 'acl',
-            )
-          ));
-        }
-      }
-      
-      return $projects;
-    }
-    
-    
-    
-    /**
-     * List of accounts this aro has access to
-     *
-     * @todo Move this to Model
-     * @access private
-     * @return array
-     */
-    private function _aroAccounts($aroId)
-    {
-      $accounts = $this->controller->Account->findCached('accounts_'.$aroId, 'acl');
-   
-      if(empty($accounts))
-      {
-        $records = $this->controller->Acl->Aco->Permission->find('all',array(
-          'conditions' => array(
-            'Permission.aro_id' => $aroId,
-            'Permission._read' => true,
-            'Aco.model' => 'Accounts',
-          ),
-          'fields' => array('Aco.foreign_key','Permission.*'),
-          'cache' => array(
-            'name' => 'accounts_aro_'.$aroId,
-            'config' => 'acl',
-          )
-        ));
-        
-        if(!empty($records))
-        {
-          $accounts = $this->controller->Account->find('all',array(
-            'conditions' => array(
-              'Account.id'      => Set::extract($records,'{n}.Aco.foreign_key')
-            ),
-            'contain' => false,
-            'fields' => array('id','name','slug'),
-            'cache' => array(
-              'name' => 'accounts_'.$aroId,
-              'config' => 'acl',
-            )
-          ));
-        }
-      }
-      
-      return $accounts;
-    }
-    
-    
-    /**
-     * Prefix permissions for this current user
-     *
-     * @access private
-     * @return array
-     */
-    private function _aroPrefixPermissions($prefix,$recordId,$personAroId)
-    {
-      $cacheKey = 'prefix_'.$prefix.'_'.$this->accountId.'_'.$personAroId;
-      $permissions = Cache::read($cacheKey,'acl');
-   
-      if(empty($permissions))
-      {
-        //Load project permissions
-        $node = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$recordId);
-
-        $controllers = $this->controller->Acl->Aco->find('list',array(
-          'conditions' => array(
-            'Aco.parent_id' => $node[0]['Aco']['id']
-          ),
-          'fields' => array(
-            'Aco.id',
-            'Aco.alias',
-          ),
-          'recursive' => '-1',
-        ));
-        $controllerIds = array_keys($controllers);
-        
-        //Check what permissions this person has for this project
-        $allowedControllers = $this->controller->Acl->Aco->Permission->find('all', array(
-          'conditions' => array(
-            'Permission.aro_id' => $personAroId,
-            'Permission.aco_id' => $controllerIds
-          ),
-          'fields' => array('Permission.*','Aco.alias')
-        ));
-        
-        foreach($allowedControllers as $allowedController)
-        {
-          $permissions[$allowedController['Aco']['alias']] = array(
-            'create'  => $allowedController['Permission']['_create'],
-            'read'    => $allowedController['Permission']['_read'],
-            'update'  => $allowedController['Permission']['_update'],
-            'delete'  => $allowedController['Permission']['_delete'],
-          );
-        }
-        
-        Cache::write($cacheKey,$permissions,'acl');
-      }
-      
-      return $permissions;
-    }
-    
-    
-    /**
-     * Companies associated to this aco
-     *
-     * @access private
-     * @return array
-     */
-    private function _loadPrefixCompanies($acoId)
-    {
-      $cacheKey = 'companies_aco_'.$acoId;
-      $companies = Cache::read($cacheKey,'acl');
-
-      if(empty($companies))
-      {
-        //Load companies
-        $records = $this->controller->Acl->Aco->Permission->find('all', array(
-          'conditions' => array(
-            'Aro.model' => 'Company',
-            'Permission.aco_id' => $acoId,
-            'Permission._read' => true
-          ),
-          'fields' => array('Aro.foreign_key')
-        ));
-        $records = Set::extract($records,'{n}.Aro.foreign_key');
-        
-        $companies = $this->controller->User->Company->find('all',array(
-          'conditions' => array('Company.id'=>$records),
-          'fields' => array('id','name','private','account_owner'),
-          'order' => 'Company.created DESC',
-          'contain' => false,
-          'cache' => array(
-            'name' => 'companies_'.$acoId,
-            'config' => 'acl',
-          )
-        ));
-        
-        Cache::write($cacheKey,$companies,'acl');
-      }
-      
-      return $companies;
-    }
-    
-    
-    /**
-     * People associated to this aco
-     *
-     * @access private
-     * @return array
-     */
-    private function _loadPrefixPeople($acoId)
-    {
-      $cacheKey = 'people_aco_'.$acoId;
-      $people = Cache::read($cacheKey,'acl');
-
-      if(empty($people))
-      {
-        //Load people
-        $records = $this->controller->Acl->Aco->Permission->find('all', array(
-          'conditions' => array(
-            'Aro.model' => 'Person',
-            'Permission.aco_id' => $acoId,
-            'Permission._read' => true
-          ),
-          'fields' => array('Aro.foreign_key')
-        ));
-        $records = Set::extract($records,'{n}.Aro.foreign_key');
-    
-        $people = $this->controller->Person->find('all',array(
-          'conditions' => array(
-            'Person.id' => $records
-          ),
-          'fields' => array('id','full_name','first_name','last_name','email','title','company_owner','user_id'),
-          'contain' => array(
-            'Company' => array('id','name'),
-            'User' => array('id','last_activity')
-          ),
-          'cache' => array(
-            'name' => 'people_aco_'.$acoId,
-            'config' => 'acl',
-          )
-        ));
-        
-        Cache::write($cacheKey,$people,'acl');
-      }
-      
-      return $people;
     }
     
     
