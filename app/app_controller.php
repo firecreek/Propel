@@ -78,11 +78,6 @@
         ));
       }
       
-      
-      //Auth settings
-      $this->AclFilter->auth();
-      
-      
       foreach($this->uses as $model)
       {
         $this->{$model}->personId = $this->Authorization->read('Person.id');
@@ -119,6 +114,12 @@
       $this->set(compact('prefix'));
     
       parent::beforeRender();
+    }
+    
+    
+    public function isAuthorized()
+    {
+      return $this->AclFilter->check();
     }
     
     
