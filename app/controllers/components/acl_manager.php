@@ -229,7 +229,7 @@
      */
     public function acoNode($path)
     {
-      $cacheKey = str_replace('/','.',$path);
+      $cacheKey = 'node_aco_'.md5($path);
     
       if(!$node = Cache::read($cacheKey,'acl'))
       {

@@ -43,7 +43,8 @@
      * @var array
      */
     public $actionMap = array(
-      'add_multiple'     => '_create'
+      'add_multiple'     => '_create',
+      'move_project'     => '_update',
     );
     
     
@@ -389,6 +390,22 @@
       ));
       
       $this->set(compact('id','completed','record'));
+    }
+    
+    
+    /**
+     * Move milestone to different project
+     *
+     * @todo Check if they have access to create on this project
+     * @access public
+     * @return void
+     */
+    public function project_move_project($id)
+    {
+      $this->Project->id = $this->data['Milestone']['project_id'];
+      
+      $this->Milestone->id = $id;
+      $this->Milestone->saveField('project_id',$this->data['Milestone']['project_id']);
     }
     
     

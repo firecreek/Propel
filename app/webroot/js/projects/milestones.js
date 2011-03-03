@@ -38,11 +38,13 @@ var Milestones = {
     });
   },
   
+  
   refresh: function()
   {
     var self = this;
     this.refreshTimer = setTimeout(function() { self._callRefresh(); },500);
   },
+  
   
   _callRefresh: function()
   {
@@ -53,7 +55,52 @@ var Milestones = {
     }
     
     $('#main').load(this.refreshUrl);
+  },
+  
+  
+  initMoveProject: function(id)
+  {
+    var obj = $('div[rel=edit-milestone-'+id+']');
+    
+    $(obj).find('.move-project-link').bind('click',function(){
+    
+      var self = this;
+    
+      $(obj).find('.move-project-form').css({
+        left:$(self).offset().left-300,
+      }).show();
+      
+      return false;
+    });
+    
+    $(obj).find('.move-project-form form').ajaxSubmit();
+
+    $(obj).find('.move-project-form div.submit a').bind('click',function(){
+      $(obj).find('.move-project-form').hide();
+      return false;
+    });
+    
+    $(obj).find('.move-project-form select').bind('change',function(){
+      if($(this).val())
+      { 
+        $(obj).find('.move-project-form div.submit input').removeAttr('disabled');
+      }
+      else
+      {
+        $(obj).find('.move-project-form div.submit input').attr('disabled',true);
+      }
+    });
+  
+    if($(obj).find('.move-project-form select').val())
+    { 
+      $(obj).find('.move-project-form div.submit input').removeAttr('disabled');
+    }
+    else
+    {
+      $(obj).find('.move-project-form div.submit input').attr('disabled',true);
+    }
   }
+  
 
 }
 

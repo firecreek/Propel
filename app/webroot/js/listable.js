@@ -175,10 +175,10 @@
         });
         
         //Submit
-        $(inline).find('form').ajaxSubmit();
+        $(inline).find('form:first').ajaxSubmit();
         
         //Cancel link
-        $(inline).find('.submit a').bind('click',function(e){
+        $(inline).find('.submit:first a').bind('click',function(e){
           //$(item).removeClass('ui-state-edit');
           //$(group).removeClass('ui-state-edit');
           e.preventDefault();

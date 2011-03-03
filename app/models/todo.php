@@ -166,7 +166,9 @@
                 'TodoItem.todo_id' => $result[$this->alias]['id'],
                 'TodoItem.completed' => true
               ),
-              'contain' => array('Responsible'),
+              'contain' => array(
+                'Responsible'
+              ),
               'order' => 'TodoItem.completed_date DESC'
             ),$this->_loadItems['recent']));
           }

@@ -43,3 +43,13 @@ table.add-multiple td.reminder div label { margin-left:2px; font-size:10px; posi
 .milestone-comment-head #milestoneStatus p { margin:0; padding:0 0 5px 5px; }
 .milestone-comment-head .item.completed .name { text-decoration: line-through; }
 
+
+/**
+ * Other
+ */
+.move-project-link { float:right; position:relative; top:-22px; }
+.move-project-link a { font-size:11px; }
+
+.move-project-form { width:320px; }
+.move-project-form label { font-weight:bold; }
+

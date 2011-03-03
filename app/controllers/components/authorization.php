@@ -28,7 +28,7 @@
      * @access public
      * @var object
      */
-    public $components = array('Session','Acl','RequestHandler');
+    public $components = array('Session','Acl','RequestHandler','AclManager');
     
     /**
      * Access data
@@ -50,7 +50,6 @@
     public function initialize(&$controller, $settings = array())
     {
       $this->controller =& $controller;
-      parent::initialize($controller, $settings);
     
       //Load person, etc..
       if($this->user('id') && isset($this->controller->params['accountSlug']))
@@ -70,6 +69,8 @@
         
         $this->_loadUser();
       }
+      
+      parent::initialize($controller, $settings);
     }
     
     
@@ -93,7 +94,7 @@
       }
       
       $this->prefixId = $this->read(Inflector::classify($this->prefix).'.id');
-      $modelRootNode = $this->Acl->Aco->node('opencamp/'.Inflector::pluralize($this->prefix).'/'.$this->prefixId);
+      $modelRootNode = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($this->prefix).'/'.$this->prefixId);
       $this->prefixAco = $modelRootNode[0]['Aco']['id'];
       
       $this->write('Prefix',array(
@@ -102,14 +103,10 @@
         'aco' => $this->prefixAco
       ));
       
-      //Data that isn't required for ajax calls
-      if(!$this->RequestHandler->isAjax())
-      {
-        $this->__loadPersonAccounts();
-        $this->__loadPersonProjects();
-        $this->__loadPrefixCompanies();
-        $this->__loadPrefixPeople();
-      }
+      $this->__loadPersonAccounts();
+      $this->__loadPersonProjects();
+      $this->__loadPrefixCompanies();
+      $this->__loadPrefixPeople();
     }
     
     

@@ -10,6 +10,7 @@
   $html->css('projects/milestones', null, array('inline'=>false));
 ?>
 
+
 <div id="MilestoneList">
 
   <div class="cols">

@@ -72,6 +72,25 @@
 
 
     /**
+     * Create check
+     * 
+     * @access public
+     * @return void
+     */
+    public function canCreate(&$model,$options = array())
+    {
+      if($this->authCheck($model,'create') && $this->authIsRelated($model,'project_id',$this->_authRead('Project.id')))
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+
+    /**
      * Check if record can be updated by current person
      * 
      * @access public
