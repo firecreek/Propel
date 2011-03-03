@@ -4,6 +4,7 @@ $.fn.ajaxSubmit = function(e) {
 	this.submit(function(){
   
     var self = this;
+    $(this).find('div.submit .saving').remove();
     $(this).find('div.submit').append('<div class="saving"></div>');
   
     var params = {};
@@ -22,7 +23,6 @@ $.fn.ajaxSubmit = function(e) {
       dataType: 'script',
       success: function(response)
       {
-        $(self).find('div.submit .saving').remove();
       }
     });
 
