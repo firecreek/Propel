@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-02-27 15:02:59 : 1298794139*/
+/* App schema generated on: 2011-03-04 04:03:51 : 1299188751*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -119,12 +119,12 @@ class AppSchema extends CakeSchema {
 	);
 	var $comments_reads = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'model_id' => array('type' => 'integer', 'null' => false),
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'last_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'model' => array('column' => array('model', 'model_id'), 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $companies = array(
@@ -232,6 +232,7 @@ class AppSchema extends CakeSchema {
 		'invitation_note' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'invitation_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'string', 'null' => false, 'default' => 'active', 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'grant_id' => array('type' => 'integer', 'null' => false),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'company_id' => array('column' => 'company_id', 'unique' => 0)),
@@ -370,7 +371,7 @@ class AppSchema extends CakeSchema {
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'todo_id' => array('column' => 'todo_id', 'unique' => 0), 'responsible_model' => array('column' => array('responsible_model', 'responsible_id'), 'unique' => 0)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'todo_id' => array('column' => 'todo_id', 'unique' => 0), 'responsible_model' => array('column' => array('responsible_model', 'responsible_id'), 'unique' => 0), 'todo_id_2' => array('column' => array('todo_id', 'completed'), 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $users = array(

@@ -1,43 +1,40 @@
-/**
- * Basic
- */
 
-#wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -50px; }
+html, body { background-color:white; }
 
 
 /**
- * Content
+ * Header
  */
+header { height:40px; background-color:#222; color:#fff; }
+header h1 { width:900px; margin:0 auto; padding-top:10px; font-size:14px; font-family:arial; }
+header h1 a { color:white; text-decoration:none; }
+header h1 a:hover { background-color:transparent; }
+header h1 a:hover { color:white; }
 
+h2 { font-size:24px; margin-bottom:10px; font-weight:normal; }
 
-/**
- * Pagination
- */
-
-
-/**
- * Tables
- */
-
-
-/**
- * Forms
- */
-
-
-
+#main { margin: 0px auto; width:900px; padding: 20px 0px 0px 0px; }
 
 /**
  * Navigation
  */
-
-
+nav { background-color:#888; height:25px;  }
+nav ul { margin:0 auto; width:900px; }
+nav li { float:left; margin:2px 20px 0 0; }
+nav li.active a { text-decoration:none; font-weight:bold; }
+nav a { color:white; }
 
 /**
- * Footer
+ * Content
  */
-#footer { width: auto; text-align: center; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; height: 20px; }
-#footer a { color: #ccc; text-decoration: none; }
-#footer a:hover { text-decoration: underline; }
-.push { height: 50px; }
+#main { margin-bottom:20px; }
+#main ul {}
+#main li { margin-left:2em; list-style-type:disc; }
 
+table { width:100%; border-width:1px; border-color:black; background-color:black; }
+table th, table td { padding:4px; }
+table th { text-align:left; color:white; }
+table td { background-color:white; }
+
+table td.toggle { text-align:center; }
+table td.toggle a { text-decoration:none; }

@@ -15,6 +15,11 @@
   Router::connect('/users/register', array('controller' => 'users', 'action' => 'register'));
   
   
+  //Admin
+  Router::connect('/admin/:controller/:action/*',
+    array('controller'=>'dashboard', 'action'=>'index', 'prefix'=>'admin')
+  );
+  
   //Comments
   Router::connect('/:accountSlug/:projectId/:associatedController/comments/edit/*',
     array('controller'=>'comments', 'action'=>'index', 'edit'=>true),
@@ -50,7 +55,6 @@
     array('controller'=>'accounts', 'action'=>'index', 'prefix'=>'account'),
     array('accountSlug'=>'[a-z0-9\-]+')
   );
-  
   
 
 ?>

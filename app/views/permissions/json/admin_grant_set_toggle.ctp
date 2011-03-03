@@ -1,0 +1,1 @@
+{ "value":"<?php echo $newValue; ?>" }

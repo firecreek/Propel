@@ -34,7 +34,7 @@
      * @access public
      * @access public
      */
-    public $uses = array('Account');
+    public $uses = array('Setting','Account');
     
     /**
      * Uses
@@ -77,6 +77,62 @@
       );
       
       parent::beforeFilter();
+    }
+    
+    
+    
+    /**
+     * Admin index
+     * 
+     * @access public
+     * @return void
+     */
+    public function admin_index()
+    {
+      $records = $this->Setting->find('all',array(
+        'fields' => 'SUBSTRING_INDEX(`key`, \'.\', 1) as name',
+        'group' => 'name'
+      ));
+      
+      $keys = array();
+      
+      foreach($records as $record)
+      {
+        $keys[] = $record[0]['name'];
+      }
+      
+      $this->set(compact('keys'));
+    }
+    
+    
+    /**
+     * Admin view
+     * 
+     * @access public
+     * @return void
+     */
+    public function admin_view($key)
+    {
+      if(!empty($this->data))
+      {
+        foreach($this->data[$key] as $name => $val)
+        {
+          $this->Setting->updateAll(
+            array('Setting.value'=>'"'.$val.'"'),
+            array('Setting.key'=>$key.'.'.$name)
+          );
+        }
+        $this->Session->setFlash(__('Values updated',true),'default',array('class'=>'success'));
+      }
+    
+      $records = $this->Setting->find('all',array(
+        'conditions' => array(
+          'key LIKE' => $key.'.%'
+        ),
+        'order' => 'weight ASC'
+      ));
+      
+      $this->set(compact('records','key'));
     }
     
     

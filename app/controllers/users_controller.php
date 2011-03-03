@@ -153,12 +153,23 @@
         }
       
         //Redirect
-        $this->redirect(array(
-          'controller'  => 'accounts',
-          'action'      => 'index',
-          'prefix'      => 'account',
-          'accountSlug' => $accountSlug
-        ));
+        if($this->Authorization->user('role_id') == 1)
+        {
+          $this->redirect(array(
+            'prefix'      => 'admin',
+            'controller'  => 'dashboard',
+            'action'      => 'index'
+          ));
+        }
+        else
+        {
+          $this->redirect(array(
+            'controller'  => 'accounts',
+            'action'      => 'index',
+            'prefix'      => 'account',
+            'accountSlug' => $accountSlug
+          ));
+        }
       }
     }
     

@@ -65,6 +65,9 @@
      */
     public function beforeFilter()
     {
+      //JSON
+      $this->RequestHandler->setContent('json', 'application/json');
+    
       //Set cache prefix
       $prefix = array();
       if(!empty($this->params['accountSlug'])) { $prefix[] = $this->params['accountSlug']; }
@@ -106,7 +109,14 @@
       {
         if($this->layout !== false && $this->layout == 'default')
         {
-          $this->layout = 'account';
+          if($prefix == 'admin')
+          {
+            $this->layout = 'admin';
+          }
+          else
+          {
+            $this->layout = 'account';
+          }
         }
       }
       

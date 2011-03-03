@@ -315,8 +315,6 @@
      */
     public function project_edit($id)
     {
-      $this->cakeError('notLoggedIn');
-      
       $this->Milestone->id = $id;
       
       if(!empty($this->data))

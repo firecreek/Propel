@@ -145,7 +145,7 @@
     {
       $this->controller->layout = 'error';
       
-      if($this->controller->RequestHandler->isAjax())
+      if(isset($this->controller->RequestHandler) && $this->controller->RequestHandler->isAjax())
       {
         $this->controller->layout = 'js/error';
       }

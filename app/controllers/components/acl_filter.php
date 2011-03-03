@@ -102,6 +102,10 @@
       {
         $this->cakeError('notLoggedIn');
       }
+      elseif($this->controller->params['prefix'] == 'admin')
+      {
+        return true;
+      }
       else
       {
         /**
