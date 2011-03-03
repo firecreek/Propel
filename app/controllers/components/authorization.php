@@ -28,7 +28,7 @@
      * @access public
      * @var object
      */
-    public $components = array('Session','Acl');
+    public $components = array('Session','Acl','RequestHandler');
     
     /**
      * Access data
@@ -84,8 +84,6 @@
       $this->__loadAccount();
       $this->__loadCompany();
       $this->__loadPerson();
-      $this->__loadPersonAccounts();
-      $this->__loadPersonProjects();
       $this->__loadPrefixPermissions('Account');
       
       if($this->prefix == 'project')
@@ -104,8 +102,14 @@
         'aco' => $this->prefixAco
       ));
       
-      $this->__loadPrefixCompanies();
-      $this->__loadPrefixPeople();
+      //Data that isn't required for ajax calls
+      if(!$this->RequestHandler->isAjax())
+      {
+        $this->__loadPersonAccounts();
+        $this->__loadPersonProjects();
+        $this->__loadPrefixCompanies();
+        $this->__loadPrefixPeople();
+      }
     }
     
     
