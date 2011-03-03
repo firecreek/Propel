@@ -55,7 +55,7 @@
      * @return void
      */
     public function account_index()
-    {
+    {    
       //Responsible filter
       if(isset($this->params['url']['responsible']))
       {
@@ -315,6 +315,8 @@
      */
     public function project_edit($id)
     {
+      $this->cakeError('notLoggedIn');
+      
       $this->Milestone->id = $id;
       
       if(!empty($this->data))

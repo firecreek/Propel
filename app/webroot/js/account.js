@@ -8,6 +8,32 @@ var Account = {
     this._wysiwyg();
   },
   
+  errorShow: function(message,options)
+  {
+    var div = $('<div class="dialog error">');
+    
+    var html = '';
+    html += '<div class="wrapper">';
+    html += '<h1>There was an error</h1>'+message;
+    html += '</div>';
+    html += '<div class="close-button"><span></span></div>';
+  
+    $('body').prepend('<div class="lights-out"></div>');
+    $('body').prepend(div);
+  
+    $(div).html(html).css({
+      top:  ($(document).height()/2) - ($(div).height() / 2)-100,
+      left: ($(document).width()/2) - ($(div).width() / 2)
+    });
+    
+    $(div).find('.close-button').bind('click',function(){
+      $('.lights-out').hide();
+      $(div).hide();
+    });
+    
+    $('.lights-out').height($(document).height()).show();
+  },
+  
   _menus: function()
   {
     $("ul.sf-menu").superfish({

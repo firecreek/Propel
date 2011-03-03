@@ -10,27 +10,19 @@
  * @link     http://opencamp.firecreek.co.uk
  * 
  */
-(function ($) {
-  var OcDialog = function () {
-    var defaults = {
-      blank: ''
+ 
+(function($) {
+  $.widget("oc.dialog",{
+    
+    options: {
+      class:'',
+      lightsOut: false
     },
     
-    testFunction = function() {
+    _create: function()
+    {
+      alert('ok');
     }
-      
-    return {
-      init: function (opt) {
-        opt = $.extend({}, defaults, opt||{});
-        
-        return this.each(function () {
-          
-          
-        });
-      }
-    };
-  }();
-  $.fn.extend({
-    OcDialog: OcDialog.init
+  
   });
-})(jQuery)
+})(jQuery);

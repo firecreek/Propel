@@ -144,6 +144,12 @@
     public function _outputMessage($template)
     {
       $this->controller->layout = 'error';
+      
+      if($this->controller->RequestHandler->isAjax())
+      {
+        $this->controller->layout = 'js/error';
+      }
+      
       $this->controller->render($template);
       $this->controller->afterFilter();
       echo $this->controller->output;

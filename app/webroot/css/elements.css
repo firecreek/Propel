@@ -10,6 +10,11 @@ ul.bullet { margin-bottom:20px; }
 ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 
+/**
+ * Lights out
+ */
+.lights-out { position:absolute; top:0; left:0; width:100%; z-index:100; background:rgba(0,0,0,0.6); display:none; text-align:left; }
+
 
 /**
  * Dialog
@@ -20,8 +25,14 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .dialog.default { background-color:white; -webkit-box-shadow:black 0px 0px 10px; -moz-box-shadow:black 0px 0px 10px; border-radius:12px; }
 .dialog.default .wrapper { padding:15px; }
 
-.dialog.default .close-button { background-color:white; position:absolute; right:15px; top:15px; width:16px; height:16px; background:url(/img/icons/close-16.png) transparent no-repeat; cursor:pointer; text-indent:-9000px }
-.dialog.default .close-button span { display:block; width:100%; height:100%; }
+.dialog.error { background-color:white; -webkit-box-shadow:black 0px 0px 10px; -moz-box-shadow:black 0px 0px 10px; border-radius:12px; border-color: #C00; border-width:2px; }
+.dialog.error .wrapper { padding:5px; }
+.dialog.error h1 { text-align:center; font-size:22px; font-weight:normal; margin:0 0 10px 0; }
+.dialog.error h2 { font-size:14px; }
+.dialog.error p:last-child { margin-bottom:10px; }
+
+.dialog .close-button { background-color:white; position:absolute; right:15px; top:15px; width:16px; height:16px; background:url(/img/icons/close-16.png) transparent no-repeat; cursor:pointer; text-indent:-9000px }
+.dialog .close-button span { display:block; width:100%; height:100%; }
 
 
 /**
