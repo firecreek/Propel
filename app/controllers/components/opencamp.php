@@ -53,8 +53,47 @@
     {
       if(isset($this->controller->params['prefix']))
       {
+        $this->_settings();
         $this->_layoutScheme();
         $this->_helpers();
+      }
+    }
+    
+    
+    /**
+     * Before Render
+     *
+     * @access public
+     * @return void
+     */
+    public function beforeRender()
+    {
+      if($this->Authorization->read('Project.id'))
+      {
+        $this->controller->set('title_for_layout',$this->Authorization->read('Project.name').' - '.Inflector::humanize($this->controller->viewPath));
+      }
+      elseif($this->Authorization->read('Account.id'))
+      {
+        $this->controller->set('title_for_layout',$this->Authorization->read('Account.name').' - '.Inflector::humanize($this->controller->viewPath));
+      }
+    }
+    
+
+    /**
+     * Settings
+     *
+     * @access private
+     * @return void
+     */
+    private function _settings()
+    {
+      $settings = $this->controller->Setting->find('list',array(
+        'fields' => array('key','value')
+      ));
+      
+      foreach($settings as $key => $val)
+      {
+        Configure::write($key,$val);
       }
     }
     
