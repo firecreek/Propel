@@ -38,6 +38,7 @@
       'Containable',
       'Auth',
       'Commentable',
+      'Private',
       'Loggable' => array(
         'titleField' => 'title'
       ),

@@ -105,6 +105,7 @@
       //Build statement
       $contain = array();
       $conditions = array();
+      $private = false;
       
       //Responsible
       if($this->{$this->modelAlias}->Behaviors->attached('Responsible'))
@@ -116,6 +117,12 @@
       if(isset($this->{$this->modelAlias}->belongsTo['Person']))
       {
         $contain[] = 'Person';
+      }
+      
+      //Private
+      if($this->{$this->modelAlias}->Behaviors->attached('Private'))
+      {
+        $private = true;
       }
       
       //Load record
@@ -134,8 +141,14 @@
               'Company' => array('id','name')
             )
           )
-        ),$contain)
+        ),$contain),
+        'private' => true
       ));
+      
+      if(empty($record))
+      {
+        $this->cakeError('recordNotFound');
+      }
       
       //Title
       $title = $record[$this->modelAlias][$this->{$this->modelAlias}->displayField];

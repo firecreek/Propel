@@ -61,16 +61,7 @@
       
       //
       $conditions = array(
-        'Post.project_id' => $this->Authorization->read('Project.id'),
-        'OR' => array(
-          array('Post.private' => 0),
-          array(
-            'AND' => array(
-              'Post.private' => 1,
-              'Person.company_id' => $this->Authorization->read('Company.id')
-            )
-          ),
-        )
+        'Post.project_id' => $this->Authorization->read('Project.id')
       );
       
       
@@ -82,6 +73,7 @@
           'CommentLast',
           'CommentUnread'
         ),
+        'private' => true,
         'group' => 'Post.id',
         'order' => 'Post.id DESC',
         'cache' => array(
@@ -107,6 +99,7 @@
             ),
             'CommentUnread'
           ),
+          'private' => true,
           'group' => 'Post.id',
           'order' => 'Post.comment_count DESC',
           'limit' => 2

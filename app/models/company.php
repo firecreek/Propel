@@ -39,6 +39,9 @@
       'Cached' => array(
         'prefix' => array(
           'companies_',
+          'company_',
+          'person_',
+          'people_',
         ),
       ),
       'Containable'
