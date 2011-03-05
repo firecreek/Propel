@@ -102,7 +102,7 @@
             $this->AclManager->allow($this->User->Person, 'accounts', $this->User->Account->id, array('set' => 'owner'));
             
             //Give this company permission for this account
-            $this->AclManager->allow($this->User->Company, 'accounts', $this->User->Account->id, array('set' => 'company'));
+            $this->AclManager->allow($this->User->Company, 'accounts', $this->User->Account->id);
             
             //Create directories for saving files
             //@todo Move this

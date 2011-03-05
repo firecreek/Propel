@@ -77,7 +77,7 @@
             
             //Give this company permission for this project
             $this->User->Company->id = $this->Authorization->read('Company.id');
-            $this->AclManager->allow($this->User->Company, 'projects', $this->Project->id, array('set' => 'company'));
+            $this->AclManager->allow($this->User->Company, 'projects', $this->Project->id);
             
             //Create a new company?
             if(isset($this->data['Permission']['action']) && $this->data['Permission']['action'] == 'add')
@@ -95,8 +95,8 @@
                 if($checkCompany)
                 {
                   //Add permission for this account and project
-                  $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'company'));
-                  $this->AclManager->allow($this->Company, 'projects', $this->Project->id, array('set' => 'company'));
+                  $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'));
+                  $this->AclManager->allow($this->Company, 'projects', $this->Project->id);
                 }
                 
               }

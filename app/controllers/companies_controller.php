@@ -80,7 +80,7 @@
           if($this->Company->save($this->data))
           {
             //Grant permission for company
-            $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'company'));
+            $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'));
             
             //Redirect
             $this->Session->setFlash(__('Company created',true), 'default', array('class'=>'success'));
@@ -413,10 +413,10 @@
             if($this->Company->save($this->data))
             {
               //Grant permission for company to account
-              $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'company'));
+              $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'));
               
               //Grant permission for company to project
-              $this->AclManager->allow($this->Company, 'projects', $this->Authorization->read('Project.id'), array('set' => 'company'));
+              $this->AclManager->allow($this->Company, 'projects', $this->Authorization->read('Project.id'));
               
               //Redirect
               $this->Session->setFlash(__('Company created',true), 'default', array('class'=>'success'));
