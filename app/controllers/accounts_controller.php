@@ -44,29 +44,41 @@
      * @return void
      */
     public function account_index()
-    {
+    {      
+      //
+      $projects = $this->Authorization->read('Projects');
+      
+      //Active projects
+      if(!empty($projects))
+      {
+        $activeProjectCount = $this->Project->find('count',array(
+          'conditions' => array(
+            'Project.id' => Set::extract('{n}.Project.id',$projects),
+            'OR' => array(
+              'Project.todo_count >'      => '0',
+              'Project.milestone_count >' => '0',
+              'Project.post_count >'      => '0',
+            )
+          ),
+          'recursive' => -1
+        ));
+      }
+      
       //New account, create project
-      if(!$this->Authorization->read('Projects'))
+      if(
+        (!$this->Authorization->read('Person.company_owner') && empty($projects)) ||
+        (!$this->Authorization->read('Person.company_owner') && isset($activeProjectCount) && $activeProjectCount == 0)
+      )
+      {
+        //Shared user
+        return $this->render('account_index_shared');
+      }
+      elseif(empty($projects))
       {
         return $this->render('account_index_new');
       }
       
-      //Empty projects
-      $activeProjectCount = $this->Project->find('count',array(
-        'conditions' => array(
-          'Project.account_id' => $this->Authorization->read('Account.id'),
-          'OR' => array(
-            'Project.todo_count >'      => '0',
-            'Project.milestone_count >' => '0',
-            'Project.post_count >'      => '0',
-          )
-        ),
-        'recursive' => -1
-      ));
-      
       //Logs      
-      //For each project load recent log files
-      $projects = $this->Authorization->read('Projects');
       $logs = array();
       
       foreach($projects as $project)

@@ -20,7 +20,7 @@
       echo '</fieldset>';
       
       echo '<fieldset class="block"><legend>'.__('Now choose a username &amp; password',true).'</legend>';
-      echo $form->input('User.username',array('label'=>__('Username',true),'after'=>'<small>'.__('This is what you’ll use to sign in').'</small>',true));
+      echo $form->input('User.username',array('label'=>__('Username',true),'after'=>'<small>'.__('This is what you\'ll use to sign in',true).'</small>',true));
       echo $form->input('User.password',array('label'=>__('Password',true),'after'=>'<small>'.__('6 characters or longer with at least one number is safest.',true).'</small>'));
       echo $form->input('User.password_confirm',array('type'=>'password','label'=>__('Enter your password again for verification',true)));
       echo '</fieldset>';

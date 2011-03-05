@@ -26,7 +26,7 @@
      * @var array
      * @access public
      */
-    public $components = array('Assets');
+    public $components = array('Assets','Message');
     
     /**
      * Uses
@@ -45,6 +45,20 @@
     public $authAllow = array(
       'account_edit'
     );
+    
+    
+    /**
+     * Before filter
+     *
+     * @access public
+     * @return void
+     */
+    public function beforeFilter()
+    {
+      $this->Authorization->allow(array('register','invitation'));
+      
+      parent::beforeFilter();
+    }
     
     
     /**
@@ -118,6 +132,67 @@
           $this->data['User']['password_confirm'] = null;
         }
       }
+    }
+    
+    
+    /**
+     * Invitation
+     *
+     * @access public
+     * @return void
+     */
+    public function invitation($code,$type = 'new')
+    {
+      $record = $this->Person->find('first',array(
+        'conditions' => array('Person.invitation_code'=>$code),
+        'contain' => array(
+          'PersonInvitee',
+          'Account'
+        )
+      ));
+      
+      if(!empty($this->data))
+      {
+        $this->data['User']['email'] = $record['Person']['email'];
+        $this->User->set($this->data);
+        
+        if($this->User->validates())
+        {
+          $this->User->save();
+        
+          //Update person record
+          $this->Person->updateAll(
+            array(
+              'Person.user_id' => $this->User->id,
+              'Person.status' => '"active"',
+              'Person.invitation_code' => null
+            ),
+            array('Person.id'=>$record['Person']['id'])
+          );
+          
+          //Email
+          $data = array_merge($record,$this->data);          
+          $this->Message->send('welcome_invite',array(
+            'subject' => __('Your account has been created',true),
+            'to' => $record['Person']['email']
+          ),$data);
+          
+          //Give this person permission for this account
+          $this->AclManager->allow($this->Person, 'accounts', $record['Person']['account_id'], array('set' => 'shared'));
+
+          //Automatically login and redirect
+          $this->Authorization->login($this->data);
+          
+          $this->redirect(array(
+            'controller'  => 'accounts',
+            'action'      => 'index',
+            'prefix'      => 'account',
+            'accountSlug' => $record['Account']['slug']
+          ));
+        }
+      }
+      
+      $this->set(compact('type','code','record'));
     }
     
     

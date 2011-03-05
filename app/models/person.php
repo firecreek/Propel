@@ -31,8 +31,9 @@
       'Containable',
       'Cached' => array(
         'prefix' => array(
-          'person_',
-          'people_',
+          'person',
+          'people',
+          'prefix',   /** Permissions */
         ),
       ),
     );
@@ -75,10 +76,10 @@
           'allowEmpty' => false,
           'message' => 'Enter a valid email address'
         ),
-        'unique' => array(
+        /*'unique' => array(
           'rule' => 'uniqueEmail',
           'message' => 'This account already has a person with this email address'
-        )
+        )*/
       )
     );
     
@@ -89,6 +90,11 @@
      * @var array
      */
     public $belongsTo = array(
+      'Account' => array(
+        'className' => 'Account',
+        'foreignKey' => 'account_id',
+        'dependant' => true
+      ),
       'Company' => array(
         'className' => 'Company',
         'foreignKey' => 'company_id',
@@ -101,6 +107,10 @@
       'Country' => array(
         'className' => 'Country',
         'foreignKey' => 'country_id'
+      ),
+      'PersonInvitee' => array(
+        'className' => 'Person',
+        'foreignKey' => 'invitation_person_id'
       )
     );
     
@@ -126,7 +136,7 @@
         'foreignKey' => 'person_id',
         'dependent' => false
       ),
-      'MilestoneResponsible' => array(
+      /*'MilestoneResponsible' => array(
         'className' => 'Milestone',
         'foreignKey' => 'responsible_person_id',
       ),
@@ -134,7 +144,7 @@
         'className' => 'Milestone',
         'foreignKey' => 'completed_person_id',
         'conditions' => array('MilestoneCompleted.completed' => true),
-      ),
+      ),*/
       'Post' => array(
         'className' => 'Post',
         'foreignKey' => 'person_id',
@@ -155,7 +165,7 @@
         'foreignKey' => 'person_id',
         'dependent' => false
       ),
-      'TodoItemResponsible' => array(
+      /*'TodoItemResponsible' => array(
         'className' => 'TodoItem',
         'foreignKey' => 'responsible_person_id',
       ),
@@ -163,7 +173,7 @@
         'className' => 'TodoItem',
         'foreignKey' => 'completed_person_id',
         'conditions' => array('TodoItemCompleted.completed' => true),
-      ),
+      ),*/
     );
     
     

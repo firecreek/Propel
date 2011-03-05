@@ -74,7 +74,7 @@
       }
       elseif($this->Authorization->read('Account.id'))
       {
-        $this->controller->set('title_for_layout',$this->Authorization->read('Account.name').' - '.Inflector::humanize($this->controller->viewPath));
+        $this->controller->set('title_for_layout',$this->Authorization->read('Account.name').': '.Inflector::humanize($this->controller->viewPath));
       }
     }
     

@@ -26,7 +26,7 @@
      * @access public
      * @access public
      */
-    public $components = array();
+    public $components = array('Message');
     
     /**
      * Uses
@@ -56,8 +56,12 @@
       //Save
       if(!empty($this->data))
       {
+        $this->data['Person']['status'] = 'invited';
         $this->data['Person']['company_id'] = $companyId;
         $this->data['Person']['account_id'] = $this->Authorization->read('Account.id');
+        $this->data['Person']['invitation_date']  = date('Y-m-d H:i:s');
+        $this->data['Person']['invitation_person_id'] = $this->Authorization->read('Person.id');
+        $this->data['Person']['invitation_code'] = md5(time());
         
         $this->Person->set($this->data);
         
@@ -67,6 +71,15 @@
           
           //Give this person permission for this account
           $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'shared'));
+          
+          //
+          $data = $this->data;
+          $data['Invitee'] = $this->Authorization->read('Person');
+          
+          $this->Message->send('invite',array(
+            'subject' => __('You\'re invited to join our project management system',true),
+            'to' => $this->data['Person']['email']
+          ),$data);
           
           //Message and redirect
           $this->Session->setFlash(__('Person added to company',true),'default',array('class'=>'success'));
@@ -186,13 +199,34 @@
     
     
     /**
+     * Delete person from account
+     *
+     * @access public
+     * @return void
+     */
+    public function account_delete($personId)
+    {
+      if($this->Person->delete($personId))
+      {
+        $this->Session->setFlash(__('Person removed from account',true),'default',array('class'=>'success'));
+      }
+      else
+      {
+        $this->Session->setFlash(__('There was a problem deleting this person, please try again',true),'default',array('class'=>'error'));
+      }
+      
+      $this->redirect(array('controller'=>'companies','action'=>'index'));
+    }
+    
+    
+    /**
      * Project add
      *
      * @access public
      * @return void
      */
     public function project_add($companyId)
-    {    
+    {
       $record = $this->Company->find('first',array(
         'conditions' => array(
           'Company.id' => $companyId,
@@ -213,6 +247,8 @@
         $this->data['Person']['account_id']       = $this->Authorization->read('Account.id');
         $this->data['Person']['status']           = 'invited';
         $this->data['Person']['invitation_date']  = date('Y-m-d H:i:s');
+        $this->data['Person']['invitation_person_id'] = $this->Authorization->read('Person.id');
+        $this->data['Person']['invitation_code'] = md5(time());    
         
         $this->Person->set($this->data);
         
@@ -221,10 +257,19 @@
           $this->Person->save();
           
           //Give this person permission for this account
-          $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'shared'));
+          $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'));
           
           //Give this person permission for this project
-          $this->AclManager->allow($this->Person, 'projects', $this->Authorization->read('Project.id'), array('set' => 'shared'));
+          $this->AclManager->allow($this->Person, 'projects', $this->Authorization->read('Project.id'));
+          
+          //
+          $data = $this->data;
+          $data['Invitee'] = $this->Authorization->read('Person');
+          
+          $this->Message->send('invite',array(
+            'subject' => __('You\'re invited to join our project management system',true),
+            'to' => $this->data['Person']['email']
+          ),$data);
           
           //Message and redirect
           $this->Session->setFlash(__('Person added to company',true),'default',array('class'=>'success'));

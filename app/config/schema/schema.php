@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-03-04 04:03:51 : 1299188751*/
+/* App schema generated on: 2011-03-05 12:03:37 : 1299303697*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -229,10 +229,11 @@ class AppSchema extends CakeSchema {
 		'phone_number_fax' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'phone_number_home' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'country_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'invitation_person_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'invitation_code' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 64, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'invitation_note' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'invitation_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'string', 'null' => false, 'default' => 'active', 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'grant_id' => array('type' => 'integer', 'null' => false),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'company_id' => array('column' => 'company_id', 'unique' => 0)),

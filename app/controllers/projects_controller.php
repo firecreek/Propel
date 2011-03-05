@@ -104,7 +104,27 @@
               {
                 //Add company permission that already exists
                 $this->Company->id = $this->data['Permission']['company_id'];
-                $this->AclManager->allow($this->Company, 'projects', $this->Project->id, array('set' => 'company'));
+                $this->AclManager->allow($this->Company, 'projects', $this->Project->id);
+                
+                //Add people to this project
+                if($this->data['Permission']['add_people'])
+                {
+                  $people = $this->Company->Person->find('all',array(
+                    'conditions' => array('Person.company_id'=>$this->data['Permission']['company_id']),
+                    'fields' => array('id'),
+                    'contain' => false
+                  ));
+                  
+                  if(!empty($people))
+                  {
+                    foreach($people as $person)
+                    {
+                      $this->Person->id = $person['Person']['id'];
+                      $this->AclManager->allow($this->Person, 'projects', $this->Project->id, array('set' => 'shared'));
+                    }
+                  }
+                }
+                
               }
             }
           

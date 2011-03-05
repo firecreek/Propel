@@ -66,7 +66,7 @@
     
     <div class="area">
       <div class="banner">
-        <h3><?php __('Sample welcome email'); ?></h3>
+        <h3><?php __('Welcome email'); ?></h3>
       </div>
       <div class="content">
         <p><?php __('As soon as you submit this form, this person will receive a welcome email with a link to pick their own username and password.'); ?></p>

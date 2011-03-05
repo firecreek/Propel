@@ -34,7 +34,7 @@ class CachedBehavior extends ModelBehavior {
  * @return void
  */
     public function afterSave(&$model, $created) {
-        $this->_deleteCachedFiles($model);
+        $this->deleteCachedFiles($model);
     }
 /**
  * afterDelete callback
@@ -43,7 +43,7 @@ class CachedBehavior extends ModelBehavior {
  * @return void
  */
     public function afterDelete(&$model) {
-        $this->_deleteCachedFiles($model);
+        $this->deleteCachedFiles($model);
     }
     
     /**
@@ -52,12 +52,29 @@ class CachedBehavior extends ModelBehavior {
      * @param object $model
      * @return void
      */
-    protected function _deleteCachedFiles(&$model)
+    public function deleteCachedFiles(&$model,$options = array())
     {
-      foreach ($this->settings[$model->alias]['prefix'] AS $prefix)
+      if(!isset($options['prefix']))
+      {
+        $options['prefix'] = $this->settings[$model->alias]['prefix'];
+      }
+    
+      foreach($options['prefix'] AS $prefix)
       {  
         //Defaults
         $files = glob(TMP.'cache'.DS.'queries'.DS.'cake_'.$prefix.'*');
+        if(is_array($files) && count($files) > 0)
+        {
+          foreach ($files AS $file) {
+            unlink($file);
+          }
+        }
+  
+        //Auth prefix
+        $cachePrefix = Cache::config('auth');
+        $cachePrefix = $cachePrefix['settings']['prefix'];
+        
+        $files = glob(TMP.'cache'.DS.'auth'.DS.$cachePrefix.$prefix.'*');
         if(is_array($files) && count($files) > 0)
         {
           foreach ($files AS $file) {

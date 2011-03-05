@@ -1,7 +1,6 @@
 
 <div id="launchbar">
   <ul class="sf-menu">
-    <li class="first"><?php echo $html->link('Opencamp','/'); ?></li>
     <li class="account"><?php echo $html->link($auth->read('Account.name'),array('project'=>false,'controller'=>'accounts','action'=>'index')); ?></li>
     <li class="project">
       <?php

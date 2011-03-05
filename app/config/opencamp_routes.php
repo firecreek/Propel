@@ -13,6 +13,7 @@
   Router::connect('/users/login', array('controller' => 'users', 'action' => 'login'));
   Router::connect('/users/logout', array('controller' => 'users', 'action' => 'logout'));
   Router::connect('/users/register', array('controller' => 'users', 'action' => 'register'));
+  Router::connect('/users/invitation/*', array('controller' => 'users', 'action' => 'invitation'));
   
   
   //Admin

@@ -127,29 +127,33 @@
       //Access to main ACO
       $this->Acl->allow($model, 'opencamp/'.$path.'/'.$foreignId);
     
-      //Access to controllers
-      $Grant = ClassRegistry::init('Grant','model');
-        
-      $record = $Grant->find('first',array(
-        'conditions' => array(
-          'Grant.alias' => $options['set'],
-          'Grant.aco_alias' => $path
-        )
-      ));
-      
-      foreach($record['GrantSet'] as $grant)
+      //Access to controllers via sets
+      if(isset($options['set']))
       {
-        $actions = array();
-        foreach($grant as $key => $val)
+        $Grant = ClassRegistry::init('Grant','model');
+          
+        $record = $Grant->find('first',array(
+          'conditions' => array(
+            'Grant.alias' => $options['set'],
+            'Grant.aco_alias' => $path
+          )
+        ));
+        
+        foreach($record['GrantSet'] as $grant)
         {
-          if(substr($key,0,1) == '_' && $val == true)
+          $actions = array();
+          foreach($grant as $key => $val)
           {
-            $actions[] = $key;
+            if(substr($key,0,1) == '_' && $val == true)
+            {
+              $actions[] = $key;
+            }
           }
+          $this->Acl->allow($model, 'opencamp/'.$path.'/'.$foreignId.'/'.$grant['acos_alias'],$actions);
         }
-      
-        $this->Acl->allow($model, 'opencamp/'.$path.'/'.$foreignId.'/'.$grant['acos_alias'],$actions);
       }
+      
+      $this->clearAuthCache($model);
     }
     
     
@@ -192,6 +196,8 @@
           'Aco.parent_id'     => $root['Aco']['id']
         ));
       }
+      
+      $this->clearAuthCache($model);
     
       return $this->Acl->Aco->Permission->delete($root['Permission']['id']);
     }
@@ -238,6 +244,22 @@
       }
       
       return $node;
+    }
+    
+
+    /**
+     * List all controllers (including plugin controllers)
+     *
+     * From Croogo AclGenerator
+     *
+     * @access public
+     * @return array
+     */
+    public function clearAuthCache(&$model)
+    {
+      $model->deleteCachedFiles(array(
+        'prefix' => array('permission','people','person','company','companies')
+      ));
     }
     
 

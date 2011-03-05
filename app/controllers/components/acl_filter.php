@@ -138,7 +138,7 @@
         $permissionNode = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
         
         if(!empty($permissionNode))
-        {
+        {        
           $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
             'conditions' => array(
               'Aro.model' => 'Person',

@@ -166,7 +166,6 @@
         $this->redirect($this->referer(), null, true); 
       }
       
-
       //Delete permission for company
       $this->Company->id = $companyId;
       $this->AclManager->delete($this->Company, 'accounts', $this->Authorization->read('Account.id'), null, array('all' => true));
@@ -327,6 +326,7 @@
     public function project_add()
     {
       //Get list of companies that can be added
+      //@todo Could Auth Companies be read?
       $modelRootNode = $this->Acl->Aco->node('opencamp/accounts/'.$this->Authorization->read('Account.id'));
       $records = $this->Acl->Aco->Permission->find('all', array(
         'conditions' => array(
@@ -370,7 +370,7 @@
           {
             //Grant permission for company to project
             $this->Company->id = $this->data['Company']['id'];
-            $this->AclManager->allow($this->Company, 'projects', $this->Authorization->read('Project.id'), array('set' => 'company'));
+            $this->AclManager->allow($this->Company, 'projects', $this->Authorization->read('Project.id'));
             
             //Add people to this project
             if($this->data['Permission']['add_people'])

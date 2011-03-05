@@ -26,7 +26,7 @@
      * @access public
      * @access public
      */
-    public $components = array();
+    public $components = array('Message');
     
     /**
      * Uses
@@ -178,6 +178,7 @@
             }
             
             //Add custom log
+            //@todo use displayField
             if(isset($record[$this->modelAlias]['title']))
             {
               $description = $record[$this->modelAlias]['title'];
@@ -192,6 +193,22 @@
               'extra1'      => $this->params['associatedController'],
               'extra2'      => $commentId
             ));
+            
+            //Send message
+            $data = array_merge($record,$this->data,array(
+              'Extra' => array(
+                'description' => $description,
+                'id' => $id,
+                'commentId' => $commentId,
+                'alias' => $this->modelAlias
+              ),
+              'Person' => $this->Authorization->read('Person')
+            ));
+            
+            /*$this->Message->send('comment',array(
+              'subject' => 'Re: '.$description,
+              'to' => 'darren.m@firecreek.co.uk'
+            ),$data);*/
             
             //Update count
             $this->Comment->updateCommentCount($id);

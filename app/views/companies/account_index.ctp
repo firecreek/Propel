@@ -30,7 +30,7 @@
           
           <p><?php echo $layout->button(__('Add a new person',true),array('controller'=>'people','action'=>'add',$company['Company']['id']),'large add'); ?></p>
           
-          <ul class="people-list">
+          <ul class="people-list clearfix">
             <li class="company">
               <div class="detail">
                 <h4><?php echo $company['Company']['name']; ?></h4>
@@ -39,7 +39,14 @@
             </li>
             <?php foreach($company['People'] as $person): ?>
               <li class="person">
-                <?php echo $layout->avatar($person['user_id']); ?>
+                <div class="avatar">
+                  <?php echo $layout->avatar($person['user_id']); ?>
+                  <?php if($person['company_owner']): ?>
+                    <p class="label owner"><?php __('Owner'); ?></p>
+                  <?php elseif($person['status'] == 'invited'): ?>
+                    <p class="label invited"><?php __('Invited'); ?></p>
+                  <?php endif; ?>
+                </div>
                 <div class="detail">
                   <h4><?php echo $person['full_name']; ?></h4>
                   <?php

@@ -505,7 +505,7 @@
           'conditions' => array(
             'Person.id' => $records
           ),
-          'fields' => array('id','full_name','first_name','last_name','email','title','company_owner','user_id'),
+          'fields' => array('id','full_name','first_name','last_name','email','title','company_owner','user_id','status'),
           'contain' => array(
             'Company' => array('id','name'),
             'User' => array('id','last_activity')

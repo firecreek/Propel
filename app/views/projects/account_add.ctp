@@ -74,7 +74,7 @@
                   <span>(<?php __('or') ?> <?php echo $html->link(__('create a new company',true),'#'); ?>)</span>
                 </p>
                 <?php echo $form->input('Permission.company_id',array('label'=>false,'empty'=>true,'options'=>$companyOptions)); ?>
-                <?php echo $form->input('Permission.company_all',array('checked'=>true,'type'=>'checkbox','label'=>__('Give everyone from this company access to this project.',true))); ?>
+                <?php echo $form->input('Permission.add_people',array('checked'=>true,'type'=>'checkbox','label'=>__('Give everyone from this company access to this project.',true))); ?>
               </div>
               
               <div id="PermissionCreateCompany" class="option" style="display:none;">

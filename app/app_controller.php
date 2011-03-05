@@ -38,8 +38,9 @@
     public $uses = array(
       'User',
       'Account',
+      'Project',
       'Person',
-      'Project'
+      'Setting'
     );
     
     /**
