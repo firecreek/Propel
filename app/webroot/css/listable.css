@@ -12,6 +12,7 @@
 .listable .group .banner span.responsibility { color:#666; } 
 .listable .group .content { padding-left:0; }
  
+.listable .items { margin-right:30px; }
  
 
 .listable .item { min-height:15px; margin:2px 0px; position:relative; left:-45px; }
@@ -30,9 +31,9 @@
 /**
  * Name
  */
-.listable .item .label { font-size:12px; left:75px; position:relative; color:#333; z-index:10; display:inline; }
+.listable .item .label { font-size:12px; left:75px; margin-right:50px; position:relative; color:#333; z-index:10; display:inline; }
 .listable .item .label span {  }
-.listable .item .label .name { display:inline-block; }
+.listable .item .label .name { display:inline; }
 
 
 /**
