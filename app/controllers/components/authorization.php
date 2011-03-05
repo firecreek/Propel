@@ -226,7 +226,7 @@
           'User' => array('id','username','email','email_format','email_send','last_activity')
         ),
         'cache' => array(
-          'name' => 'person_'.$this->user('id'),
+          'name' => 'person_'.$this->user('id').'_'.$this->read('Account.id'),
           'config' => 'auth',
         )
       ));
@@ -328,32 +328,47 @@
      */
     private function __loadPersonProjects()
     {
-      $aroId = $this->read('Person._aro_id');
-      $projects = $this->controller->Account->Project->findCached('projects_'.$aroId, 'auth');
+      $projects = $this->controller->Account->Project->findCached('projects_'.$this->user('id'), 'auth');
    
       if(empty($projects))
       {
+        $peopleIds = $this->controller->Person->find('list',array(
+          'conditions' => array('Person.user_id'=>$this->user('id')),
+          'fields' => array('id')
+        ));
+        
+        $aros = array();
+        
+        foreach($peopleIds as $personId)
+        {
+          $aro = $this->Acl->Aro->find('list', array(
+            'fields' => array('id'),
+            'conditions' => array(
+              'Aro.model' => 'Person',
+              'Aro.foreign_key' => $personId,
+            ),
+            'recursive' => -1
+          ));
+          $aros[] = key($aro);
+        }
+      
         $records = $this->controller->Acl->Aco->Permission->find('all',array(
           'conditions' => array(
-            'Permission.aro_id' => $aroId,
+            'Permission.aro_id' => $aros,
             'Permission._read' => true,
             'Aco.model' => 'Projects',
           ),
-          'fields' => array('Aco.foreign_key','Permission.*'),
-          'cache' => array(
-            'name' => 'projects_aro_'.$aroId,
-            'config' => 'auth',
-          )
+          'fields' => array('Aco.foreign_key','Permission.*')
         ));
         
         if(!empty($records))
         {
           $projects = $this->controller->Account->Project->find('all',array(
             'conditions' => array(
-              'Project.id'      => Set::extract($records,'{n}.Aco.foreign_key'),
-              'Project.status'  => 'active'
+              'Project.id'      => Set::extract($records,'{n}.Aco.foreign_key')
             ),
-            'fields' => array('id','name'),
+            'fields' => array('id','name','status'),
+            'order' => array('Project.name ASC'),
             'contain' => array(
               'Account' => array(
                 'fields' => array('id','name','slug')
@@ -361,10 +376,6 @@
               'Company' => array(
                 'fields' => array('id','name')
               )
-            ),
-            'cache' => array(
-              'name' => 'projects_'.$aroId,
-              'config' => 'auth',
             )
           ));
         }

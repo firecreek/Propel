@@ -143,6 +143,8 @@
      */
     public function invitation($code,$type = 'new')
     {
+      $this->layout = 'plain';
+    
       $record = $this->Person->find('first',array(
         'conditions' => array('Person.invitation_code'=>$code),
         'contain' => array(
@@ -153,42 +155,66 @@
       
       if(!empty($this->data))
       {
-        $this->data['User']['email'] = $record['Person']['email'];
-        $this->User->set($this->data);
-        
-        if($this->User->validates())
+        if($type == 'new')
         {
-          $this->User->save();
-        
-          //Update person record
-          $this->Person->updateAll(
-            array(
-              'Person.user_id' => $this->User->id,
-              'Person.status' => '"active"',
-              'Person.invitation_code' => null
-            ),
-            array('Person.id'=>$record['Person']['id'])
-          );
+          //New user
+          $this->data['User']['email'] = $record['Person']['email'];
+          $this->User->set($this->data);
           
-          //Email
-          $data = array_merge($record,$this->data);          
-          $this->Message->send('welcome_invite',array(
-            'subject' => __('Your account has been created',true),
-            'to' => $record['Person']['email']
-          ),$data);
+          if($this->User->validates())
+          {
+            $this->User->save();
           
-          //Give this person permission for this account
-          $this->AclManager->allow($this->Person, 'accounts', $record['Person']['account_id'], array('set' => 'shared'));
-
-          //Automatically login and redirect
-          $this->Authorization->login($this->data);
-          
-          $this->redirect(array(
-            'controller'  => 'accounts',
-            'action'      => 'index',
-            'prefix'      => 'account',
-            'accountSlug' => $record['Account']['slug']
-          ));
+            //Update person record
+            $this->Person->updateAll(
+              array(
+                'Person.user_id' => $this->User->id,
+                'Person.status' => '"active"',
+                'Person.invitation_code' => null
+              ),
+              array('Person.id'=>$record['Person']['id'])
+            );
+            
+            //Email
+            $data = array_merge($record,$this->data);          
+            $this->Message->send('welcome_invite',array(
+              'subject' => __('Your account has been created',true),
+              'to' => $record['Person']['email']
+            ),$data);
+            
+            //Automatically login and redirect
+            $this->Authorization->login($this->data);
+            
+            $this->redirect(array(
+              'controller'  => 'accounts',
+              'action'      => 'index',
+              'prefix'      => 'account',
+              'accountSlug' => $record['Account']['slug']
+            ));
+          }
+        }
+        else
+        {
+          //Existing user, try and log them in, if successful then attach them to this account and project
+          if($this->Authorization->login($this->data))
+          {
+            //Update person record
+            $this->Person->updateAll(
+              array(
+                'Person.user_id' => $this->Authorization->user('id'),
+                'Person.status' => '"active"',
+                'Person.invitation_code' => null
+              ),
+              array('Person.id'=>$record['Person']['id'])
+            );
+            
+            $this->redirect(array(
+              'controller'  => 'accounts',
+              'action'      => 'index',
+              'prefix'      => 'account',
+              'accountSlug' => $record['Account']['slug']
+            ));
+          }
         }
       }
       

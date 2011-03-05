@@ -32,7 +32,7 @@
         </div>
         <div class="col right">
           <h3><?php __('Already have an account?'); ?></h3>
-          <p><?php echo $html->link(__('Click here to sign in and accept the invite',true),array('action'=>'invitation',$code,'existing')); ?></p>
+          <p><?php echo $html->link(__('Sign in',true),array('action'=>'invitation',$code,'existing')); ?> <?php __('with the username you already have.'); ?></p>
         </div>
       </div>
       

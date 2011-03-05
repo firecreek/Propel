@@ -84,7 +84,7 @@
           
           //
           $data = $this->data;
-          $data['Invitee'] = $this->Authorization->read('Person');
+          $data['PersonInvitee'] = $this->Authorization->read('Person');
           
           $this->Message->send('invite',array(
             'subject' => __('You\'re invited to join our project management system',true),
@@ -249,8 +249,7 @@
         $this->data['Person']['id'] = $personId;
         $this->data['Person']['email'] = $this->data['Person']['email'];
         $this->data['Person']['invitation_date']  = date('Y-m-d H:i:s');
-        $this->data['Person']['invitation_person_id'] = $this->Authorization->read('Person.id');
-        $this->data['Person']['invitation_code'] = md5(time());    
+        $this->data['Person']['invitation_person_id'] = $this->Authorization->read('Person.id'); 
         
         $this->Person->set($this->data);
         
@@ -260,6 +259,7 @@
         
           $data = array_merge($this->data);
           $data['Person']['first_name'] = $record['Person']['first_name'];
+          $data['Person']['invitation_code'] = $record['Person']['invitation_code'];
           $data['PersonInvitee'] = $this->Authorization->read('Person');
           
           $this->Message->send('invite',array(
@@ -319,10 +319,10 @@
           $this->Person->save();
           
           //Give this person permission for this account
-          $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'));
+          $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'shared'));
           
           //Give this person permission for this project
-          $this->AclManager->allow($this->Person, 'projects', $this->Authorization->read('Project.id'));
+          $this->AclManager->allow($this->Person, 'projects', $this->Authorization->read('Project.id'), array('set' => 'shared'));
           
           //
           $data = $this->data;

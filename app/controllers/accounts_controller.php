@@ -65,10 +65,7 @@
       }
       
       //New account, create project
-      if(
-        (!$this->Authorization->read('Person.company_owner') && empty($projects)) ||
-        (!$this->Authorization->read('Person.company_owner') && isset($activeProjectCount) && $activeProjectCount == 0)
-      )
+      if(!$this->Authorization->read('Person.company_owner') && empty($projects))
       {
         //Shared user
         return $this->render('account_index_shared');

@@ -1,7 +1,7 @@
 
 <div id="launchbar">
   <ul class="sf-menu">
-    <li class="account"><?php echo $html->link($auth->read('Account.name'),array('project'=>false,'controller'=>'accounts','action'=>'index')); ?></li>
+    <li class="first"><?php echo $html->link($auth->read('Account.name'),array('project'=>false,'controller'=>'accounts','action'=>'index')); ?></li>
     <li class="project">
       <?php
         echo $html->link(__('Project',true).': '.$auth->read('Project.name'),array('project'=>false,'controller'=>'accounts','action'=>'index'));
