@@ -113,7 +113,7 @@
       if(!$this->CommentPerson->find('count',array(
         'conditions' => array(
           'model'       => $this->associatedAlias,
-          'model_id'  => $id,
+          'model_id'    => $id,
           'person_id'   => $personId
         ),
         'recursive' => -1
@@ -121,8 +121,9 @@
       {
         //add
         $this->CommentPerson->save(array(
+          'id'          => 0,
           'model'       => $this->associatedAlias,
-          'model_id'  => $id,
+          'model_id'    => $id,
           'person_id'   => $personId
         ));
       }    

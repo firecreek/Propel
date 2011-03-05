@@ -597,6 +597,14 @@ table.calendar.small td.with.completed.upcoming .day { color:white; }
  
 
 /**
+ * Add Comment
+ */
+.subscribe-people div.checkbox { margin-bottom:5px; }
+.subscribe-people div.checkbox input { position:relative; top:2px; }
+.subscribe-people div.checkbox label { float:none; width:auto; margin-left:5px; display:inline; }
+
+
+/**
  * Logs
  */
 table.logs {  }

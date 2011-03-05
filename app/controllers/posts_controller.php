@@ -34,7 +34,7 @@
      * @access public
      * @access public
      */
-    public $uses = array('Post');
+    public $uses = array('Post','Comment');
     
     
     /**
@@ -140,8 +140,16 @@
         if($this->Post->validates())
         {
           $this->Post->save();
-          
-          //$this->Session->setFlash(__('Post added',true),'default',array('class'=>'success'));
+          $postId = $this->Post->id;
+        
+          //Add checked
+          if(isset($this->data['CommentPeople']['person_id']) && !empty($this->data['CommentPeople']['person_id']))
+          {
+            foreach($this->data['CommentPeople']['person_id'] as $personId)
+            {
+              $this->Comment->addCommentPerson($postId,$personId);
+            }
+          }
           
           $this->redirect(array('controller'=>'comments','action'=>'index','associatedController'=>'posts',$this->Post->id));
         }

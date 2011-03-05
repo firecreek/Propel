@@ -47,6 +47,10 @@
         <?php endif; ?>
         
         <?php
+          echo $this->element('comments/people');
+        ?>
+        
+        <?php
           echo $form->submit(__('Post this message',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('action'=>'index') ) ));
           echo $form->end();
         ?>
