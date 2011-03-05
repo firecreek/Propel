@@ -73,7 +73,6 @@
           'CommentLast',
           'CommentUnread'
         ),
-        'private' => true,
         'group' => 'Post.id',
         'order' => 'Post.id DESC',
         'cache' => array(
@@ -98,6 +97,10 @@
               'Person'
             ),
             'CommentUnread'
+          ),
+          'cache' => array(
+            'name' => 'post_recent',
+            'config' => 'system'
           ),
           'private' => true,
           'group' => 'Post.id',

@@ -249,9 +249,8 @@
         'order' => 'Todo.position ASC',
         'contain' => array(
           'Milestone' => array('id','title','deadline'),
-          'Person' => array('PersonCompany')
+          'Person' => array()
         ),
-        'private' => true,
         'filter' => $filter,
         'items' => array(
           'conditions' => array_merge(array(
@@ -267,10 +266,10 @@
           ),
           'count' => true
         ),
-        /*'cache' => array(
+        'cache' => array(
           'name' => 'todo_'.md5(serialize($filter)),
           'config' => 'system',
-        )*/
+        )
       ));
       
       if(isset($this->Todo->responsibleName))

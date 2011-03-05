@@ -105,7 +105,6 @@
       //Build statement
       $contain = array();
       $conditions = array();
-      $private = false;
       
       //Responsible
       if($this->{$this->modelAlias}->Behaviors->attached('Responsible'))
@@ -117,12 +116,6 @@
       if(isset($this->{$this->modelAlias}->belongsTo['Person']))
       {
         $contain[] = 'Person';
-      }
-      
-      //Private
-      if($this->{$this->modelAlias}->Behaviors->attached('Private'))
-      {
-        $private = true;
       }
       
       //Load record
@@ -141,8 +134,7 @@
               'Company' => array('id','name')
             )
           )
-        ),$contain),
-        'private' => true
+        ),$contain)
       ));
       
       if(empty($record))

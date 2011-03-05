@@ -34,7 +34,7 @@
       }
       
       //Only do if Person is in contain
-      if(isset($query['private']) && $query['private'] == true)
+      if(isset($query['private']) && $query['private'] == true && isset($query['contain']['Person']))
       {      
         $query['conditions'] = array(
           'AND' => array(

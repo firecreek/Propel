@@ -27,7 +27,9 @@
      * @var array
      */
     public $actsAs = array(
-      'Containable'
+      'Auth',
+      'Containable',
+      'Private'
     );
     
     /**
