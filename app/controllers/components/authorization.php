@@ -188,7 +188,7 @@
           'Project.id' => $this->controller->params['projectId']
         ),
         'contain' => array(
-          'Company' => array('id','name','private'),
+          'Company' => array('id','name','can_see_private'),
           'Person' => array('id','user_id','full_name','email','user_id')
         ),
         'cache' => array(
@@ -223,7 +223,8 @@
         ),
         'fields' => array('id','first_name','last_name','full_name','email','company_owner','user_id'),
         'contain' => array(
-          'User' => array('id','username','email','email_format','email_send','last_activity')
+          'User' => array('id','username','email','email_format','email_send','last_activity'),
+          'Company' => array('id','name','can_see_private')
         ),
         'cache' => array(
           'name' => 'person_'.$this->user('id').'_'.$this->read('Account.id'),
@@ -255,7 +256,13 @@
         $this->cakeError('personNoAro');
       }
       
-      $this->write('Person',$person['Person']);
+      $write = $person['Person'];
+      foreach($person as $key => $val)
+      {
+        if($key != 'Person') { $write[$key] = $val; }
+      }
+      
+      $this->write('Person',$write);
     
       //Update activity time
       //@todo When caching is recoded then clear the person cache here
@@ -472,7 +479,7 @@
         
         $companies = $this->controller->User->Company->find('all',array(
           'conditions' => array('Company.id'=>$records),
-          'fields' => array('id','name','private','account_owner'),
+          'fields' => array('id','name','can_see_private','account_owner'),
           'order' => 'Company.created DESC',
           'contain' => false,
           'cache' => array(

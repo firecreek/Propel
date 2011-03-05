@@ -12,12 +12,11 @@
    */
   class PrivateBehavior extends ModelBehavior
   {
-    public $dueOptions = array();
-
     
     public function setup(&$model, $config = array())
     {
     }
+    
     
     
     /**
@@ -27,15 +26,16 @@
      * @return string
      */
     public function beforeFind(&$model, $query)
-    {
+    {      
+    
       if($query['fields'] == 'COUNT(*) AS `count`')
       {
         return $query;
       }
       
       //Only do if Person is in contain
-      if(isset($query['contain']['Person']))
-      {
+      if(isset($query['private']) && $query['private'] == true)
+      {      
         $query['conditions'] = array(
           'AND' => array(
             $query['conditions'],
@@ -45,9 +45,15 @@
                 array(
                   'AND' => array(
                     $model->alias.'.private' => 1,
-                    'Person.company_id' => $model->authRead('Company.id')
+                    'Person.company_id' => $model->authRead('Person.Company.id')
                   )
                 ),
+                array(
+                  'AND' => array(
+                    $model->alias.'.private' => 1,
+                    $model->authRead('Person.Company.can_see_private').' = 1'
+                  )
+                )
               )
             )
           )

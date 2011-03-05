@@ -34,7 +34,7 @@
       <p><?php __('Normally the only people who can view private messages and to-dos are people in your own company, but this setting allows you to grant people in other companies the ability to see private items. Use this option with care.'); ?></p>
       <fieldset class="tight">
         <?php
-          echo $form->input('private',array('label'=>__('Yes, allow everyone in this company to view items marked Private',true)));
+          echo $form->input('can_see_private',array('label'=>__('Yes, allow everyone in this company to view items marked Private',true)));
         ?>
       </fieldset>
     <?php endif; ?>

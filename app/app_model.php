@@ -23,23 +23,33 @@ class AppModel extends LazyModel {
  */
     public $useCache = true;
     
-/**
- * Override find function to use caching
- *
- * Caching can be done either by unique names,
- * or prefixes where a hashed value of $options array is appended to the name
- * 
- * @param mixed $type 
- * @param array $options 
- * @return mixed
- * @access public
- */
+    /**
+     * Override find function to use caching
+     *
+     * Caching can be done either by unique names,
+     * or prefixes where a hashed value of $options array is appended to the name
+     * 
+     * @param mixed $type 
+     * @param array $options 
+     * @return mixed
+     * @access public
+     */
     public function find($type, $options = array()) {
-        if ($this->useCache) {
-            $cachedResults = $this->_findCached($type, $options);
-            if ($cachedResults) {
-                return $cachedResults;
-            }
+    
+        //Private
+        if(isset($options['private']) && $options['private'] == true)
+        {
+          //$this->contain(array('Person'=>array('PersonCompany')));
+        }
+        
+        
+        if($this->useCache)
+        {
+          $cachedResults = $this->_findCached($type, $options);
+          if ($cachedResults)
+          {
+            return $cachedResults;
+          }
         }
         
         $args = func_get_args();
@@ -55,6 +65,7 @@ class AppModel extends LazyModel {
                 Cache::write($cacheName, $results, $options['cache']['config']);
             }
         }
+    
         return $results;
     }
     

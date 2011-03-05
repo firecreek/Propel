@@ -152,8 +152,8 @@
       ));
       
       //Todo active/completed lists
-      $todosActive = $this->Todo->findActive($this->Authorization->read('Project.id'));
-      $todosCompleted = $this->Todo->findCompleted($this->Authorization->read('Project.id'));
+      //$todosActive = $this->Todo->findActive($this->Authorization->read('Project.id'));
+      //$todosCompleted = $this->Todo->findCompleted($this->Authorization->read('Project.id'));
       
       $this->set(compact('todos','todosCompleted','todosActive'));
     }
@@ -248,9 +248,10 @@
         'fields' => array('id','name','description','private','person_id'),
         'order' => 'Todo.position ASC',
         'contain' => array(
-          'Person' => array('id','company_id'),
           'Milestone' => array('id','title','deadline'),
+          'Person' => array('PersonCompany')
         ),
+        'private' => true,
         'filter' => $filter,
         'items' => array(
           'conditions' => array_merge(array(
@@ -266,10 +267,10 @@
           ),
           'count' => true
         ),
-        'cache' => array(
+        /*'cache' => array(
           'name' => 'todo_'.md5(serialize($filter)),
           'config' => 'system',
-        )
+        )*/
       ));
       
       if(isset($this->Todo->responsibleName))

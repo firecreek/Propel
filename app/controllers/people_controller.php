@@ -139,8 +139,12 @@
           $updated = 0;
           foreach($this->data['Permission'] as $projectId => $checked)
           {
-            if($checked != $this->Person->hasPermission($personId,'Projects',$projectId))
+            if($checked != $this->Person->hasPermission($personId,'Projects',$projectId) || 1 == 1)
             {
+              //Company id
+              $this->Project->id = $projectId;
+              $companyId = $this->Project->field('company_id');
+            
               $updated++;
               if(!$checked)
               {
@@ -153,6 +157,10 @@
                 //Add default access to this project
                 $this->Person->id = $personId;
                 $this->AclManager->allow($this->Person, 'projects', $projectId, array('set'=>'shared','delete'=>true));
+                
+                //Company access
+                $this->User->Company->id = $companyId;
+                $this->AclManager->allow($this->User->Company, 'projects', $projectId);
               }
             }
           }
@@ -166,6 +174,8 @@
           {
             $this->Session->setFlash(__('No permissions to update',true),'default',array('class'=>'error'));
           }
+          
+          $this->redirect(array('action'=>'edit',$personId));
           
         }
         else

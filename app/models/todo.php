@@ -193,7 +193,6 @@
     }
     
     
-    
     /**
      * Find active lists
      *
@@ -229,6 +228,7 @@
             )
           )
         ),
+        'private' => true,
         'fields' => array('id','name'),
         'order' => 'Todo.name ASC',
         'contain' => array('Person'=>array('id')),
@@ -267,6 +267,7 @@
             )
           )
         ),
+        'private' => true,
         'fields' => array('id','name'),
         'order' => 'Todo.name ASC',
         'contain' => array('Person'=>array('id')),
