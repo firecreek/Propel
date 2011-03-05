@@ -1,5 +1,5 @@
 <?php
-  $html->css('invitation', null, array('inline'=>false));
+  $html->css('pages/invitation', null, array('inline'=>false));
 ?>
 
 <div class="box">

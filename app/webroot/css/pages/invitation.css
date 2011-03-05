@@ -1,6 +1,4 @@
 
-.box { width:650px; margin:0 auto; border-radius:12px; }
-.box .banner { border-top-left-radius:12px; border-top-right-radius:12px; }
 .box div.input input { width:40%; }
 
 .content .box h2 { font-weight:bold; margin-bottom:5px; border:1px solid red; }

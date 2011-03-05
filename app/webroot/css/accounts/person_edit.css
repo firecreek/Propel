@@ -6,6 +6,13 @@
 
 
 /**
+ * Person edit
+ */
+#PersonEdit .invite {  } 
+#PersonEdit .invite h3 { margin-bottom:0; } 
+
+
+/**
  * Edit my own profile
  */
 #UserEdit .avatar { height:80px; }

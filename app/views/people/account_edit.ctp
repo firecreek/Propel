@@ -8,10 +8,10 @@
     $personal = true;
   }
   
-  $html->css('accounts/user_edit', null, array('inline'=>false));
+  $html->css('accounts/person_edit', null, array('inline'=>false));
 
 ?>
-<div class="cols">
+<div class="cols" id="PersonEdit">
 
   <div class="col left">
 
@@ -35,13 +35,13 @@
         <?php endif; ?>
       
         <?php if($record['Person']['status'] == 'invited'): ?>
-          <div class="section outlined">
+          <div class="section outlined invite">
             <div class="banner transparent">
               <h3><?php echo sprintf(__('Can I resend %s\'s welcome invitation email?',true),$record['Person']['first_name']); ?></h3>
             </div>
             <div class="content">
               <p><?php
-                $inviteLink = $html->link(__('re-send the email invitation',true),array('project'=>false,'controller'=>'people','action'=>'invite'));
+                $inviteLink = $html->link(__('re-send the email invitation',true),array('project'=>false,'controller'=>'people','action'=>'invite_resend',$personId));
                 $inviteSent = date('F j, Y',strtotime($record['Person']['invitation_date']));
                 echo sprintf(__('Yes. You can %s if it went to the wrong email address or %s didn\'t receive it. The last invitation was sent on %s.',true),$inviteLink,$record['Person']['first_name'],$inviteSent);
               ?></p>

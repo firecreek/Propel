@@ -376,10 +376,12 @@ form.basic small { display:inline; margin-left:10px; }
 form.basic .intro { margin-bottom:5px; }
 form.basic h3 { margin-bottom:5px; }
 
+form.light input { font-weight:normal; }
 form.strong label { font-weight:bold; }
 
 form.larger label { font-size:14px; }
 
+form .input.text.half-width input { width:50%; }
 form .input.text.full-width input { width:95%; }
 form .input.textarea.full-width textarea { width:95%; }
 

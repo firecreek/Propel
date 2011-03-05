@@ -36,6 +36,16 @@
      */
     public $uses = array('Person','Company');
     
+    /**
+     * Action map
+     *
+     * @access public
+     * @var array
+     */
+    public $actionMap = array(
+      'invite_resend'      => '_create'
+    );
+    
     
     /**
      * Add
@@ -220,6 +230,58 @@
     
     
     /**
+     * Resend invitation
+     *
+     * @access public
+     * @return void
+     */
+    public function account_invite_resend($personId)
+    {
+      $this->layout = 'plain';
+      
+      $record = $this->Person->find('first',array(
+        'conditions' => array('Person.id'=>$personId),
+        'contain' => false
+      ));
+      
+      if(!empty($this->data))
+      {
+        $this->data['Person']['id'] = $personId;
+        $this->data['Person']['email'] = $this->data['Person']['email'];
+        $this->data['Person']['invitation_date']  = date('Y-m-d H:i:s');
+        $this->data['Person']['invitation_person_id'] = $this->Authorization->read('Person.id');
+        $this->data['Person']['invitation_code'] = md5(time());    
+        
+        $this->Person->set($this->data);
+        
+        if($this->Person->validates())
+        {
+          $this->Person->save();
+        
+          $data = array_merge($this->data);
+          $data['Person']['first_name'] = $record['Person']['first_name'];
+          $data['PersonInvitee'] = $this->Authorization->read('Person');
+          
+          $this->Message->send('invite',array(
+            'subject' => __('You\'re invited to join our project management system',true),
+            'to' => $this->data['Person']['email']
+          ),$data);
+          
+          $this->Session->setFlash(sprintf(__('Instructions have been sent to %s',true),$this->data['Person']['email']),'default',array('class'=>'success'));
+          
+          $this->redirect(array('action'=>'edit',$personId));
+        }
+      }
+      else
+      {
+        $this->data['Person']['email'] = $record['Person']['email'];
+      }
+      
+      $this->set(compact('personId','record'));
+    }
+    
+    
+    /**
      * Project add
      *
      * @access public
@@ -264,7 +326,7 @@
           
           //
           $data = $this->data;
-          $data['Invitee'] = $this->Authorization->read('Person');
+          $data['PersonInvitee'] = $this->Authorization->read('Person');
           
           $this->Message->send('invite',array(
             'subject' => __('You\'re invited to join our project management system',true),
