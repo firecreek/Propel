@@ -231,6 +231,12 @@
         }
       }
       
+      //Build description
+      if($model->hasField('private'))
+      {
+        $logData['private'] = $model->field('private');
+      }
+      
       $this->Log->create();
       return $this->Log->save($logData);
     }

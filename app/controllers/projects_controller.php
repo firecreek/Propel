@@ -240,7 +240,7 @@
         'order' => 'Log.created DESC',
         'limit' => 100,
         'contain' => array(
-          'Person' => array('first_name','last_name')
+          'Person' => array('id','company_id','first_name','last_name')
         )
       );
       $logs = $this->paginate('Log');

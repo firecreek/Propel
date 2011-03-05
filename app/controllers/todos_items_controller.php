@@ -122,9 +122,10 @@
           
           //Save log
           $this->TodoItem->customLog('assigned',$todoItemId,array(
-            'extra1' => $item['Todo']['name'],
-            'extra2' => $item['Todo']['id'],
-            'extra3' => isset($item['Responsible']['name']) ? $item['Responsible']['name'] : null
+            'extra1'  => $item['Todo']['name'],
+            'extra2'  => $item['Todo']['id'],
+            'extra3'  => isset($item['Responsible']['name']) ? $item['Responsible']['name'] : null,
+            'private' => $item['Todo']['private']
           ));
           
           //
