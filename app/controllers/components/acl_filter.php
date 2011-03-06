@@ -102,11 +102,11 @@
       {
         $this->cakeError('notLoggedIn');
       }
-      elseif($this->controller->params['prefix'] == 'admin')
+      elseif($this->controller->params['prefix'] == 'admin' && $this->Authorization->user('role_id') == 1)
       {
         return true;
       }
-      else
+      elseif($this->Authorization->user('role_id') == 2)
       {
         /**
          * Permission checking
