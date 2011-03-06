@@ -57,9 +57,9 @@
     {
       //Settings
       $default = array(
-        'from'          => 'Opencamp <opencamp@firecreek.co.uk>',
-        'replyTo'       => 'darren.m@firecreek.co.uk',
-        'return'        => 'darren.m@firecreek.co.uk',
+        'from'          => Configure::read('Email.replyName').' <'.Configure::read('Email.replyEmail').'>',
+        'replyTo'       => Configure::read('Email.replyEmail'),
+        'return'        => Configure::read('Email.replyEmail'),
         'layout'        => 'default',
         'view'          => $view,
         'subject'       => null,
