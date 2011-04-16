@@ -67,7 +67,7 @@
         'attachments'   => array(),
         'methods'       => array('email'),
         'debug'         => false,
-        'subject'       => 'Opencamp'
+        'subject'       => 'Propel'
       );
       $settings = array_merge($default,$settings);
       

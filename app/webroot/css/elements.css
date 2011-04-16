@@ -44,6 +44,14 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box>.private { background:url(/img/icons/padlock-red-16.png) transparent no-repeat 20px 5px; }
 .box>.private p { padding:5px 0; font-size:12px; margin:0 0 0 45px; }
 
+.box.small { width:550px; margin:0 auto; border-radius:12px; }
+.box.small .banner { border-top-left-radius:12px; border-top-right-radius:12px; }
+.box.small input { width:60%; }
+
+.box.small h2 { font-weight:bold; margin-bottom:5px; }
+.box.small p.intro { font-size:14px; color:#666; }
+
+
 .box .banner { border-bottom:none; position:relative; background-color:#EDF3FE;  min-height:48px; }
 .box .banner h2 { font-size:14px; margin:0; padding:15px 0 0 20px; }
 .box .banner h2 span { font-size:12px; color:#999; font-weight:normal; margin-left:10px; }

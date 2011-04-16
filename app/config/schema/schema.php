@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-03-05 15:03:06 : 1299315306*/
+/* App schema generated on: 2011-04-17 00:04:32 : 1302971492*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -188,10 +188,11 @@ class AppSchema extends CakeSchema {
 		'extra1' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'extra2' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'extra3' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'person_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'person_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'person_id' => array('column' => array('person_id', 'private'), 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $milestones = array(
@@ -391,6 +392,7 @@ class AppSchema extends CakeSchema {
 		'timezone_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'deleted' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'deleted_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+		'activate_token' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'api_token' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'ical_token' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'ip_address' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),

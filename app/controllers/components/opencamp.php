@@ -51,9 +51,10 @@
      */
     public function startup()
     {
+      $this->_settings();
+        
       if(isset($this->controller->params['prefix']))
       {
-        $this->_settings();
         $this->_layoutScheme();
         $this->_helpers();
       }

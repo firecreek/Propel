@@ -14,12 +14,13 @@
   Router::connect('/users/logout', array('controller' => 'users', 'action' => 'logout'));
   Router::connect('/users/register', array('controller' => 'users', 'action' => 'register'));
   Router::connect('/users/invitation/*', array('controller' => 'users', 'action' => 'invitation'));
+  Router::connect('/users/reset/*', array('controller' => 'users', 'action' => 'reset'));
   
   
   //Admin
-  Router::connect('/admin/:controller/:action/*',
+  /*Router::connect('/admin/:controller/:action/*',
     array('controller'=>'dashboard', 'action'=>'index', 'prefix'=>'admin')
-  );
+  );*/
   
   //Comments
   Router::connect('/:accountSlug/:projectId/:associatedController/comments/edit/*',

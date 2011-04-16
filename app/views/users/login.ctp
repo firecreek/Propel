@@ -1,8 +1,5 @@
-<?php
-  $html->css('login', null, array('inline'=>false));
-?>
 
-<div class="box">
+<div class="box small">
 
   <div class="banner">
     <?php if(isset($account) && !empty($account)): ?>
@@ -28,7 +25,7 @@
     ?>
     <hr class="dashed" />
     
-    <p><strong><?php __('Help'); ?>:</strong> <?php echo $html->link(__('I forgot my username or password',true),array('accountSlug'=>false,'action'=>'forgotten')); ?></p>
+    <p><strong><?php __('Help'); ?>:</strong> <?php echo $html->link(__('I forgot my username or password',true),array('action'=>'forgotten')); ?></p>
     
   </div>
 

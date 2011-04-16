@@ -1,4 +1,4 @@
-<?php __('You\'re invited to join Opencamp, our project management and collaboration system.'); ?>
+<?php __('You\'re invited to join Propel, our project management and collaboration system.'); ?>
 
 
 <?php __('Hi'); ?> <?php echo $data['Person']['first_name'] ?>,

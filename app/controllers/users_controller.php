@@ -55,7 +55,7 @@
      */
     public function beforeFilter()
     {
-      $this->Authorization->allow(array('register','invitation'));
+      $this->Authorization->allow(array('register','invitation','forgotten','reset'));
       
       parent::beforeFilter();
     }
@@ -176,7 +176,7 @@
             );
             
             //Email
-            $data = array_merge($record,$this->data);          
+            $data = array_merge($record,$this->data);
             $this->Message->send('welcome_invite',array(
               'subject' => __('Your account has been created',true),
               'to' => $record['Person']['email']
@@ -298,6 +298,81 @@
      */
     public function forgotten()
     {
+      if(!empty($this->data))
+      {
+        $record = $this->User->find('first',array(
+          'conditions' => array('User.email'=>$this->data['User']['email']),
+          'contain' => false
+        ));
+        
+        if(!empty($record))
+        {
+          $this->User->id = $record['User']['id'];
+          $record['User']['activate_token'] = $this->User->setToken('activate');
+        
+          $this->Message->send('forgotten',array(
+            'subject' => __('Reset your password',true),
+            'to' => $this->data['User']['email']
+          ),$record);
+        
+          $this->Session->setFlash(__('Instructions for signing in have been emailed to you',true),'default',array('class'=>'success'));
+          
+          $this->redirect(array('action'=>'login'));
+        }
+      }
+    }
+    
+    
+    /**
+     * Reset password
+     *
+     * @access public
+     * @return void
+     */
+    public function reset($token)
+    {
+      $record = $this->User->find('first',array(
+        'conditions' => array(
+          'User.activate_token' => $token
+        ),
+        'contain' => array(
+          'Account'
+        )
+      ));
+      
+      if(empty($record))
+      {
+        return $this->render('reset_expired');
+      }
+      
+      //
+      $this->data['User']['username'] = $record['User']['username'];
+      
+      if(!empty($this->data))
+      {
+        $this->data['User']['id'] = $record['User']['id'];
+        $this->User->set($this->data);
+        
+        if($this->User->validates())
+        {
+          $this->User->save($this->data,array('fields'=>array('password')));
+          
+          //Automatically login and redirect
+          $this->Authorization->login($this->data);
+          
+          $this->redirect(array(
+            'controller'  => 'accounts',
+            'action'      => 'index',
+            'prefix'      => 'account',
+            'accountSlug' => $record['Account']['slug']
+          ));
+        }
+        else
+        {
+          unset($this->data['User']['password']);
+          unset($this->data['User']['password_confirm']);
+        }
+      }
     }
     
     

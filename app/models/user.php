@@ -28,6 +28,7 @@
      */
     public $actsAs = array(
       'Acl' => array('type' => 'requester'),
+      'Token',
       'Containable'
     );
       
