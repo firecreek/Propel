@@ -100,7 +100,7 @@
                   <li><?php
                     if($record['Post']['comment_count'] == 0)
                     {
-                      echo $html->link(__('Add a comment',true),$url);
+                      echo $html->link(__('Add a comment',true),array_merge($url,array('#comment-add')));
                     }
                     else
                     {

@@ -103,6 +103,41 @@
     
 
     /**
+     * Before delete
+     *
+     * @access public
+     * @return boolean
+     */
+    public function beforeDelete()
+    {
+      if($modelId = $this->field('model_id'))
+      {
+        $this->__deleteModelId = $modelId;
+      }
+      
+      return true;
+    }
+    
+
+    /**
+     * After delete
+     *
+     * @access public
+     * @return boolean
+     */
+    public function afterDelete()
+    {
+      if(isset($this->__deleteModelId))
+      {
+        $this->updateCommentCount($this->__deleteModelId);
+        unset($this->__deleteModelId);
+      }
+      
+      return true;
+    }
+    
+
+    /**
      * Add a subscriber to this comment if not already
      *
      * @access public
@@ -223,6 +258,13 @@
      */
     public function updateCommentCount($id)
     {
+      $model = ClassRegistry::init($this->associatedAlias);
+      
+      if(!$model->hasField('comment_count'))
+      {
+        return true;
+      }
+      
       $count = $this->find('count',array(
         'conditions' => array(
           'Comment.model' => $this->associatedAlias,
@@ -231,7 +273,6 @@
         'recursive' => -1
       ));
       
-      $model = ClassRegistry::init($this->associatedAlias);
       $model->recursive = -1;
       $model->id = $id;
       
