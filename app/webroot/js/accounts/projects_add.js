@@ -12,6 +12,7 @@ var ProjectsAdd = {
     //If no companies to select from then default the create new company
     if(this.companyCount == 0)
     {
+      $('#PermissionOption').val('create');
       $('#PermissionCreateCompany p span').hide();
       $('#PermissionSelectCompany').hide();
       $('#PermissionCreateCompany').show();
