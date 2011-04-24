@@ -23,7 +23,14 @@
   <div class="options">
     <?php
       echo $form->input('responsible',array('id'=>false,'div'=>'input first','options'=>$responsibleOptions,'empty'=>true,'label'=>__('Who\'s responsible?',true)));
-      echo $form->input('deadline',array('empty'=>true,'type'=>'date','div'=>'input second','label'=>__('When is it due?',true)));
+      echo $form->input('deadline',array(
+        'empty'=>true,
+        'type'=>'date',
+        'div'=>'input second',
+        'label'=>__('When is it due?',true),
+        'minYear' => date('Y')-2,
+        'maxYear' => date('Y')+10,
+      ));
     ?>
   </div>
   <hr />

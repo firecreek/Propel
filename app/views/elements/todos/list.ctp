@@ -86,7 +86,7 @@
             <?php echo $html->link(__('Add an item',true),array('controller'=>'todos_items','action'=>'add',$record['Todo']['id']),array('rel'=>$ident,'class'=>'important')); ?>
           </div>
           <?php
-            echo $this->element('todos/add_item',array(
+            echo $this->element('todos_items/add',array(
               'todoId'      => $record['Todo']['id'],
               'groupIdent'  => $ident
             ));

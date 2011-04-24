@@ -140,7 +140,16 @@
         }
         else
         {
-          $this->Session->setFlash(__('Failed to save the record, please check the form',true),'default',array('class'=>'error'));
+          //Error validating todo item
+          if($this->RequestHandler->isAjax())
+          {
+            $this->set(compact('id'));
+            return $this->render('project_add_error');
+          }
+          else
+          {
+            $this->Session->setFlash(__('Failed to save the record, please check the form',true),'default',array('class'=>'error'));
+          }
         }
       }
       

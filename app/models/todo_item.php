@@ -107,6 +107,12 @@
           'rule' => array('numeric')
         ),
       ),
+      'description' => array(
+        'notempty' => array(
+          'rule' => array('notempty'),
+          'allowEmpty' => false
+        )
+      )
     );
     
 
