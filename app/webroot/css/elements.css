@@ -395,6 +395,8 @@ form .input.textarea.full-width textarea { width:95%; }
 
 form .input input.dummy { color:#888; }
 
+form p.light { color:#666; }
+
 
 /**
  * Buttons

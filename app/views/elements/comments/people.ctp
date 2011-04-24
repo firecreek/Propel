@@ -4,10 +4,10 @@
   if(!empty($people)):
 ?>
   
-  <div class="subscribe-people">
+  <fieldset class="subscribe-people">
     
     <h5><?php __('Subscribe people to receive email notifications'); ?></h5>
-    <p>
+    <p class="light">
       <?php __('The people you select will get an email when you post this comment.'); ?><br />
       <?php __('They\'ll also be notified by email every time a new comment is added.'); ?>
     </p>
@@ -23,7 +23,7 @@
       ));
     ?>
   
-  </div>
+  </fieldset>
   
   <hr />
 

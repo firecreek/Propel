@@ -1,6 +1,6 @@
 <?php
 
-  $javascript->link('projects/posts_add.js', false);
+  $this->Javascript->link('projects/posts_add.js', false);
   
 ?>
 <div class="cols">
@@ -11,20 +11,40 @@
       <div class="banner">
         <h2><?php __('Edit this message'); ?></h2>
         <ul class="right important">
-          <li><?php echo $html->link(__('Delete this message',true),array('action'=>'delete',$id)); ?></li>
+          <li><?php echo $this->Html->link(__('Delete this message',true),array('action'=>'delete',$id)); ?></li>
         </ul>
       </div>
       <div class="content">
         
         <?php
-          echo $form->create('Post',array('url'=>$this->here,'class'=>'block'));
+          echo $this->Form->create('Post',array('url'=>$this->here,'class'=>'block'));
         ?>
         
         <?php echo $this->element('posts/form'); ?>
+        
+        <?php
+          //Show if more than one person (me)
+          $people = $this->Auth->read('People');
+          if(count($people) > 1):
+        ?>
+          <fieldset class="notify-changes">
+            <h5><?php __('Notify the people checked off above that you\'ve edited this message?'); ?></h5>
+            <p class="light">
+              <?php __('Anyone checked off above will receive an email with the full content of the message.'); ?><br />
+              <?php __('They will also be notified every time a comment is added.'); ?>
+            </p>
+            
+            <?php
+              echo $this->Form->input('_notify_changes',array('type'=>'checkbox','label'=>__('Yes, notify the subscribers above of these changes via email',true)));
+            ?>
+          </fieldset>
+          <hr />
+        <?php endif; ?>
+          
           
         <?php
-          echo $form->submit(__('Save changes',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('controller'=>'comments','action'=>'index','associatedController'=>'posts',$id) ) ));
-          echo $form->end();
+          echo $this->Form->submit(__('Save changes',true),array('after'=>__('or',true).' '.$this->Html->link(__('Cancel',true),array('controller'=>'comments','action'=>'index','associatedController'=>'posts',$id) ) ));
+          echo $this->Form->end();
         ?>
 
         
