@@ -18,7 +18,7 @@
     ?>
     -
     <?php
-      $url = array('action'=>'index');
+      $url = array('action'=>'index','?'=>array('responsible'=>'','due'=>''));
       $text = __('Show all to-dos',true);
     
       if(isset($id))

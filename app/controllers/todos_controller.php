@@ -229,7 +229,8 @@
       if(isset($this->data['Todo']['responsible']) && !empty($this->data['Todo']['responsible']))
       {
         $filter['Responsible'] = array(
-          'value' => $this->data['Todo']['responsible']
+          'value' => $this->data['Todo']['responsible'],
+          'model' => 'TodoItem'
         );
       }
       
