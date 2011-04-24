@@ -12,6 +12,12 @@
    */
   class CommentHelper extends AppHelper
   {
+    /**
+     * Helpers
+     *
+     * @access public
+     * @var array
+     */
     public $helpers = array('Html');
     
     /**

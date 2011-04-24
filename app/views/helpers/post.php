@@ -12,6 +12,13 @@
    */
   class PostHelper extends AppHelper
   {
+    /**
+     * Helpers
+     *
+     * @access public
+     * @var array
+     */
+    public $helpers = array('Html');
     
     /**
      * Before log output
@@ -21,6 +28,14 @@
      */
     public function beforeLog($data)
     {
+      $options['description'] = $this->Html->link($data['Log']['description'],array(
+        'associatedController' => 'posts',
+        'controller' => 'comments',
+        'action' => 'index',
+        $data['Log']['model_id']
+      ));
+      
+      return $options;
     }
     
     /**
