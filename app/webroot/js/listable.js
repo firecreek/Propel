@@ -137,6 +137,8 @@
       var after     = $(item).find('.after');
       var overview  = $(item).find('.overview');
       
+      var header    = ($(element).closest('.header').length > 0) ? true : false;
+      
       //@todo Centralise this code
       var url = $(item).attr('rel-edit-url');
       var data = { objId:$(item).attr('id') };
@@ -166,7 +168,8 @@
         $(item).removeClass('ui-state-loading');
         
         //$(item).addClass('ui-state-edit');
-        //$(group).addClass('ui-state-edit');
+        
+        if(header) { $(group).addClass('ui-state-edit'); }
         
         //Trigger
         self._trigger("edit", element, {
@@ -181,6 +184,7 @@
         $(inline).find('.submit:first a').bind('click',function(e){
           //$(item).removeClass('ui-state-edit');
           //$(group).removeClass('ui-state-edit');
+          if(header) { $(group).removeClass('ui-state-edit'); }
           e.preventDefault();
           $(inline).html('').hide();
           $(overview).show();

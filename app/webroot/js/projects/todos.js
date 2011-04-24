@@ -35,7 +35,6 @@ var Todos = {
     //RHS Filters
     $('#TodoFilter div.submit').hide();
     $('#TodoFilter select').bind('change',function(e){
-      
       var form = $(this).closest('form');
       
       $(form).submit();
@@ -64,8 +63,16 @@ var Todos = {
       if(!self.reorderLists)
       {
         //Show
-        self.reorderLists = true;
         
+        //Check a group isn't being edited
+        if($('.group.ui-state-edit').length == 1)
+        {
+          alert('There are todo groups in edit mode, please save your changes first');
+          return false;
+        }
+        
+        //
+        self.reorderLists = true;
         $('#todoFilter').hide();
         
         $(this).addClass('active');
@@ -127,7 +134,6 @@ var Todos = {
     
     //Cancel button
     $('.item-add .submit a').live('click',function(e){
-      var group = $('.item-add .submit a').closest('.group');
       var addContainer = $(this).closest('.add-item-container');
       
       if(addContainer)

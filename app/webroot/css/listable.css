@@ -71,6 +71,7 @@
 
 .listable .item .loading { background:url(/img/icons/loader-small-horizontal.gif) white no-repeat center center; width:50px; height:27px; position:absolute; top:-5px; left:0; z-index:10; border-bottom-left-radius: 15px 15px; border-top-left-radius: 15px 15px; }
 
+
 /**
  * 
  */
@@ -84,6 +85,16 @@
 
 .listable .item.ui-state-loading .maintain { display:none;  }
 .listable .item.ui-state-loading .comment { display:none; }
+
+
+/**
+ * Listables with groups
+ */
+.listable .group.ui-state-edit {  }
+.listable .group.ui-state-edit .header .overview { display:none; }
+.listable .group.ui-state-edit .item-content { display:none; }
+.listable .group.ui-state-edit .after { display:none; }
+
 
 /**
  * Maintain record
