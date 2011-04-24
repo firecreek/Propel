@@ -54,7 +54,7 @@
                     $title = $person['title'];
                     if($person['company_owner'])
                     {
-                      $title = __('OpenCamp account owner',true);
+                      $title = __('Propel account owner',true);
                     }
                   ?>
                   <?php if($title): ?><p class="title"><?php echo $title; ?></p><?php endif; ?>

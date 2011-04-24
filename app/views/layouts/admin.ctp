@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title><?php echo $title_for_layout; ?> - <?php __('Opencamp'); ?></title>
+  <title><?php echo $title_for_layout; ?> - <?php __('Propel'); ?></title>
   <?php
     echo $html->css(array(
       'reset',
@@ -20,7 +20,7 @@
 <body>
 
   <header>
-    <h1><?php echo $html->link('Opencamp','/'); ?> &gt; Admin Area</h1>
+    <h1><?php echo $html->link('Propel','/'); ?> &gt; Admin Area</h1>
   </header>
 
   <nav>

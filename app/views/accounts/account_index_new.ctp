@@ -5,7 +5,7 @@
   
     <div class="box">
       <div class="banner">
-        <h2><?php __('Welcome to your Opencamp'); ?></h2>
+        <h2><?php __('Welcome to your Propel'); ?></h2>
       </div>
       <div class="content">
         

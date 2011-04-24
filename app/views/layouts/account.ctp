@@ -30,8 +30,6 @@
 
 <body>
 
-
-
     <?php
       echo $this->element('headers/'.$prefix);
     ?>

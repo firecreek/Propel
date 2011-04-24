@@ -11,7 +11,7 @@
 
     <div class="box">
       <div class="banner">
-        <h2><?php __('Update your Opencamp ID details'); ?></h2>
+        <h2><?php __('Update your Propel ID details'); ?></h2>
       </div>
       <div class="content">
       
@@ -44,7 +44,7 @@
           );
         
           echo $form->input('User.email_format',array('label'=>__('Email format',true),'options'=>$formats));
-          echo $form->input('User.email_send',array('label'=>__('Receive emails from Opencamp',true)));
+          echo $form->input('User.email_send',array('label'=>__('Receive emails from Propel',true)));
         ?>
       
         <hr />

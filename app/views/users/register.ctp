@@ -12,7 +12,7 @@
       
       echo $form->create('User',array('url'=>$this->here));
       
-      echo '<fieldset><legend>'.__('Create your Opencamp account',true).'</legend>';
+      echo '<fieldset><legend>'.__('Create your Propel account',true).'</legend>';
       echo $form->input('Person.first_name',array('label'=>__('First name',true)));
       echo $form->input('Person.last_name',array('label'=>__('Last name',true)));
       echo $form->input('User.email',array('label'=>__('Email',true)));

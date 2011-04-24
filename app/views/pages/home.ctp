@@ -2,7 +2,7 @@
 <div class="box">
   <div class="content">
 
-    <h2>Project Management with OpenCamp</h2>
+    <h2>Project Management with Propel</h2>
     
     <?php echo $session->flash(); ?>
     

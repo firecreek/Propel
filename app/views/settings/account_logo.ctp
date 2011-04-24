@@ -38,7 +38,7 @@
         
           <p><?php __('Your logo appears on the sign in screen, the Dashboard, and Overview pages.'); ?></p>
           <p class="note"><?php echo $note.__('The logo must be in PNG, GIF, or JPG format and can\'t be more than 300 pixels wide.',true); ?></p>
-          <p class="note"><?php echo $tip.__('If you want the logo\'s background to blend in with Opencamp\'s grey background, you should put the logo on a grey background with the hex color #e5e5e5 and then upload that version of the logo.',true); ?></p>
+          <p class="note"><?php echo $tip.__('If you want the logo\'s background to blend in with Propel\'s grey background, you should put the logo on a grey background with the hex color #e5e5e5 and then upload that version of the logo.',true); ?></p>
         
         <?php elseif($type == 'apple'): ?>
         
