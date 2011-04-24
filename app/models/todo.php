@@ -37,7 +37,7 @@
       ),
       'Cached' => array(
         'prefix' => array(
-          'todo',
+          'todo'
         ),
       )
     );
@@ -134,6 +134,7 @@
       {
         $this->_loadItems = $query['items'];
       }
+      
       return $query;
     }
     

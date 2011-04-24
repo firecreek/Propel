@@ -273,6 +273,20 @@
         )
       ));
       
+      //Clear any lists with no todo items
+      //@todo When filtering by both the main todo item exists, maybe need to inner join both tables
+      if(isset($filter['Responsible']) && isset($filter['Due']))
+      {
+        foreach($todos as $key => $todo)
+        {
+          if(empty($todo['TodoItem']))
+          {
+            //unset($todos[$key]);
+          }
+        }
+      }
+      
+      //
       if(isset($this->Todo->responsibleName))
       {
         $this->set('responsibleName',$this->Todo->responsibleName);
@@ -307,6 +321,9 @@
         if($this->Todo->validates())
         {
           $this->Todo->save();
+          
+          $this->Cookie->delete('Todos.responsible');
+          $this->Cookie->delete('Todos.due');
           
           $this->Session->setFlash(__('Todo list added',true),'default',array('class'=>'success'));
           $this->redirect(array('action'=>'index'));

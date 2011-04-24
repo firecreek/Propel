@@ -10,6 +10,10 @@ var Milestones = {
     $('#MilestoneList .col.right a.add').live('click',function(e){
       $('#MilestoneList').hide();
       $('#MilestoneAdd').show();
+      
+      $('#MilestoneAdd form')[0].reset();
+      $('#MilestoneAdd form :input:visible:first').focus();
+      
       return false;
     });
     

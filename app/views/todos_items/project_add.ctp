@@ -8,7 +8,7 @@
       </div>
       <div class="content">
         <?php
-          echo $this->element('todos_item/add',array(
+          echo $this->element('todos_items/add',array(
             'class'=>'block',
             'cancelText'=>__('Cancel',true),
             'todoId' => $id

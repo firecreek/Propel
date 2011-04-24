@@ -11,6 +11,10 @@ var Todos = {
     $('#TodoList .col.right a.add').bind('click',function(e){
       $('#TodoList').hide();
       $('#TodoAdd').show();
+      
+      $('#TodoAdd form')[0].reset();
+      $('#TodoAdd form :input:visible:first').focus();
+      
       return false;
     });
     
