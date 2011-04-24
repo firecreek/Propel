@@ -131,6 +131,17 @@
     {
       $this->_outputMessage('unknown_acl_error');
     }
+
+    /**
+     * xx
+     *
+     * @access public
+     * @return void
+     */
+    public function invitationInvalid($params)
+    {
+      $this->_outputMessage('invitation_invalid');
+    }
     
     
     /**

@@ -76,10 +76,10 @@
           'allowEmpty' => false,
           'message' => 'Enter a valid email address'
         ),
-        /*'unique' => array(
+        'unique' => array(
           'rule' => 'uniqueEmail',
           'message' => 'This account already has a person with this email address'
-        )*/
+        )
       )
     );
     

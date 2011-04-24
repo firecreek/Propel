@@ -22,7 +22,6 @@
   <div id="main">
     <div class="error-box">
       <?php echo $content_for_layout; ?>
-      <p class="previous"><?php echo $html->link(__('< Go back to previous page',true),Controller::referer()); ?></p>
     </div>
   </div>
 

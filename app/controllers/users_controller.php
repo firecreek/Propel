@@ -153,6 +153,28 @@
         )
       ));
       
+      //No invitation code found
+      if(empty($record))
+      {
+        $this->cakeError('invitationInvalid');
+      }
+      
+      //Already logged in
+      if($this->Authorization->user('id'))
+      {
+        $this->Person->updateAll(
+          array(
+            'Person.user_id' => $this->Authorization->user('id'),
+            'Person.status' => '"active"',
+            'Person.invitation_code' => null
+          ),
+          array('Person.id'=>$record['Person']['id'])
+        );
+        
+        $added = true;
+      }
+      
+      //Post
       if(!empty($this->data))
       {
         if($type == 'new')
@@ -185,12 +207,7 @@
             //Automatically login and redirect
             $this->Authorization->login($this->data);
             
-            $this->redirect(array(
-              'controller'  => 'accounts',
-              'action'      => 'index',
-              'prefix'      => 'account',
-              'accountSlug' => $record['Account']['slug']
-            ));
+            $added = true;
           }
         }
         else
@@ -208,16 +225,25 @@
               array('Person.id'=>$record['Person']['id'])
             );
             
-            $this->redirect(array(
-              'controller'  => 'accounts',
-              'action'      => 'index',
-              'prefix'      => 'account',
-              'accountSlug' => $record['Account']['slug']
-            ));
+            $added = true;
           }
         }
       }
       
+      //Added?
+      if(isset($added) && $added)
+      {
+        $this->Session->setFlash(sprintf(__('You now have access to %s\'s account page',true),$record['Account']['name']),'default',array('class'=>'success'));
+      
+        $this->redirect(array(
+          'controller'  => 'accounts',
+          'action'      => 'index',
+          'prefix'      => 'account',
+          'accountSlug' => $record['Account']['slug']
+        ));
+      }
+      
+      //Continue view
       $this->set(compact('type','code','record'));
     }
     
