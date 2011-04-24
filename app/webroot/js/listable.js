@@ -185,6 +185,9 @@
           //$(item).removeClass('ui-state-edit');
           //$(group).removeClass('ui-state-edit');
           if(header) { $(group).removeClass('ui-state-edit'); }
+          
+          $(item).removeClass('ui-state-active');
+          
           e.preventDefault();
           $(inline).html('').hide();
           $(overview).show();
