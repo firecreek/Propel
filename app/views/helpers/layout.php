@@ -229,6 +229,38 @@
       return $list;
     }
     
+    
+    /**
+     * Project list
+     *
+     * @param array $people List of people
+     * @param array $options
+     * @access public
+     * @return array
+     */
+    public function projectList($projects,$options = array())
+    {
+      $_options = array(
+        'ignoreActive' => true
+      );
+      $options = array_merge($_options,$options);
+      
+      $list = array();
+  
+      foreach($projects as $project)
+      {
+        if(
+          ($options['ignoreActive'] == false) ||
+          ($options['ignoreActive'] == true && $project['Project']['id'] != $this->Auth->read('Project.id'))
+        )
+        {
+          $list[$project['Project']['id']] = $project['Project']['name'];
+        }
+      }
+    
+      return $list;
+    }
+    
   }
   
 ?>

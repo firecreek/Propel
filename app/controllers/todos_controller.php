@@ -44,6 +44,7 @@
      */
     public $actionMap = array(
       'update_positions' => '_update',
+      'move_project'     => '_update',
     );
     
     
@@ -119,14 +120,16 @@
      */
     public function project_index()
     {
+      $projectId = $this->Authorization->read('Project.id');
+    
       //Total todo lists
       $total = $this->Todo->find('count',array(
         'conditions' => array(
-          'Todo.project_id' => $this->Authorization->read('Project.id')
+          'Todo.project_id' => $projectId
         ),
         'contain' => array('Person'),
         'cache' => array(
-          'name' => 'todo_total',
+          'name' => 'todo_total_'.$projectId,
           'config' => 'system',
         ),
         'recursive' => -1
@@ -141,7 +144,7 @@
       //Todos
       $todos = $this->__filterTodos(array(
         array(
-          'Todo.project_id' => $this->Authorization->read('Project.id'),
+          'Todo.project_id' => $projectId,
           'OR' => array(
             'Todo.todo_items_count' => 0,
             'NOT' => array(
@@ -268,7 +271,7 @@
           'count' => true
         ),
         'cache' => array(
-          'name' => 'todo_'.md5(serialize($filter)),
+          'name' => 'todo_'.md5(serialize($filter)).'_'.$this->Authorization->read('Project.id'),
           'config' => 'system',
         )
       ));
@@ -408,6 +411,35 @@
       
       $this->Session->setFlash(__('Todo deleted',true),'default',array('class'=>'success'));
       $this->redirect(array('action'=>'index'));
+    }
+    
+    
+    /**
+     * Move record to different project
+     *
+     * @todo Check if they have access to create on this project
+     * @access public
+     * @return void
+     */
+    public function project_move_project($id)
+    {
+      //Load previous record
+      $this->Todo->id = $id;
+      $oldProjectId = $this->Todo->field('project_id');
+      
+      $this->Todo->TodoItem->Behaviors->disable('Commentable');
+      
+      $this->Todo->id = $id;
+      $this->Todo->saveField('project_id',$this->data['Todo']['project_id']);
+      
+      $this->Todo->TodoItem->updateAll(
+        array('TodoItem.project_id'=>$this->data['Todo']['project_id']),
+        array('TodoItem.project_id'=>$oldProjectId)
+      );
+      
+      $this->Todo->TodoItem->Behaviors->enable('Commentable');
+      
+      $this->set(compact('id'));
     }
     
     

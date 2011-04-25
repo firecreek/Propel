@@ -62,6 +62,50 @@ var Account = {
         content_css_url:'/css/rte.css'
       });
     }
+  },
+  
+  
+  initMoveProject: function(id)
+  {
+    var obj = $('#'+id);
+    
+    $(obj).find('.move-project-link').bind('click',function(){
+    
+      var self = this;
+    
+      $(obj).find('.move-project-form').css({
+        left:$(self).offset().left-300,
+      }).show();
+      
+      return false;
+    });
+    
+    $(obj).find('.move-project-form form').ajaxSubmit();
+
+    $(obj).find('.move-project-form div.submit a').bind('click',function(){
+      $(obj).find('.move-project-form').hide();
+      return false;
+    });
+    
+    $(obj).find('.move-project-form select').bind('change',function(){
+      if($(this).val())
+      { 
+        $(obj).find('.move-project-form div.submit input').removeAttr('disabled');
+      }
+      else
+      {
+        $(obj).find('.move-project-form div.submit input').attr('disabled',true);
+      }
+    });
+  
+    if($(obj).find('.move-project-form select').val())
+    { 
+      $(obj).find('.move-project-form div.submit input').removeAttr('disabled');
+    }
+    else
+    {
+      $(obj).find('.move-project-form div.submit input').attr('disabled',true);
+    }
   }
 
 }

@@ -76,7 +76,7 @@
         'group' => 'Post.id',
         'order' => 'Post.id DESC',
         'cache' => array(
-          'name' => 'post',
+          'name' => 'post_'.$this->Authorization->read('Project.id'),
           'config' => 'system'
         )
       ));
@@ -99,7 +99,7 @@
             'CommentUnread'
           ),
           'cache' => array(
-            'name' => 'post_recent',
+            'name' => 'post_recent_'.$this->Authorization->read('Project.id'),
             'config' => 'system'
           ),
           'private' => true,

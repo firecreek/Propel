@@ -68,19 +68,8 @@
     {
       //JSON
       $this->RequestHandler->setContent('json', 'application/json');
-    
-      //Set cache prefix
-      $prefix = array();
-      if(!empty($this->params['accountSlug'])) { $prefix[] = $this->params['accountSlug']; }
-      if(!empty($this->params['projectId'])) { $prefix[] = $this->params['projectId']; }
       
-      if(!empty($prefix))
-      {
-        Cache::config('system', array(
-          'prefix' => implode('_',$prefix).'_'
-        ));
-      }
-      
+      //
       foreach($this->uses as $model)
       {
         $this->{$model}->personId = $this->Authorization->read('Person.id');

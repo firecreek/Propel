@@ -1,5 +1,5 @@
 
-<div class="box">
+<div class="box" id="TodoEdit<?php echo $id; ?>">
   <div class="banner">
     <h2><?php __('Edit to-do list'); ?></h2>
   </div>
@@ -11,6 +11,7 @@
     
     <?php
       echo $form->create('Todo',array('url'=>$this->here,'class'=>'block'));
+      echo $form->hidden('ident',array('value'=>$this->params['form']['objId']));
       
       echo $form->input('name',array(
         'label'=>__('Name of list',true),
@@ -47,10 +48,15 @@
     
     <hr />
       
+    
     <?php
-      echo $form->hidden('ident',array('value'=>$this->params['form']['objId']));
       echo $form->submit(__('Save changes',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('action'=>'index') ) ));
       echo $form->end();
+    ?>
+    
+    <?php
+      //Move record to a different project
+      echo $this->element('projects/move_record',array('id'=>$id,'alias'=>'Todo'));
     ?>
 
     

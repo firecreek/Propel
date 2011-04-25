@@ -650,6 +650,18 @@ table.logs.dated .today span { background-color:#FFF000; border-bottom:0; color:
 .badge.private { background-color:#FF0000; }
 
 
+/**
+ * Move project link
+ */
+.move-project-link { float:right; position:relative; top:-22px; }
+.move-project-link a { font-size:11px; }
+
+.move-project-form { width:320px; }
+.move-project-form label { font-weight:bold; }
+.move-project-form .saving { background-color:white !important; }
+
+
+
 
 /**
  * Fix floats

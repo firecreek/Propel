@@ -115,8 +115,13 @@ class AppModel extends LazyModel {
      * @return boolean True on success, false on failure
      * @access public
      */
-    public function updateAll($fields, $conditions = true)
+    public function updateAll($fields, $conditions = true, $options = array())
     {
+      $_options = array(
+        'callbacks' => true
+      );
+      $options = array_merge($_options,$options);
+    
       $args = func_get_args();
       $output = call_user_func_array(array('parent', 'updateAll'), $args);
       if ($output)
@@ -134,13 +139,16 @@ class AppModel extends LazyModel {
             $this->id = false;
           }
       
-          $created = false;
-          $options = array();
-          $this->Behaviors->trigger($this, 'afterSave', array(
-              $created,
-              $options,
-          ));
-          $this->afterSave($created);
+          if($options['callbacks'])
+          {
+            $created = false;
+            $this->Behaviors->trigger($this, 'afterSave', array(
+                $created,
+                $options,
+            ));
+            $this->afterSave($created);
+          }
+          
           $this->_clearCache();
           return true;
       }
