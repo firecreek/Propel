@@ -46,6 +46,11 @@
       'Searchable' => array(
         'title' => 'title',
         'description' => false
+      ),
+      'Cached' => array(
+        'prefix' => array(
+          'milestone'
+        ),
       )
     );
     

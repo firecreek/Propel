@@ -158,7 +158,11 @@
         'conditions' => array(
           'Milestone.project_id' => $this->Authorization->read('Project.id')
         ),
-        'recursive' => -1
+        'recursive' => -1,
+        'cache' => array(
+          'name' => 'milestone_total_'.$this->Authorization->read('Project.id'),
+          'config' => 'system',
+        )
       ));
     
       //Nothing added yet
@@ -188,7 +192,11 @@
           'Milestone.completed'  => false
         ),
         'contain' => $contain,
-        'order' => 'Milestone.deadline ASC'
+        'order' => 'Milestone.deadline ASC',
+        'cache' => array(
+          'name' => 'milestone_overdue_'.$this->Authorization->read('Project.id'),
+          'config' => 'system',
+        )
       ));
       
       //Upcoming
@@ -199,7 +207,11 @@
           'Milestone.completed'   => false
         ),
         'contain' => $contain,
-        'order' => 'Milestone.deadline ASC'
+        'order' => 'Milestone.deadline ASC',
+        'cache' => array(
+          'name' => 'milestone_upcoming_'.$this->Authorization->read('Project.id'),
+          'config' => 'system',
+        )
       ));
       
       //Upcoming next 14 days
@@ -211,6 +223,10 @@
           'Milestone.deadline <=' => date('Y-m-d',strtotime('+14 days')),
         ),
         'contain' => $contain,
+        'cache' => array(
+          'name' => 'milestone_upcoming14_'.$this->Authorization->read('Project.id'),
+          'config' => 'system',
+        )
       ));
       
       //Completed
@@ -220,7 +236,11 @@
           'Milestone.completed'  => true
         ),
         'contain' => $contain,
-        'order' => 'Milestone.completed_date ASC'
+        'order' => 'Milestone.completed_date ASC',
+        'cache' => array(
+          'name' => 'milestone_completed_'.$this->Authorization->read('Project.id'),
+          'config' => 'system',
+        )
       ));
       
       $this->set(compact('upcoming','completed','overdue','upcoming14Days'));
