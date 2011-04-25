@@ -76,6 +76,56 @@
       )
     );
     
+    
+    
+    /**
+     * Create default categories
+     *
+     * @param int $accountId
+     * @param int $projectId
+     * @access public
+     * @return boolean
+     */
+    public function createDefaults($accountId = null,$projectId = null)
+    {
+      //Build list
+      if(!$projectId)
+      {
+        $records = $this->find('all',array(
+          'fields' => array('type','name'),
+          'contain' => false,
+          'conditions' => array(
+            'account_id' => null,
+            'project_id' => null,
+          )
+        ));
+      }
+      else
+      {
+        $records = $this->find('all',array(
+          'fields' => array('type','name'),
+          'contain' => false,
+          'conditions' => array(
+            'account_id' => $accountId,
+            'project_id' => null,
+          )
+        ));
+      }
+      
+      //Insert
+      foreach($records as $record)
+      {
+        $this->create();
+        
+        $record[$this->alias]['account_id'] = $accountId;
+        if($projectId) { $record[$this->alias]['project_id'] = $projectId; }
+        
+        $this->save($record);
+      }
+      
+      return true;
+    }
+    
   }
   
 ?>

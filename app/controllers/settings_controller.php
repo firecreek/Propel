@@ -18,7 +18,7 @@
      * @access public
      * @access public
      */
-    public $helpers = array('Image');
+    public $helpers = array('Image','Listable');
     
     /**
      * Components
@@ -45,6 +45,7 @@
     public $actionMap = array(
       'appearance'  => '_update',
       'logo'        => '_update',
+      'categories'  => '_update',
     );
     
     /**
@@ -333,6 +334,41 @@
       $this->set('schemeKeys',$this->schemeKeys);
       $this->set(compact('records'));
     }
+    
+    
+    
+    /**
+     * Categories
+     *
+     * @access public
+     * @return void
+     */
+    public function account_categories()
+    {
+      $this->loadModel('Category');
+    
+      $records = $this->Category->find('all',array(
+        'conditions' => array(
+          'Category.account_id' => $this->Authorization->read('Account.id')
+        ),
+        'contain' => false
+      ));
+      
+      //Group up
+      $categories = array();
+      foreach($records as $record)
+      {
+        if(!isset($categories[$record['Category']['type']]))
+        {
+          $categories[$record['Category']['type']] = array();
+        }
+        
+        $categories[$record['Category']['type']][] = $record;
+      }
+      
+      $this->set(compact('categories'));
+    }
+    
   
   }
   

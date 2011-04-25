@@ -18,9 +18,9 @@
   
   
   //Admin
-  /*Router::connect('/admin/:controller/:action/*',
+  Router::connect('/admin/:controller/:action/*',
     array('controller'=>'dashboard', 'action'=>'index', 'prefix'=>'admin')
-  );*/
+  );
   
   //Comments
   Router::connect('/:accountSlug/:projectId/:associatedController/comments/edit/*',

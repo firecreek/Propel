@@ -37,12 +37,12 @@
   <?php
   
     $submitText = __('Add this item',true);
-    
+
     if(!isset($cancelText))
     {
       $cancelText = __('I\'m done adding items',true);
     }
-      
+    
     if($edit)
     {
       $submitText = __('Save this item',true);

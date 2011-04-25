@@ -95,6 +95,10 @@
             $this->User->Person->saveField('user_id',$this->User->id);
             $this->User->Person->saveField('account_id',$this->User->Account->id);
             
+            //Create default categories for account
+            $this->loadModel('Category');
+            $this->Category->createDefaults($this->User->Account->id);
+            
             //Create ACO for this account
             $this->AclManager->create('accounts',$this->User->Account->id);
             
@@ -118,7 +122,6 @@
               'prefix'      => 'account',
               'accountSlug' => $this->data['Account']['slug']
             ));
-
           }
           else
           {

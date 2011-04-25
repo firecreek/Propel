@@ -27,7 +27,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .dialog.default { background-color:white; -webkit-box-shadow:black 0px 0px 10px; -moz-box-shadow:black 0px 0px 10px; border-radius:12px; }
 .dialog.default .wrapper { padding:15px; }
 
-.dialog.error { background-color:white; -webkit-box-shadow:black 0px 0px 10px; -moz-box-shadow:black 0px 0px 10px; border-radius:12px; border-color: #C00; border-width:2px; }
+.dialog.error { background-color:white; -webkit-box-shadow:black 0px 0px 10px; -moz-box-shadow:black 0px 0px 10px; border-radius:12px; border-color: #C00; border-width:2px; width:600px; }
 .dialog.error .wrapper { padding:5px; }
 .dialog.error h1 { text-align:center; font-size:22px; font-weight:normal; margin:0 0 10px 0; }
 .dialog.error h2 { font-size:14px; }
@@ -106,6 +106,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box .content { padding:20px; }
 .box .content h2 { margin:0; font-size:22px; font-weight:normal; padding:10px 0 10px 0; }
 .box .content h3 { font-size:14px; margin:0 0 15px 0; padding:0 0 0 0; }
+.box .content h3.tight { margin:0 0 2px 0; }
 .box .content p { margin:0 0 1em 0; }
 .box .content p a.active { color:black; text-decoration:none; font-weight:bold; }
 

@@ -158,7 +158,14 @@
       
       if(isset($this->controller->RequestHandler) && $this->controller->RequestHandler->isAjax())
       {
-        $this->controller->layout = 'js/error';
+        if($this->controller->RequestHandler->ext == 'js')
+        {
+          $this->controller->layout = 'js/error';
+        }
+        else
+        {
+          $this->controller->layout = 'error_ajax';
+        }
       }
       
       $this->controller->render($template);

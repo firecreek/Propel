@@ -68,6 +68,10 @@
         {
           if($this->Project->saveAll($this->data))
           {
+            //Create default categories for project
+            $this->loadModel('Category');
+            $this->Category->createDefaults($this->Authorization->read('Account.id'),$this->Project->id);
+            
             //Create ACO for this account
             $this->AclManager->create('projects',$this->Project->id);
             
