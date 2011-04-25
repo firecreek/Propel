@@ -22,6 +22,8 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .dialog { position:absolute; top:200px; left:200px; width:450px; z-index:999;   }
 .dialog .wrapper { padding:10px; }
 
+.dialog p.title { text-align:center; text-align:center; padding:10px 0 5px 0; margin:0; font-weight:bold; }
+
 .dialog.default { background-color:white; -webkit-box-shadow:black 0px 0px 10px; -moz-box-shadow:black 0px 0px 10px; border-radius:12px; }
 .dialog.default .wrapper { padding:15px; }
 
@@ -30,6 +32,10 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .dialog.error h1 { text-align:center; font-size:22px; font-weight:normal; margin:0 0 10px 0; }
 .dialog.error h2 { font-size:14px; }
 .dialog.error p:last-child { margin-bottom:10px; }
+
+.dialog.calendar { width:260px; }
+.dialog.calendar .ui-datepicker { padding:0 15px 15px 15px;; }
+.dialog.calendar .ui-current-date { display:none; }
 
 .dialog .close-button { background-color:white; position:absolute; right:15px; top:15px; width:16px; height:16px; background:url(/img/icons/close-16.png) transparent no-repeat; cursor:pointer; text-indent:-9000px }
 .dialog .close-button span { display:block; width:100%; height:100%; }

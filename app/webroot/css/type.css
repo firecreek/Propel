@@ -26,6 +26,7 @@ a.important.active, .important a.active { background-color:#FC3; color:#000000; 
 
 a.unimportant, .unimportant a { color:#333; padding:0 1px; }
 a.unimportant:hover, .unimportant a:hover { background-color:#333; text-decoration:none; color:white; }
+form .text input.unimportant { color:#666; }
 
 .error,
 .notice,

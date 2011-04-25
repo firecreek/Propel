@@ -17,6 +17,7 @@
   $.widget("oc.calendar",{
     
     options: {
+      datepicker: {}
     },
     
     _create: function()
@@ -25,7 +26,7 @@
       
       $(this.element).find('select').hide();
       
-      $(this.element).datepicker({
+      $(this.element).datepicker(jQuery.extend({
         changeMonth: true,
         changeYear: true,
         firstDay: 1,
@@ -36,7 +37,7 @@
         onSelect: function(dateText) {
           self._updateDate.apply(self,arguments)
         }
-      });
+      },this.options.datepicker));
       
       $(this.element).append('<div class="ui-current-date">Loading</div>');
       this._updateDate.apply(this);
@@ -62,3 +63,54 @@
   
   });
 })(jQuery);
+
+
+
+/**
+ * Dialog Calendars
+ */
+var Calendar = {
+
+  active:'',
+  inside:false,
+  
+  load: function()
+  {
+    if($('#Calendar').length == 0) { return; }
+  
+    //Detect clicks outside of element
+    var self = this;
+    $('#Calendar').hover(function(){ 
+      self.inside = true;
+    }, function(){ 
+      self.inside = false;
+    });
+    
+    $('body').mouseup(function(){ 
+      if(!self.inside) { $('#Calendar').hide(); }
+    });
+  },
+
+  show: function(id)
+  {
+    this.active = id;
+    
+    $('#Calendar').css({
+      left:($('#'+this.active).offset().left+$('#'+this.active).width())+35,
+      top:$('#'+this.active).offset().top-60
+    }).show();
+  },
+  
+  updateDate: function(date)
+  {
+    $('#'+this.active).removeClass('unimportant').val(date);
+    $('#Calendar').hide();
+    this.active = '';
+  }
+
+}
+
+$(document).ready(function() {
+  Calendar.load();
+});
+

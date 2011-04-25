@@ -275,6 +275,15 @@
         {
           if(!empty($data['title']))
           {
+            if($data['deadline'] == __('Pick a date',true))
+            {
+              $data['deadline'] = date('Y-m-d');
+            }
+            else
+            {
+              $data['deadline'] = date('Y-m-d',strtotime($data['deadline']));
+            }
+          
             $save[] = array(
               'Milestone' => array_merge(array(
                   'account_id' => $this->Authorization->read('Account.id'),

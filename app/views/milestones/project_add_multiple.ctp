@@ -17,6 +17,21 @@
       echo $form->create('Milestone',array('url'=>$this->here));
     ?>
     
+
+    <div id="Calendar" class="dialog default calendar" style="display:none;">
+      <p class="title"><?php __('Set the due date'); ?></p>
+      <div class="cal"></div>
+      <?php
+        echo $javascript->codeBlock("
+          $('.dialog.calendar').calendar({
+            datepicker: {
+              onSelect: function(dateText) { Calendar.updateDate(dateText); }
+            }
+          });
+        ");
+      ?>
+    </div>
+    
     <table class="zebra add-multiple">
       <thead>
         <tr>
@@ -29,7 +44,14 @@
       <tbody>
       <?php for($ii = 1; $ii <= 10; $ii++): ?>
         <tr>
-          <td class="due"><?php echo $form->input('Milestone.'.$ii.'.deadline',array('label'=>false)); ?></td>
+          <td class="due"><?php
+            echo $form->input('Milestone.'.$ii.'.deadline',array(
+              'label'=>false,
+              'type'=>'text',
+              'class'=>'date-select unimportant',
+              'value' => __('Pick a date',true)
+            ));
+          ?></td>
           <td class="title"><?php echo $form->input('Milestone.'.$ii.'.title',array('label'=>false)); ?></td>
           <td class="responsible"><?php echo $form->input('Milestone.'.$ii.'.responsible',array('options'=>$responsibleOptions,'empty'=>true,'label'=>false)); ?></td>
           <td class="reminder"><?php echo $form->input('Milestone.'.$ii.'.email',array('label'=>__('Send reminder',true))); ?></td>
@@ -38,12 +60,19 @@
       </tbody>
     </table>
     
+    <?php
+      echo $this->Javascript->codeBlock("
+        $('input.date-select').bind('click',function(){
+          Calendar.show($(this).attr('id'));
+        });
+      ");
+    ?>
 
       
     <hr />
       
     <?php
-      echo $form->submit(__('Create this milestones',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('action'=>'index') ) ));
+      echo $form->submit(__('Create these milestones',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('action'=>'index') ) ));
       echo $form->end();
     ?>
 
