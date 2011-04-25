@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-04-25 13:04:00 : 1303707720*/
+/* App schema generated on: 2011-04-25 13:04:44 : 1303708604*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -85,13 +85,13 @@ class AppSchema extends CakeSchema {
 	);
 	var $categories = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'project_id' => array('type' => 'integer', 'null' => false),
+		'account_id' => array('type' => 'integer', 'null' => false, 'key' => 'index'),
+		'project_id' => array('type' => 'integer', 'null' => false, 'key' => 'index'),
+		'type' => array('type' => 'string', 'null' => false, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'name' => array('type' => 'string', 'null' => false, 'length' => 90, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'model_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'project_id' => array('column' => 'project_id', 'unique' => 0), 'account_id' => array('column' => 'account_id', 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $comments = array(
