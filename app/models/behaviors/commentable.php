@@ -71,6 +71,8 @@
         ),
       ),false);
       
+      //@todo Fix this, it doesn't work because there is only one instance of this behavior, not one for each model
+      //      So the associatedAlias gets set only for the first model that uses this behavior.
       $model->Comment->associatedAlias = $model->alias;
     }
     
@@ -138,9 +140,10 @@
     public function afterSave(&$model)
     {
       //Subscribe this person automatically to the record
-      if(isset($model->id) && is_numeric($model->id) && isset($model->personId))
+      if(isset($model->id) && $model->authRead('Person.id'))
       {
-        $model->Comment->addCommentPerson($model->id,$model->personId);
+        $model->Comment->associatedAlias = $model->alias;
+        $model->Comment->addCommentPerson($model->id,$model->authRead('Person.id'));
       }
     }
     
