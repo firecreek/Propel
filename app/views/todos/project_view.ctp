@@ -10,7 +10,7 @@
 
     <div class="box">
       <div class="banner">
-        <h2><?php echo $html->link(__('See all to-do lists',true),array('action'=>'index')); ?></h2>
+        <h2><?php echo $html->link(__('« See all to-do lists',true),array('action'=>'index')); ?></h2>
         
         <?php echo $this->element('todos/banner_filters'); ?>
         
