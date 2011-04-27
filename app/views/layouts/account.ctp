@@ -39,7 +39,10 @@
       <?php echo $content_for_layout; ?>
     </div>
     
-    <?php echo $this->element('account/footer'); ?>
+    <footer>
+      <p><?php __('Managed with'); ?> <?php echo $html->link('Propel','http://www.propelhq.com?ref=accfoot'); ?>.</p>
+    </footer>
+
 
 </body>
 </html>
