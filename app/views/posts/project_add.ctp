@@ -1,6 +1,7 @@
 <?php
 
   $javascript->link('projects/posts_add.js', false);
+  $javascript->link('categories.js', false);
   
 ?>
 <div class="cols">

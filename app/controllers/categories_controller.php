@@ -40,12 +40,17 @@
      * @access public
      * @return void
      */
-    public function account_add($type)
+    public function add($type)
     {
       if(!empty($this->data))
       {
         $this->data['Category']['type'] = $type;
         $this->data['Category']['account_id'] = $this->Authorization->read('Account.id');
+        
+        if($this->Authorization->read('Project.id'))
+        {
+          $this->data['Category']['project_id'] = $this->Authorization->read('Project.id');
+        }
         
         $this->Category->set($this->data);
         
@@ -72,7 +77,7 @@
      * @access public
      * @return void
      */
-    public function account_edit($id)
+    public function edit($id)
     {
       //Post
       if(!empty($this->data))
@@ -94,18 +99,15 @@
     }
     
     
-    
-    
     /**
-     * Edit category
+     * Delete category
      *
      * @access public
      * @return void
      */
-    public function account_delete($id)
+    public function delete($id)
     {
       $this->Category->delete($id);
-
       $this->set(compact('id'));
     }
   

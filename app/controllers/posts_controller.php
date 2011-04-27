@@ -34,7 +34,7 @@
      * @access public
      * @access public
      */
-    public $uses = array('Post','Comment');
+    public $uses = array('Post','Comment','Category');
     
     
     /**
@@ -49,9 +49,9 @@
       $viewType = 'expanded';
       
       //Set
-      if(isset($this->params['url']['view']))
+      if(isset($this->params['named']['view']))
       {
-        $viewType = $this->params['url']['view'];
+        $viewType = $this->params['named']['view'];
         $this->Cookie->write('Posts.viewType',$viewType);
       }
       elseif($cookieViewType = $this->Cookie->read('Posts.viewType'))
@@ -63,6 +63,32 @@
       $conditions = array(
         'Post.project_id' => $this->Authorization->read('Project.id')
       );
+      
+      //Category
+      $category = array();
+      $categoryId = null;
+      if(isset($this->params['named']['category']) && is_numeric($this->params['named']['category']))
+      {
+        $categoryId = $this->params['named']['category'];
+      
+        //@todo Move to model
+        $category = $this->Post->Category->find('first',array(
+          'conditions' => array(
+            'id'          => $categoryId,
+            'type'        => 'post',
+            'account_id'  => $this->Authorization->read('Account.id'),
+            'project_id'  => $this->Authorization->read('Project.id'),
+          ),
+          'contain' => false
+        ));
+        
+        if(empty($category))
+        {
+          $this->cakeError('badUrl');
+        }
+        
+        $conditions['Post.category_id'] = $this->params['named']['category'];
+      }
       
       
       //Load records
@@ -76,7 +102,7 @@
         'group' => 'Post.id',
         'order' => 'Post.id DESC',
         'cache' => array(
-          'name' => 'post_'.$this->Authorization->read('Project.id'),
+          'name' => 'post_'.$this->Authorization->read('Project.id').'_'.$categoryId,
           'config' => 'system'
         )
       ));
@@ -99,7 +125,7 @@
             'CommentUnread'
           ),
           'cache' => array(
-            'name' => 'post_recent_'.$this->Authorization->read('Project.id'),
+            'name' => 'post_recent_'.$this->Authorization->read('Project.id').'_'.$categoryId,
             'config' => 'system'
           ),
           'private' => true,
@@ -110,13 +136,17 @@
       }
     
       //Empty
-      if(empty($records))
+      if(empty($records) && !$categoryId)
       {
         return $this->render('project_index_new');
       }
       
+      //Categories
+      $this->helpers[] = 'Listable';
+      $categories = $this->Post->Category->findByType('post');
+      
       //
-      $this->set(compact('records','viewType','activeRecords'));
+      $this->set(compact('records','viewType','activeRecords','categories','category','categoryId'));
     }
     
     
@@ -159,7 +189,10 @@
       $this->loadModel('Milestone');
       $milestoneOptions = $this->Milestone->findProjectList($this->Authorization->read('Project.id'));
       
-      $this->set(compact('milestoneOptions'));
+      //Category
+      $categories = $this->Category->findByType('post');
+      
+      $this->set(compact('milestoneOptions','categories'));
     }
     
     

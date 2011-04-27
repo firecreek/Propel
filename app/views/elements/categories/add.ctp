@@ -6,11 +6,13 @@
 <div class="category-add">
   <?php
   
-    $url = array('controller'=>'categories','action'=>'add',$type);
-  
     if($edit)
     {
       $url = array('controller'=>'categories','action'=>'edit',$id);
+    }
+    else
+    {
+      $url = array('controller'=>'categories','action'=>'add',$type);
     }
   
     echo $this->Form->create('Category',array('url'=>$url));

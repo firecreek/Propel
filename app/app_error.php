@@ -12,6 +12,18 @@
   class AppError extends ErrorHandler
   {
     /**
+     * notFound
+     *
+     * @access public
+     * @return void
+     */
+    public function badUrl($params)
+    {
+      $this->_outputMessage('bad_url');
+    }
+    
+    
+    /**
      * notLoggedIn
      *
      * @access public

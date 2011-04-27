@@ -7,6 +7,10 @@
     return;
   }
   
+  //Connect named
+  Router::connectNamed(array('category','view'));
+  
+  //Extensions
   Router::parseExtensions('rss','json','ajax','xml','js'); 
 
   Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
@@ -19,7 +23,7 @@
   
   //Admin
   Router::connect('/admin/:controller/:action/*',
-    array('controller'=>'dashboard', 'action'=>'index', 'prefix'=>'admin')
+    array('controller'=>'dashboard', 'action'=>'index', 'prefix'=>'admin', 'admin'=>true)
   );
   
   //Comments
@@ -30,6 +34,16 @@
   Router::connect('/:accountSlug/:projectId/:associatedController/comments/:action/*',
     array('controller'=>'comments', 'action'=>'index'),
     array('accountSlug'=>'[a-z0-9\-]+','projectId'=>'[0-9]+','associatedController'=>'[a-z0-9\_\-]+')
+  );
+  
+  //Categories
+  Router::connect('/:accountSlug/:projectId/categories/:action/*',
+    array('controller'=>'categories', 'action'=>'index'),
+    array('accountSlug'=>'[a-z0-9\-]+','projectId'=>'[0-9]+')
+  );
+  Router::connect('/:accountSlug/categories/:action/*',
+    array('controller'=>'categories', 'action'=>'index'),
+    array('accountSlug'=>'[a-z0-9\-]+')
   );
   
   
@@ -57,6 +71,7 @@
     array('controller'=>'accounts', 'action'=>'index', 'prefix'=>'account'),
     array('accountSlug'=>'[a-z0-9\-]+')
   );
+  
   
 
 ?>

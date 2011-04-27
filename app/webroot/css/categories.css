@@ -1,0 +1,63 @@
+
+.category-add {
+  background-color:#EFEFEF;
+  padding: 5px;
+  margin: 5px 0 0 15px;
+}
+.category-add hr { margin:5px 0; }
+.category-add div.input.text { margin-bottom:0; }
+.category-add div.input.text input { width:40%; }
+.category-add .submit .saving { background-color:#EFEFEF; }
+
+.add-record-link { background-color:#EFEFEF; padding:2px 5px; margin:5px 0 0 15px; }
+.add-record-link a { font-size:11px; }
+
+
+/**
+ * Category side bar
+ */
+.category-filter {}
+.category-filter .listable { margin:0; }
+.category-filter .listable .items { margin-right:0; }
+.category-filter .listable .item { left:0; margin:0 0 5px 0; padding:0 0 5px 0; border-bottom:1px solid transparent; }
+.category-filter .listable .item .label { left:0; }
+.category-filter .listable .item .label a { padding:3px; }
+.category-filter .listable .item.active .label {  }
+.category-filter .listable .item.active .label a { background-color:black; color:white; text-decoration:none; }
+.category-filter .listable .item .maintain { display:none; position:absolute; background-color:transparent; width:100%; border-radius:0; right:0; }
+.category-filter .listable .item .maintain .delete { position:absolute; right:0; }
+.category-filter .listable .item .maintain .edit { position:absolute; right:20px; top:5px; }
+
+.category-filter .listable .item .loading { background-color:transparent; left:245px; top:2px; width:16px; height:11px; border-bottom-left-radius:0; border-top-left-radius:0; }
+
+.category-filter .add-record-link { background-color:transparent; margin-left:0; padding-left:0; }
+
+.category-filter .listable .inline { left:0; }
+
+.category-filter .add-record-link { display:none; }
+.category-filter .category-add { margin-left:0;  }
+.category-filter .category-add div.input.text input { width:95%; }
+
+/** Edit mode */
+.category-filter.ui-state-edit .listable .item { border-bottom:1px solid #CCC; }
+.category-filter.ui-state-edit .listable .item .maintain { display:inline-block; }
+.category-filter.ui-state-edit .listable .item.active .label {  }
+.category-filter.ui-state-edit .listable .item.active .label a { background-color:transparent; color:blue; text-decoration:underline; }
+.category-filter.ui-state-edit .add-record-link { display:block; }
+
+
+/**
+ * Setting category page
+ */
+#SettingCategories .listable { margin:0 0 20px 0; padding:0 0 5px 0; }
+#SettingCategories .listable .item {  }
+#SettingCategories .listable .item .check {  }
+#SettingCategories .listable .item .label { left:60px; }
+
+#SettingCategories .listable .item { margin:0; min-height:0; }
+#SettingCategories .listable .item .maintain { display:inline-block; position:relative; background-color:transparent; width:auto; border-radius:0; position:relative; top:1px; left:5px; }
+	
+#SettingCategories .listable .item .maintain .delete { margin-top:2px; position:absolute; left:35px; display:none; }
+#SettingCategories .listable .item.ui-state-active .maintain .delete { display:block; }
+
+#SettingCategories .listable .item .loading { top:0px; }

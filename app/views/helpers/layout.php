@@ -261,6 +261,30 @@
       return $list;
     }
     
+    
+    /**
+     * Category list
+     *
+     * @param array $people List of people
+     * @param array $options
+     * @access public
+     * @return array
+     */
+    public function categoryList($list,$options = array())
+    {
+      $_options = array(
+        'add' => true
+      );
+      $options = array_merge($_options,$options);
+      
+      if($options['add'])
+      {
+        $list['_add'] = '- '.__('add new category',true).' -';
+      }
+    
+      return $list;
+    }
+    
   }
   
 ?>

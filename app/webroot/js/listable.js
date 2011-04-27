@@ -260,37 +260,4 @@
 
 
 
-/**
- * Call script
- */
-function __scriptCall(url, options)
-{
-  if(options.loading)
-  {
-    $(options.element).find('.loading').show();
-  }
-  
-  if(!options.data)
-  {
-    options.data = {};
-  }
-  
-  if(options.element)
-  {
-    options.data['objId'] = $(options.element).attr('id');
-  }
-
-  //
-  $.ajax({
-    type: 'POST',
-    url: url+'.js',
-    dataType: 'script',
-    cache: false,
-    data: options.data,
-    success: function(response)
-    {
-    }
-  });
-}
-
 

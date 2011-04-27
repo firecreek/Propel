@@ -87,7 +87,7 @@
       $this->__loadPerson();
       $this->__loadPrefixPermissions('Account');
       
-      if($this->prefix == 'project')
+      if(isset($this->controller->params['projectId']))
       {
         $this->__loadProject();
         $this->__loadPrefixPermissions('Project');

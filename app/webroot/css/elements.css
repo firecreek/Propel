@@ -668,6 +668,13 @@ table.logs.dated .today span { background-color:#FFF000; border-bottom:0; color:
 .move-project-form .saving { background-color:white !important; }
 
 
+/**
+ * Categories
+ */
+div.category-select { margin:0 0 20px 0; }
+div.category-select label { float:left; margin:3px 5px 0 0; font-size:10px; }
+div.category-select .saving { background:url(/img/icons/loader-small-horizontal.gif) white no-repeat center left; top:0; width:16px; height:11px; display:inline-block; margin:0 0 0 8px; }
+
 
 
 /**

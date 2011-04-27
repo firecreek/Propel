@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-04-25 13:04:44 : 1303708604*/
+/* App schema generated on: 2011-04-25 17:04:58 : 1303724038*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -85,14 +85,23 @@ class AppSchema extends CakeSchema {
 	);
 	var $categories = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'account_id' => array('type' => 'integer', 'null' => false, 'key' => 'index'),
-		'project_id' => array('type' => 'integer', 'null' => false, 'key' => 'index'),
+		'account_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
+		'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'type' => array('type' => 'string', 'null' => false, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'name' => array('type' => 'string', 'null' => false, 'length' => 90, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'project_id' => array('column' => 'project_id', 'unique' => 0), 'account_id' => array('column' => 'account_id', 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
+	var $categories_records = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'category_id' => array('type' => 'integer', 'null' => false),
+		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'model_id' => array('type' => 'integer', 'null' => false),
+		'created' => array('type' => 'datetime', 'null' => false),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
 	var $comments = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),

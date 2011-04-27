@@ -126,6 +126,25 @@
       return true;
     }
     
+    
+    /**
+     * Load by type
+     *
+     * @access public
+     * @return array
+     */
+    public function findByType($type)
+    {
+      return $this->find('list',array(
+        'conditions' => array(
+          $this->alias.'.type'        => $type,
+          $this->alias.'.project_id'  => $this->authRead('Project.id')
+        ),
+        'fields' => array('id','name'),
+        'contain' => false
+      ));
+    }
+    
   }
   
 ?>

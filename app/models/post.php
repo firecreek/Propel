@@ -130,6 +130,17 @@
     public $hasAndBelongsToMany = array(
     );
 
+    
+    /**
+     * Comment binds
+     *
+     * @access public
+     * @var array
+     */
+    public $commentBinds = array(
+      'Category'
+    );
+
   }
   
 ?>

@@ -8,6 +8,10 @@
 <?php
   echo $form->input('title',array('label'=>__('Title',true),'div'=>'input text full-width'));
   
+  echo $this->element('categories/select',array(
+    'addUrl' => array('controller'=>'categories','action'=>'add','post')
+  ));
+
   echo $form->input('body',array('type'=>'textarea','label'=>false,'class'=>'wysiwyg','div'=>'input textarea editor full-width'));
   echo $form->hidden('format',array('value'=>'textile'));
   
@@ -18,6 +22,7 @@
 </fieldset>
 
 <hr />
+
 
 <?php if(!empty($milestoneOptions)): ?>
   <?php

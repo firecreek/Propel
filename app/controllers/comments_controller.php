@@ -101,7 +101,7 @@
      * @return void
      */
     public function index($id)
-    {      
+    {
       //Build statement
       $contain = array();
       $conditions = array();
@@ -116,6 +116,12 @@
       if(isset($this->{$this->modelAlias}->belongsTo['Person']))
       {
         $contain[] = 'Person';
+      }
+      
+      //Other binds
+      if(isset($this->{$this->modelAlias}->commentBinds))
+      {
+        $contain = array_merge($contain,$this->{$this->modelAlias}->commentBinds);
       }
       
       //Load record

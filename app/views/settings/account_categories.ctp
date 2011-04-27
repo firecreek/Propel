@@ -15,7 +15,10 @@
     <p class="unimportant"><?php __('These are the message categories that every new project starts with'); ?></p>
   
     <?php
-      echo $this->element('categories/list',array('type'=>'post','records'=>$categories['post']));
+      echo $this->element('categories/list',array(
+        'type'    => 'post',
+        'records' => isset($categories['post']) ? $categories['post'] : array()
+      ));
     ?>
 
 
@@ -23,7 +26,10 @@
     <p class="unimportant"><?php __('These are the file categories that every new project starts with.'); ?></p>
   
     <?php
-      echo $this->element('categories/list',array('type'=>'file','records'=>$categories['file']));
+      echo $this->element('categories/list',array(
+        'type'    => 'file',
+        'records' => isset($categories['file']) ? $categories['file'] : array()
+      ));
     ?>
     
   </div>
