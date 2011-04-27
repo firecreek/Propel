@@ -173,11 +173,14 @@
           $postId = $this->Post->id;
         
           //Add checked
-          if(isset($this->data['CommentPeople']['person_id']) && !empty($this->data['CommentPeople']['person_id']))
+          if(isset($this->data['CommentPeople']) && !empty($this->data['CommentPeople']))
           {
-            foreach($this->data['CommentPeople']['person_id'] as $personId)
+            foreach($this->data['CommentPeople'] as $personId => $checked)
             {
-              $this->Comment->addCommentPerson($postId,$personId);
+              if($checked)
+              {
+                $this->Comment->addCommentPerson($postId,$personId);
+              }
             }
           }
           

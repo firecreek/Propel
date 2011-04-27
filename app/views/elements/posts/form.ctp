@@ -16,7 +16,8 @@
   echo $form->hidden('format',array('value'=>'textile'));
   
   echo $form->input('private',array(
-    'label' => __('Private',true).' <span>('.__('Visible only to your company',true).')</span>'
+    'label' => __('Private',true).' <span>('.__('Visible only to your company',true).')</span>',
+    'class' => 'private'
   ));
 ?>
 </fieldset>
@@ -36,5 +37,5 @@
 <?php endif; ?>
 
 <?php
-  echo $this->element('comments/people');
+  echo $this->element('people/subscribe');
 ?>

@@ -1,0 +1,14 @@
+
+/**
+ * Subscribe list
+ */
+.subscribe-list {  }
+ 
+.subscribe-list table { width:100%; }
+.subscribe-list table td { width:20%; }
+
+.subscribe-list table tbody tr:first-child td { padding-top:15px; }
+.subscribe-list table tbody:first-child tr td { padding-top:0; }
+
+.subscribe-list table tr {  }
+.subscribe-list table tr.all label { font-weight:bold; }
