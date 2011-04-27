@@ -86,25 +86,28 @@
       
       $projects = array();
       
-      foreach($authProjects as $key => $project)
+      if(!empty($authProjects))
       {
-        if($project['Project']['id'] == 27) { continue; }
-        
-        $todos = $this->__filterTodos(array(
-          array(
-            'Todo.project_id' => $project['Project']['id'],
-            'OR' => array(
-              'Todo.todo_items_count' => 0,
-              'NOT' => array(
-                'Todo.todo_items_count = Todo.todo_items_completed_count'
+        foreach($authProjects as $key => $project)
+        {
+          if($project['Project']['id'] == 27) { continue; }
+          
+          $todos = $this->__filterTodos(array(
+            array(
+              'Todo.project_id' => $project['Project']['id'],
+              'OR' => array(
+                'Todo.todo_items_count' => 0,
+                'NOT' => array(
+                  'Todo.todo_items_count = Todo.todo_items_completed_count'
+                )
               )
             )
-          )
-        ));
-        
-        if(!empty($todos))
-        {
-          $projects[] = array_merge($project,array('Todo'=>$todos));
+          ));
+          
+          if(!empty($todos))
+          {
+            $projects[] = array_merge($project,array('Todo'=>$todos));
+          }
         }
       }
       
@@ -245,6 +248,11 @@
           'model' => 'TodoItem'
         );
       }
+      
+      //Cache suffix
+      $cacheSuffix = array();
+      if($this->Authorization->read('Account.id')) { $cacheSuffix[] = $this->Authorization->read('Account.id'); }
+      if($this->Authorization->read('Project.id')) { $cacheSuffix[] = $this->Authorization->read('Project.id'); }
 
       //Todo lists for filter
       $todos = $this->Todo->find('all',array(
@@ -271,7 +279,7 @@
           'count' => true
         ),
         'cache' => array(
-          'name' => 'todo_'.md5(serialize($filter)).'_'.$this->Authorization->read('Project.id'),
+          'name' => 'todo_'.md5(serialize($filter)).'_'.implode('_',$cacheSuffix),
           'config' => 'system',
         )
       ));

@@ -14,7 +14,7 @@ header h1 { width:900px; margin:0 auto; padding-top:10px; font-size:14px; font-f
 
 #install .banner {}
 #install .banner { border-bottom:1px solid #d4d5d0; margin-bottom:20px; }
-#install .banner h2 { background-color:#f0f1e9; font-size:16px; padding:10px 20px 10px 20px; }
+#install .banner h2 { background-color:#f0f1e9; font-size:16px; padding:10px 20px 10px 20px; margin:0; }
 
 #install .content { padding: 0px 20px 20px 20px; }
 
