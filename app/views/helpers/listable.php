@@ -2,15 +2,13 @@
 
   /**
    * Listable Helper
-   *
-   * Create standardised check box lists with javascript and ajax functionality
    * 
    * @category Helper
-   * @package  OpenCamp
+   * @package  Propel
    * @version  1.0
    * @author   Darren Moore <darren.m@firecreek.co.uk>
    * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
-   * @link     http://opencamp.firecreek.co.uk
+   * @link     http://www.propelhq.com
    */
   class ListableHelper extends AppHelper
   {

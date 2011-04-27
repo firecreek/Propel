@@ -3,16 +3,12 @@
   /**
    * Comment Read Model
    *
-   * Used to check which comments have been read by a Person
-   * If record exists then comments have been read already
-   * When viewing a comment a new record is added to this model with the comment id
-   *
    * @category Model
-   * @package  OpenCamp
+   * @package  Propel
    * @version  1.0
    * @author   Darren Moore <darren.m@firecreek.co.uk>
    * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
-   * @link     http://opencamp.firecreek.co.uk
+   * @link     http://www.propelhq.com
    */
   class CommentRead extends AppModel
   {
