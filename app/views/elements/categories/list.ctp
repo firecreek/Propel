@@ -24,6 +24,9 @@
     <?php
       foreach($records as $catId => $catName)
       {
+        //
+        $listOptions = array();
+      
         //Filter
         if($filter)
         {

@@ -348,7 +348,8 @@
     
       $records = $this->Category->find('all',array(
         'conditions' => array(
-          'Category.account_id' => $this->Authorization->read('Account.id')
+          'Category.account_id' => $this->Authorization->read('Account.id'),
+          'Category.project_id' => null
         ),
         'contain' => false
       ));
