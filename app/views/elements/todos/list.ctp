@@ -112,7 +112,10 @@
         
         <?php
           $countDisplay = 'none';
-          if(isset($record['TodoItemCountCompleted']) && !empty($record['TodoItemCountCompleted']))
+          if(
+            isset($record['TodoItemCountCompleted']) && 
+            $record['TodoItemCountCompleted'] > 3
+          )
           { 
             $countDisplay = 'block';
           }
