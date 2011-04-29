@@ -7,7 +7,7 @@
     foreach($authProjects as $authProject)
     {
       $class = null;
-      if($authProject['Project']['id'] == $auth->read('Project.id'))
+      if($authProject['Project']['id'] == $this->Auth->read('Project.id'))
       {
         $class = 'active';
       }
