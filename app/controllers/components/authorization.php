@@ -82,6 +82,8 @@
      */
     public function _loadUser()
     {
+      $this->reset();
+    
       $this->__loadAccount();
       $this->__loadCompany();
       $this->__loadPerson();
@@ -599,6 +601,18 @@
         $this->Session->write('Auth.'.$model,$data);
       }
       
+    }
+    
+    
+    /**
+     * Reset data
+     *
+     * @access public
+     * @return boolean
+     */
+    public function reset()
+    {
+      return $this->Session->delete('AuthAccount');
     }
     
     
