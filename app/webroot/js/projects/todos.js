@@ -73,7 +73,7 @@ var Todos = {
         
         //
         self.reorderLists = true;
-        $('#todoFilter').hide();
+        $('#TodoFilter').hide();
         
         $(this).addClass('active');
         $(this).html($(this).attr('rel-active'));
@@ -108,7 +108,7 @@ var Todos = {
         //Hide
         self.reorderLists = false;
         
-        $('#todoFilter').show();
+        $('#TodoFilter').show();
         
         $(this).removeClass('active');
         $(this).html($(this).attr('rel-not-active'));
