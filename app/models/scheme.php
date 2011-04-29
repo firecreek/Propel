@@ -30,7 +30,7 @@
       'Containable',
       'Cached' => array(
         'prefix' => array(
-          'scheme',
+          'scheme'
         ),
       )
     );

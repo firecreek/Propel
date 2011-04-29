@@ -125,7 +125,8 @@
           'model' => $model->alias,
           'model_id' => $model->id
         ),
-        'fields' => array('id')
+        'fields' => array('id'),
+        'contain' => false
       )))
       {
         $id = $searchRecord['SearchIndex']['id'];

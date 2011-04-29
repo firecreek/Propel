@@ -31,7 +31,7 @@
       ?>
       
       <?php
-        echo $this->element('comments/people');
+        echo $this->element('people/subscribe');
       ?>
       
       <?php

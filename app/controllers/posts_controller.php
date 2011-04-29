@@ -79,7 +79,11 @@
             'account_id'  => $this->Authorization->read('Account.id'),
             'project_id'  => $this->Authorization->read('Project.id'),
           ),
-          'contain' => false
+          'contain' => false,
+          'cache' => array(
+            'config' => 'system',
+            'name'   => 'category'
+          )
         ));
         
         if(empty($category))
@@ -102,7 +106,7 @@
         'group' => 'Post.id',
         'order' => 'Post.id DESC',
         'cache' => array(
-          'name' => 'post_'.$this->Authorization->read('Project.id').'_'.$categoryId,
+          'name' => 'post_'.$categoryId,
           'config' => 'system'
         )
       ));
@@ -125,7 +129,7 @@
             'CommentUnread'
           ),
           'cache' => array(
-            'name' => 'post_recent_'.$this->Authorization->read('Project.id').'_'.$categoryId,
+            'name' => 'post_recent_'.$categoryId,
             'config' => 'system'
           ),
           'private' => true,

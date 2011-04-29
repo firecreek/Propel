@@ -1,27 +1,32 @@
 <?php
-App::import('Lib', 'LazyModel');
 
-/**
- * Application model
- *
- * This file is the base model of all other models
- *
- * PHP version 5
- *
- * @category Models
- * @package  Croogo
- * @version  1.0
- * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
- * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link     http://www.croogo.org
- */
-class AppModel extends LazyModel {
-/**
- * use Caching
- *
- * @var string
- */
+  App::import('Lib', 'LazyModel');
+  
+  /**
+   * AppHelper
+   *
+   * Caching by Croogo
+   *
+   * @category Model
+   * @package  Propel
+   * @version  1.0
+   * @author   Darren Moore <darren.m@firecreek.co.uk>
+   * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+   * @link     http://www.propelhq.com
+   */
+  class AppModel extends LazyModel
+  {
+    /**
+     * Use Caching
+     *
+     * @access public
+     * @var string
+     */
     public $useCache = true;
+    
+    
+    public $actsAs = array('Auth');
+    
     
     /**
      * Override find function to use caching
@@ -34,42 +39,61 @@ class AppModel extends LazyModel {
      * @return mixed
      * @access public
      */
-    public function find($type, $options = array()) {
+    public function find($type, $options = array())
+    {
+      //Build cached name
+      if(
+        $this->Behaviors->attached('Auth') && 
+        isset($options['cache']['config']) && 
+        $options['cache']['config'] == 'system'
+      )
+      {
+        $name = array();
+        $name[] = $options['cache']['name'];
+        if($this->authRead('Person.id')) { $name[] = $this->authRead('Person.id'); }
+        if($this->authRead('Account.id')) { $name[] = $this->authRead('Account.id'); }
+        if($this->authRead('Project.id')) { $name[] = $this->authRead('Project.id'); }
+        $name[] = md5(Router::url());
+        
+        $options['cache']['name'] = implode('_',$name);
+      }
     
-        //Private
-        if(isset($options['private']) && $options['private'] == true)
+      //
+      if($this->useCache)
+      {
+        $cachedResults = $this->_findCached($type, $options);
+        if ($cachedResults)
         {
-          //$this->contain(array('Person'=>array('PersonCompany')));
+          return $cachedResults;
         }
-        
-        
-        if($this->useCache)
-        {
-          $cachedResults = $this->_findCached($type, $options);
-          if ($cachedResults)
-          {
-            return $cachedResults;
+      }
+      
+      $args = func_get_args();
+      $results = call_user_func_array(array('parent', 'find'), $args);
+      if ($this->useCache) {
+          if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
+              $cacheName = $options['cache']['name'];
+          } elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
+              $cacheName = $options['cache']['prefix'] . md5(serialize($options));
           }
-        }
-        
-        $args = func_get_args();
-        $results = call_user_func_array(array('parent', 'find'), $args);
-        if ($this->useCache) {
-            if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
-                $cacheName = $options['cache']['name'];
-            } elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
-                $cacheName = $options['cache']['prefix'] . md5(serialize($options));
-            }
 
-            if (isset($cacheName)) {
-                Cache::write($cacheName, $results, $options['cache']['config']);
-            }
-        }
-    
-        return $results;
+          if (isset($cacheName)) {
+              Cache::write($cacheName, $results, $options['cache']['config']);
+          }
+      }
+  
+      return $results;
     }
     
-    function findCached($name,$config) {
+    
+    /**
+     * Find cached
+     *
+     * @access public
+     * @return array
+     */
+    public function findCached($name,$config)
+    {
       return $this->_findCached('all',array(
         'cache' => array(
           'name' => $name,
@@ -87,20 +111,21 @@ class AppModel extends LazyModel {
     * @return void
     * @access private
     */
-    function _findCached($type, $options) {
-        if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
-            $cacheName = $options['cache']['name'];
-        } elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
-            $cacheName = $options['cache']['prefix'] . md5(serialize($options));
-        } else {
-            return false;
-        }
-        
-        $results = Cache::read($cacheName, $options['cache']['config']);
-        if ($results) {
-            return $results;
-        }
-        return false;
+    function _findCached($type, $options)
+    {
+      if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
+          $cacheName = $options['cache']['name'];
+      } elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
+          $cacheName = $options['cache']['prefix'] . md5(serialize($options));
+      } else {
+          return false;
+      }
+      
+      $results = Cache::read($cacheName, $options['cache']['config']);
+      if ($results) {
+          return $results;
+      }
+      return false;
     }
     
     
@@ -154,5 +179,7 @@ class AppModel extends LazyModel {
       }
       return false;
     }
-}
+    
+  }
+  
 ?>

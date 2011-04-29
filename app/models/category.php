@@ -36,7 +36,12 @@
      */
     public $actsAs = array(
       'Auth',
-      'Containable'
+      'Containable',
+      'Cached' => array(
+        'prefix' => array(
+          'category_'
+        ),
+      ),
     );
     
     /**

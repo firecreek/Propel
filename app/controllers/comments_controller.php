@@ -87,7 +87,6 @@
       $this->set('associatedController',$this->associatedController);
       $this->set('modelAlias',$this->modelAlias);
       
-      
       parent::beforeRender();
     }
     

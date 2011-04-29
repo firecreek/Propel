@@ -113,58 +113,6 @@
       $this->controller->helpers[] = 'Post';
     }
     
-
-    /**
-     * Initialize component
-     *
-     * @todo Is this used anymore?
-     * @access public
-     * @return void
-     */
-    public function findResponsible()
-    {
-      $key = $this->controller->data['Todo']['responsible'];
-      
-      $responsible = array('name'=>__('Anyone',true));
-      
-      if($key == 'self')
-      {
-        $model = 'Person';
-        $id = $this->Authorization->read('Person.id');
-        $nameField = 'full_name';
-      }
-      elseif(substr($key,0,7) == 'person_')
-      {
-        $model = 'Person';
-        $id = substr($key,7);
-        $nameField = 'full_name';
-      }
-      elseif(substr($key,0,8) == 'company_')
-      {
-        $model = 'Company';
-        $id = substr($key,8);
-        $nameField = 'name';
-      }
-      
-      //Load responsible person/company model data
-      if(isset($model) && isset($id))
-      {
-        $record = $this->controller->{$model}->find('first',array(
-          'conditions' => array('id' => $id),
-          'contain' => false
-        ));
-        
-        $responsible = array(
-          'id'    => $record[$model]['id'],
-          'name'  => $record[$model][$nameField],
-          'model' => $model,
-          'id'    => $id
-        );
-      }
-      
-      return $responsible;
-    }
-    
     
     /**
      * Layout scheme colours
@@ -178,10 +126,10 @@
         'conditions' => array('scheme_id' => $this->Authorization->read('Account.scheme_id')),
         'fields'  => array('SchemeStyle.key','SchemeStyle.value'),
         'recursive' => -1,
-        'cache' => array(
+        /*'cache' => array(
           'name' => 'scheme',
           'config' => 'system',
-        )
+        )*/
       ));
       
       return $this->Session->write('Style',$style);

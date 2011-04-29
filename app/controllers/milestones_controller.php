@@ -132,6 +132,7 @@
      */
     public function project_index()
     {
+      //@todo Check if this should still be here, maybe old code
       if(!empty($this->data))
       {
         foreach($this->data['Milestone'] as $id => $checked)
@@ -160,7 +161,7 @@
         ),
         'recursive' => -1,
         'cache' => array(
-          'name' => 'milestone_total_'.$this->Authorization->read('Project.id'),
+          'name' => 'milestone_total',
           'config' => 'system',
         )
       ));
@@ -194,7 +195,7 @@
         'contain' => $contain,
         'order' => 'Milestone.deadline ASC',
         'cache' => array(
-          'name' => 'milestone_overdue_'.$this->Authorization->read('Project.id'),
+          'name' => 'milestone_overdue',
           'config' => 'system',
         )
       ));
@@ -209,7 +210,7 @@
         'contain' => $contain,
         'order' => 'Milestone.deadline ASC',
         'cache' => array(
-          'name' => 'milestone_upcoming_'.$this->Authorization->read('Project.id'),
+          'name' => 'milestone_upcoming',
           'config' => 'system',
         )
       ));
@@ -224,7 +225,7 @@
         ),
         'contain' => $contain,
         'cache' => array(
-          'name' => 'milestone_upcoming14_'.$this->Authorization->read('Project.id'),
+          'name' => 'milestone_upcoming14',
           'config' => 'system',
         )
       ));

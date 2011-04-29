@@ -37,7 +37,12 @@
     public $actsAs = array(
       'Auth',
       'Containable',
-      'Private'
+      'Private',
+      'Cached' => array(
+        'prefix' => array(
+          'log_'
+        ),
+      ),
     );
     
     /**

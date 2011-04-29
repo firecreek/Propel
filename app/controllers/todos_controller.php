@@ -132,7 +132,7 @@
         ),
         'contain' => array('Person'),
         'cache' => array(
-          'name' => 'todo_total_'.$projectId,
+          'name' => 'todo_total',
           'config' => 'system',
         ),
         'recursive' => -1
@@ -177,20 +177,11 @@
       $todo = $this->__filterTodos(array(
         'Todo.id' => $id
       ));
-      
-      //No record found
-      if(empty($todo))
-      {
-        $this->cakeError('error404');
-      }
-      
-      //
       $todo = $todo[0];
       
       //Todo active/completed lists
       $todosActive = $this->Todo->findActive($this->Authorization->read('Project.id'));
       $todosCompleted = $this->Todo->findCompleted($this->Authorization->read('Project.id'));
-      
       
       $this->set(compact('id','todo','todosCompleted','todosActive'));
     }
@@ -199,6 +190,7 @@
     /**
      * Project list todos
      *
+     * @todo Move some code to model
      * @access public
      * @return void
      */
@@ -248,12 +240,7 @@
           'model' => 'TodoItem'
         );
       }
-      
-      //Cache suffix
-      $cacheSuffix = array();
-      if($this->Authorization->read('Account.id')) { $cacheSuffix[] = $this->Authorization->read('Account.id'); }
-      if($this->Authorization->read('Project.id')) { $cacheSuffix[] = $this->Authorization->read('Project.id'); }
-
+    
       //Todo lists for filter
       $todos = $this->Todo->find('all',array(
         'conditions' => $conditions,
@@ -279,7 +266,7 @@
           'count' => true
         ),
         'cache' => array(
-          'name' => 'todo_'.md5(serialize($filter)).'_'.implode('_',$cacheSuffix),
+          'name' => 'todo_'.md5(serialize($filter)),
           'config' => 'system',
         )
       ));

@@ -201,7 +201,11 @@
         'conditions' => array(
           'Project.id' => $this->Authorization->read('Project.id')
         ),
-        'contain' => false
+        'contain' => false,
+        'cache' => array(
+          'config' => 'system',
+          'name'   => 'project'
+        ),
       ));
     
       //Overdue
@@ -217,6 +221,10 @@
           'Responsible',
           'Account' => array('id','name','slug'),
           'Project' => array('id','name'),
+        ),
+        'cache' => array(
+          'config' => 'system',
+          'name'   => 'milestone_overdue'
         ),
         'order' => 'Milestone.deadline ASC',
         'limit' => 10
@@ -234,6 +242,10 @@
           'Responsible',
           'Account' => array('id','name','slug'),
           'Project' => array('id','name'),
+        ),
+        'cache' => array(
+          'config' => 'system',
+          'name'   => 'milestone_upcoming'
         ),
         'limit' => 100
       ));
