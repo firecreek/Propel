@@ -83,7 +83,7 @@ class ImageHelper extends Helper {
             call_user_func("image".$types[$size[2]], $temp, $cachefile);
             imagedestroy ($image);
             imagedestroy ($temp);
-        } else {
+        } elseif(!$cached) {
             copy($url, $cachefile);
         }
 
