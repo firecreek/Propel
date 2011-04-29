@@ -210,6 +210,11 @@
      */
     public function uniqueEmail()
     {
+      if(!isset($this->data[$this->alias]['company_id']))
+      {
+        return true;
+      }
+    
       //Load company record to get account_id
       $accountId = $this->Company->field('account_id',array('id'=>$this->data[$this->alias]['company_id']));
       
