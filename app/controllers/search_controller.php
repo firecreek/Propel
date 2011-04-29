@@ -1,4 +1,6 @@
 <?php
+
+  App::import('Sanitize');
   
   /**
    * Search Controller
