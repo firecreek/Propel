@@ -25,7 +25,7 @@
   <div class="detail">
     <p><span><?php __('From'); ?>:</span> <?php echo $record['Person']['full_name']; ?></p>
     <p><span><?php __('Date'); ?>:</span> <?php echo date('D, j M Y \a\t g:ma',strtotime($record['Post']['created'])); ?></p>
-    <?php if(isset($record['Category'])): ?>
+    <?php if(isset($record['Category']) && !empty($record['Category'])): ?>
       <p><span><?php __('Category'); ?>:</span> <?php echo $this->Html->link($record['Category']['name'],array('controller'=>'posts','action'=>'index','category'=>$record['Category']['id'])); ?></p>
     <?php endif; ?>
   </div>

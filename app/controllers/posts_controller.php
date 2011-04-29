@@ -18,7 +18,7 @@
      * @access public
      * @access public
      */
-    public $helpers = array('Time','Textile');
+    public $helpers = array('Time','Textile','Listable');
     
     /**
      * Components
@@ -146,7 +146,6 @@
       }
       
       //Categories
-      $this->helpers[] = 'Listable';
       $categories = $this->Post->Category->findByType('post');
       
       //
@@ -246,11 +245,14 @@
         ));
       }
       
+      //Categories
+      $categories = $this->Post->Category->findByType('post');
+      
       //Milestone list
       $this->loadModel('Milestone');
       $milestoneOptions = $this->Milestone->findProjectList($this->Authorization->read('Project.id'));
       
-      $this->set(compact('id','milestoneOptions'));
+      $this->set(compact('id','milestoneOptions','categories'));
     }
     
     
