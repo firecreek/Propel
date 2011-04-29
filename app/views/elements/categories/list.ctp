@@ -22,6 +22,21 @@
 
   <div class="items">
     <?php
+      //All
+      if(isset($all) && $all)
+      {
+        echo $listable->item('Category',false,__('All',true).' '.$name,array(
+          'position'  => false,
+          'checkbox'  => false,
+          'comments'  => false,
+          'edit'      => false,
+          'delete'    => false,
+          'class'     => (!$active) ? 'active' : null,
+          'url'       => array_merge($filter,array('category'=>false))
+        ));
+      }
+    
+      //
       foreach($records as $catId => $catName)
       {
         //
@@ -52,11 +67,16 @@
   
   <div class="add-record-container">
     <div class="add-record-link" style="display:none;">
-      <?php echo $html->link(sprintf(__('Add a new %s category',true),$type),array('controller'=>'categories','action'=>'add',$type),array('class'=>'important','rel'=>'Categories'.$typeHuman)); ?>
+      <?php
+        $addName = isset($name) ? strtolower($name) : $type;
+      
+        echo $html->link(sprintf(__('Add a new %s category',true),$addName),array('controller'=>'categories','action'=>'add',$type),array('class'=>'important','rel'=>'Categories'.$typeHuman));
+      ?>
     </div>
     <?php
       echo $this->element('categories/add',array(
-        'type'  => $type
+        'type'    => $type,
+        'filter'  => $filter
       ));
     ?>
   </div>

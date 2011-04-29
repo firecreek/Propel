@@ -20,13 +20,21 @@
 <?php else: ?>
 
   <?php
-    $listHtml = $listable->item('Category',$record['Category']['id'],$record['Category']['name'],array(
+
+    $listOptions = array();
+
+    if(isset($this->data['Filter']['url']))
+    {
+      $listOptions['url'] = $this->data['Filter']['url'].'/category:'.$record['Category']['id'];
+    }
+  
+    $listHtml = $listable->item('Category',$record['Category']['id'],$record['Category']['name'],array_merge(array(
       'position'  => false,
       'checkbox'  => false,
       'comments'  => false,
       'editUrl'   => $html->url(array('controller'=>'categories','action'=>'edit',$record['Category']['id'])),
       'deleteUrl' => $html->url(array('controller'=>'categories','action'=>'delete',$record['Category']['id'])),
-    ));
+    ),$listOptions));
     $listHtml = $javascript->escapeString($listHtml);
 
     $typeHuman = Inflector::humanize($type);

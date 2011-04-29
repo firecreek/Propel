@@ -184,7 +184,9 @@
       //Categories
       echo $this->element('categories/side',array(
         'type' => 'post',
-        'records' => $categories
+        'records' => $categories,
+        'all' => true,
+        'name' => __('Messages',true)
       ));
     ?>
     

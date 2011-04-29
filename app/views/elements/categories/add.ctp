@@ -17,6 +17,11 @@
   
     echo $this->Form->create('Category',array('url'=>$url));
     echo $this->Form->input('name',array('label'=>false));
+    
+    if(isset($filter) && !empty($filter))
+    {
+      echo $this->Form->hidden('Filter.url',array('value'=>$this->Html->url($filter)));
+    }
   ?>
   
   <hr />

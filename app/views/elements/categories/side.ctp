@@ -1,4 +1,9 @@
+<?php
 
+  if(!isset($all)) { $all = false; }
+  if(!isset($name)) { $name = null; }
+
+?>
 <div class="area category-filter">
   <div class="banner">
     <h3><?php __('Categories'); ?></h3>
@@ -12,7 +17,9 @@
         'type'      => $type,
         'records'   => $records,
         'filter'    => array('controller'=>'posts','action'=>'index'),
-        'active'    => isset($this->params['named']['category']) ? $this->params['named']['category'] : null
+        'active'    => isset($this->params['named']['category']) ? $this->params['named']['category'] : null,
+        'all'       => $all,
+        'name'      => $name
       ));
     ?>
   </div>
