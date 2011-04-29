@@ -14,14 +14,16 @@
     <p><?php __('After you add a company you\'ll be able to specify which people from this company can access the project.'); ?></p>
     
     <?php
-      echo $form->create('Company',array('url'=>$this->here,'class'=>'block'));
+      echo $form->create('Company',array('url'=>$this->here,'class'=>'block','id'=>'CompanyForm'));
       echo $form->hidden('Permission.option',array('value'=>'select'));
     ?>
     
     <div id="CompanyAddNew" class="option">
       <p>
         <strong><?php __('New company name') ?></strong>
-        <span>(<?php __('or') ?> <?php echo $html->link(__('select an existing company',true),'#'); ?>)</span>
+        <?php if(!empty($companies)): ?>
+          <span>(<?php __('or') ?> <?php echo $html->link(__('select an existing company',true),'#'); ?>)</span>
+        <?php endif; ?>
       </p>
 
       <?php
@@ -48,7 +50,14 @@
     
     
     <?php
-      echo $form->submit(__('Add company',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('controller'=>'companies','action'=>'permissions') ) ));
+      echo $form->submit(
+        __('Add company',true),
+        array(
+          'after'=>__('or',true).' '.$html->link(__('Cancel',true),array('controller'=>'companies','action'=>'permissions')),
+          'rel-text-existing' => __('Add company',true),
+          'rel-text-new' => __('Create and add company',true),
+        )
+      );
       echo $form->end();
     ?>
   </div>
