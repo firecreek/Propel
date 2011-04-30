@@ -133,6 +133,7 @@
       $this->_outputMessage('record_wrong_account');
     }
 
+
     /**
      * xx
      *
@@ -143,6 +144,19 @@
     {
       $this->_outputMessage('unknown_acl_error');
     }
+
+
+    /**
+     * xx
+     *
+     * @access public
+     * @return void
+     */
+    public function blackHole($params)
+    {
+      $this->_outputMessage('black_hole');
+    }
+
 
     /**
      * xx

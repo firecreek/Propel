@@ -145,16 +145,22 @@
      */
     public function addCommentPerson($id,$personId)
     {
-      if(!$this->CommentPerson->find('count',array(
+      //If already exists
+      $exists = $this->CommentPerson->find('count',array(
         'conditions' => array(
           'model'       => $this->associatedAlias,
           'model_id'    => $id,
           'person_id'   => $personId
         ),
         'recursive' => -1
-      )))
+      ));
+      
+      //Person is part of this project
+      $validPeople = Set::extract($this->authRead('People'),'{n}.Person.id');
+      
+      //Add
+      if(!$exists && in_array($personId,$validPeople))
       {
-        //add
         $this->CommentPerson->save(array(
           'id'          => 0,
           'model'       => $this->associatedAlias,
