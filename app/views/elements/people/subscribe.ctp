@@ -30,6 +30,13 @@
       $content = '';
       $perRow = 5;
       $count = 0;
+      
+      //Selected passed
+      $selected = array();
+      if(isset($this->data['CommentPerson']))
+      {
+        $selected = Set::extract($this->data['CommentPerson'],'{n}.Person.id');
+      }
     
       //
       foreach($grouped as $companyName => $people)
@@ -47,12 +54,14 @@
           //Colspan
           $colSpan = (count($people) >= $perRow) ? $perRow : count($people);
         
-          $content .= '<tr class="all" rel-company="'.$companyName.'"><td colspan="'.$colSpan.'">'.$form->input('CompanyCount.'.$count,array(
+          $content .= '<tr class="all" rel-company="'.$companyName.'"><td colspan="'.$colSpan.'">';
+          $content .= $form->input('CompanyCount.'.$count,array(
             'name'  => false,
             'type'  => 'checkbox',
             'label' => __('All of',true).' '.$companyName,
             'rel-company' => $companyName
-          )).'</td></tr>';
+          ));
+          $content .= '</td></tr>';
         }
         
         $options = Set::combine($people,'{n}.id','{n}.full_name');
@@ -73,11 +82,14 @@
           }
           
           $count++;
-          $content .= '<td colspan="'.$colSpan.'">'.$this->Form->input('CommentPeople.'.$personId,array(
+          $content .= '<td colspan="'.$colSpan.'">';
+          $content .= $this->Form->input('CommentPeople.'.$personId,array(
             'type'=>'checkbox',
             'label'=>$label,
-            'rel-company' => $companyName
-          )).'</td>';
+            'rel-company' => $companyName,
+            'checked' => in_array($personId,$selected)
+          ));
+          $content .= '</td>';
           
           if($count == $perRow) { $content .= '</tr>'; $count = 0; }
         }

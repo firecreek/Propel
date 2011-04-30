@@ -248,6 +248,11 @@
         }
         
       }
+      else
+      {
+        //Set
+        $this->data = $record;
+      }
       
       
       //Edit record

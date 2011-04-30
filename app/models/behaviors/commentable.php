@@ -137,13 +137,37 @@
      * @access public
      * @return array
      */
-    public function afterSave(&$model)
+    public function afterSave(&$model, $created)
     {
+      $model->Comment->associatedAlias = $model->alias;
+    
       //Subscribe this person automatically to the record
-      if(isset($model->id) && $model->authRead('Person.id'))
+      if(
+        $model->authRead('Person.id') &&
+        ($created) || (!$created && !isset($model->data['CommentPeople']))
+      )
       {
-        $model->Comment->associatedAlias = $model->alias;
         $model->Comment->addCommentPerson($model->id,$model->authRead('Person.id'));
+      }
+      
+      //Other people
+      if(isset($model->data['CommentPeople']))
+      {
+        //Delete previous
+        if(!$created)
+        {
+          $model->Comment->CommentPerson->deleteAll(array(
+            'model' => $model->alias,
+            'model_id' => $model->id
+          ));
+        }
+      
+        //Add new
+        $subscribers = array_filter($model->data['CommentPeople']);
+        foreach($subscribers as $personId => $checked)
+        {
+          $model->Comment->addCommentPerson($model->id,$personId);
+        }
       }
     }
     

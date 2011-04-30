@@ -26,7 +26,7 @@
      * @access public
      * @access public
      */
-    public $components = array('Cookie');
+    public $components = array('Cookie','Message');
     
     /**
      * Uses
@@ -173,19 +173,8 @@
         if($this->Post->validates())
         {
           $this->Post->save();
-          $postId = $this->Post->id;
-        
-          //Add checked
-          if(isset($this->data['CommentPeople']) && !empty($this->data['CommentPeople']))
-          {
-            foreach($this->data['CommentPeople'] as $personId => $checked)
-            {
-              if($checked)
-              {
-                $this->Comment->addCommentPerson($postId,$personId);
-              }
-            }
-          }
+          $this->data['Post']['id'] = $this->Post->id;
+          $this->_sendEmails('add',$this->data);
           
           $this->redirect(array('controller'=>'comments','action'=>'index','associatedController'=>'posts',$this->Post->id));
         }
@@ -220,6 +209,11 @@
         if($this->Post->validates())
         {
           $this->Post->save();
+        
+          if(isset($this->data['Post']['_notify_changes']) && $this->data['Post']['_notify_changes'])
+          {
+            $this->_sendEmails('edit',$this->data);
+          }
           
           if($this->RequestHandler->isAjax())
           {
@@ -241,6 +235,9 @@
             'Post.id' => $id
           ),
           'contain' => array(
+            'CommentPerson' => array( 
+              'Person'
+            )
           )
         ));
       }
@@ -253,6 +250,44 @@
       $milestoneOptions = $this->Milestone->findProjectList($this->Authorization->read('Project.id'));
       
       $this->set(compact('id','milestoneOptions','categories'));
+    }
+    
+    
+    /**
+     * Email
+     *
+     * @access private
+     * @return boolean
+     */
+    private function _sendEmails($type,$data)
+    {
+      //Email checked
+      if(isset($data['CommentPeople']) && !empty($data['CommentPeople']))
+      {
+        $subscribers = array_filter($data['CommentPeople']);
+        $people = array_keys($subscribers);
+        
+        //Read in post
+        $post = $this->Post->find('first',array(
+          'conditions' => array('Post.id'=>$data['Post']['id']),
+          'contain' => array(
+            'Person' => array(
+              'Company'
+            ),
+            'Project' => array(
+              'Account'
+            ),
+            'Category',
+            'Milestone'
+          )
+        ));
+        $post['Action']['type'] = $type;
+      
+        $this->Message->send('post',array(
+          'subject' => $post['Post']['title'],
+          'to'      => $people
+        ),$post);
+      }
     }
     
     

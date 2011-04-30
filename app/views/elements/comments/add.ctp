@@ -31,7 +31,11 @@
       ?>
       
       <?php
-        echo $this->element('people/subscribe');
+        //Subscribe people
+        if(isset($subscribe) && $subscribe == true)
+        {
+          echo $this->element('people/subscribe');
+        }
       ?>
       
       <?php

@@ -67,18 +67,16 @@
         'attachments'   => array(),
         'methods'       => array('email'),
         'debug'         => false,
-        'subject'       => 'Propel'
+        'subject'       => 'Propel',
+        'data'          => $data
       );
       $settings = array_merge($default,$settings);
       
-      //Who to
+      //Who to, id's, arrays etc.. can come in
       $settings['to'] = $this->_findTo($settings);
       
-      //Set for view
-      $this->controller->set('data',$data);
-      
-      //Render body
-      $settings['body'] = $this->_renderMessage($settings);
+      //Subject, include project name or account name if set
+      $settings['subject'] = $this->_subject($settings);;
       
       //Debug
       if($settings['debug'])
@@ -100,10 +98,81 @@
      * @return array
      */
     private function _findTo($settings)
-    {
-      $to = array($settings['to']);
+    { 
+      $output = array();
+    
+      if(is_string($settings['to']))
+      {
+        $output[] = $settings['to'];
+      }
+      elseif(is_numeric($settings['to']))
+      {
+        $output[] = $this->__loadPerson($settings['to']);  
+      }
+      elseif(is_array($settings['to']))
+      {
+        foreach($settings['to'] as $to)
+        {
+          if(is_string($to))
+          {
+            $output[] = $to;
+          }
+          elseif(is_numeric($to))
+          {
+            $output[] = $this->__loadPerson($to);          
+          }
+        }
+      }
       
-      return $to;
+      return $output;
+    }
+    
+    
+    /**
+     * Load person
+     *
+     * @param int $id Person ID
+     * @access private
+     * @return mixed
+     */
+    private function __loadPerson($id)
+    {
+      if($person = ClassRegistry::init('Person')->find('first',array(
+        'conditions' => array('Person.id'=>$id),
+        'contain' => false
+      )))
+      {
+        $output = array(
+          'email' => $person['Person']['email'],
+          'name' => $person['Person']['full_name'],
+        );
+      }
+
+      return isset($output) ? $output : false;
+    }
+    
+    
+    /**
+     * Build subject
+     *
+     * @access private
+     * @return string
+     */
+    private function _subject($settings)
+    {
+      if($this->Authorization->read('Project.id'))
+      {
+        $prefix = $this->Authorization->read('Project.name');
+      }
+      elseif($this->Authorization->read('Account.id'))
+      {
+        $prefix = $this->Authorization->read('Account.name');
+      }
+      
+      if(isset($prefix)) { $output = '['.$prefix.'] '.$settings['subject']; }
+      else { $output = $settings['subject']; }
+    
+      return $output;
     }
     
     
@@ -197,13 +266,28 @@
         $this->Email->delivery = 'smtp';
       }
       
+      //To
+      if(is_array($to))
+      {
+        $toParam = $to['name'].' <'.$to['email'].'>';
+      }
+      else
+      {
+        $toParam = '<'.$to.'>';
+      }
+      
       //Send email
       $this->Email->additionalParams = "-f".$settings['return'];
-      $this->Email->to        = '<'.$to.'>';
+      $this->Email->to        = $toParam;
       $this->Email->from      = $settings['from'];
       $this->Email->replyTo   = '<'.$settings['replyTo'].'>';
       $this->Email->subject   = $settings['subject'];
       $this->Email->sendAs    = $settings['sendAs'];
+      
+      //Render body
+      $this->controller->set('data',$settings['data']);
+      $this->controller->set(compact('settings','to'));
+      $settings['body'] = $this->_renderMessage($settings);
       
       /*if(!empty($settings['attachments']))
       {
