@@ -12,7 +12,9 @@
   class AppError extends ErrorHandler
   {
     /**
-     * notFound
+     * Bad URL
+     *
+     * Something in the URL is incorrect
      *
      * @access public
      * @return void
@@ -24,7 +26,7 @@
     
     
     /**
-     * notLoggedIn
+     * Not Logged in
      *
      * @access public
      * @return void
@@ -34,8 +36,11 @@
       $this->_outputMessage('not_logged_in');
     }
 
+
     /**
-     * xx
+     * Account not found
+     *
+     * Accessing URL: /unknown-account-name/*
      *
      * @access public
      * @return void
@@ -45,8 +50,11 @@
       $this->_outputMessage('account_not_found');
     }
 
+
     /**
-     * xx
+     * Prefix not found
+     *
+     * Prefix for loading permissions not found, e.g. account_, project_
      *
      * @access public
      * @return void
@@ -56,8 +64,12 @@
       $this->_outputMessage('prefix_not_found');
     }
 
+
     /**
-     * xx
+     * Person not found
+     *
+     * Authorization can't find the current person
+     * Person may have been deleted on the account while logged in
      *
      * @access public
      * @return void
@@ -67,8 +79,11 @@
       $this->_outputMessage('person_not_found');
     }
 
+
     /**
-     * xx
+     * Person no ARO
+     *
+     * Person has no ARO records. The access was probably removed
      *
      * @access public
      * @return void
@@ -80,7 +95,10 @@
 
 
     /**
-     * xx
+     * Bad CRUD access
+     *
+     * User has no access to this area as specified by CRUD
+     * The user might not have delete access but called the delete URL
      *
      * @access public
      * @return void
@@ -92,7 +110,9 @@
     
 
     /**
-     * xx
+     * Record not found
+     *
+     * Record passed to the method was not found
      *
      * @access public
      * @return void
@@ -104,7 +124,9 @@
 
 
     /**
-     * xx
+     * Record wrong prefix
+     *
+     * Current prefix (e.g. project) does not match in fields assocated key (e.g. project_id)
      *
      * @access public
      * @return void
@@ -116,7 +138,10 @@
 
 
     /**
-     * xx
+     * Record is private
+     *
+     * Person is attempting to access a private record and they are not
+     * in the same company of the owner
      *
      * @access public
      * @return void
@@ -128,7 +153,9 @@
 
 
     /**
-     * xx
+     * Record wrong account
+     *
+     * The accessed record belongs to a different account
      *
      * @access public
      * @return void
@@ -140,7 +167,9 @@
 
 
     /**
-     * xx
+     * Permission denied
+     *
+     * Generic error when permission was denied
      *
      * @access public
      * @return void
@@ -152,7 +181,9 @@
 
 
     /**
-     * xx
+     * Unknown ACL error
+     *
+     * Problem somewhere in acl_filter
      *
      * @access public
      * @return void
@@ -164,7 +195,9 @@
 
 
     /**
-     * xx
+     * Black Hole
+     *
+     * User accessed something they are refused
      *
      * @access public
      * @return void
@@ -176,7 +209,7 @@
 
 
     /**
-     * xx
+     * Invalid inviation token
      *
      * @access public
      * @return void
@@ -190,8 +223,9 @@
     /**
      * Output message
      * 
-     * This is a direct copy from cakephp core error.php
+     * This is a copy from cakephp core error.php supporting js and ajax requests
      *
+     * @param string $template
      * @access private
      * @return void
      */
