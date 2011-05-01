@@ -16,7 +16,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array('Image','Listable');
     
@@ -24,7 +24,7 @@
      * Components
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $components = array('Assets');
     
@@ -32,7 +32,7 @@
      * Uses
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $uses = array('Setting','Account');
     
@@ -40,7 +40,7 @@
      * Uses
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $actionMap = array(
       'appearance'  => '_update',
@@ -52,7 +52,7 @@
      * Scheme keys
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $schemeKeys = array();
     
@@ -79,7 +79,6 @@
       
       parent::beforeFilter();
     }
-    
     
     
     /**
@@ -109,6 +108,7 @@
     /**
      * Admin view
      * 
+     * @param string $key String to edit
      * @access public
      * @return void
      */
@@ -185,11 +185,11 @@
     }
     
     
-    
     /**
      * Logo
      *
      * @todo More checks on incoming files, use assets component
+     * @param int $type Type of logo to change
      * @access public
      * @return void
      */
@@ -252,7 +252,6 @@
       
       $this->set(compact('type'));
     }
-    
     
     
     /**
@@ -333,7 +332,6 @@
       $this->set('schemeKeys',$this->schemeKeys);
       $this->set(compact('records'));
     }
-    
     
     
     /**

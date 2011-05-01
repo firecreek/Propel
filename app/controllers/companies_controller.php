@@ -102,6 +102,7 @@
     /**
      * Edit
      *
+     * @param int $companyId Company pk
      * @access public
      * @return void
      */
@@ -147,6 +148,7 @@
     /**
      * Delete
      *
+     * @param int $companyId Company pk
      * @access public
      * @return void
      */
@@ -444,6 +446,7 @@
      * This function does not delete companies, it will only remove the
      * company and people from permissions
      * 
+     * @param int $companyId Company pk
      * @access public
      * @return void
      */

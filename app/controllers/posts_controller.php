@@ -16,7 +16,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array('Time','Textile','Listable');
     
@@ -24,7 +24,7 @@
      * Components
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $components = array('Cookie','Message');
     
@@ -32,7 +32,7 @@
      * Uses
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $uses = array('Post','Comment','Category');
     
@@ -194,6 +194,7 @@
     /**
      * Project edit post
      * 
+     * @param int $id Post pk
      * @access public
      * @return void
      */
@@ -256,6 +257,8 @@
     /**
      * Email
      *
+     * @param string $type New or edit
+     * @param array $data Form data
      * @access private
      * @return boolean
      */
@@ -294,6 +297,7 @@
     /**
      * Project delete milestone
      * 
+     * @param int $id Post pk
      * @access public
      * @return void
      */

@@ -16,7 +16,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array();
     
@@ -24,7 +24,7 @@
      * Components
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $components = array('Message');
     
@@ -32,7 +32,7 @@
      * Uses
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $uses = array('Person','Company');
     
@@ -50,6 +50,7 @@
     /**
      * Add
      *
+     * @param int $companyId Company pk to add person to
      * @access public
      * @return void
      */
@@ -108,6 +109,7 @@
     /**
      * Edit
      *
+     * @param int $personId Person pk
      * @access public
      * @return void
      */
@@ -221,6 +223,7 @@
     /**
      * Delete person from account
      *
+     * @param int $personId Person pk
      * @access public
      * @return void
      */
@@ -242,6 +245,7 @@
     /**
      * Resend invitation
      *
+     * @param int $personId Person pk
      * @access public
      * @return void
      */
@@ -294,6 +298,7 @@
     /**
      * Project add
      *
+     * @param int $companyId Company pk to add person to
      * @access public
      * @return void
      */
@@ -362,6 +367,7 @@
     /**
      * Edit
      *
+     * @param int $personId Person pk
      * @access public
      * @return void
      */

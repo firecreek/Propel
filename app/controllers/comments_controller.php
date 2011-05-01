@@ -16,7 +16,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array('Listable','Textile');
     
@@ -24,15 +24,15 @@
      * Components
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $components = array('Message');
     
     /**
-     * Uses
+     * Models
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $uses = array('Comment');
     
@@ -91,11 +91,11 @@
     }
     
     
-
     /**
      * Comments list
      * 
      * @todo Clean this function up?
+     * @param int $id Associated controller model ID
      * @access public
      * @return void
      */
@@ -299,6 +299,8 @@
     /**
      * Delete comment
      * 
+     * @param int $id Associated controller model ID
+     * @param int $commentId Comment to delete
      * @access public
      * @return void
      */
@@ -331,6 +333,7 @@
     /**
      * Subscribe
      * 
+     * @param int $id Associated controller model ID
      * @access public
      * @return void
      */
@@ -347,6 +350,7 @@
     /**
      * Unsubscribe
      * 
+     * @param int $id Associated controller model ID
      * @access public
      * @return void
      */

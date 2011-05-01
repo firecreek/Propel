@@ -16,7 +16,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array();
     
@@ -24,7 +24,7 @@
      * Components
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $components = array('Authorization');
     
@@ -32,7 +32,7 @@
      * Uses
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $uses = array();
     

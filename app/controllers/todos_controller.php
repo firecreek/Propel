@@ -168,6 +168,7 @@
     /**
      * Project View Id
      *
+     * @param int $id Todo pk
      * @access public
      * @return void
      */
@@ -191,6 +192,7 @@
      * Project list todos
      *
      * @todo Move some code to model
+     * @param array $conditions
      * @access public
      * @return void
      */
@@ -336,6 +338,7 @@
     /**
      * Project edit todo
      * 
+     * @param int $id Todo pk
      * @access public
      * @return void
      */
@@ -391,6 +394,7 @@
     /**
      * Project delete todo
      * 
+     * @param int $id Todo pk
      * @access public
      * @return void
      */
@@ -412,7 +416,8 @@
     /**
      * Move record to different project
      *
-     * @todo Check if they have access to create on this project
+     * @todo Check if they have access to create on this project, same as milestones
+     * @param int $id Todo pk
      * @access public
      * @return void
      */

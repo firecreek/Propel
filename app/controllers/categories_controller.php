@@ -16,7 +16,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array('Listable');
     
@@ -24,7 +24,7 @@
      * Components
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $components = array('Authorization');
     
@@ -32,7 +32,7 @@
      * Uses
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $uses = array('Category');
     
@@ -40,6 +40,7 @@
     /**
      * Add category
      *
+     * @param string $type Type of category
      * @access public
      * @return void
      */
@@ -77,6 +78,7 @@
     /**
      * Edit category
      *
+     * @param int $id Category pk
      * @access public
      * @return void
      */
@@ -105,6 +107,7 @@
     /**
      * Delete category
      *
+     * @param int $id Category pk
      * @access public
      * @return void
      */

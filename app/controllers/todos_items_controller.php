@@ -16,7 +16,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array('Listable');
     
@@ -24,7 +24,7 @@
      * Components
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $components = array('Message');
     
@@ -32,7 +32,7 @@
      * Uses
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $uses = array('TodoItem','Todo');
     
@@ -90,10 +90,10 @@
     }
     
     
-
     /**
      * Add todo item
      *
+     * @param int $id Todo pk
      * @access public
      * @return void
      */
@@ -173,6 +173,7 @@
     /**
      * Edit todo item
      *
+     * @param int $id Todo pk
      * @access public
      * @return void
      */
@@ -229,6 +230,8 @@
     /**
      * Email
      *
+     * @param string $type Type, new or edit
+     * @param array $data Form data
      * @access private
      * @return boolean
      */
@@ -264,6 +267,7 @@
     /**
      * Project delete todo item
      * 
+     * @param int $id Todo item pk
      * @access public
      * @return void
      */
@@ -290,6 +294,8 @@
     /**
      * Project update todo item completed
      * 
+     * @param int $id Todo item pk
+     * @param boolean $completed
      * @access public
      * @return void
      */

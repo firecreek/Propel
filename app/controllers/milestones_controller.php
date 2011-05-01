@@ -16,7 +16,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array('Listable');
     
@@ -24,7 +24,7 @@
      * Components
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $components = array('Cookie');
     
@@ -32,7 +32,7 @@
      * Uses
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $uses = array('Milestone','Company');
     
@@ -340,6 +340,7 @@
     /**
      * Project edit milestone
      * 
+     * @param int $id Milestone id
      * @access public
      * @return void
      */
@@ -388,6 +389,8 @@
     /**
      * Project update milestone completed
      * 
+     * @param int $id Milestone id
+     * @param boolean $completed Completed state
      * @access public
      * @return void
      */
@@ -426,7 +429,8 @@
     /**
      * Move milestone to different project
      *
-     * @todo Check if they have access to create on this project
+     * @todo Check if the milestone can be moved to the other project
+     * @param int $id Milestone pk
      * @access public
      * @return void
      */
@@ -442,6 +446,7 @@
     /**
      * Project delete milestone
      * 
+     * @param int $id Milestone pk
      * @access public
      * @return void
      */

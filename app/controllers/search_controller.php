@@ -18,7 +18,7 @@
      * Helpers
      *
      * @access public
-     * @access public
+     * @var array
      */
     public $helpers = array();
     
@@ -206,6 +206,8 @@
     /**
      * Do the search
      *
+     * @param array $conditions Conditions for search
+     * @param array $options Options
      * @access private
      * @return void
      */
@@ -236,6 +238,7 @@
     /**
      * Save search
      *
+     * @param string $type Type of search
      * @access private
      * @return boolean
      */
@@ -269,6 +272,7 @@
     /**
      * Get recent searches
      *
+     * @param string $type Type of search
      * @access private
      * @return boolean
      */
@@ -283,6 +287,7 @@
     /**
      * Search forget
      *
+     * @param string $type Type of search
      * @access private
      * @return boolean
      */

@@ -141,6 +141,8 @@
     /**
      * Invitation
      *
+     * @param string $code Token to validate
+     * @param string $type New or existing user
      * @access public
      * @return void
      */
@@ -355,6 +357,7 @@
     /**
      * Reset password
      *
+     * @param string $token Token to reset
      * @access public
      * @return void
      */
