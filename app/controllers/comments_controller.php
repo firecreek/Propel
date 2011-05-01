@@ -60,11 +60,9 @@
     {
       $this->associatedController = Inflector::pluralize(Inflector::classify($this->params['associatedController']));
       
-      //Model
-      //@todo Create inflector for model names
-      $modelAlias = $this->params['associatedController'];
-      $modelAlias = str_replace('s_','_',$modelAlias);
-      $this->modelAlias = Inflector::classify($modelAlias);
+      //Associated controller model
+      $this->modelAlias = str_replace('s_','_',$this->params['associatedController']);
+      $this->modelAlias = Inflector::classify($this->modelAlias);
       $this->loadModel($this->modelAlias);
       
       //

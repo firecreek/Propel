@@ -19,8 +19,8 @@
      * @var array
      */
     public $components = array(
-      'Acl',
       'Authorization',
+      'Acl',
       'AclFilter',
       'AclManager',
       'Propel',
@@ -36,9 +36,9 @@
      * @var array
      */
     public $uses = array(
-      'User',
       'Account',
       'Project',
+      'User',
       'Person',
       'Setting'
     );
@@ -58,6 +58,7 @@
       'Time'
     );
     
+    
     /**
      * Before Filter
      *
@@ -69,11 +70,9 @@
       //JSON
       $this->RequestHandler->setContent('json', 'application/json');
       
-      //
+      //Auth state to model behavior
       foreach($this->uses as $model)
       {
-        $this->{$model}->personId = $this->Authorization->read('Person.id');
-        
         if($this->{$model}->Behaviors->attached('Auth'))
         {
           $this->{$model}->setAuthState($this->Session->read('AuthAccount'));
