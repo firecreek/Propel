@@ -117,7 +117,7 @@
      */
     public function canDelete()
     {
-      if($this->authCheck($model,'update') && $this->authIsRelated($model,'project_id',$this->_authRead('Project.id')))
+      if($this->authCheck($model,'delete') && $this->authIsRelated($model,'project_id',$this->_authRead('Project.id')))
       {
         return true;
       }
