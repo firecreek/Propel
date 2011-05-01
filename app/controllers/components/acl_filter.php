@@ -177,7 +177,15 @@
           }
           
           //Check individual record belongs to this prefix and privacy settings
-          $modelAlias = Inflector::classify($this->controllerName);
+          if(isset($this->controller->modelAlias))
+          {
+            $modelAlias = $this->controller->modelAlias;
+          }
+          else
+          {
+            $modelAlias = Inflector::classify($this->controllerName);
+          }
+          
           $fieldKey   = $prefix.'_id';
           
           //Check record
