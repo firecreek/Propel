@@ -115,6 +115,14 @@
     }
     
     
+    /**
+     * Is Authorized check
+     *
+     * System uses its own CRUD check
+     *
+     * @access public
+     * @return boolean
+     */
     public function isAuthorized()
     {
       return $this->AclFilter->check();
@@ -124,6 +132,9 @@
     /**
      * Redirect
      *
+     * @param mixed $url
+     * @param string $status
+     * @param boolean $exit
      * @access public
      * @return void
      */

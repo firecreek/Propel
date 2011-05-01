@@ -24,7 +24,12 @@
      */
     public $useCache = true;
     
-    
+    /**
+     * Auth
+     *
+     * @access public
+     * @var array
+     */
     public $actsAs = array('Auth');
     
     
@@ -70,16 +75,17 @@
       
       $args = func_get_args();
       $results = call_user_func_array(array('parent', 'find'), $args);
-      if ($this->useCache) {
-          if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
-              $cacheName = $options['cache']['name'];
-          } elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
-              $cacheName = $options['cache']['prefix'] . md5(serialize($options));
-          }
+      if ($this->useCache)
+      {
+        if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
+            $cacheName = $options['cache']['name'];
+        } elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
+            $cacheName = $options['cache']['prefix'] . md5(serialize($options));
+        }
 
-          if (isset($cacheName)) {
-              Cache::write($cacheName, $results, $options['cache']['config']);
-          }
+        if (isset($cacheName)) {
+            Cache::write($cacheName, $results, $options['cache']['config']);
+        }
       }
   
       return $results;

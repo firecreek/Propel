@@ -13,6 +13,12 @@
   class AppHelper extends Helper
   {
   
+    /**
+     * Construct class
+     *
+     * @access public
+     * @return void
+     */
     public function __construct()
     {
       $this->tags['radio'] = '<input type="radio" name="%s" id="%s" %s /><label for="%2$s">%s</label>'; 
@@ -20,6 +26,14 @@
     }
     
   
+    /**
+     * URL
+     *
+     * @param mixed $url
+     * @param boolean $full
+     * @access public
+     * @return string
+     */
     public function url($url = null, $full = false)
     {
       if(is_array($url) && (!isset($url['prefix']) || $url['prefix'] !== false))
