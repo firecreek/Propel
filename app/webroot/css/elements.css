@@ -664,8 +664,10 @@ table.logs.dated .today span { background-color:#FFF000; border-bottom:0; color:
 .move-project-link a { font-size:11px; }
 
 .move-project-form { width:320px; }
+.move-project-form hr { margin:5px 0; }
 .move-project-form label { font-weight:bold; }
 .move-project-form .saving { background-color:white !important; }
+.move-project-form p { font-size:11px; color:#666; margin:0 0 2px 0 !important; padding:0; }
 
 
 /**

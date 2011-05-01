@@ -75,6 +75,7 @@ var Account = {
     
       $(obj).find('.move-project-form').css({
         left:$(self).offset().left-300,
+        top:$(self).offset().top-100,
       }).show();
       
       return false;

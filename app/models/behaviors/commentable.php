@@ -164,9 +164,12 @@
       
         //Add new
         $subscribers = array_filter($model->data['CommentPeople']);
-        foreach($subscribers as $personId => $checked)
+        if(!empty($subscribers))
         {
-          $model->Comment->addCommentPerson($model->id,$personId);
+          foreach($subscribers as $personId => $checked)
+          {
+            $model->Comment->addCommentPerson($model->id,$personId);
+          }
         }
       }
     }

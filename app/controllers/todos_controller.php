@@ -416,7 +416,6 @@
     /**
      * Move record to different project
      *
-     * @todo Check if they have access to create on this project, same as milestones
      * @param int $id Todo pk
      * @access public
      * @return void

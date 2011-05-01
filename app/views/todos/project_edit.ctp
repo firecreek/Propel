@@ -54,9 +54,11 @@
       echo $form->end();
     ?>
     
-    <?php
-      //Move record to a different project
-      echo $this->element('projects/move_record',array('id'=>$id,'alias'=>'Todo'));
+    <?php      
+      echo $this->element('projects/move_record',array(
+        'id'    => $id,
+        'alias' => 'Todo'
+      ));
     ?>
 
     

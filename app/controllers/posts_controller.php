@@ -36,6 +36,16 @@
      */
     public $uses = array('Post','Comment','Category');
     
+    /**
+     * Action map
+     *
+     * @access public
+     * @var array
+     */
+    public $actionMap = array(
+      'move_project'     => '_update'
+    );
+    
     
     /**
      * Project list posts
@@ -255,6 +265,33 @@
       $milestoneOptions = $this->Milestone->findProjectList($this->Authorization->read('Project.id'));
       
       $this->set(compact('id','milestoneOptions','categories','record'));
+    }
+    
+    
+    /**
+     * Move post to different project
+     *
+     * @param int $id Milestone pk
+     * @access public
+     * @return void
+     */
+    public function project_move_project($id)
+    {
+      //Check we have access to this project
+      if(!$this->Authorization->check('Projects',$this->data['Post']['project_id'],array('create')))
+      {
+        $this->cakeError('permissionDenied');
+      }
+      
+      $this->Post->save(array(
+        'Post' => array(
+          'id'            => $id,
+          'project_id'    => $this->data['Post']['project_id'],
+          'milestone_id'  => null,
+          'category_id'   => null
+        ),
+        'CommentPeople' => array()
+      ));
     }
     
     

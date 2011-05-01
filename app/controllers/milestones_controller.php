@@ -429,15 +429,12 @@
     /**
      * Move milestone to different project
      *
-     * @todo Check if the milestone can be moved to the other project
      * @param int $id Milestone pk
      * @access public
      * @return void
      */
     public function project_move_project($id)
     {
-      $this->Project->id = $this->data['Milestone']['project_id'];
-      
       //Check we have access to this project
       if(!$this->Authorization->check('Projects',$this->data['Milestone']['project_id'],array('create')))
       {

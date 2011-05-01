@@ -47,6 +47,22 @@
           echo $this->Form->end();
         ?>
 
+        <?php
+          //Move record to a different project
+          $message = '<p>'.__('All comments and attached files will move with this message.',true).'</p>';
+          
+          if(isset($record['Milestone']['title']) && !empty($record['Milestone']['title']))
+          {
+            $message .= '<p>'.sprintf(__('This message will no longer be associated with the milestone, %s',true),$record['Milestone']['title']).'</p>';
+          }
+          
+          echo $this->element('projects/move_record',array(
+            'id'        => $id,
+            'alias'     => 'Post',
+            'name'      => 'Message',
+            'message'   => $message
+          ));
+        ?>
         
       </div>
     </div>
