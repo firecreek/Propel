@@ -41,13 +41,12 @@ header nav a, header nav li { color:#D1EEFF; font-size:10px; }
 header nav a:hover { background-color: #054700; color:white; text-decoration:none; }
 
 nav#account ul { position:absolute; right:30px; top:0; }
-nav#account li { float:left; padding:6px 0px 6px 4px; margin:0; display:inline; }
+nav#account li { float:left; padding:6px 0px 6px 0; margin:0; display:inline; }
 
 nav#account li a { padding:6px 4px 6px 4px; }
 nav#account li span { padding:6px 6px 6px 4px; }
 
-nav#account li:after { content:" | "; color:#D1EEFF; font-size:9px; }
-nav#account li:last-child:after { content:""; }
+nav#account li span.space { color:#D1EEFF; font-size:9px; padding:0 5px; }
 
 nav.main { position:absolute; bottom:0px; left:30px; }
 nav.extra { position:absolute; bottom:0px; right:30px; }

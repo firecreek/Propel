@@ -19,9 +19,9 @@
 
   <nav id="account">
       <ul>
-          <li><span><?php echo $session->read('AuthAccount.Person.first_name').' '.$session->read('AuthAccount.Person.last_name'); ?></span></li>
-          <li><?php echo $html->link(__('Project Settings',true),array('controller'=>'projects','action'=>'edit')); ?></li>
-          <li><?php echo $html->link(__('My info',true),array('controller'=>'people','action'=>'edit',$session->read('AuthAccount.Person.id'))); ?></li>
+          <li><span><?php echo $session->read('AuthAccount.Person.first_name').' '.$session->read('AuthAccount.Person.last_name'); ?></span><span class="space">|</span></li>
+          <li><?php echo $html->link(__('Project Settings',true),array('controller'=>'projects','action'=>'edit')); ?><span class="space">|</span></li>
+          <li><?php echo $html->link(__('My info',true),array('controller'=>'people','action'=>'edit',$session->read('AuthAccount.Person.id'))); ?><span class="space">|</span></li>
           <li><?php echo $html->link(__('Sign out',true),array('account'=>false,'project'=>false,'controller'=>'users','action'=>'logout')); ?></li>
       </ul>
   </nav>
