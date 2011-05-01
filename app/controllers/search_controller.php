@@ -59,14 +59,6 @@
     public $modelScopes = array();
     
     /**
-     * Search history limit
-     *
-     * @access public
-     * @var int
-     */
-    public $searchHistoryLimit = 10;
-    
-    /**
      * ACL Mapping
      *
      * @access public
@@ -75,6 +67,22 @@
     public $actionMap = array(
       'forget' => '_read'
     );
+    
+    /**
+     * Search history limit
+     *
+     * @access public
+     * @var int
+     */
+    public $searchHistoryLimit = 10;
+    
+    /**
+     * Cookie key
+     *
+     * @access public
+     * @var string
+     */
+    public $cookieKey = null;
     
     
     /**
@@ -101,6 +109,17 @@
           $this->search[$key] = $this->params['url'][$key];
         }
       }
+      
+      //Set a key for the cookie
+      if($this->Authorization->read('Account.id'))
+      {
+        $this->cookieKey .= $this->Authorization->read('Account.id');
+      }
+      if($this->Authorization->read('Project.id'))
+      {
+        $this->cookieKey .= '-'.$this->Authorization->read('Project.id');
+      }
+      
       
       parent::beforeFilter();
     }
@@ -158,7 +177,7 @@
     
       if(!empty($this->search['terms']))
       {
-        $this->_searchSave($key);
+        $this->_searchSave();
         
         //Search
         if($this->search['global'])
@@ -185,7 +204,7 @@
      */
     public function account_forget()
     {
-      $this->_searchForget('global');
+      $this->_searchForget();
       $this->redirect(array('action'=>'index'));
     }
     
@@ -198,7 +217,7 @@
      */
     public function project_forget()
     {
-      $this->_searchForget('project_'.$this->Authorization->read('Project.id'));
+      $this->_searchForget();
       $this->redirect(array('action'=>'index'));
     }
     
@@ -242,9 +261,9 @@
      * @access private
      * @return boolean
      */
-    private function _searchSave($type)
+    private function _searchSave()
     {
-      $current = $this->Session->read('Searches.'.$type);
+      $current = $this->Session->read('Searches.'.$this->cookieKey);
       
       $terms  = $this->search['terms'];
       $scope  = $this->search['scope'];
@@ -265,7 +284,7 @@
         $current = array_slice($current,count($current)-$this->searchHistoryLimit);
       }
       
-      return $this->Session->write('Searches.'.$type,$current);
+      return $this->Session->write('Searches.'.$this->cookieKey,$current);
     }
     
     
@@ -276,9 +295,9 @@
      * @access private
      * @return boolean
      */
-    private function _searchRecent($type)
+    private function _searchRecent()
     {
-      $results = $this->Session->read('Searches.'.$type);
+      $results = $this->Session->read('Searches.'.$this->cookieKey);
       if(!empty($results)) { $results = array_reverse($results); }
       return $results;
     }
@@ -291,9 +310,9 @@
      * @access private
      * @return boolean
      */
-    private function _searchForget($type)
+    private function _searchForget()
     {
-      return $this->Session->delete('Searches.'.$type);
+      return $this->Session->delete('Searches.'.$this->cookieKey);
     }
     
   
