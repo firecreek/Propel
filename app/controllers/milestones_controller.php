@@ -131,7 +131,7 @@
      * @return void
      */
     public function project_index()
-    {
+    {  
       //@todo Check if this should still be here, maybe old code
       if(!empty($this->data))
       {
@@ -437,6 +437,12 @@
     public function project_move_project($id)
     {
       $this->Project->id = $this->data['Milestone']['project_id'];
+      
+      //Check we have access to this project
+      if(!$this->Authorization->check('Projects',$this->data['Milestone']['project_id'],array('create')))
+      {
+        $this->cakeError('permissionDenied');
+      }
       
       $this->Milestone->id = $id;
       $this->Milestone->saveField('project_id',$this->data['Milestone']['project_id']);

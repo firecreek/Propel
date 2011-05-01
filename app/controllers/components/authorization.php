@@ -543,6 +543,19 @@
     }
     
     
+    /**
+     * Access check
+     * 
+     * @access public
+     * @return boolean
+     */
+    public function check($alias,$modelId,$permissions = array())
+    {
+      $this->controller->Person->id = $this->read('Person.id');
+      return $this->AclManager->check($this->controller->Person, $alias, $modelId, null, array('permission'=>$permissions));
+    }
+    
+    
     
     /**
      * Login

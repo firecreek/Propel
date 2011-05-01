@@ -427,6 +427,12 @@
       $this->Todo->id = $id;
       $oldProjectId = $this->Todo->field('project_id');
       
+      //Check we have access to this project
+      if(!$this->Authorization->check('Projects',$this->data['Todo']['project_id'],array('create')))
+      {
+        $this->cakeError('permissionDenied');
+      }
+      
       $this->Todo->TodoItem->Behaviors->disable('Commentable');
       
       $this->Todo->id = $id;

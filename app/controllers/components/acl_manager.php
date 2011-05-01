@@ -210,19 +210,35 @@
      * @access public
      * @return int
      */
-    public function check(&$model, $path, $foreignId, $action, $options = array())
+    public function check(&$model, $path, $foreignId, $action = null, $options = array())
     {
       //Get aco
-      $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId.'/'.$action);
+      if($action)
+      {
+        $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId.'/'.$action);
+      }
+      else
+      {
+        $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId);
+      }
       $acoId = $root[0]['Aco']['id'];
       
       //Permissions
+      $conditions = array();
+      if(isset($options['permission']))
+      {
+        foreach($options['permission'] as $key)
+        {
+          $conditions['_'.$key] = true;
+        }
+      }
+      
       return $this->Acl->Aco->Permission->find('count',array(
-        'conditions' => array(
+        'conditions' => array_merge(array(
           'Aro.model' => $model->alias,
           'Aro.foreign_key' => $model->id,
           'Permission.aco_id' => $acoId
-        )
+        ),$conditions)
       ));
     }
     

@@ -78,6 +78,7 @@
       $this->_outputMessage('person_no_aro');
     }
 
+
     /**
      * xx
      *
@@ -88,6 +89,7 @@
     {
       $this->_outputMessage('bad_crud_access');
     }
+    
 
     /**
      * xx
@@ -100,6 +102,7 @@
       $this->_outputMessage('record_not_found');
     }
 
+
     /**
      * xx
      *
@@ -110,6 +113,7 @@
     {
       $this->_outputMessage('record_wrong_prefix');
     }
+
 
     /**
      * xx
@@ -122,6 +126,7 @@
       $this->_outputMessage('record_is_private');
     }
 
+
     /**
      * xx
      *
@@ -131,6 +136,18 @@
     public function recordWrongAccount($params)
     {
       $this->_outputMessage('record_wrong_account');
+    }
+
+
+    /**
+     * xx
+     *
+     * @access public
+     * @return void
+     */
+    public function permissionDenied($params)
+    {
+      $this->_outputMessage('permission_denied');
     }
 
 
