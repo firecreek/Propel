@@ -92,7 +92,9 @@
         </div>
         <div class="content">
           <p><?php __(sprintf('This will permanently remove %s from your account. Don\'t worry, their messages, comments, and history will not be erased.',$record['Person']['first_name'])); ?></p>
-          <p><?php echo $html->link(__(sprintf('Delete %s now',$record['Person']['first_name']),true),array('action'=>'delete',$personId),array('class'=>'important','confirm'=>__('Are you sure you want to delete this person?',true))); ?></p>
+          <p><?php
+            echo $html->link(sprintf(__('Delete %s now',true),$record['Person']['first_name']),array('project'=>false,'action'=>'delete',$personId),array('class'=>'important','confirm'=>__('Are you sure you want to delete this person?',true)));
+          ?></p>
         </div>
       </div>
       

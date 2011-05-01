@@ -235,7 +235,7 @@
         $this->Session->setFlash(__('There was a problem deleting this person, please try again',true),'default',array('class'=>'error'));
       }
       
-      $this->redirect(array('controller'=>'companies','action'=>'index'));
+      $this->redirect($this->referer());
     }
     
     
