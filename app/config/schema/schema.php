@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-04-25 17:04:58 : 1303724038*/
+/* App schema generated on: 2011-05-02 00:05:32 : 1304267912*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -34,14 +34,6 @@ class AppSchema extends CakeSchema {
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 0), 'parent_id' => array('column' => 'parent_id', 'unique' => 0), 'parent_and_foreign' => array('column' => array('parent_id', 'foreign_key'), 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
-	var $apicalls = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'ip_address' => array('type' => 'string', 'null' => false, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'user_id' => array('type' => 'integer', 'null' => false),
-		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
 	var $aros = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
 		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
@@ -64,25 +56,6 @@ class AppSchema extends CakeSchema {
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'ARO_ACO_KEY' => array('column' => array('aro_id', 'aco_id'), 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
-	var $attachments = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'name' => array('type' => 'string', 'null' => false, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'description' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'byte_size' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
-		'project_id' => array('type' => 'integer', 'null' => false),
-		'category_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'model_id' => array('type' => 'integer', 'null' => false),
-		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'version' => array('type' => 'integer', 'null' => false, 'length' => 4),
-		'current' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'person_id' => array('type' => 'integer', 'null' => false),
-		'updated' => array('type' => 'datetime', 'null' => false),
-		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
 	var $categories = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'account_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
@@ -93,15 +66,6 @@ class AppSchema extends CakeSchema {
 		'created' => array('type' => 'datetime', 'null' => false),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'project_id' => array('column' => 'project_id', 'unique' => 0), 'account_id' => array('column' => 'account_id', 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-	var $categories_records = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'category_id' => array('type' => 'integer', 'null' => false),
-		'model' => array('type' => 'string', 'null' => false, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'model_id' => array('type' => 'integer', 'null' => false),
-		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
 	var $comments = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
@@ -220,7 +184,7 @@ class AppSchema extends CakeSchema {
 		'person_id' => array('type' => 'integer', 'null' => false),
 		'updated' => array('type' => 'datetime', 'null' => false),
 		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'project_id' => array('column' => 'project_id', 'unique' => 0)),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'project_id' => array('column' => 'project_id', 'unique' => 0), 'project_id_2' => array('column' => array('project_id', 'completed'), 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $people = array(
@@ -340,19 +304,6 @@ class AppSchema extends CakeSchema {
 		'params' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
-	);
-	var $times = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'project_id' => array('type' => 'integer', 'null' => false),
-		'todo_item_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'hours' => array('type' => 'float', 'null' => false, 'default' => '0.00', 'length' => '5,2'),
-		'description' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'date' => array('type' => 'datetime', 'null' => false),
-		'person_id' => array('type' => 'integer', 'null' => false),
-		'updated' => array('type' => 'datetime', 'null' => false),
-		'created' => array('type' => 'datetime', 'null' => false),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $timezones = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
