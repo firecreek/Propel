@@ -85,9 +85,12 @@
      * Delete list item
      */
     _delete: function(e)
-    {      
-      var item = $(this).closest('.item');
-      __scriptCall(item.attr('rel-delete-url'),{ element:item,loading:true });
+    {
+      if(confirm('Are you sure you want to delete this record?'))
+      {
+        var item = $(this).closest('.item');
+        __scriptCall(item.attr('rel-delete-url'),{ element:item,loading:true });
+      }
       
       return false;
     },

@@ -225,7 +225,7 @@
       if($options['delete'])
       {
         if(!isset($options['deleteUrl'])) { $options['deleteUrl'] = array('action'=>'delete',$id); }
-        $maintain .= sprintf($this->tags['delete'],$this->Html->link(__('Delete',true),$options['deleteUrl'],array('title'=>__('Delete',true),'confirm'=>__('Are you sure you want to delete this record?',true))));
+        $maintain .= sprintf($this->tags['delete'],$this->Html->link(__('Delete',true),$options['deleteUrl'],array('title'=>__('Delete',true))));
       }
       
       if($options['edit'])
