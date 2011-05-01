@@ -202,6 +202,19 @@
     {
       $this->Post->id = $id;
       
+      $record = $this->Post->find('first',array(
+        'conditions' => array(
+          'Post.id' => $id
+        ),
+        'contain' => array(
+          'CommentPerson' => array( 
+            'Person'
+          ),
+          'Milestone'
+        )
+      ));
+      
+      //
       if(!empty($this->data))
       {
         $this->data['Post']['id'] = $id;
@@ -231,16 +244,7 @@
       }
       else
       {
-        $this->data = $this->Post->find('first',array(
-          'conditions' => array(
-            'Post.id' => $id
-          ),
-          'contain' => array(
-            'CommentPerson' => array( 
-              'Person'
-            )
-          )
-        ));
+        $this->data = $record;
       }
       
       //Categories
@@ -250,7 +254,7 @@
       $this->loadModel('Milestone');
       $milestoneOptions = $this->Milestone->findProjectList($this->Authorization->read('Project.id'));
       
-      $this->set(compact('id','milestoneOptions','categories'));
+      $this->set(compact('id','milestoneOptions','categories','record'));
     }
     
     
