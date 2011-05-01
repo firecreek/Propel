@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * Opencamp Component
+   * Propel Component
    *
    * @category Component
    * @package  Propel
@@ -10,7 +10,7 @@
    * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
    * @link     http://www.propelhq.com
    */
-  class OpencampComponent extends Object
+  class PropelComponent extends Object
   {
     /**
      * Controller object

@@ -23,7 +23,7 @@
       'Authorization',
       'AclFilter',
       'AclManager',
-      'Opencamp',
+      'Propel',
       'RequestHandler',
       'Session',
       'DebugKit.Toolbar'
