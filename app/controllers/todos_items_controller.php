@@ -316,25 +316,48 @@
      */
     public function project_update_positions()
     {
-      foreach($this->params['form'] as $key => $data)
+      if(!empty($this->params['form']))
       {
-        $datasplit = explode('-',$data);
+        //Todo
+        $todos = array();
+      
+        //
+        foreach($this->params['form'] as $key => $data)
+        {
+          $datasplit = explode('-',$data);
+          
+          $todoId = $datasplit[0];
+          $position = $datasplit[1];
+          
+          $todoItemId = str_replace('TodoItem','',$key);
+          
+          $save = array(
+            'id' => $todoItemId,
+            'todo_id' => $todoId,
+            'position' => $position
+          );
+          $this->TodoItem->save($save,false);
+          
+          /*$this->Todo->TodoItem->updateAll(
+            array(
+              'TodoItem.todo_id' => $todoId,
+              'TodoItem.position' => $position
+            ),
+            array('TodoItem.id'=>$todoItemId)
+          );*/
+          
+          $todos[] = $todoId;
+        }
         
-        $todoId = $datasplit[0];
-        $position = $datasplit[1];
+        //Update all todo lists counts
+        /*$todos = array_unique($todos);
         
-        $todoItemId = str_replace('TodoItem','',$key);
+        $this->Todo->updateCounterCache();
         
-        
-        $this->Todo->TodoItem->updateAll(
-          array(
-            'TodoItem.todo_id' => $todoId,
-            'TodoItem.position' => $position
-          ),
-          array('TodoItem.id'=>$todoItemId)
-        );
-        
-      }
+        debug($todos);
+        exit;*/
+      }  
+      
     }
     
   }

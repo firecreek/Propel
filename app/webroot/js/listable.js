@@ -25,7 +25,10 @@
         start: function(event,ui){
         },
         update: function(event,ui){
-          self._positions(self.options.positionUrl);
+          if(this === ui.item.parent()[0])
+          {
+            self._positions(self.options.positionUrl);
+          }
         }
       });
       
