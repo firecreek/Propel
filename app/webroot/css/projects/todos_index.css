@@ -72,8 +72,9 @@
 .item-add hr { margin:5px 0; clear:both; }
 
 .item-add .options {  }
-.item-add .options div.first { float:left; margin-right:20px; }
-.item-add .options div.second { float:left; }
+.item-add .options div.fields { clear:both; }
+.item-add .options div.first { display:inline-block; margin-right:20px; }
+.item-add .options div.second { display:inline-block; }
 
 .item-add .submit .saving { background-color:#EFEFEF; }
 

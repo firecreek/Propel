@@ -134,6 +134,10 @@
         'className' => 'Todo',
         'foreignKey' => 'todo_id',
         'counterCache' => 'todo_items_count'
+      ),
+      'Person' => array(
+        'className' => 'Person',
+        'foreignKey' => 'person_id'
       )
     );
     

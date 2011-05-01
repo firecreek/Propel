@@ -26,7 +26,7 @@
      * @access public
      * @access public
      */
-    public $components = array();
+    public $components = array('Message');
     
     /**
      * Uses
@@ -112,16 +112,22 @@
         if($this->TodoItem->validates())
         {
           $this->TodoItem->save();
-          
-          $todoItemId = $this->TodoItem->id;
+          $this->data['TodoItem']['id'] = $this->TodoItem->id;
         
+          //Email responsible
+          $this->_sendEmails('add',$this->data);
+          
+          //Build log data
           $item = $this->TodoItem->find('first',array(
-            'conditions' => array('TodoItem.id'=>$todoItemId),
-            'contain' => array('Todo','Responsible')
+            'conditions' => array('TodoItem.id'=>$this->data['TodoItem']['id']),
+            'contain' => array(
+              'Todo' => array('id','name','private'),
+              'Responsible' => array('name')
+            )
           ));
           
           //Save log
-          $this->TodoItem->customLog('assigned',$todoItemId,array(
+          $this->TodoItem->customLog('assigned',$this->data['TodoItem']['id'],array(
             'extra1'  => $item['Todo']['name'],
             'extra2'  => $item['Todo']['id'],
             'extra3'  => isset($item['Responsible']['name']) ? $item['Responsible']['name'] : null,
@@ -165,6 +171,97 @@
     
     
     /**
+     * Edit todo item
+     *
+     * @access public
+     * @return void
+     */
+    public function project_edit($id)
+    {
+      if(!empty($this->data))
+      {
+        $this->data['TodoItem']['id'] = $id;
+        
+        $this->Todo->TodoItem->set($this->data);
+
+        if($this->Todo->TodoItem->validates())
+        {
+          $this->Todo->TodoItem->save();
+          
+          //Email responsible
+          $this->_sendEmails('edit',$this->data);
+          
+          if($this->RequestHandler->isAjax())
+          {
+            $item = $this->Todo->TodoItem->find('first',array(
+              'conditions' => array('TodoItem.id'=>$id),
+              'contain' => array('Todo','Responsible')
+            ));
+          
+            $this->set(compact('id','item'));
+            return $this->render();
+          }
+          
+          $this->Session->setFlash(__('Todo item updated',true),'default',array('class'=>'success'));
+          $this->redirect(array('controller'=>'todos','action'=>'index'));
+        }
+        else
+        {
+          $this->Session->setFlash(__('Failed to save the record, please check the form',true),'default',array('class'=>'error'));
+        }
+      }
+      else
+      {
+        $this->data = $this->TodoItem->find('first',array(
+          'conditions' => array(
+            'TodoItem.id' => $id
+          ),
+          'contain' => array(
+            'Responsible'
+          )
+        ));
+      }
+      
+      $this->set(compact('todoId','id'));
+    }
+    
+    
+    /**
+     * Email
+     *
+     * @access private
+     * @return boolean
+     */
+    private function _sendEmails($type,$data)
+    {
+      //Email checked
+      if(!empty($data['TodoItem']['responsible']) && $data['TodoItem']['notify'])
+      {
+        //Read in record
+        $record = $this->TodoItem->find('first',array(
+          'conditions' => array('TodoItem.id'=>$this->data['TodoItem']['id']),
+          'contain' => array(
+            'Todo' => array('id','name'),
+            'Person' => array('id','first_name','last_name','full_name','email'),
+            'Responsible',
+            'Person' => array(
+              'Company'
+            ),
+            'Project' => array(
+              'Account'
+            ),
+          )
+        ));
+      
+        $this->Message->send('todo_assigned',array(
+          'subject' => __('To-do item assigned to you',true),
+          'to'      => $record['Person']['id']
+        ),$record);
+      }
+    }
+    
+    
+    /**
      * Project delete todo item
      * 
      * @access public
@@ -187,59 +284,6 @@
       
       $this->Session->setFlash(__('Todo item deleted',true),'default',array('class'=>'success'));
       $this->redirect(array('action'=>'index'));
-    }
-    
-    
-    /**
-     * Edit todo item
-     *
-     * @access public
-     * @return void
-     */
-    public function project_edit($id)
-    {
-      if(!empty($this->data))
-      {
-        $this->data['TodoItem']['id'] = $id;
-        
-        $this->Todo->TodoItem->set($this->data);
-
-        if($this->Todo->TodoItem->validates())
-        {
-          $this->Todo->TodoItem->save();
-          
-          if($this->RequestHandler->isAjax())
-          {
-            $item = $this->Todo->TodoItem->find('first',array(
-              'conditions' => array('TodoItem.id'=>$id),
-              'contain' => array('Todo','Responsible')
-            ));
-          
-            $this->set(compact('id','item'));
-            return $this->render();
-          }
-          
-          $this->Session->setFlash(__('Todo item updated',true),'default',array('class'=>'success'));
-          $this->redirect(array('action'=>'index'));
-        }
-        else
-        {
-          $this->Session->setFlash(__('Failed to save the record, please check the form',true),'default',array('class'=>'error'));
-        }
-      }
-      else
-      {
-        $this->data = $this->TodoItem->find('first',array(
-          'conditions' => array(
-            'TodoItem.id' => $id
-          ),
-          'contain' => array(
-            'Responsible'
-          )
-        ));
-      }
-      
-      $this->set(compact('todoId','id'));
     }
     
     
@@ -338,24 +382,8 @@
           );
           $this->TodoItem->save($save,false);
           
-          /*$this->Todo->TodoItem->updateAll(
-            array(
-              'TodoItem.todo_id' => $todoId,
-              'TodoItem.position' => $position
-            ),
-            array('TodoItem.id'=>$todoItemId)
-          );*/
-          
           $todos[] = $todoId;
         }
-        
-        //Update all todo lists counts
-        /*$todos = array_unique($todos);
-        
-        $this->Todo->updateCounterCache();
-        
-        debug($todos);
-        exit;*/
       }  
       
     }

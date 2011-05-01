@@ -101,25 +101,25 @@
     { 
       $output = array();
     
-      if(is_string($settings['to']))
-      {
-        $output[] = $settings['to'];
-      }
-      elseif(is_numeric($settings['to']))
+      if(is_numeric($settings['to']))
       {
         $output[] = $this->__loadPerson($settings['to']);  
+      }
+      elseif(is_string($settings['to']))
+      {
+        $output[] = $settings['to'];
       }
       elseif(is_array($settings['to']))
       {
         foreach($settings['to'] as $to)
         {
-          if(is_string($to))
-          {
-            $output[] = $to;
-          }
-          elseif(is_numeric($to))
+          if(is_numeric($to))
           {
             $output[] = $this->__loadPerson($to);          
+          }
+          elseif(is_string($to))
+          {
+            $output[] = $to;
           }
         }
       }

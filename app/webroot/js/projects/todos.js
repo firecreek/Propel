@@ -148,7 +148,34 @@ var Todos = {
     
       return false;
     });
+  
+  
+    //Notify
+    $('.item-add .fields select[name*=responsible]').live('change',function(e){
+      self._notifyCheck(this);
+    });
     
+  },
+  
+  
+  _notifyCheck: function(obj)
+  {
+    var val = $(obj).val();
+    var notifyDom = $(obj).closest('.options').find('.notify');
+    var personName = $(obj).find('option:selected').text();
+    
+    if(val == 'self' || val.substr(0,7) == 'person_')
+    {
+      var text = $(notifyDom).find('input[type=checkbox]').attr('rel-label-text');
+      text = text.replace('%s',personName);
+      $(notifyDom).find('label').text(text);
+      
+      $(notifyDom).show();
+    }
+    else
+    {
+      $(notifyDom).hide();
+    }
   }
 
 }
