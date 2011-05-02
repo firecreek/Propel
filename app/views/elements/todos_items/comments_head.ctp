@@ -1,6 +1,8 @@
 <?php
   $this->set('activeMenu','todos');
   $html->css('projects/todos', null, array('inline'=>false));
+  
+  $subscribe = true;
 ?>
 <div class="banner todositems-comment-head">
   <h2>
@@ -12,7 +14,24 @@
 
   <div class="record">
     <div class="wrapper listable"><?php
-      echo $this->element('todos_items/comments_record');
+      $prefix = '';
+      $class = null;
+      
+      if($record['TodoItem']['completed'])
+      {
+        $prefix = date('M j',strtotime($record['TodoItem']['completed_date']));
+        $class = 'completed';
+      }
+      
+      echo $listable->item('TodoItem',$id,$record['TodoItem']['description'],array(
+        'delete'    => false,
+        'edit'      => false,
+        'comments'  => false,
+        'class'     => $class,
+        'checked'   => $record['TodoItem']['completed'] ? true : false,
+        'prefix'    => $prefix,
+        'updateUrl' => $html->url(array('controller'=>'todos_items','action'=>'update',$id))
+      ));
     ?></div>
   </div>
 </div>
