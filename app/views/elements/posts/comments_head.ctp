@@ -23,11 +23,19 @@
   <div class="avatar"><?php echo $layout->avatar($record['Person']['user_id']); ?></div>
   <h3><?php echo $record['Post']['title']; ?></h3>
   <div class="detail">
+  
     <p><span><?php __('From'); ?>:</span> <?php echo $record['Person']['full_name']; ?></p>
+    
     <p><span><?php __('Date'); ?>:</span> <?php echo date('D, j M Y \a\t g:ma',strtotime($record['Post']['created'])); ?></p>
-    <?php if(isset($record['Category']['name']) && !empty($record['Category']['name'])): ?>
+    
+    <?php if(isset($record['Milestone']['id']) && !empty($record['Milestone']['id'])): ?>
+      <p><span><?php __('Milestone'); ?>:</span> <?php echo $this->Html->link($record['Milestone']['title'],array('controller'=>'milestones','action'=>'index','#Milestone-'.$record['Milestone']['id'])); ?></p>
+    <?php endif; ?>
+    
+    <?php if(isset($record['Category']['id']) && !empty($record['Category']['id'])): ?>
       <p><span><?php __('Category'); ?>:</span> <?php echo $this->Html->link($record['Category']['name'],array('controller'=>'posts','action'=>'index','category'=>$record['Category']['id'])); ?></p>
     <?php endif; ?>
+    
   </div>
   <div class="body restore-html">
     <?php
@@ -42,3 +50,4 @@
     ?>
   </div>
 </div>
+

@@ -138,7 +138,8 @@
      * @var array
      */
     public $commentBinds = array(
-      'Category'
+      'Category',
+      'Milestone'
     );
 
   }
