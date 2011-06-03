@@ -52,7 +52,7 @@
             'host'=> 'localhost',
             'login'=> 'root',
             'password'=> '',
-            'database'=> 'opencamp',
+            'database'=> 'propel',
             'schema'=> null,
             'prefix'=> null,
             'encoding' => 'UTF8',

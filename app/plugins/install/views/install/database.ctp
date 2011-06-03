@@ -4,33 +4,35 @@
     </div>
     <div class="content">
         <?php
-            echo $form->create('Install', array('url' => array('plugin' => 'install', 'controller' => 'install', 'action' => 'database')));
-            echo $form->input('Install.driver', array(
-                'label' => 'Driver',
-                'value' => 'mysql',
-                'empty' => false,
-                'options' => array(
-                    'mysql' => 'mysql',
-                    'mysqli' => 'mysqli',
-                    'sqlite' => 'sqlite',
-                    'postgres' => 'postgres',
-                    'mssql' => 'mssql',
-                    'db2' => 'db2',
-                    'oracle' => 'oracle',
-                    'firebird' => 'firebird',
-                    'sybase' => 'sybase',
-                    'odbc' => 'odbc',
-                ),
-            ));
-            //echo $form->input('Install.driver', array('label' => 'Driver', 'value' => 'mysql'));
-            echo $form->input('Install.host', array('label' => 'Host', 'value' => 'localhost'));
-            echo $form->input('Install.login', array('label' => 'User / Login', 'value' => 'root'));
-            echo $form->input('Install.password', array('label' => 'Password'));
-            echo $form->input('Install.database', array('label' => 'Name', 'value' => 'opencamp'));
-            echo $form->input('Install.port', array('label' => 'Port (leave blank if unknown)'));
-            
-            echo $form->button('Next',array('class'=>'button','type'=>'submit'));
-            echo $form->end();
+          echo $this->Session->flash();
+      
+          echo $this->Form->create('Install', array('url' => array('plugin' => 'install', 'controller' => 'install', 'action' => 'database'),'class'=>'block'));
+          echo $this->Form->input('Install.driver', array(
+              'label' => 'Driver',
+              'value' => 'mysql',
+              'empty' => false,
+              'options' => array(
+                  'mysql' => 'mysql',
+                  'mysqli' => 'mysqli',
+                  'sqlite' => 'sqlite',
+                  'postgres' => 'postgres',
+                  'mssql' => 'mssql',
+                  'db2' => 'db2',
+                  'oracle' => 'oracle',
+                  'firebird' => 'firebird',
+                  'sybase' => 'sybase',
+                  'odbc' => 'odbc',
+              ),
+          ));
+          //echo $this->Form->input('Install.driver', array('label' => 'Driver', 'value' => 'mysql'));
+          echo $this->Form->input('Install.host', array('label' => 'Host', 'value' => 'localhost'));
+          echo $this->Form->input('Install.login', array('label' => 'User / Login', 'value' => 'root'));
+          echo $this->Form->input('Install.password', array('label' => 'Password'));
+          echo $this->Form->input('Install.database', array('label' => 'Name', 'value' => 'propel'));
+          echo $this->Form->input('Install.port', array('label' => 'Port (leave blank if unknown)'));
+          
+          echo $this->Form->button('Next',array('class'=>'large','type'=>'submit'));
+          echo $this->Form->end();
         ?>
 
     </div>

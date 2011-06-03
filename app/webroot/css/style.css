@@ -1,3 +1,104 @@
+/**
+ * Default Propel Theme
+ *
+ * @package Propel
+ * @author Darren Moore <darren@propelhq.com>
+ */
+
+
+/**
+ * Reset
+ * ----------------------------------------------------
+ */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}
+
+
+/**
+ * Type
+ * ----------------------------------------------------
+ */
+* { margin: 0;}
+html, body { font-size:13px; background-color: #E5E5E5; height: 100%; }
+html, body, button { font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif; line-height:1.5; }
+
+h1, h2, h3, h4, h5 { font-family:Arial; }
+
+h3.sub { font-size:12px; border-bottom:1px solid black; margin:15px 0 5px; padding-bottom:2px; }
+
+hr {  }
+
+p.important, h3.important, h4.important { color:#C00; }
+
+p.note { color:#666; font-size:12px; }
+p.note span { text-transform:uppercase; font-weight:bold; }
+
+p.large { font-size:16px; font-family:arial; }
+
+a, a.normal { color:#03C; padding:0 1px; }
+a:hover, a.normal:hover { background-color:#03C; text-decoration:none; color:white; padding:0 1px; }
+
+a.strong { font-weight:bold !important; }
+
+a.important, .important a { color:red; }
+a.important:hover, .important a:hover { background-color:red; text-decoration:none; color:white; }
+a.important.active, .important a.active { background-color:#FC3; color:#000000; }
+
+a.unimportant, .unimportant a { color:#333; padding:0 1px; }
+a.unimportant:hover, .unimportant a:hover { background-color:#333; text-decoration:none; color:white; }
+form .text input.unimportant { color:#666; }
+p.unimportant { color:#666; }
+
+.error,
+.notice,
+.success,
+.message { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd; }
+.error { background: #FBE3E4; color: #D12F19; border-color: #FBC2C4; }
+.notice,
+.message { background: #FFF6BF; color: #817134; border-color: #FFD324; }
+.success { background: #E6EFC2; color: #529214; border-color: #C6D880; }
+.error a { color: #D12F19; }
+.notice a,
+.message a { color:#817134; }
+.success a { color:#529214; }
+
+
+
+p.highlight, label.highlight, h4.highlight { background-color:#FFC; }
+.highlight-bright { background-color:#FFF000; }
+
+p.overdue { color:#C00; }
+p.upcoming { color:#C93; }
+p.completed { color:#090; }
+
+.private { background-color:#FFE6EA !important; }
+.strike { text-decoration:line-through; }
+
+
+/** Paddings */
+.pad5 { padding:5px; }
+.pad10 { padding:10px; }
+.pad15 { padding:15px; }
+.pad20 { padding:20px; }
+
+
+/** Restore HTML */
+.restore-html p,
+	.restore-html ul,
+	.restore-html ol { margin-bottom:1em !important; }
+
+.restore-html ul, .restore-html ol { margin-left:1em; }
+
+.restore-html li { margin-left:1em; }
+.restore-html ul li { list-style-type:disc; }
+.restore-html ol li { list-style-type:decimal; }
+
+
+
+
+/**
+ * Elements
+ * ----------------------------------------------------
+ */
 
 
 /**
@@ -391,6 +492,9 @@ form.basic small { display:inline; margin-left:10px; }
 form.basic .intro { margin-bottom:5px; }
 form.basic h3 { margin-bottom:5px; }
 
+form.block {}
+form.block label { width:auto; display:block; }
+
 form.light input { font-weight:normal; }
 form.strong label { font-weight:bold; }
 
@@ -408,13 +512,13 @@ form p.light { color:#666; }
 /**
  * Buttons
  */
-.button.large {
+button.large, .button.large {
  font-size: 16px;
  padding: 8px 19px 9px;
 }
-.button.large:hover { padding: 8px 19px 9px; }
+button.large { padding:5px 19px 6px; }
 
-.button {
+button, .button {
  -webkit-box-shadow: rgba(0, 0, 0, 0.246094) 0px 1px 3px;
  background: #6f9e2c url(/img/overlay-button.png) repeat-x 0px 0px;
  border:none;
@@ -437,10 +541,9 @@ form p.light { color:#666; }
  width: auto;
 }
 
-.button:hover {
+button:hover, .button:hover {
  background-color: #8fb53c;
  color: white;
- padding: 5px 15px 6px;
 }
 
 
@@ -468,7 +571,6 @@ form p.light { color:#666; }
 
 .button.action.inline { background:none; border:none; border-radius:0; -webkit-box-shadow:none; box-shadow:none; padding:5px 15px 6px; margin-left:4px; }
 .button.action.inline span { font-weight:normal; font-size:12px; color:#666; font-family:"Lucida Grande", verdana; padding-top:2px; padding-bottom:3px; }
-
 
 
 /**
@@ -695,4 +797,5 @@ div.category-select .saving { background:url(/img/icons/loader-small-horizontal.
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
 /* End hide from IE-mac */
+
 

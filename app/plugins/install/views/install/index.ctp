@@ -39,7 +39,7 @@
             }
 
             if ($check) {
-                echo $html->link('Click here to begin installation', array('action' => 'database'),array('class'=>'button'));
+                echo $html->link(__('Click here to begin installation',true), array('action' => 'database'),array('class'=>'button large'));
             } else {
                 echo '<p>' . __('Installation cannot continue as minimum requirements are not met.', true) . '</p>';
             }
