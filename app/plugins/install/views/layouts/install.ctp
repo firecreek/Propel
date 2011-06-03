@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title><?php echo $title_for_layout; ?> - <?php __('Propel'); ?></title>
-    <?php
-        echo $html->css(array(
-            'style',
-            '/install/css/install',
-        ));
-        echo $scripts_for_layout;
-    ?>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title><?php echo $title_for_layout; ?> - <?php __('Propel'); ?></title>
+  <?php
+      echo $html->css(array(
+          'style',
+          '/install/css/install',
+      ));
+      echo $scripts_for_layout;
+  ?>
 </head>
-
 <body>
 
     <div id="wrapper" class="install">
@@ -31,5 +30,5 @@
     </div>
 
 
-    </body>
+</body>
 </html>
