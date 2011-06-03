@@ -178,9 +178,9 @@
                         $db->execute($create);
                     }
 
-                    $dataObjects = App::objects('class', APP . 'config' . DS . 'schema' . DS . 'data' . DS);
+                    $dataObjects = App::objects('class', APP . 'plugins' . DS . 'install' . DS . 'config' . DS . 'data' . DS);
                     foreach ($dataObjects as $data) {
-                        App::import('class', $data, false, APP . 'config' . DS . 'schema' . DS . 'data' . DS);
+                      App::import('class', $data, false, APP . 'plugins' . DS . 'install' . DS . 'config' . DS . 'data' . DS);
                         $classVars = get_class_vars($data);
                         $modelAlias = substr($data, 0, -4);
                         $table = $classVars['table'];
@@ -243,12 +243,12 @@
                 return false;
             }
 
-            // set new password for admin, hashed according to new salt value
+            //admin password
             $password = rand(10000,99999);
             
-            //$this->loadModel('User');
-            //$this->User->id = $this->User->field('id', array('username' => 'admin'));
-            //$this->User->saveField('password', Security::hash($password, null, $salt));
+            $this->loadModel('User');
+            $this->User->id = 1;
+            $this->User->saveField('password',Security::hash($password, null, $salt));
             
             $this->set(compact('password'));
         }
