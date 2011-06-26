@@ -361,7 +361,7 @@
       $cacheKey = 'prefix_'.$prefix.'_'.$this->read('Account.id');
       $permissions = Cache::read($cacheKey,'auth');
    
-      if(empty($permissions) || $name == 'Project')
+      if(empty($permissions))
       {      
         //Load model permissions
         $node = $this->Acl->Aco->node('controllers');
@@ -380,7 +380,7 @@
         $permissions = array();
         $records = $this->read(Inflector::pluralize($name));
         
-        if(Set::extract($records,'/Project[id='.$accessModelId.']'))
+        if(Set::extract($records,'/'.Inflector::camelize($name).'[id='.$accessModelId.']'))
         {
           //Person access ACO
           $personAccess = Set::extract($this->read('Person'),'/PersonAccess[model='.$name.'][model_id='.$accessModelId.']');
@@ -485,7 +485,7 @@
       $cacheKey = 'people_'.implode('_',$prefix);
       $people = Cache::read($cacheKey,'auth');
 
-      if(empty($people) || 1 == 1)
+      if(empty($people))
       {
         //Load people
         $people = $this->controller->Person->PersonAccess->find('all',array(
