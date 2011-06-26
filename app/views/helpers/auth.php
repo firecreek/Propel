@@ -21,6 +21,14 @@
     public $helpers = array('Session');
     
     
+    
+    public function __construct()
+    {
+      parent::__construct();
+      
+      $this->Router =& Router::getInstance();
+    }
+    
     /**
      * Check permission
      *
@@ -29,9 +37,29 @@
      * @access public
      * @return boolean
      */
-    public function check($alias,$type)
+    public function check($model,$controller = null,$action = null)
     {
-      return $this->Session->read('AuthAccount.Permissions.'.$alias.'.'.$type);
+      $isAllowed = false;
+      $permissions = $this->Session->read('AuthAccount.Permissions');
+      
+      if(is_array($model))
+      {
+        $url = $this->Router->parse($this->url($model));
+        
+        $controller = $url['controller'];
+        $model = $url['prefix'];
+        $action = $url['action'];
+        
+        if(isset($url['prefix'])) { $action = $url['prefix'].'_'.$action; }
+      }
+      else
+      {
+      }
+      
+      $isAllowed = Set::extract($permissions,'/'.Inflector::camelize($model).'[controller='.Inflector::camelize($controller).'][action='.$action.'][read=1]');
+      if(!empty($isAllowed)) { $isAllowed = true; }
+      
+      return $isAllowed;
     }
     
     

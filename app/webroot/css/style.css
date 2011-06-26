@@ -512,11 +512,6 @@ form p.light { color:#666; }
 /**
  * Buttons
  */
-button.large, .button.large {
- font-size: 16px;
- padding: 8px 19px 9px;
-}
-button.large { padding:5px 19px 6px; }
 
 button, .button {
  -webkit-box-shadow: rgba(0, 0, 0, 0.246094) 0px 1px 3px;
@@ -546,9 +541,15 @@ button:hover, .button:hover {
  color: white;
 }
 
+button.large, .button.large {
+ font-size: 16px;
+ padding: 8px 19px 9px;
+}
+button.large { padding:5px 19px 6px; }
 
 .button.action {
   background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5));
+  background:-moz-linear-gradient(top,  #FDFDFD,  #E5E5E5);
   color:#000000;
   text-shadow: rgba(255, 255, 255, 0.246094) 0px -1px 1px;
   border-radius: 12px;

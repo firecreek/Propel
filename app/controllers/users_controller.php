@@ -36,16 +36,6 @@
      */
     public $uses = array('User','Person','Account');
     
-    /**
-     * Auth allow
-     *
-     * @var array
-     * @access public
-     */
-    public $authAllow = array(
-      'account_edit'
-    );
-    
     
     /**
      * Before filter
@@ -69,6 +59,7 @@
      */
     public function register()
     {
+    
       //$this->_checkUser();
       
       if(!empty($this->data))
@@ -99,14 +90,11 @@
             $this->loadModel('Category');
             $this->Category->createDefaults($this->User->Account->id);
             
-            //Create ACO for this account
-            $this->AclManager->create('accounts',$this->User->Account->id);
+            //Add person to account
+            $this->AclManager->allow($this->User->Person,$this->User->Account);
             
-            //Give this person permission for this account
-            $this->AclManager->allow($this->User->Person, 'accounts', $this->User->Account->id, array('set' => 'owner'));
-            
-            //Give this company permission for this account
-            $this->AclManager->allow($this->User->Company, 'accounts', $this->User->Account->id);
+            //Add company to account
+            $this->AclManager->allow($this->User->Company,$this->User->Account);
             
             //Create directories for saving files
             //@todo Move this
@@ -275,26 +263,27 @@
     
       //Attempting to login
       if(!empty($this->data) && $this->Authorization->login($this->data))
-      {
-        $accountSlug = $this->Session->read('Auth.Account.slug');
-      
-        //Check account to log into
-        if(isset($account) && $this->Account->hasAccess($account['Account']['id'],$this->Session->read('Auth')))
-        {
-          $accountSlug = $account['Account']['slug'];
-        }
-      
+      {      
         //Redirect
         if($this->Authorization->user('role_id') == 1)
         {
           $this->redirect(array(
             'prefix'      => 'admin',
+            'admin'       => true,
             'controller'  => 'dashboard',
             'action'      => 'index'
           ));
         }
         else
         {
+          $accountSlug = $this->Session->read('Auth.Account.slug');
+        
+          //Check account to log into
+          if(isset($account) && $this->Account->hasAccess($account['Account']['id'],$this->Session->read('Auth')))
+          {
+            $accountSlug = $account['Account']['slug'];
+          }
+          
           $this->redirect(array(
             'controller'  => 'accounts',
             'action'      => 'index',

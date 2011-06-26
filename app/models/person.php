@@ -27,7 +27,6 @@
      * @var array
      */
     public $actsAs = array(
-      'Acl' => array('type' => 'requester'),
       'Containable',
       'Cached' => array(
         'prefix' => array(
@@ -150,11 +149,11 @@
         'foreignKey' => 'person_id',
         'dependent' => false
       ),
-      'Time' => array(
+      /*'Time' => array(
         'className' => 'Time',
         'foreignKey' => 'person_id',
         'dependent' => false
-      ),
+      ),*/
       'Todo' => array(
         'className' => 'Todo',
         'foreignKey' => 'person_id',
@@ -164,6 +163,11 @@
         'className' => 'TodoItem',
         'foreignKey' => 'person_id',
         'dependent' => false
+      ),
+      'PersonAccess' => array(
+        'className' => 'PersonAccess',
+        'foreignKey' => 'person_id',
+        'dependent' => true
       ),
       /*'TodoItemResponsible' => array(
         'className' => 'TodoItem',
@@ -188,17 +192,6 @@
       parent::__construct($id, $table, $ds);
       
       $this->virtualFields['full_name'] = sprintf('CONCAT(%s.first_name, " ", %s.last_name)', $this->alias, $this->alias);
-    }
-    
-    
-    /**
-     * Parent Node
-     *
-     * @access public
-     * @return void
-     */
-    public function parentNode()
-    {
     }
     
     
@@ -253,88 +246,54 @@
     
     
     /**
-     * Persons project permissions
+     * Aro record
      *
-     * @todo Make this generic for any type of aro model and data
      * @access public
-     * @return boolean
+     * @return void
      */
-    public function projectPermissions($id)
+    public function aro(&$model,$create = false)
     {
-      $this->Acl = ClassRegistry::init('Aro');
-      $this->Aco = ClassRegistry::init('Aco');
-    
-      //Find Aros for Person
-      $aro = $this->Aro->find('first', array(
-        'conditions' => array(
-          'Aro.model' => 'Person',
-          'Aro.foreign_key' => $id,
-        ),
+      $data = array(
+        'person_id' => $this->id,
+        'model' => $model->alias,
+        'model_id' => $model->id
+      );
+      
+      $record = $this->PersonAccess->find('first',array(
+        'conditions' => $data,
         'recursive' => -1
       ));
-      $aroId = $aro['Aro']['id'];
       
-      //Load Acos
-      $records = $this->Aco->Permission->find('all',array(
-        'conditions' => array(
-          'Permission.aro_id' => $aroId,
-          'Permission._read' => true,
-          'Aco.model' => 'Projects',
-        ),
-        'fields' => array('Aco.foreign_key','Permission.*')
-      ));
-      
-      $projects = null;
-      
-      if(!empty($records))
+      if(empty($record) && $create)
+      {        
+        //Create access
+        $this->PersonAccess->create();
+        $this->PersonAccess->save($data);
+      }
+      elseif(!empty($record))
       {
-        $projects = ClassRegistry::init('Project')->find('all',array(
-          'conditions' => array(
-            'Project.id'      => Set::extract($records,'{n}.Aco.foreign_key'),
-            'Project.status'  => 'active'
-          ),
-          'fields' => array('id','name'),
-          'contain' => false
-        ));
+        $this->PersonAccess->id = $record['PersonAccess']['id'];
       }
       
-      return $projects;
+      return $this->PersonAccess;
     }
-    
     
     
     /**
-     * Check if a user has permission
+     * After Delete Aro
      *
-     * @todo Make this generic for any type of aro model and data
      * @access public
      * @return boolean
      */
-    public function hasPermission($id,$model,$projectId)
+    public function afterAroDelete($aro,$aco)
     {
-      $this->Acl = ClassRegistry::init('Aro');
-      $this->Aco = ClassRegistry::init('Aco');
-    
-      //Find Aros for Person
-      $aro = $this->Aro->find('first', array(
-        'conditions' => array(
-          'Aro.model' => 'Person',
-          'Aro.foreign_key' => $id,
-        ),
-        'recursive' => -1
-      ));
-      $aroId = $aro['Aro']['id'];
-      
-      //Load Acos
-      return $this->Aco->Permission->find('count',array(
-        'conditions' => array(
-          'Permission.aro_id' => $aroId,
-          'Permission._read' => true,
-          'Aco.model' => $model,
-          'Aco.foreign_key' => $projectId
-        )
+      return $this->PersonAccess->deleteAll(array(
+        'person_id' => $aro->id,
+        'model' => $aco->alias,
+        'model_id' => $aco->id
       ));
     }
+    
 
   }
   

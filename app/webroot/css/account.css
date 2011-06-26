@@ -61,7 +61,12 @@ nav.tabs li a { background-color:#217A00; text-decoration:none; float:left; marg
 nav.tabs li a:hover { background-color:#054700; }
 nav.tabs li:last-child a { margin-right:0; }
 
-nav.tabs li.active a { color:#000; font-weight:bold; background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5)); }
+nav.tabs li.active a {
+	color:#000;
+	font-weight:bold;
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5));
+	background:-moz-linear-gradient(top,  #FDFDFD,  #E5E5E5);
+}
 
 
 

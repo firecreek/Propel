@@ -36,16 +36,6 @@
      */
     public $uses = array('Person','Company');
     
-    /**
-     * Action map
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'invite_resend'      => '_create'
-    );
-    
     
     /**
      * Add
@@ -81,7 +71,8 @@
           $this->Person->save();
           
           //Give this person permission for this account
-          $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'shared'));
+          $this->Account->id = $this->Authorization->read('Account.id');
+          $this->AclManager->allow($this->Person, $this->Account);
           
           //
           $data = $this->data;
@@ -121,6 +112,7 @@
           'Company.account_id' => $this->Authorization->read('Account.id')
         ),
         'contain' => array(
+          'PersonAccess' => array(),
           'Company' => array('id'),
           'User' => array()
         )
@@ -141,30 +133,31 @@
           $updated = 0;
           foreach($this->data['Permission'] as $projectId => $checked)
           {
-            if($checked != $this->Person->hasPermission($personId,'Projects',$projectId) || 1 == 1)
+            $this->Person->id = $personId;
+            $this->Project->id = $projectId;
+            
+            if($checked != $this->AclManager->check($this->Person,$this->Project))
             {
               //Company id
               $this->Project->id = $projectId;
-              $companyId = $this->Project->field('company_id');
             
               $updated++;
               if(!$checked)
               {
                 //Remove access to this project
-                $this->Person->id = $personId;
-                $this->AclManager->delete($this->Person, 'projects', $projectId, null, array('all'=>true));
+                $this->AclManager->delete($this->Person,$this->Project);
               }
               else
               {
                 //Add default access to this project
-                $this->Person->id = $personId;
-                $this->AclManager->allow($this->Person, 'projects', $projectId, array('set'=>'shared','delete'=>true));
+                $this->AclManager->allow($this->Person,$this->Project);
                 
                 //Company access
-                $this->User->Company->id = $companyId;
-                $this->AclManager->allow($this->User->Company, 'projects', $projectId);
+                $this->User->Company->id = $this->Person->field('company_id');
+                $this->AclManager->allow($this->User->Company,$this->Project);
               }
             }
+            
           }
           
           //Flash
@@ -205,7 +198,7 @@
         $this->data = $record;
       }
       
-      //Projects and users permissions to them
+      //Projects for this account
       $projects = $this->Project->find('all',array(
         'conditions' => array(
           'Project.account_id' => $this->Authorization->read('Account.id')
@@ -213,10 +206,20 @@
         'fields' => array('id','name','status'),
         'contain' => false
       ));
-      $projectPermissions = $this->Person->projectPermissions($personId);
-      $projectPermissions = Set::combine($projectPermissions,'{n}.Project.id','{n}.Project.name');
       
-      $this->set(compact('personId', 'record', 'companies','projects','projectPermissions'));
+      //Access person has to projects
+      foreach($projects as $key => $project)
+      {
+        $access = false;
+        if(Set::extract($record,'/PersonAccess[model=Project][model_id='.$project['Project']['id'].']'))
+        {
+          $access = true;
+        }
+        
+        $projects[$key]['Project']['_access'] = $access;
+      }
+      
+      $this->set(compact('personId', 'record', 'companies','projects'));
     }
     
     
@@ -229,7 +232,7 @@
      */
     public function account_delete($personId)
     {
-      if($this->Person->delete($personId))
+      if($this->Person->delete($personId,true))
       {
         $this->Session->setFlash(__('Person removed from account',true),'default',array('class'=>'success'));
       }
@@ -238,7 +241,7 @@
         $this->Session->setFlash(__('There was a problem deleting this person, please try again',true),'default',array('class'=>'error'));
       }
       
-      $this->redirect($this->referer());
+      $this->redirect(array('controller'=>'companies','action'=>'index'));
     }
     
     
@@ -333,11 +336,12 @@
         {
           $this->Person->save();
           
-          //Give this person permission for this account
-          $this->AclManager->allow($this->Person, 'accounts', $this->Authorization->read('Account.id'), array('set' => 'shared'));
+          $this->Account->id = $this->Authorization->read('Account.id');
+          $this->Project->id = $this->Authorization->read('Project.id');
           
-          //Give this person permission for this project
-          $this->AclManager->allow($this->Person, 'projects', $this->Authorization->read('Project.id'), array('set' => 'shared'));
+          //Add permissions
+          $this->AclManager->allow($this->Person, $this->Account);
+          $this->AclManager->allow($this->Person, $this->Project);
           
           //
           $data = $this->data;
@@ -350,7 +354,7 @@
           
           //Message and redirect
           $this->Session->setFlash(__('Person added to company',true),'default',array('class'=>'success'));
-          $this->redirect(array('controller'=>'companies','action'=>'permissions'));
+          $this->redirect(array('controller'=>'companies','action'=>'index'));
         }
         else
         {

@@ -73,7 +73,7 @@
     ?>
   
     <?php
-      if($this->Auth->check('Account.Projects','create'))
+      if($this->Auth->check(array('controller'=>'projects','action'=>'add')))
       {
         echo $layout->button(__('Create a new project',true),array('controller'=>'projects','action'=>'add'),'large add');
       }

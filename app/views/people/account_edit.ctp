@@ -111,7 +111,7 @@
             <?php
               foreach($projects as $project)
               {
-                $checked = isset($projectPermissions[$project['Project']['id']]) ? true : false;
+                $checked = $project['Project']['_access'] ? true : false;
                 echo $form->input('Permission.'.$project['Project']['id'],array('label'=>$project['Project']['name'],'type'=>'checkbox','checked'=>$checked));
               }
             ?>

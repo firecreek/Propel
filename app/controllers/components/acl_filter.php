@@ -29,32 +29,28 @@
     public $components = array('Authorization','AclManager','Acl','Session');
     
     /**
-     * CRUD permission map
+     * Controller to check
      *
      * @access public
-     * @var array
+     * @var string
      */
-    public $actionMap = array(
-      'index'     => '_read',
-      'view'      => '_read',
-      'comments'  => '_read',
-      'edit'      => '_update',
-      'add'       => '_create',
-      'delete'    => '_delete',
-      'update'    => '_update',
-    );
-    
+    public $authController = null;
     
     /**
-     * Checks with Auth model behavior if record can be modified
+     * Action to check
      *
      * @access public
-     * @var array
+     * @var string
      */
-    public $modelAuthCheck = array(
-      '_update'  => true,
-      '_delete'  => true
-    );
+    public $authAction = null;
+    
+    /**
+     * Model to check
+     *
+     * @access public
+     * @var string
+     */
+    public $authModel = null;
     
 
     /**
@@ -74,13 +70,10 @@
       $this->Authorization->loginAction = array('prefix' => false, 'controller' => 'users', 'action' => 'login');
       $this->Authorization->logoutRedirect = array('prefix' => false, 'controller' => 'users', 'action' => 'login');
       $this->Authorization->userScope = array('User.status' => 1);
-      $this->Authorization->actionPath = 'openbase/';
+      $this->Authorization->actionPath = 'controllers/';
       
-      //Extended action map
-      if(isset($this->controller->actionMap))
-      {
-        $this->actionMap = array_merge($this->actionMap,$this->controller->actionMap);
-      }
+      $this->authController = $this->controller->name;
+      $this->authAction = $this->controller->action;
     }
 
 
@@ -112,63 +105,26 @@
          * Permission checking
          */        
         $isAllowed  = false;
-        $prefix     = isset($this->controller->params['prefix']) ? $this->controller->params['prefix'] : null;
-        $modelId    = $this->Authorization->read('Prefix.id');
-        $accountId  = $this->Authorization->read('Account.id');
-        $personAro  = $this->Authorization->read('Person._aro_id');
         
-        //Action map
-        $action     = str_replace($prefix.'_','',$this->controller->action);
-        $actionKey  = $this->actionMap[$action];
+        $prefix      = $this->Authorization->read('Prefix');
+        $permissions = $this->Authorization->read('Permissions');
         
-        //Controller name to check
-        if(!isset($this->controllerName))
+        //Controller permissions
+        $isAllowed = $this->Authorization->check($prefix['name'],$this->authController,$this->authAction);
+
+        if(!$isAllowed)
         {
-          if(isset($this->controller->associatedController))
-          {
-            $this->controllerName = $this->controller->associatedController;
-          }
-          else
-          {
-            $this->controllerName = $this->controller->name;
-          }
-        }
-        
-        //Check if this person is allowed to be in this controller and has the correct CRUD access
-        $permissionNode = $this->AclManager->acoNode('opencamp/'.Inflector::pluralize($prefix).'/'.$modelId.'/'.$this->controllerName);
-        
-        if(!empty($permissionNode))
-        {        
-          $isAllowed = $this->controller->Acl->Aco->Permission->find('count', array(
-            'conditions' => array(
-              'Aro.model' => 'Person',
-              'Permission.aco_id' => $permissionNode[0]['Aco']['id'],
-              'Permission.aro_id' => $this->Authorization->read('Person._aro_id'),
-              'Permission.'.$actionKey => true
-            ),
-            'cache' => array(
-              'name' => 'permission_'.$permissionNode[0]['Aco']['id'].'_'.$this->Authorization->read('Person._aro_id').$actionKey,
-              'config' => 'acl',
-            )
-          ));
-          
-          if(!$isAllowed)
-          {
-            $this->cakeError('badCrudAccess');
-          }
+          $this->cakeError('badCrudAccess');
         }
         
         //Check record
         //This will force set the isAllowed variable to false if problems are found
         //Loads in more data so correct error messages can be given
         if(
-          $actionKey !== '_create' &&
+          isset($this->modelId) || 
           (
-            isset($this->modelId) || 
-            (
-              isset($this->controller->params['pass'][0]) && 
-              is_numeric($this->controller->params['pass'][0]))
-            )
+            isset($this->controller->params['pass'][0]) && 
+            is_numeric($this->controller->params['pass'][0]))
           )
         {
           if(!isset($this->modelId))
@@ -177,16 +133,13 @@
           }
           
           //Check individual record belongs to this prefix and privacy settings
-          if(isset($this->controller->modelAlias))
+          $modelAlias = Inflector::classify($this->authController);
+          if(!empty($this->authModel))
           {
-            $modelAlias = $this->controller->modelAlias;
-          }
-          else
-          {
-            $modelAlias = Inflector::classify($this->controllerName);
+            $modelAlias = $this->authModel;
           }
           
-          $fieldKey   = $prefix.'_id';
+          $fieldKey = $prefix['name'].'_id';
           
           //Check record
           if(
@@ -225,15 +178,15 @@
               'fields' => $fields
             ));
             
-            //Check if private
+            //Check record
             if(empty($modelRecord))
             {
               //No record found
               $this->cakeError('recordNotFound');
             }
-            elseif($modelRecord[$modelAlias][$fieldKey] != $modelId)
+            elseif($modelRecord[$modelAlias][$fieldKey] != $prefix['id'])
             {
-              //Record not matching the prefix
+              //Record not matching the prefix record id, e.g. project_id=7 but record shows project_id=1
               $this->cakeError('recordWrongPrefix');
             }
             elseif(isset($modelRecord[$modelAlias]['private']) && $modelRecord[$modelAlias]['private'] == true)
@@ -245,9 +198,7 @@
               }
             }
           }
-          
         }
-      
       
         //Throw error
         if(!$isAllowed)

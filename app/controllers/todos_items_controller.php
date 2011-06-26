@@ -37,16 +37,6 @@
     public $uses = array('TodoItem','Todo');
     
     /**
-     * Action map
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'update_positions'      => '_update'
-    );
-    
-    /**
      * Before filter
      *
      * @access public

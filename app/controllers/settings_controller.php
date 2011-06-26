@@ -37,18 +37,6 @@
     public $uses = array('Setting','Account');
     
     /**
-     * Uses
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'appearance'  => '_update',
-      'logo'        => '_update',
-      'categories'  => '_update',
-    );
-    
-    /**
      * Scheme keys
      *
      * @access public

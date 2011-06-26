@@ -27,6 +27,7 @@
      * @var array
      */
     public $actsAs = array(
+      'Acl' => array('type' => 'controlled'),
       'Containable',
       'Cached' => array(
         'prefix' => array(
@@ -109,6 +110,19 @@
         'dependent' => false
       )
     );
+    
+    
+    
+    /**
+     * Parent ACO node
+     *
+     * @access public
+     * @return string
+     */
+    public function parentNode()
+    {
+      return 'models';
+    }
     
     
     /**

@@ -61,7 +61,7 @@
       foreach($links as $key => $link)
       {
         //Check if person has access to this controller
-        if($options['permissions'] && !$this->Auth->check($options['permissions'].'.'.Inflector::camelize($link['url']['controller']),'read'))
+        if($options['permissions'] && !$this->Auth->check($link['url']))
         {
           continue;
         }

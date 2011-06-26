@@ -36,16 +36,6 @@
      */
     public $uses = array('Post','Comment','Category');
     
-    /**
-     * Action map
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'move_project'     => '_update'
-    );
-    
     
     /**
      * Project list posts
@@ -115,10 +105,10 @@
         ),
         'group' => 'Post.id',
         'order' => 'Post.id DESC',
-        'cache' => array(
+        /*'cache' => array(
           'name' => 'post_'.$categoryId,
           'config' => 'system'
-        )
+        )*/
       ));
       
       

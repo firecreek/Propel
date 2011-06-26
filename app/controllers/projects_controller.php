@@ -36,16 +36,6 @@
      */
     public $uses = array('Project','Company','Log');
     
-    /**
-     * Action map
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'start'      => '_read',
-    );
-    
     
     /**
      * Index
@@ -72,16 +62,12 @@
             $this->loadModel('Category');
             $this->Category->createDefaults($this->Authorization->read('Account.id'),$this->Project->id);
             
-            //Create ACO for this account
-            $this->AclManager->create('projects',$this->Project->id);
-            
             //Give this person permission for this project
             $this->User->Person->id = $this->Authorization->read('Person.id');
-            $this->AclManager->allow($this->User->Person, 'projects', $this->Project->id, array('set' => 'owner'));
+            $this->AclManager->allow($this->User->Person,$this->Project);
             
-            //Give this company permission for this project
             $this->User->Company->id = $this->Authorization->read('Company.id');
-            $this->AclManager->allow($this->User->Company, 'projects', $this->Project->id);
+            $this->AclManager->allow($this->User->Company,$this->Project);
             
             //Create a new company?
             if(isset($this->data['Permission']['action']) && $this->data['Permission']['action'] == 'add')

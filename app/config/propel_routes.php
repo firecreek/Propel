@@ -7,6 +7,7 @@
     return;
   }
   
+  
   //Connect named
   Router::connectNamed(array('category','view'));
   

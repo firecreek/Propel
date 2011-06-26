@@ -9,7 +9,7 @@
       </div>
       <div class="content">
         
-        <?php if($this->Auth->check('Account.Projects','create')): ?>
+        <?php if($this->Auth->check('Account','Projects','account_add')): ?>
           
           <div class="start-bar">
             <h2><?php echo $html->link(__('Create your first project',true),array('controller'=>'projects','action'=>'add')); ?></h2>

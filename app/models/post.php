@@ -37,8 +37,8 @@
     public $actsAs = array(
       'Containable',
       'Auth',
-      'Commentable',
       'Private',
+      'Commentable',
       'Loggable' => array(
         'titleField' => 'title'
       ),

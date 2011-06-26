@@ -36,17 +36,6 @@
      */
     public $uses = array('Comment');
     
-    /**
-     * Action map
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'unsubscribe' => '_read',
-      'subscribe'   => '_read',
-    );
-    
     public $authPrefix = 'project';
     
     
@@ -57,13 +46,19 @@
      * @return void
      */
     public function beforeFilter()
-    {
+    {    
+      //
       $this->associatedController = Inflector::pluralize(Inflector::classify($this->params['associatedController']));
       
       //Associated controller model
       $this->modelAlias = str_replace('s_','_',$this->params['associatedController']);
       $this->modelAlias = Inflector::classify($this->modelAlias);
       $this->loadModel($this->modelAlias);
+      
+      //ACL options for checking
+      $this->AclFilter->authController  = Inflector::pluralize(Inflector::classify($this->params['associatedController']));
+      $this->AclFilter->authAction      = 'project_'.$this->action;
+      $this->AclFilter->authModel       = $this->modelAlias;
       
       //
       $this->Comment->associatedAlias = $this->modelAlias;

@@ -134,6 +134,18 @@
     
     
     /**
+     * Parent Node
+     *
+     * @access public
+     * @return void
+     */
+    public function parentNode()
+    {
+      return false;
+    }
+    
+    
+    /**
      * Validation check if company name is unique to this account
      *
      * @access public
@@ -165,49 +177,6 @@
       ));
       
       return $check > 0 ? false : true;
-    }
-    
-    
-    /**
-     *
-     */
-    public function parentNode()
-    {
-    }
-    
-    
-    
-    /**
-     * Check if a user has permission
-     *
-     * @todo Move to behavior
-     * @access public
-     * @return boolean
-     */
-    public function hasPermission($id,$model,$projectId)
-    {
-      $this->Acl = ClassRegistry::init('Aro');
-      $this->Aco = ClassRegistry::init('Aco');
-    
-      //Find Aros for Person
-      $aro = $this->Aro->find('first', array(
-        'conditions' => array(
-          'Aro.model' => 'Company',
-          'Aro.foreign_key' => $id,
-        ),
-        'recursive' => -1
-      ));
-      $aroId = $aro['Aro']['id'];
-      
-      //Load Acos
-      return $this->Aco->Permission->find('count',array(
-        'conditions' => array(
-          'Permission.aro_id' => $aroId,
-          'Permission._read' => true,
-          'Aco.model' => $model,
-          'Aco.foreign_key' => $projectId
-        )
-      ));
     }
 
   }

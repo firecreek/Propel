@@ -93,7 +93,7 @@
     <div class="col right">
 
       <?php
-        if($auth->check('Project.Todos','create'))
+        if($auth->check(array('controller'=>'todos','action'=>'add')))
         {
           echo $layout->button(__('New to-do list',true),array('controller'=>'todos','action'=>'add'),'large add');
         }

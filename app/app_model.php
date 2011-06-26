@@ -146,44 +146,22 @@
      * @return boolean True on success, false on failure
      * @access public
      */
-    public function updateAll($fields, $conditions = true, $options = array())
+    public function updateAll($fields, $conditions = true)
     {
-      $_options = array(
-        'callbacks' => true
-      );
-      $options = array_merge($_options,$options);
-    
-      $args = func_get_args();
-      $output = call_user_func_array(array('parent', 'updateAll'), $args);
-      if ($output)
-      {
-          if(!empty($conditions[$this->alias.'.id']))
-          {
-            $this->id = $conditions[$this->alias.'.id'];
-          }
-          elseif(!empty($conditions['id']))
-          {
-            $this->id = $conditions['id'];
-          }
-          else
-          {
-            $this->id = false;
-          }
-      
-          if($options['callbacks'])
-          {
+        $args = func_get_args();
+        $output = call_user_func_array(array('parent', 'updateAll'), $args);
+        if ($output) {
             $created = false;
+            $options = array();
             $this->Behaviors->trigger($this, 'afterSave', array(
                 $created,
                 $options,
             ));
             $this->afterSave($created);
-          }
-          
-          $this->_clearCache();
-          return true;
-      }
-      return false;
+            $this->_clearCache();
+            return true;
+        }
+        return false;
     }
     
   }

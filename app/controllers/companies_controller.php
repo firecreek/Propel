@@ -36,16 +36,6 @@
      */
     public $uses = array('Company');
     
-    /**
-     * Action map
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'permissions'  => '_update'
-    );
-    
     
     /**
      * Index
@@ -56,6 +46,7 @@
     public function account_index()
     {
       $records = $this->_people();
+      
       $this->set(compact('records'));
     }
     
@@ -80,7 +71,8 @@
           if($this->Company->save($this->data))
           {
             //Grant permission for company
-            $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'));
+            $this->Account->id = $this->Authorization->read('Account.id');
+            $this->AclManager->allow($this->Company, $this->Account);
             
             //Redirect
             $this->Session->setFlash(__('Company created',true), 'default', array('class'=>'success'));
@@ -189,19 +181,6 @@
      */
     public function project_index()
     {
-      $records = $this->_people();
-      $this->set(compact('records'));
-    }
-    
-    
-    /**
-     * Project permissions
-     *
-     * @access public
-     * @return void
-     */
-    public function project_permissions()
-    {
       $this->loadModel('Person');
     
       $grantMap = array(
@@ -226,7 +205,8 @@
             {
               //Remove person from accessing this project
               $this->Person->id = $personId;
-              $this->AclManager->delete($this->Person, 'projects', $this->Authorization->read('Project.id'), null, array('all'=>true));
+              $this->Project->id = $this->Authorization->read('Project.id');
+              $this->AclManager->delete($this->Person, $this->Project);
               $deleted[] = $personId;
             }
           }
@@ -274,7 +254,7 @@
           $this->Session->setFlash(__('No changes made to permissions',true));
         }
         
-        $this->redirect(array('action'=>'permissions'));
+        $this->redirect(array('action'=>'index'));
       }
     
     
@@ -282,34 +262,27 @@
       $projectId = $this->Authorization->read('Project.id');
       $companies = $this->Authorization->read('Companies');
       
+      
       foreach($companies as $key => $company)
       {
         $people = $this->Company->Person->find('all',array(
           'conditions' => array('Person.company_id'=>$company['Company']['id']),
           'fields' => array('id','first_name','last_name','full_name','status','email','company_owner'),
-          'contain' => false,
+          'contain' => array(
+            'PersonAccess'
+          ),
           'order' => 'Person.first_name ASC'
         ));
         
         foreach($people as $personKey => $person)
         {
-          $this->Person->id = $person['Person']['id'];
-          $grantKey = null;
-          
-          if($this->AclManager->check($this->Person, 'projects', $projectId, 'Milestones'))
+          $access = false;
+          if(Set::extract($person,'/PersonAccess[model=Project][model_id='.$projectId.']'))
           {
-            $grantKey = 3;
-          }
-          elseif($this->AclManager->check($this->Person, 'projects', $projectId, 'Todos'))
-          {
-            $grantKey = 2;
-          }
-          elseif($this->AclManager->check($this->Person, 'projects', $projectId, 'Posts'))
-          {
-            $grantKey = 1;
+            $access = true;
           }
           
-          $people[$personKey]['Person']['_grantKey'] = $grantKey;
+          $people[$personKey]['Person']['_access'] = $access;
         }
         
         $companies[$key]['People'] = Set::extract($people,'{n}.Person');
@@ -372,7 +345,8 @@
           {
             //Grant permission for company to project
             $this->Company->id = $this->data['Company']['id'];
-            $this->AclManager->allow($this->Company, 'projects', $this->Authorization->read('Project.id'));
+            $this->Project->id = $this->Authorization->read('Project.id');
+            $this->AclManager->allow($this->Company, $this->Project);
             
             //Add people to this project
             if($this->data['Permission']['add_people'])
@@ -400,7 +374,7 @@
             $this->Session->setFlash(__('You do not have permission to add the company',true), 'default', array('class'=>'error'));
           }
           
-          $this->redirect(array('controller'=>'companies','action'=>'permissions'));
+          $this->redirect(array('controller'=>'companies','action'=>'index'));
         }
         else
         {
@@ -414,15 +388,16 @@
           {
             if($this->Company->save($this->data))
             {
-              //Grant permission for company to account
-              $this->AclManager->allow($this->Company, 'accounts', $this->Authorization->read('Account.id'));
-              
-              //Grant permission for company to project
-              $this->AclManager->allow($this->Company, 'projects', $this->Authorization->read('Project.id'));
+              $this->Account->id = $this->Authorization->read('Account.id');
+              $this->Project->id = $this->Authorization->read('Project.id');
+            
+              //Grant permissions
+              $this->AclManager->allow($this->Company, $this->Account);
+              $this->AclManager->allow($this->Company, $this->Project);
               
               //Redirect
               $this->Session->setFlash(__('Company created',true), 'default', array('class'=>'success'));
-              $this->redirect(array('controller'=>'companies','action'=>'permissions'));
+              $this->redirect(array('controller'=>'companies','action'=>'index'));
             }
             else
             {
@@ -454,13 +429,18 @@
     {
       //Delete permission for company
       $this->Company->id = $id;
-      $this->AclManager->delete($this->Company, 'projects', $this->Authorization->read('Project.id'), null, array('all'=>true));
-      
-      //Remove all people associated with this company
-      $people = $this->Company->Person->find('all',array(
-        'conditions' => array('Person.company_id'=>$id),
-        'fields' => array('id'),
-        'contain' => false
+      $this->Project->id = $this->Authorization->read('Project.id');
+      $this->AclManager->delete($this->Company,$this->Project);
+
+      //Remove all people associated with this company from this project
+      $people = $this->Company->Person->PersonAccess->find('all',array(
+        'conditions' => array(
+          'PersonAccess.model' => 'Project',
+          'Person.company_id'  => $id
+        ),
+        'contain' => array(
+          'Person' => array('id')
+        )
       ));
       
       if(!empty($people))
@@ -468,12 +448,12 @@
         foreach($people as $person)
         {
           $this->Person->id = $person['Person']['id'];
-          $this->AclManager->delete($this->Person, 'projects', $this->Authorization->read('Project.id'), null, array('all'=>true));
+          $this->AclManager->delete($this->Person, $this->Project);
         }
       }
       
       $this->Session->setFlash(__('Company has been removed from this project',true),'default',array('class'=>'success'));
-      $this->redirect(array('action'=>'permissions'));
+      $this->redirect(array('action'=>'index'));
     }
     
     

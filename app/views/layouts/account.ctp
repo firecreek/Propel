@@ -6,8 +6,7 @@
   <?php
     echo $html->css(array(
       'reset',
-      'type',
-      'elements',
+      'style',
       'account',
       'listable'
     ));

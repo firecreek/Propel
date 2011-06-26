@@ -45,118 +45,60 @@
       $this->folder = new Folder;
     }
     
+    
+    /**
+     * Allow access
+     *
+     * @access public
+     * @return boolean
+     */
+    public function allow(&$model,&$aco)
+    {
+      if(method_exists($model,'aro'))
+      {
+        $aro = $model->aro($aco,true);
+      }
+      else
+      {
+        $aro = $model;
+      }
+      
+      if($this->Acl->allow($aro, $aco))
+      {
+        $this->clearAuthCache($model);
+        return true;
+      }
+      return false;
+    }
+    
+    
+    
+    /**
+     * Deny access
+     *
+     * @access public
+     * @return boolean
+     */
+    public function deny(&$model,&$aco)
+    {
+      if(method_exists($model,'aro'))
+      {
+        $aro = $model->aro($aco);
+      }
+      else
+      {
+        $aro = $model;
+      }
+      
+      if($this->Acl->deny($aro, $aco))
+      {
+        $this->clearAuthCache($model);
+        return true;
+      }
+      return false;
+    }
+    
 
-    /**
-     * Account ACL
-     *
-     * @access public
-     * @return void
-     */
-    public function create($alias, $foreignId)
-    {
-      //Get account ACO root
-      $root = $this->root($alias);
-      
-      //Check if company has a root
-      if(!$acoRoot = $this->root($alias.'/'.$foreignId))
-      {
-        $this->Acl->Aco->create(array(
-          'parent_id'       => $root,
-          'model'           => Inflector::camelize($alias),
-          'foreign_key'     => $foreignId,
-          'alias'           => $foreignId
-        ));
-        $this->Acl->Aco->save();
-        $acoRoot = $this->Acl->Aco->id;
-      }
-      
-      //Get all controllers
-      $controllers = $this->listControllers();
-      
-      foreach($controllers as $name => $file)
-      {
-        if(!$this->root($alias.'/'.$foreignId.'/'.$name))
-        {
-          $this->Acl->Aco->create(array(
-            'parent_id'       => $acoRoot,
-            'model'           => null,
-            'foreign_key'     => null,
-            'alias'           => $name
-          ));
-          $this->Acl->Aco->save();
-        }
-      }
-      
-    }
-    
-    
-    /**
-     * Root ACO
-     *
-     * @param string $path
-     * @access public
-     * @return int
-     */
-    public function root($path)
-    {
-      $root = $this->Acl->Aco->node('opencamp/'.$path);
-      return !empty($root) ? Set::extract($root,'0.Aco.id') : false;
-    }
-    
-    
-    /**
-     * Allow access to an ACO based on a set
-     *
-     * @param string $path
-     * @access public
-     * @return int
-     */
-    public function allow(&$model, $path, $foreignId, $options = array())
-    {
-      $_options = array(
-        'delete' => false
-      );
-      $options = array_merge($_options,$options);
-      
-      //Delete previous if exists
-      if($options['delete'])
-      {
-        $this->delete($model, $path, $foreignId, null, array('all'=>true));
-      }
-    
-      //Access to main ACO
-      $this->Acl->allow($model, 'opencamp/'.$path.'/'.$foreignId);
-    
-      //Access to controllers via sets
-      if(isset($options['set']))
-      {
-        $Grant = ClassRegistry::init('Grant','model');
-          
-        $record = $Grant->find('first',array(
-          'conditions' => array(
-            'Grant.alias' => $options['set'],
-            'Grant.aco_alias' => $path
-          )
-        ));
-        
-        foreach($record['GrantSet'] as $grant)
-        {
-          $actions = array();
-          foreach($grant as $key => $val)
-          {
-            if(substr($key,0,1) == '_' && $val == true)
-            {
-              $actions[] = $key;
-            }
-          }
-          $this->Acl->allow($model, 'opencamp/'.$path.'/'.$foreignId.'/'.$grant['acos_alias'],$actions);
-        }
-      }
-      
-      $this->clearAuthCache($model);
-    }
-    
-    
     /**
      * Remove ACO based on a set
      *
@@ -164,104 +106,64 @@
      * @access public
      * @return boolean
      */
-    public function delete(&$model, $path, $foreignId, $action = null, $options = array())
+    public function delete(&$model,&$aco)
     {
-      $_options = array(
-        'all' => false
-      );
-      $options = array_merge($_options,$options);
-      
-      //Get aco
-      $fullpath = 'opencamp/'.$path.'/'.$foreignId;
-      if(!empty($action)) { $fullpath .= '/'.$action; }
-      
-      $root = $this->Acl->Aco->node($fullpath);
-      $acoId = $root[0]['Aco']['id'];
-      
-      //Root permission
-      $root = $this->Acl->Aco->Permission->find('first',array(
-        'conditions' => array(
-          'Aro.model'         => $model->alias,
-          'Aro.foreign_key'   => $model->id,
-          'Permission.aco_id' => $acoId
-        )
-      ));
-      
-      //Delete children
-      if($options['all'])
+      if(method_exists($model,'aro'))
       {
-        $this->Acl->Aco->Permission->deleteAll(array(
-          'Aro.model'         => $model->alias,
-          'Aro.foreign_key'   => $model->id,
-          'Aco.parent_id'     => $root['Aco']['id']
-        ));
-      }
-      
-      $this->clearAuthCache($model);
-    
-      return $this->Acl->Aco->Permission->delete($root['Permission']['id']);
-    }
-    
-    
-    /**
-     * Check permission
-     *
-     * @param string $path
-     * @access public
-     * @return int
-     */
-    public function check(&$model, $path, $foreignId, $action = null, $options = array())
-    {
-      //Get aco
-      if($action)
-      {
-        $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId.'/'.$action);
+        $aro = $model->aro($aco);
       }
       else
       {
-        $root = $this->Acl->Aco->node('opencamp/'.$path.'/'.$foreignId);
-      }
-      $acoId = $root[0]['Aco']['id'];
-      
-      //Permissions
-      $conditions = array();
-      if(isset($options['permission']))
-      {
-        foreach($options['permission'] as $key)
-        {
-          $conditions['_'.$key] = true;
-        }
+        $aro = $model;
       }
       
-      return $this->Acl->Aco->Permission->find('count',array(
-        'conditions' => array_merge(array(
-          'Aro.model' => $model->alias,
-          'Aro.foreign_key' => $model->id,
-          'Permission.aco_id' => $acoId
-        ),$conditions)
+      //Aco
+      $acoNode = $this->Acl->Aco->node($aco);
+      $acoId = $acoNode[0]['Aco']['id'];
+      
+      //Aro
+      $acoNode = $this->Acl->Aro->node($aro);
+      $aroId = $acoNode[0]['Aro']['id'];
+      
+      $deleted = $this->Acl->Aco->Permission->deleteAll(array(
+        'Permission.aco_id' => $acoId,
+        'Permission.aro_id' => $aroId
       ));
+      
+      if($deleted)
+      {
+        if(method_exists($model,'afterAroDelete'))
+        {
+          $model->afterAroDelete($model,$aco);
+        }
+        
+        $this->clearAuthCache($model);
+        return true;
+      }
+      
+      return false;
     }
     
     
     /**
-     * Cache Aco Node
+     * Check access
      *
      * @access public
-     * @return array
+     * @return boolean
      */
-    public function acoNode($path)
+    public function check(&$model,&$aco)
     {
-      $cacheKey = 'node_aco_'.md5($path);
-    
-      if(!$node = Cache::read($cacheKey,'acl'))
+      if(method_exists($model,'aro'))
       {
-        $node = $this->Acl->Aco->node($path);
-        Cache::write($cacheKey,$node,'acl');
+        $aro = $model->aro($aco);
+      }
+      else
+      {
+        $aro = $model;
       }
       
-      return $node;
+      return $this->Acl->check($aro, $aco);
     }
-    
 
     /**
      * List all controllers (including plugin controllers)
@@ -282,9 +184,7 @@
     /**
      * List all controllers (including plugin controllers)
      *
-     * From Croogo AclGenerator
-     *
-     * @access public
+     * @credit Croogo www.croogo.com
      * @return array
      */
     public function listControllers()
@@ -295,29 +195,89 @@
       $this->folder->path = APP.'controllers'.DS;
       $controllers = $this->folder->read();
       foreach ($controllers['1'] AS $c) {
-          if (strstr($c, '.php')) {
+          if (substr($c, strlen($c) - 4, 4) == '.php') {
               $cName = Inflector::camelize(str_replace('_controller.php', '', $c));
               $controllerPaths[$cName] = APP.'controllers'.DS.$c;
           }
       }
 
       // plugins/*/controllers/
-      /*$this->folder->path = APP.'plugins'.DS;
+      $this->folder->path = APP.'plugins'.DS;
       $plugins = $this->folder->read();
       foreach ($plugins['0'] AS $p) {
           if ($p != 'install') {
               $this->folder->path = APP.'plugins'.DS.$p.DS.'controllers'.DS;
               $pluginControllers = $this->folder->read();
               foreach ($pluginControllers['1'] AS $pc) {
-                  if (strstr($pc, '.php')) {
+                  if (substr($pc, strlen($pc) - 4, 4) == '.php') {
                       $pcName = Inflector::camelize(str_replace('_controller.php', '', $pc));
                       $controllerPaths[$pcName] = APP.'plugins'.DS.$p.DS.'controllers'.DS.$pc;
                   }
               }
           }
-      }*/
+      }
 
       return $controllerPaths;
+    }
+
+
+    /**
+     * List actions of a particular Controller.
+     *
+     * @credit Croogo www.croogo.com
+     * @param string  $name Controller name (the name only, without having Controller at the end)
+     * @param string  $path full path to the controller file including file extension
+     * @param boolean $all  default is false. it true, private actions will be returned too.
+     * @return array
+     */
+    public function listActions($name, $path)
+    {
+      // base methods
+      if (strpos($path, APP.'plugins') !== false) {
+          $plugin = $this->getPluginFromPath($path);
+          $pacName = Inflector::camelize($plugin) . 'AppController'; // pac - PluginAppController
+          $pacPath = APP.'plugins'.DS.$plugin.DS.$plugin.'_app_controller.php';
+          App::import('Controller', $pacName, null, null, $pacPath);
+          $baseMethods = get_class_methods($pacName);
+      } else {
+          $baseMethods = get_class_methods('AppController');
+      }
+
+      $controllerName = $name.'Controller';
+      App::import('Controller', $controllerName, null, null, $path);
+      $methods = get_class_methods($controllerName);
+
+      // filter out methods
+      foreach ($methods AS $k => $method) {
+          if (strpos($method, '_', 0) === 0) {
+              unset($methods[$k]);
+              continue;
+          }
+          if (in_array($method, $baseMethods)) {
+              unset($methods[$k]);
+              continue;
+          }
+      }
+
+      return $methods;
+    }
+
+
+    /**
+     * Get plugin name from path
+     *
+     * @credit Croogo www.croogo.com
+     * @param string $path file path
+     * @return string
+     */
+    public function getPluginFromPath($path)
+    {
+      $pathE = explode(DS, $path);
+      $pluginsK = array_search('plugins', $pathE);
+      $pluginNameK = $pluginsK + 1;
+      $plugin = $pathE[$pluginNameK];
+
+      return $plugin;
     }
     
     

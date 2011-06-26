@@ -9,16 +9,11 @@ class UserData {
 			'role_id' => '1',
 			'username' => 'admin',
 			'password' => 'replace',
-			'name' => 'Administrator',
 			'email' => 'you@your-site.com',
-			'website' => '/about',
-			'activation_key' => '',
-			'image' => '',
-			'bio' => '',
-			'timezone' => '0',
+			'timezone_id' => '0',
 			'status' => '1',
-			'updated' => '2010-06-06 07:00:10',
-			'created' => '2009-04-05 00:20:34'
+			'updated' => '2011-05-05 06:00:00',
+			'created' => '2011-05-05 06:00:00'
 		),
 	);
 

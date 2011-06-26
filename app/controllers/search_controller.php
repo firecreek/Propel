@@ -59,16 +59,6 @@
     public $modelScopes = array();
     
     /**
-     * ACL Mapping
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'forget' => '_read'
-    );
-    
-    /**
      * Search history limit
      *
      * @access public

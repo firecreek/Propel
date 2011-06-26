@@ -36,17 +36,6 @@
      */
     public $uses = array('Milestone','Company');
     
-    /**
-     * Action map
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'add_multiple'     => '_create',
-      'move_project'     => '_update',
-    );
-    
     
     /**
      * Index

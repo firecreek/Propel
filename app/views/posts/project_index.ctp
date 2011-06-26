@@ -174,7 +174,7 @@
   <div class="col right">
   
     <?php
-      if($auth->check('Project.Posts','create'))
+      if($auth->check(array('action'=>'add')))
       {
         echo $layout->button(__('Post a new message',true),array_merge(array('action'=>'add'),$named),'large add');
       }

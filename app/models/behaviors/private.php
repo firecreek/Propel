@@ -18,7 +18,6 @@
     }
     
     
-    
     /**
      * Before find
      * 
@@ -26,15 +25,14 @@
      * @return string
      */
     public function beforeFind(&$model, $query)
-    {      
-    
+    {
       if($query['fields'] == 'COUNT(*) AS `count`')
       {
         return $query;
       }
       
       //Only do if Person is in contain
-      if(isset($query['contain']['Person']))
+      if(isset($query['contain']['Person']) || in_array('Person',$query['contain']))
       {      
         $query['conditions'] = array(
           'AND' => array(
