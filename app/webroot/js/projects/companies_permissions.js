@@ -20,43 +20,29 @@ var CompanyPermissions = {
         //Grant default
         post = {
           data: {
-            Grant: {}
+            Person: {},
+            Form: {}
           }
         };
-        post['data']['Grant'][personId] = defaultGrant;
-        post['data']['Action'] = 'add';
+        post['data']['Person'][personId] = 1;
+        post['data']['Form']['action'] = 'allow';
       }
       else
       {
         //Remove
         post = {
           data: {
-            Person: {}
+            Person: {},
+            Form: {}
           }
         };
         post['data']['Person'][personId] = 0;
-        post['data']['Action'] = 'remove';
+        post['data']['Form']['action'] = 'delete';
       }
       
       self.submit(personId,post);
     });
     
-    
-    //Grant set changes
-    $('#CompanyPermissions input:radio').bind('change',function(){
-      var personId = $(this).attr('rel-person');
-      var grantId = $('#CompanyPermissions input[rel-group='+$(this).attr('rel-group')+']:radio:checked').val();
-      
-      var post = {
-        data: {
-          Grant: {}
-        }
-      };
-      post['data']['Grant'][personId] = grantId;
-      post['data']['Action'] = 'grant';
-      
-      self.submit(personId,post);
-    });
     
   },
   

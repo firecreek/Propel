@@ -199,22 +199,34 @@
         //People who need to be removed
         if(isset($this->data['Person']) && !empty($this->data['Person']))
         {
+          $action = $this->data['Form']['action'];
+        
           foreach($this->data['Person'] as $personId => $checked)
           {
-            if(!$checked && $personId != $this->Authorization->read('Person.id'))
+            if($personId != $this->Authorization->read('Person.id'))
             {
               //Remove person from accessing this project
               $this->Person->id = $personId;
               $this->Project->id = $this->Authorization->read('Project.id');
-              $this->AclManager->delete($this->Person, $this->Project);
-              $deleted[] = $personId;
+              
+              if($action == 'allow')
+              {
+                $this->AclManager->allow($this->Person, $this->Project);
+                $granted[] = $personId;
+              }
+              else
+              {
+                $this->AclManager->delete($this->Person, $this->Project);
+                $deleted[] = $personId;
+              }
+              
             }
           }
         }
         
     
         //Grants
-        if(isset($this->data['Grant']) && !empty($this->data['Grant']))
+        /*if(isset($this->data['Grant']) && !empty($this->data['Grant']))
         {
           foreach($this->data['Grant'] as $personId => $grantKey)
           {
@@ -235,7 +247,7 @@
               $granted[] = $personId;
             }
           }
-        }
+        }*/
         
         //Ajax response
         if($this->RequestHandler->isAjax())
@@ -301,12 +313,14 @@
     public function project_add()
     {
       //Get list of companies that can be added
-      //@todo Could Auth Companies be read?
-      $modelRootNode = $this->Acl->Aco->node('opencamp/accounts/'.$this->Authorization->read('Account.id'));
+      $this->Account->id = $this->Authorization->read('Account.id');
+      $aco = $this->Acl->Aco->node($this->Account);
+      $aco = $aco[0]['Aco']['id'];
+      
       $records = $this->Acl->Aco->Permission->find('all', array(
         'conditions' => array(
           'Aro.model' => 'Company',
-          'Permission.aco_id' => $modelRootNode[0]['Aco']['id'],
+          'Permission.aco_id' => $aco,
           'Permission._read' => true
         ),
         'fields' => array('Aro.foreign_key')
@@ -362,7 +376,8 @@
                 foreach($people as $person)
                 {
                   $this->Person->id = $person['Person']['id'];
-                  $this->AclManager->allow($this->Person, 'projects', $this->Authorization->read('Project.id'), array('set' => 'shared'));
+                  $this->Project->id = $this->Authorization->read('Project.id');
+                  $this->AclManager->allow($this->Person, $this->Project);
                 }
               }
             }
