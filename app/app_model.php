@@ -153,10 +153,11 @@
         if ($output) {
             $created = false;
             $options = array();
-            $this->Behaviors->trigger($this, 'afterSave', array(
+            //Do not enable this
+            /*$this->Behaviors->trigger($this, 'afterSave', array(
                 $created,
                 $options,
-            ));
+            ));*/
             $this->afterSave($created);
             $this->_clearCache();
             return true;
