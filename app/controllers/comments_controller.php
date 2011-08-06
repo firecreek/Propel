@@ -149,109 +149,10 @@
         'field'           => $this->{$this->modelAlias}->displayField
       ));
       
-
-      //Add comment
-      if(!empty($this->data))
-      {
-        $this->data['Comment']['model'] = $this->modelAlias;
-        $this->data['Comment']['model_id'] = $id;
-        $this->data['Comment']['person_id'] = $this->Authorization->read('Person.id');
-        $this->data['Comment']['account_id'] = $this->Authorization->read('Account.id');
-        $this->data['Comment']['project_id'] = $this->Authorization->read('Project.id');
-        
-        $this->Comment->set($this->data);
-        
-        if($this->Comment->validates())
-        {
-          if($this->Comment->save())
-          {
-            //Comment id
-            $commentId = $this->Comment->id;
-            
-            //Add self to subscribers
-            $this->Comment->addCommentPerson($id,$this->Authorization->read('Person.id'));
-            
-            //Add checked
-            if(isset($data['CommentPeople']['person_id']) && !empty($data['CommentPeople']['person_id']))
-            {
-              foreach($data['CommentPeople']['person_id'] as $personId)
-              {
-                $this->Comment->addCommentPerson($id,$personId);
-              }
-            }
-            
-            //Add custom log
-            //@todo use displayField
-            if(isset($record[$this->modelAlias]['title']))
-            {
-              $description = $record[$this->modelAlias]['title'];
-            }
-            elseif(isset($record[$this->modelAlias]['description']))
-            {
-              $description = $record[$this->modelAlias]['description'];
-            }
-            
-            $this->Comment->customLog('add',$id,array(
-              'description' => $description,
-              'extra1'      => $this->params['associatedController'],
-              'extra2'      => $commentId
-            ));
-            
-            //Send message
-            $data = array_merge($record,$this->data,array(
-              'Extra' => array(
-                'description' => $description,
-                'id' => $id,
-                'commentId' => $commentId,
-                'alias' => $this->modelAlias
-              ),
-              'Person' => $this->Authorization->read('Person')
-            ));
-            
-            /*$this->Message->send('comment',array(
-              'subject' => 'Re: '.$description,
-              'to' => 'darren.m@firecreek.co.uk'
-            ),$data);*/
-            
-            //Update count
-            $this->Comment->updateCommentCount($id);
-            $this->data = null;
-            
-            //If ajax call
-            /*if($this->RequestHandler->isAjax())
-            {
-              $record = $this->Comment->find('first',array(
-                'conditions' => array('Comment.id'=>$commentId),
-                'contain' => array(
-                  'CommentPerson' => array(
-                    'Person' => array(
-                      'fields' => array('id','full_name','email','user_id','company_id'),
-                      'Company' => array('id','name')
-                    )
-                  )
-                )
-              ));
-            
-              $this->set(compact('id','record'));
-              return $this->render();
-            }*/
-            
-            $this->redirect(array('action'=>'index',$id,'#Comment'.$commentId));
-          }
-        }
-        
-      }
-      else
-      {
-        //Set
-        $this->data = $record;
-      }
-      
-      
       //Edit record
-      if(isset($this->params['edit']) && $this->params['edit'] == true && isset($this->params['pass'][1]))
+      if(isset($this->params['named']['edit']) && is_numeric($this->params['named']['edit']))
       {
-        $commentId = $this->params['pass'][1];
+        $commentId = $this->params['named']['edit'];
         
         //Load this record
         $comment = $this->Comment->find('first',array(
@@ -265,7 +166,7 @@
           //Not owner
           $this->Session->setFlash(__('You do not have permission to edit this comment',true),'default',array('class'=>'error'));
         }
-        elseif(strtotime($comment['Comment']['created']) < strtotime('-15 minutes'))
+        elseif(strtotime($comment['Comment']['created']) < strtotime('-'.Configure::read('Comments.edit_expiry').' minutes'))
         {
           //Expired
           $this->Session->setFlash(__('You can no longer edit this record',true),'default',array('class'=>'error'));
@@ -285,6 +186,140 @@
       //
       $this->set('activeMenu',Inflector::underscore($this->associatedController));
       $this->set(compact('id','record'));
+    }
+    
+    
+    
+    /**
+     * Comment add
+     *
+     * @access public
+     * @return void
+     */
+    public function add($id)
+    {
+      $this->data['Comment']['model'] = $this->modelAlias;
+      $this->data['Comment']['model_id'] = $id;
+      $this->data['Comment']['person_id'] = $this->Authorization->read('Person.id');
+      $this->data['Comment']['account_id'] = $this->Authorization->read('Account.id');
+      $this->data['Comment']['project_id'] = $this->Authorization->read('Project.id');
+      
+      $this->Comment->set($this->data);
+      
+      if($this->Comment->validates())
+      {
+        $this->Comment->save();
+      
+        //Comment id
+        $commentId = $this->Comment->id;
+        
+        //Add self to subscribers
+        $this->Comment->addCommentPerson($id,$this->Authorization->read('Person.id'));
+        
+        //Add checked
+        if(isset($data['CommentPeople']['person_id']) && !empty($data['CommentPeople']['person_id']))
+        {
+          foreach($data['CommentPeople']['person_id'] as $personId)
+          {
+            $this->Comment->addCommentPerson($id,$personId);
+          }
+        }
+        
+        //Add custom log
+        //@todo use displayField
+        if(isset($record[$this->modelAlias]['title']))
+        {
+          $description = $record[$this->modelAlias]['title'];
+        }
+        elseif(isset($record[$this->modelAlias]['description']))
+        {
+          $description = $record[$this->modelAlias]['description'];
+        }
+        
+        $this->Comment->customLog('add',$id,array(
+          'description' => $description,
+          'extra1'      => $this->params['associatedController'],
+          'extra2'      => $commentId
+        ));
+        
+        //Send message
+        $data = array_merge($record,$this->data,array(
+          'Extra' => array(
+            'description' => $description,
+            'id' => $id,
+            'commentId' => $commentId,
+            'alias' => $this->modelAlias
+          ),
+          'Person' => $this->Authorization->read('Person')
+        ));
+        
+        /*$this->Message->send('comment',array(
+          'subject' => 'Re: '.$description,
+          'to' => 'darren.m@firecreek.co.uk'
+        ),$data);*/
+        
+        //Update count
+        $this->Comment->updateCommentCount($id);
+        
+        $this->redirect(array('action'=>'index',$id,'#Comment'.$commentId));
+      }
+      else
+      {
+        $this->Session->setFlash(__('Please check the fields',true),'default',array('class'=>'error'));
+        $this->redirect(array('action'=>'index',$id));
+      }
+      
+    }
+    
+    
+    
+    /**
+     * Comment edit
+     *
+     * @access public
+     * @return void
+     */
+    public function edit($id)
+    {
+      //Check
+      $error = null;
+    
+      //Load this record
+      $comment = $this->Comment->find('first',array(
+        'conditions' => array('Comment.id'=>$this->data['Comment']['id']),
+        'fields' => array('id','person_id','created'),
+        'contain' => false
+      ));
+      
+      //Check valid
+      if($comment['Comment']['person_id'] != $this->Authorization->read('Person.id'))
+      {
+        //Not owner
+        $error = __('You do not have permission to edit this comment',true);
+      }
+      elseif(strtotime($comment['Comment']['created']) < strtotime('-'.Configure::read('Comments.edit_expiry').' minutes'))
+      {
+        //Expired
+        $error = __('You can no longer edit this record',true);
+      }
+    
+      $this->Comment->set($this->data);
+      
+      if(empty($errors) && $this->Comment->validates())
+      {
+        $this->Comment->save();
+        $this->redirect(array('action'=>'index',$id,'#Comment'.$this->data['Comment']['id']));
+      }
+      elseif(!empty($errors))
+      {
+        $this->Session->setFlash($error,'default',array('class'=>'error'));
+      }
+      else
+      {
+        $this->Session->setFlash(__('Please check the form and try again',true),'default',array('class'=>'error'));
+      }
+      
+      $this->redirect(array('action'=>'index',$id));
     }
     
     

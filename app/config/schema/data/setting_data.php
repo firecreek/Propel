@@ -94,6 +94,16 @@ class SettingData {
 			'weight' => '9',
 			'params' => ''
 		),
+		array(
+			'id' => '10',
+			'key' => 'Comments.edit_expiry',
+			'value' => '15',
+			'title' => 'Edit expiry',
+			'description' => 'Able to edit the comment, in minutes',
+			'input_type' => 'text',
+			'weight' => '',
+			'params' => ''
+		),
 	);
 
 }

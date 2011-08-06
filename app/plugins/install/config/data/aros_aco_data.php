@@ -1291,6 +1291,105 @@ class ArosAcoData {
 			'_update' => '1',
 			'_delete' => '1'
 		),
+		array(
+			'id' => '144',
+			'aro_id' => '5',
+			'aco_id' => '103',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '145',
+			'aro_id' => '5',
+			'aco_id' => '104',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '146',
+			'aro_id' => '6',
+			'aco_id' => '12',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '147',
+			'aro_id' => '6',
+			'aco_id' => '13',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '148',
+			'aro_id' => '6',
+			'aco_id' => '14',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '149',
+			'aro_id' => '6',
+			'aco_id' => '103',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '150',
+			'aro_id' => '6',
+			'aco_id' => '104',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '151',
+			'aro_id' => '7',
+			'aco_id' => '103',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '152',
+			'aro_id' => '7',
+			'aco_id' => '104',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '153',
+			'aro_id' => '8',
+			'aco_id' => '104',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
+		array(
+			'id' => '154',
+			'aro_id' => '8',
+			'aco_id' => '103',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
 	);
 
 }

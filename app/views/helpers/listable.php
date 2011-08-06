@@ -142,10 +142,10 @@
       }
       
       //Can comment
-      if(!$this->Auth->check(array('controller'=>'Comments','action'=>'index')))
+      /*if(!$this->Auth->check(array('controller'=>'Comments','action'=>'index')))
       {
         $options['comments'] = false;
-      }
+      }*/
 
       //Style
       if(!is_array($options['class'])) { $options['class'] = array($options['class']); }

@@ -11,7 +11,7 @@ class AcoData {
 			'foreign_key' => '',
 			'alias' => 'propel',
 			'lft' => '1',
-			'rght' => '246'
+			'rght' => '266'
 		),
 		array(
 			'id' => '2',
@@ -29,7 +29,7 @@ class AcoData {
 			'foreign_key' => '',
 			'alias' => 'controllers',
 			'lft' => '58',
-			'rght' => '245'
+			'rght' => '265'
 		),
 		array(
 			'id' => '4',
@@ -92,7 +92,7 @@ class AcoData {
 			'foreign_key' => '',
 			'alias' => 'Comments',
 			'lft' => '71',
-			'rght' => '80'
+			'rght' => '84'
 		),
 		array(
 			'id' => '11',
@@ -136,8 +136,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Companies',
-			'lft' => '81',
-			'rght' => '98'
+			'lft' => '85',
+			'rght' => '102'
 		),
 		array(
 			'id' => '16',
@@ -145,8 +145,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_index',
-			'lft' => '82',
-			'rght' => '83'
+			'lft' => '86',
+			'rght' => '87'
 		),
 		array(
 			'id' => '17',
@@ -154,8 +154,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_add',
-			'lft' => '84',
-			'rght' => '85'
+			'lft' => '88',
+			'rght' => '89'
 		),
 		array(
 			'id' => '18',
@@ -163,8 +163,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_edit',
-			'lft' => '86',
-			'rght' => '87'
+			'lft' => '90',
+			'rght' => '91'
 		),
 		array(
 			'id' => '19',
@@ -172,8 +172,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_delete',
-			'lft' => '88',
-			'rght' => '89'
+			'lft' => '92',
+			'rght' => '93'
 		),
 		array(
 			'id' => '20',
@@ -181,8 +181,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_index',
-			'lft' => '90',
-			'rght' => '91'
+			'lft' => '94',
+			'rght' => '95'
 		),
 		array(
 			'id' => '21',
@@ -190,8 +190,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_permissions',
-			'lft' => '92',
-			'rght' => '93'
+			'lft' => '96',
+			'rght' => '97'
 		),
 		array(
 			'id' => '22',
@@ -199,8 +199,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_add',
-			'lft' => '94',
-			'rght' => '95'
+			'lft' => '98',
+			'rght' => '99'
 		),
 		array(
 			'id' => '23',
@@ -208,8 +208,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_delete',
-			'lft' => '96',
-			'rght' => '97'
+			'lft' => '100',
+			'rght' => '101'
 		),
 		array(
 			'id' => '24',
@@ -217,8 +217,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Dashboard',
-			'lft' => '99',
-			'rght' => '102'
+			'lft' => '103',
+			'rght' => '106'
 		),
 		array(
 			'id' => '25',
@@ -226,8 +226,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'admin_index',
-			'lft' => '100',
-			'rght' => '101'
+			'lft' => '104',
+			'rght' => '105'
 		),
 		array(
 			'id' => '26',
@@ -235,8 +235,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Milestones',
-			'lft' => '103',
-			'rght' => '120'
+			'lft' => '107',
+			'rght' => '124'
 		),
 		array(
 			'id' => '27',
@@ -244,8 +244,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_index',
-			'lft' => '104',
-			'rght' => '105'
+			'lft' => '108',
+			'rght' => '109'
 		),
 		array(
 			'id' => '28',
@@ -253,8 +253,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_index',
-			'lft' => '106',
-			'rght' => '107'
+			'lft' => '110',
+			'rght' => '111'
 		),
 		array(
 			'id' => '29',
@@ -262,8 +262,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_add',
-			'lft' => '108',
-			'rght' => '109'
+			'lft' => '112',
+			'rght' => '113'
 		),
 		array(
 			'id' => '30',
@@ -271,8 +271,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_add_multiple',
-			'lft' => '110',
-			'rght' => '111'
+			'lft' => '114',
+			'rght' => '115'
 		),
 		array(
 			'id' => '31',
@@ -280,8 +280,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_edit',
-			'lft' => '112',
-			'rght' => '113'
+			'lft' => '116',
+			'rght' => '117'
 		),
 		array(
 			'id' => '32',
@@ -289,8 +289,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_update',
-			'lft' => '114',
-			'rght' => '115'
+			'lft' => '118',
+			'rght' => '119'
 		),
 		array(
 			'id' => '33',
@@ -298,8 +298,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_move_project',
-			'lft' => '116',
-			'rght' => '117'
+			'lft' => '120',
+			'rght' => '121'
 		),
 		array(
 			'id' => '34',
@@ -307,8 +307,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_delete',
-			'lft' => '118',
-			'rght' => '119'
+			'lft' => '122',
+			'rght' => '123'
 		),
 		array(
 			'id' => '35',
@@ -316,8 +316,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Pages',
-			'lft' => '121',
-			'rght' => '124'
+			'lft' => '125',
+			'rght' => '128'
 		),
 		array(
 			'id' => '36',
@@ -325,8 +325,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'display',
-			'lft' => '122',
-			'rght' => '123'
+			'lft' => '126',
+			'rght' => '127'
 		),
 		array(
 			'id' => '37',
@@ -334,8 +334,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'People',
-			'lft' => '125',
-			'rght' => '138'
+			'lft' => '129',
+			'rght' => '142'
 		),
 		array(
 			'id' => '38',
@@ -343,8 +343,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_add',
-			'lft' => '126',
-			'rght' => '127'
+			'lft' => '130',
+			'rght' => '131'
 		),
 		array(
 			'id' => '39',
@@ -352,8 +352,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_edit',
-			'lft' => '128',
-			'rght' => '129'
+			'lft' => '132',
+			'rght' => '133'
 		),
 		array(
 			'id' => '40',
@@ -361,8 +361,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_delete',
-			'lft' => '130',
-			'rght' => '131'
+			'lft' => '134',
+			'rght' => '135'
 		),
 		array(
 			'id' => '41',
@@ -370,8 +370,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_invite_resend',
-			'lft' => '132',
-			'rght' => '133'
+			'lft' => '136',
+			'rght' => '137'
 		),
 		array(
 			'id' => '42',
@@ -379,8 +379,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_add',
-			'lft' => '134',
-			'rght' => '135'
+			'lft' => '138',
+			'rght' => '139'
 		),
 		array(
 			'id' => '43',
@@ -388,8 +388,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_edit',
-			'lft' => '136',
-			'rght' => '137'
+			'lft' => '140',
+			'rght' => '141'
 		),
 		array(
 			'id' => '44',
@@ -397,8 +397,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Permissions',
-			'lft' => '139',
-			'rght' => '146'
+			'lft' => '143',
+			'rght' => '150'
 		),
 		array(
 			'id' => '45',
@@ -406,8 +406,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'admin_index',
-			'lft' => '140',
-			'rght' => '141'
+			'lft' => '144',
+			'rght' => '145'
 		),
 		array(
 			'id' => '46',
@@ -415,8 +415,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'admin_actions',
-			'lft' => '142',
-			'rght' => '143'
+			'lft' => '146',
+			'rght' => '147'
 		),
 		array(
 			'id' => '47',
@@ -424,8 +424,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'admin_actions_update',
-			'lft' => '144',
-			'rght' => '145'
+			'lft' => '148',
+			'rght' => '149'
 		),
 		array(
 			'id' => '48',
@@ -433,8 +433,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Posts',
-			'lft' => '147',
-			'rght' => '158'
+			'lft' => '151',
+			'rght' => '162'
 		),
 		array(
 			'id' => '49',
@@ -442,8 +442,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_index',
-			'lft' => '148',
-			'rght' => '149'
+			'lft' => '152',
+			'rght' => '153'
 		),
 		array(
 			'id' => '50',
@@ -451,8 +451,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_add',
-			'lft' => '150',
-			'rght' => '151'
+			'lft' => '154',
+			'rght' => '155'
 		),
 		array(
 			'id' => '51',
@@ -460,8 +460,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_edit',
-			'lft' => '152',
-			'rght' => '153'
+			'lft' => '156',
+			'rght' => '157'
 		),
 		array(
 			'id' => '52',
@@ -469,8 +469,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_move_project',
-			'lft' => '154',
-			'rght' => '155'
+			'lft' => '158',
+			'rght' => '159'
 		),
 		array(
 			'id' => '53',
@@ -478,8 +478,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_delete',
-			'lft' => '156',
-			'rght' => '157'
+			'lft' => '160',
+			'rght' => '161'
 		),
 		array(
 			'id' => '54',
@@ -487,8 +487,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Projects',
-			'lft' => '159',
-			'rght' => '168'
+			'lft' => '163',
+			'rght' => '172'
 		),
 		array(
 			'id' => '55',
@@ -496,8 +496,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_add',
-			'lft' => '160',
-			'rght' => '161'
+			'lft' => '164',
+			'rght' => '165'
 		),
 		array(
 			'id' => '56',
@@ -505,8 +505,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_start',
-			'lft' => '162',
-			'rght' => '163'
+			'lft' => '166',
+			'rght' => '167'
 		),
 		array(
 			'id' => '57',
@@ -514,8 +514,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_index',
-			'lft' => '164',
-			'rght' => '165'
+			'lft' => '168',
+			'rght' => '169'
 		),
 		array(
 			'id' => '58',
@@ -523,8 +523,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_edit',
-			'lft' => '166',
-			'rght' => '167'
+			'lft' => '170',
+			'rght' => '171'
 		),
 		array(
 			'id' => '59',
@@ -532,8 +532,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Search',
-			'lft' => '169',
-			'rght' => '178'
+			'lft' => '173',
+			'rght' => '182'
 		),
 		array(
 			'id' => '60',
@@ -541,8 +541,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_index',
-			'lft' => '170',
-			'rght' => '171'
+			'lft' => '174',
+			'rght' => '175'
 		),
 		array(
 			'id' => '61',
@@ -550,8 +550,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_index',
-			'lft' => '172',
-			'rght' => '173'
+			'lft' => '176',
+			'rght' => '177'
 		),
 		array(
 			'id' => '62',
@@ -559,8 +559,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_forget',
-			'lft' => '174',
-			'rght' => '175'
+			'lft' => '178',
+			'rght' => '179'
 		),
 		array(
 			'id' => '63',
@@ -568,8 +568,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_forget',
-			'lft' => '176',
-			'rght' => '177'
+			'lft' => '180',
+			'rght' => '181'
 		),
 		array(
 			'id' => '64',
@@ -577,8 +577,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Settings',
-			'lft' => '179',
-			'rght' => '192'
+			'lft' => '183',
+			'rght' => '196'
 		),
 		array(
 			'id' => '65',
@@ -586,8 +586,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'admin_index',
-			'lft' => '180',
-			'rght' => '181'
+			'lft' => '184',
+			'rght' => '185'
 		),
 		array(
 			'id' => '66',
@@ -595,8 +595,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'admin_view',
-			'lft' => '182',
-			'rght' => '183'
+			'lft' => '186',
+			'rght' => '187'
 		),
 		array(
 			'id' => '67',
@@ -604,8 +604,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_index',
-			'lft' => '184',
-			'rght' => '185'
+			'lft' => '188',
+			'rght' => '189'
 		),
 		array(
 			'id' => '68',
@@ -613,8 +613,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_logo',
-			'lft' => '186',
-			'rght' => '187'
+			'lft' => '190',
+			'rght' => '191'
 		),
 		array(
 			'id' => '69',
@@ -622,8 +622,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_appearance',
-			'lft' => '188',
-			'rght' => '189'
+			'lft' => '192',
+			'rght' => '193'
 		),
 		array(
 			'id' => '70',
@@ -631,8 +631,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_categories',
-			'lft' => '190',
-			'rght' => '191'
+			'lft' => '194',
+			'rght' => '195'
 		),
 		array(
 			'id' => '71',
@@ -640,8 +640,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Todos',
-			'lft' => '193',
-			'rght' => '210'
+			'lft' => '197',
+			'rght' => '214'
 		),
 		array(
 			'id' => '72',
@@ -649,8 +649,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_index',
-			'lft' => '194',
-			'rght' => '195'
+			'lft' => '198',
+			'rght' => '199'
 		),
 		array(
 			'id' => '73',
@@ -658,8 +658,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_index',
-			'lft' => '196',
-			'rght' => '197'
+			'lft' => '200',
+			'rght' => '201'
 		),
 		array(
 			'id' => '74',
@@ -667,8 +667,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_view',
-			'lft' => '198',
-			'rght' => '199'
+			'lft' => '202',
+			'rght' => '203'
 		),
 		array(
 			'id' => '75',
@@ -676,8 +676,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_add',
-			'lft' => '200',
-			'rght' => '201'
+			'lft' => '204',
+			'rght' => '205'
 		),
 		array(
 			'id' => '76',
@@ -685,8 +685,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_edit',
-			'lft' => '202',
-			'rght' => '203'
+			'lft' => '206',
+			'rght' => '207'
 		),
 		array(
 			'id' => '77',
@@ -694,8 +694,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_delete',
-			'lft' => '204',
-			'rght' => '205'
+			'lft' => '208',
+			'rght' => '209'
 		),
 		array(
 			'id' => '78',
@@ -703,8 +703,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_move_project',
-			'lft' => '206',
-			'rght' => '207'
+			'lft' => '210',
+			'rght' => '211'
 		),
 		array(
 			'id' => '79',
@@ -712,8 +712,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_update_positions',
-			'lft' => '208',
-			'rght' => '209'
+			'lft' => '212',
+			'rght' => '213'
 		),
 		array(
 			'id' => '80',
@@ -721,8 +721,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'TodosItems',
-			'lft' => '211',
-			'rght' => '222'
+			'lft' => '215',
+			'rght' => '226'
 		),
 		array(
 			'id' => '81',
@@ -730,8 +730,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_add',
-			'lft' => '212',
-			'rght' => '213'
+			'lft' => '216',
+			'rght' => '217'
 		),
 		array(
 			'id' => '82',
@@ -739,8 +739,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_edit',
-			'lft' => '214',
-			'rght' => '215'
+			'lft' => '218',
+			'rght' => '219'
 		),
 		array(
 			'id' => '83',
@@ -748,8 +748,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_delete',
-			'lft' => '216',
-			'rght' => '217'
+			'lft' => '220',
+			'rght' => '221'
 		),
 		array(
 			'id' => '84',
@@ -757,8 +757,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_update',
-			'lft' => '218',
-			'rght' => '219'
+			'lft' => '222',
+			'rght' => '223'
 		),
 		array(
 			'id' => '85',
@@ -766,8 +766,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'project_update_positions',
-			'lft' => '220',
-			'rght' => '221'
+			'lft' => '224',
+			'rght' => '225'
 		),
 		array(
 			'id' => '86',
@@ -775,8 +775,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'Users',
-			'lft' => '223',
-			'rght' => '238'
+			'lft' => '227',
+			'rght' => '242'
 		),
 		array(
 			'id' => '87',
@@ -784,8 +784,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'register',
-			'lft' => '224',
-			'rght' => '225'
+			'lft' => '228',
+			'rght' => '229'
 		),
 		array(
 			'id' => '88',
@@ -793,8 +793,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'invitation',
-			'lft' => '226',
-			'rght' => '227'
+			'lft' => '230',
+			'rght' => '231'
 		),
 		array(
 			'id' => '89',
@@ -802,8 +802,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'login',
-			'lft' => '228',
-			'rght' => '229'
+			'lft' => '232',
+			'rght' => '233'
 		),
 		array(
 			'id' => '90',
@@ -811,8 +811,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'logout',
-			'lft' => '230',
-			'rght' => '231'
+			'lft' => '234',
+			'rght' => '235'
 		),
 		array(
 			'id' => '91',
@@ -820,8 +820,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'forgotten',
-			'lft' => '232',
-			'rght' => '233'
+			'lft' => '236',
+			'rght' => '237'
 		),
 		array(
 			'id' => '92',
@@ -829,8 +829,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'reset',
-			'lft' => '234',
-			'rght' => '235'
+			'lft' => '238',
+			'rght' => '239'
 		),
 		array(
 			'id' => '93',
@@ -838,8 +838,8 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'account_edit',
-			'lft' => '236',
-			'rght' => '237'
+			'lft' => '240',
+			'rght' => '241'
 		),
 		array(
 			'id' => '94',
@@ -847,8 +847,98 @@ class AcoData {
 			'model' => '',
 			'foreign_key' => '',
 			'alias' => 'ToolbarAccess',
-			'lft' => '239',
-			'rght' => '244'
+			'lft' => '243',
+			'rght' => '252'
+		),
+		array(
+			'id' => '95',
+			'parent_id' => '3',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'Grants',
+			'lft' => '253',
+			'rght' => '264'
+		),
+		array(
+			'id' => '96',
+			'parent_id' => '95',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'admin_index',
+			'lft' => '254',
+			'rght' => '255'
+		),
+		array(
+			'id' => '97',
+			'parent_id' => '95',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'admin_add',
+			'lft' => '256',
+			'rght' => '257'
+		),
+		array(
+			'id' => '98',
+			'parent_id' => '95',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'admin_edit',
+			'lft' => '258',
+			'rght' => '259'
+		),
+		array(
+			'id' => '99',
+			'parent_id' => '95',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'admin_view',
+			'lft' => '260',
+			'rght' => '261'
+		),
+		array(
+			'id' => '100',
+			'parent_id' => '95',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'admin_update',
+			'lft' => '262',
+			'rght' => '263'
+		),
+		array(
+			'id' => '101',
+			'parent_id' => '94',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'history_state',
+			'lft' => '248',
+			'rght' => '249'
+		),
+		array(
+			'id' => '102',
+			'parent_id' => '94',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'sql_explain',
+			'lft' => '250',
+			'rght' => '251'
+		),
+		array(
+			'id' => '103',
+			'parent_id' => '10',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'add',
+			'lft' => '80',
+			'rght' => '81'
+		),
+		array(
+			'id' => '104',
+			'parent_id' => '10',
+			'model' => '',
+			'foreign_key' => '',
+			'alias' => 'edit',
+			'lft' => '82',
+			'rght' => '83'
 		),
 	);
 

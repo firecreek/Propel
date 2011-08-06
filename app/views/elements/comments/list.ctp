@@ -15,7 +15,7 @@
     if($record['Person']['id'] == $this->Auth->read('Person.id'))
     {
       $class = 'highlight';
-      if($created > strtotime('-15 minutes'))
+      if($created > strtotime('-'.Configure::read('Comments.edit_expiry').' minutes'))
       {
         $canEdit = true;
         $minutesAgo = floor((time() - $created)/60);
@@ -33,7 +33,7 @@
         
         <?php if($canEdit): ?>
           <span class="edit"> | 
-            <?php echo $html->link(__('Edit',true),array('action'=>'edit',$id,$record['id'],'#comment-add')); ?>
+            <?php echo $html->link(__('Edit',true),array('action'=>'index','edit'=>$record['id'],$id)); ?>
             (for another <span class="countdown-container"><?php echo $minutesAgo; ?> minutes</span>)
           </span>
         <?php endif; ?>
