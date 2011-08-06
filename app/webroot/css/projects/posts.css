@@ -4,18 +4,13 @@
  */
 .box .post-list h3 { margin-bottom:0; }
 
-.post-active { -webkit-box-shadow:#BBB 0px 0px 5px; -moz-box-shadow:#BBB 0px 0px 5px; border-radius:12px; margin:0 0 40px 0; }
-.post-active .wrapper { padding:10px 20px; }
+div.intro .section .banner h3 a { font-size:14px; }
+div.intro .section .avatar { float:left; width:45px; }
+div.intro .section p { margin:0; }
+div.intro .section p.detail { font-size:12px; }
+div.intro .section p.comments { font-size:11px; color:#666; }
 
-.post-active h4 { margin-bottom:10px; }
-
-.post-active .section .banner h3 a { font-size:14px; }
-.post-active .section .avatar { float:left; width:45px; }
-.post-active .section p { margin:0; }
-.post-active .section p.detail { font-size:12px; }
-.post-active .section p.comments { font-size:11px; color:#666; }
-
-.post-active .section:last-child { border-bottom:0; margin-bottom:10px; padding-bottom:0; }
+div.intro .section:last-child { border-bottom:0; margin-bottom:10px; padding-bottom:0; }
 
 
 /**

@@ -358,6 +358,15 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 
 /**
+ * Intro box
+ */
+div.intro { -webkit-box-shadow:#BBB 0px 0px 5px; -moz-box-shadow:#BBB 0px 0px 5px; border-radius:12px; margin:0 0 40px 0; }
+div.intro .wrapper { padding:10px 20px; }
+div.intro h4 { margin-bottom:10px; }
+
+ 
+
+/**
  * Card
  */
 .card { border-radius:12px; width:250px; -webkit-box-shadow:#BBB 0px 0px 8px; -moz-box-shadow:#BBB 0px 0px 8px; }

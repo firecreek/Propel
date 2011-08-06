@@ -35,7 +35,7 @@
       
       
         <?php if(!empty($activeRecords)): ?>
-          <div class="post-active">
+          <div class="intro">
             <div class="wrapper">
               <h4 class="important"><?php __('Most active discussions'); ?></h4>
               
