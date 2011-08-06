@@ -52,6 +52,14 @@
      */
     public $authModel = null;
     
+    /**
+     * If the passed model id has to be the owner
+     *
+     * @access public
+     * @var string
+     */
+    public $mustBeOwner = false;
+    
 
     /**
      * Initialize component
@@ -198,6 +206,11 @@
                 $this->cakeError('recordIsPrivate');
               }
             }
+            elseif($this->mustBeOwner && $modelRecord['Person']['id'] != $this->Authorization->read('Person.id'))
+            {
+              $this->cakeError('permissionDenied');
+            }
+            
           }
         }
       

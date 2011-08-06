@@ -36,7 +36,7 @@
      * @access public
      * @var array
      */
-    public $cache = false;
+    public $cache = true;
     
     /**
      * Access data

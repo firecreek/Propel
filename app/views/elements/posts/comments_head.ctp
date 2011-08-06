@@ -18,11 +18,11 @@
       <li><?php echo $html->link(__('New message',true),array('controller'=>'posts','action'=>'add')); ?></li>
     <?php endif; ?>
     
-    <?php if($this->Auth->check(array('controller'=>'posts','action'=>'edit'))): ?>
+    <?php if($this->Auth->check(array('controller'=>'posts','action'=>'edit'),array('type'=>'model','record'=>$record,'model'=>'Post'))): ?>
       <li><?php echo $html->link(__('Edit this message',true),array('controller'=>'posts','action'=>'edit',$id)); ?></li>
     <?php endif; ?>
     
-    <?php if($this->Auth->check(array('controller'=>'posts','action'=>'delete'))): ?>
+    <?php if($this->Auth->check(array('controller'=>'posts','action'=>'delete'),array('type'=>'model','record'=>$record,'model'=>'Post'))): ?>
       <li><?php echo $html->link(__('Delete',true),array('controller'=>'posts','action'=>'delete',$id)); ?></li>
     <?php endif; ?>
   </ul>

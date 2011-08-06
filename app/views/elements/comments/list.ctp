@@ -64,7 +64,7 @@
   <?php
     if($canEdit)
     {
-      $minutesLeft = strtotime('+15 minutes',$created);
+      $minutesLeft = strtotime('+'.Configure::read('Comments.edit_expiry').' minutes',$created);
     
       echo $javascript->codeBlock("
         var finishDate = new Date(".date('Y,',$minutesLeft).(date('m')-1).date(',d,H,i,s',$minutesLeft)."); 

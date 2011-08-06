@@ -38,6 +38,25 @@
     
     
     /**
+     * Before filter
+     *
+     * @access public
+     * @return void
+     */
+    public function beforeFilter()
+    {
+      $action = str_replace($this->params['prefix'],'',$this->action);
+    
+      if($action == '_edit' || $action == '_delete')
+      {
+        $this->AclFilter->mustBeOwner = true;
+      }
+    
+      parent::beforeFilter();
+    }
+    
+    
+    /**
      * Project list posts
      *
      * @access public

@@ -37,35 +37,93 @@
      * @access public
      * @return boolean
      */
-    public function check($model,$options = array())
+    public function check($key,$options = array())
     {
-      if(!is_array($model))
-      {
-        die('Auth::check(), Deprecated use of method');
-      }
-      
       //
       $_options = array(
-        'prefix' => true
+        'prefix' => true,
+        'type' => 'controller'
       );
       $options = array_merge($_options,$options);
+      
+      //Check controller permissions
+      $check = $this->_checkController($key,$options);
+      
+      if($options['type'] == 'model' && $check)
+      {
+        $check = $this->_checkModel($key,$options);
+      }
+      
+      return $check;
+    }
     
+    
+    /**
+     * Check controller
+     *
+     * @param string $key
+     * @param string $options
+     * @access private
+     * @return boolean
+     */
+    private function _checkController($key,$options = array())
+    {
       //
       $permissions = $this->Session->read('AuthAccount.Permissions');
     
       //
-      $url = $this->Router->parse($this->url($model));
+      $url = $this->Router->parse($this->url($key));
       $controller = $url['controller'];
       $model = $url['prefix'];
       $action = $url['action'];
       
       if(isset($url['prefix']) && $options['prefix']) { $action = $url['prefix'].'_'.$action; }
       
-      $isAllowed = Set::extract($permissions,'/'.Inflector::camelize($model).'[controller='.Inflector::camelize($controller).'][action='.$action.'][read=1]');
+      //
+      if(Set::extract($permissions,'/'.Inflector::camelize($model).'[controller='.Inflector::camelize($controller).'][action='.$action.'][read=1]'))
+      {
+        return true;
+      }
       
-      if(!empty($isAllowed)) { $isAllowed = true; }
+      return false;
+    }
+    
+    
+    /**
+     * Check model
+     *
+     * @param string $key
+     * @param string $options
+     * @access private
+     * @return boolean
+     */
+    private function _checkModel($key,$options = array())
+    {
+      $modelPersonId = $options['record'][$options['model']]['person_id'];
       
-      return $isAllowed;
+      if($options['record'][$options['model']]['person_id'] == $this->read('Person.id'))
+      {
+        return true;
+      }
+      
+      return false;  
+    }
+    
+    
+    /**
+     * Check is prefix owner
+     *
+     * @param string $key
+     * @param string $options
+     * @access private
+     * @return boolean
+     */
+    private function _checkIsPrefixOwner($key,$options = array())
+    {
+      if($this->read(Inflector::camelize($model).'.person_id') == $this->read('Person.id'))
+      {
+        return true;
+      }
     }
     
     
