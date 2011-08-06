@@ -12,11 +12,21 @@
 
 <div class="banner">
   <h2><?php echo $html->link(__('« All Messages',true),array('controller'=>'posts','action'=>'index')); ?></h2>
+  
   <ul class="right important">
-    <li><?php echo $html->link(__('New message',true),array('controller'=>'posts','action'=>'add')); ?></li>
-    <li><?php echo $html->link(__('Edit this message',true),array('controller'=>'posts','action'=>'edit',$id)); ?></li>
-    <li><?php echo $html->link(__('Delete',true),array('controller'=>'posts','action'=>'delete',$id)); ?></li>
+    <?php if($this->Auth->check(array('controller'=>'posts','action'=>'add'))): ?>
+      <li><?php echo $html->link(__('New message',true),array('controller'=>'posts','action'=>'add')); ?></li>
+    <?php endif; ?>
+    
+    <?php if($this->Auth->check(array('controller'=>'posts','action'=>'edit'))): ?>
+      <li><?php echo $html->link(__('Edit this message',true),array('controller'=>'posts','action'=>'edit',$id)); ?></li>
+    <?php endif; ?>
+    
+    <?php if($this->Auth->check(array('controller'=>'posts','action'=>'delete'))): ?>
+      <li><?php echo $html->link(__('Delete',true),array('controller'=>'posts','action'=>'delete',$id)); ?></li>
+    <?php endif; ?>
   </ul>
+  
 </div>
 
 <div class="content post-detail">
