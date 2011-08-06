@@ -34,6 +34,23 @@
     {
       return $this->Html->link('<span>'.$text.'</span>',$url,array('class'=>'button action '.$type,'escape'=>false));
     }
+        
+    /**
+     * Status
+     *
+     * instead of 0/1, show tick/cross
+     *
+     * @param integer $value 0 or 1
+     * @return string formatted img tag
+     */
+    public function status($value) {
+        if ($value == 1) {
+            $output = $this->Html->image('/img/icons/tick.png');
+        } else {
+            $output = $this->Html->image('/img/icons/cross.png');
+        }
+        return $output;
+    }
     
     
     /**

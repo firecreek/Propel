@@ -64,7 +64,7 @@
             
             //Give this person permission for this project
             $this->User->Person->id = $this->Authorization->read('Person.id');
-            $this->AclManager->allow($this->User->Person,$this->Project);
+            $this->AclManager->allow($this->User->Person,$this->Project,array('alias'=>'owner'));
             
             $this->User->Company->id = $this->Authorization->read('Company.id');
             $this->AclManager->allow($this->User->Company,$this->Project);

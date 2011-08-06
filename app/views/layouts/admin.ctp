@@ -10,7 +10,8 @@
     ));
     echo $javascript->link(array(
       'jquery/jquery',
-      'jquery/jquery-ui'
+      'jquery/jquery-ui',
+      'admin'
     ));
     echo $scripts_for_layout;
   ?>

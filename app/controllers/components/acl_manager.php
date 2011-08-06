@@ -52,11 +52,11 @@
      * @access public
      * @return boolean
      */
-    public function allow(&$model,&$aco)
+    public function allow(&$model,&$aco,$data = array())
     {
       if(method_exists($model,'aro'))
       {
-        $aro = $model->aro($aco,true);
+        $aro = $model->aro($aco,true,$data);
       }
       else
       {

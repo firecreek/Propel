@@ -6,8 +6,7 @@
   echo $javascript->codeBlock("
     Milestones.refreshUrl = '".$html->url(array('action'=>'index'))."';
   ");
-  
-  $html->css('projects/milestones', null, array('inline'=>false));
+
 ?>
 
 
@@ -112,10 +111,10 @@
     
       
       <?php
-        if($auth->check('Project.Milestones','create'))
+        //Add milestone
+        if($auth->check(array('action'=>'add')))
         {
           echo $layout->button(__('Add a new milestone',true),array('action'=>'add'),'large add');
-          
           echo $layout->button(__('Add ten at a time',true),array('action'=>'add_multiple'),'inline add-grey');
         }
       ?>

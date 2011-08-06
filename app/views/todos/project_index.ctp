@@ -8,6 +8,14 @@
   
 ?>
 
+
+<div id="TodoAdd" style="display:none;">
+  <?php
+    echo $this->element('todos/add');
+  ?>
+</div>
+
+
 <div id="TodoList">
 
   <div class="cols">
@@ -93,7 +101,7 @@
     <div class="col right">
 
       <?php
-        if($auth->check(array('controller'=>'todos','action'=>'add')))
+        if($auth->check(array('action'=>'add')))
         {
           echo $layout->button(__('New to-do list',true),array('controller'=>'todos','action'=>'add'),'large add');
         }
@@ -110,11 +118,3 @@
     
   </div>
 </div>
-
-
-<div id="TodoAdd" style="display:none;">
-  <?php
-    echo $this->element('todos/add');
-  ?>
-</div>
-

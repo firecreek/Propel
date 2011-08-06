@@ -2,7 +2,7 @@
 .section.plain { border-bottom:0; }
 
 .todos .cols { background-color:#EEE; }
-.todos .col.left {   width:30%; }
+.todos .col.left { width:30%; }
 .todos .col.right { width:70%; }
 
 .todos .col .wrapper { padding:5px; }

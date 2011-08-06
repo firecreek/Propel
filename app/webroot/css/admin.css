@@ -36,5 +36,7 @@ table th, table td { padding:4px; }
 table th { text-align:left; color:white; }
 table td { background-color:white; }
 
+table tr.head td { background-color:#c0c0c0; }
+
 table td.toggle { text-align:center; }
 table td.toggle a { text-decoration:none; }

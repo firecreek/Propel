@@ -19,34 +19,19 @@
 .listable .item.ui-sortable-helper { left:5px !important; }
 
 
-/**
- * Checkbox
- */
+
 .listable .item .check { left:55px; position:relative; }
 .listable .item .check div.input { position:absolute; z-index:10; }
 .listable .item .check div.input input { position:relative; top:2px; }
 
-
-
-/**
- * Name
- */
 .listable .item .label { font-size:12px; left:75px; margin-right:50px; position:relative; color:#333; z-index:10; display:inline; }
 .listable .item .label span {  }
 .listable .item .label .name { display:inline; }
 
-
-/**
- * Extra rounded box (e.g. assigned to)
- */
 .listable .item .extra { background-color:#EFEFEF; display:inline; border-radius:10px; margin-left:5px; padding:2px 8px; font-size:10px; color:#333; }
 .listable .item .extra.hover { background-color:#C9C9C9; cursor:pointer; }
 .listable .item .extra.active { background-color:#000104; color:white; cursor:pointer; }
 
-
-/**
- * Private
- */
 .listable .item .extra.private { background-color:#D00 !important; color:white; font-weight:normal; border-radius:0; font-size:9px; padding:2px 4px; position:relative; top:-2px; cursor:pointer; }
 .listable .item .private-pop { position:absolute; top:-30px; right:-75px; background:url(/img/icons/arrow-red-down-11.png) transparent no-repeat bottom center; height:29px;  }
 .listable .item .private-pop p { background:url(/img/icons/padlock-red-16.png) #D00 no-repeat 5px 3px; color:white; font-size:10px; margin:0; width:170px; padding:4px 0 4px 25px; font-weight:normal; }
@@ -132,3 +117,35 @@
  * Inline box
  */
 .listable .inline { position:relative; left:45px; }
+
+
+/**
+ * Styles
+ */
+ 
+
+
+/**
+ * Maintain options right inline
+ */
+.listable.inline-right { margin:0 0 20px 0; padding:0 0 5px 0; }
+.listable.inline-right .item {  }
+.listable.inline-right .item .check {  }
+.listable.inline-right .item .label { left:60px; }
+
+.listable.inline-right .item { margin:0; min-height:0; padding-bottom:5px; }
+.listable.inline-right .item .maintain { padding:0; display:inline-block; position:relative; background-color:transparent; width:auto; border-radius:0; position:relative; top:1px; left:5px; }
+.listable.inline-right .item .maintain .delete { margin-top:4px; position:absolute; left:30px; display:none; }
+.listable.inline-right .item .maintain .edit { display:none; }
+.listable.inline-right .item.ui-state-active .maintain .delete { display:block; }
+.listable.inline-right .item.ui-state-active .maintain .edit { display:inline-block; }
+
+.listable.inline-right .item .loading { top:0px; }
+
+
+
+
+/**
+ * Elements visible
+ */
+.listable.edit-visible .item .maintain .edit { display:inline-block; }

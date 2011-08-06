@@ -39,11 +39,6 @@
      * @var array
      */
     public $validate = array(
-      'role_id' => array(
-        'numeric' => array(
-          'rule' => array('numeric')
-        ),
-      ),
       'username' => array(
         'notempty' => array(
           'rule' => array('notempty'),
@@ -97,13 +92,6 @@
         'fields' => '',
         'order' => ''
       ),
-      'Role' => array(
-        'className' => 'Role',
-        'foreignKey' => 'role_id',
-        'conditions' => '',
-        'fields' => '',
-        'order' => ''
-      ),
       'Timezone' => array(
         'className' => 'Timezone',
         'foreignKey' => 'timezone_id',
@@ -121,6 +109,13 @@
       'Account' => array(
         'className' => 'Account',
         'foreignKey' => 'account_id',
+        'conditions' => '',
+        'fields' => '',
+        'order' => ''
+      ),
+      'Role' => array(
+        'className' => 'Role',
+        'foreignKey' => 'role_id',
         'conditions' => '',
         'fields' => '',
         'order' => ''

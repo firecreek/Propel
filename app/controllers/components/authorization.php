@@ -36,6 +36,14 @@
      * @access public
      * @var array
      */
+    public $cache = true;
+    
+    /**
+     * Access data
+     *
+     * @access public
+     * @var array
+     */
     public $access = array();
     
 
@@ -50,13 +58,12 @@
     public function initialize(&$controller, $settings = array())
     {
       $this->controller =& $controller;
-    
+      
       //Load person, etc..
       if($this->user('id') && isset($this->controller->params['accountSlug']))
       {
-        $this->accountSlug  = $this->controller->params['accountSlug'];
-        
         $this->prefix = null;
+        $this->accountSlug  = $this->controller->params['accountSlug'];
         
         if(isset($this->controller->params['prefix']))
         {
@@ -77,29 +84,27 @@
     /**
      * Load User
      *
+     * @todo Centralise caching
      * @access public
      * @return void
      */
     public function _loadUser()
     {
       $this->reset();
-    
+      
       //Load account, company, project
-      $this->__loadAccount();
-      $this->__loadCompany();
-      $this->__loadProject();
+      $this->_call('Account');
+      $this->_call('Company');
+      $this->_call('Project');
+      $this->_call('Prefix');
+      $this->_call('Person');
       
-      //Set prefix
-      $this->__loadPrefix();
+      /**
+       * Records accessible
+       */
+      $this->_call('Accounts',array('Accounts'),array('method'=>'PersonAccess'));
       
-      //Load person
-      $this->__loadPerson();
-      
-      //Accounts this person has access to
-      $this->__loadPersonAccess('Account');
-      
-      //Projects this person has access to
-      $this->__loadPersonAccess('Project',array(
+      $this->_call('Projects',array('Projects',array(
         'contain' => array(
           'Account' => array(
             'fields' => array('id','name','slug')
@@ -108,19 +113,29 @@
             'fields' => array('id','name')
           )
         )
-      ));
+      )),array('method'=>'PersonAccess'));
       
-      //Load permissions
-      $this->__loadModelPermissions('Account');
       
-      if(isset($this->controller->params['projectId']))
+      /**
+       * Permissions
+       */
+      $this->_call('Permissions.Account',array('Account'),array('method'=>'ModelPermissions'));
+      if($this->prefix !== 'account')
       {
-        $this->__loadModelPermissions('Project');
+        $key = Inflector::classify($this->prefix);
+        $this->_call('Permissions.'.$key,array($key),array('method'=>'ModelPermissions'));
       }
       
-      $this->__loadPrefixCompanies();
-      $this->__loadPrefixPeople();
+      /**
+       * Companies and people with access
+       */
+      $this->_call('Companies',array(),array('method'=>'PrefixCompanies'));
+      $this->_call('People',array(),array('method'=>'PrefixPeople'));
+      
+      //
+      $this->updateUserActivity();
     }
+    
     
     
     /**
@@ -129,22 +144,57 @@
      * @access private
      * @return boolean
      */
-    
-    public function __loadPrefix()
+    private function _call($name,$args = array(),$options = array())
     {
-      $this->prefixId = $this->read(Inflector::classify($this->prefix).'.id');
+      $_options = array(
+        'cache' => $this->cache,
+        'method' => $name
+      );
+      $options = array_merge($_options,$options);
+  
+      //Build unique cache key
+      $keyArr = array();
+      $keyArr[] = Inflector::camelize($name);
+      $keyArr[] = 'account-'.$this->accountSlug;
       
-      //Aco ID
-      $acoId = $this->Acl->Aco->field('id',array(
-        'model' => $this->prefix,
-        'foreign_key' => $this->prefixId
-      ));
-    
-      $this->write('Prefix',array(
-        'name'    => $this->prefix,
-        'id'      => $this->prefixId,
-        'aco_id'  => $acoId
-      ));
+      if(isset($this->controller->params['projectId']))
+      {
+        $keyArr[] = 'project-'.$this->controller->params['projectId'];
+      }
+      
+      if($personId = $this->read('Person.id'))
+      {
+        $keyArr[] = 'person-'.$personId;
+      }
+      else
+      {
+        $keyArr[] = 'user-'.$this->user('id');
+      }
+      $cacheKey = implode('_',$keyArr);
+      
+      //
+      if($options['cache'] == true)
+      {
+        //Check cache
+        $data = Cache::read($cacheKey,'auth');
+      }
+      
+      //Method
+      if(!isset($data) || (isset($data) && empty($data)))
+      {
+        //debug('call:' .$options['method'].' // '.$cacheKey);
+        $method = '__load'.$options['method'];
+        
+        $data = call_user_func_array(array($this, $method), $args);
+      }
+      
+      $this->write($name,$data);
+      
+      //Cache
+      if($options['cache'] == true)
+      {
+        Cache::write($cacheKey,$data,'auth');
+      }
       
       return true;
     }
@@ -165,10 +215,6 @@
         'fields' => array('id','name','slug','scheme_id'),
         'contain' => array(
           'CompanyOwner' => array('id','name')
-        ),
-        'cache' => array(
-          'name' => 'account_'.$this->accountSlug,
-          'config' => 'auth',
         )
       ));
       
@@ -177,9 +223,7 @@
         $this->cakeError('accountNotFound');
       }
       
-      $this->write('Account',$account['Account']);
-      
-      return true;
+      return $account['Account'];
     }
     
     
@@ -197,11 +241,7 @@
           'Company.account_owner' => true
         ),
         'fields' => array('id','name'),
-        'contain' => false,
-        'cache' => array(
-          'name' => 'company_'.$this->read('Account.id'),
-          'config' => 'auth',
-        )
+        'contain' => false
       ));
       
       if(empty($company))
@@ -209,9 +249,7 @@
         $this->cakeError('companyNotFound');
       }
       
-      $this->write('Company',$company['Company']);
-      
-      return true;
+      return $company['Company'];
     }
     
     
@@ -232,10 +270,6 @@
         'contain' => array(
           'Company' => array('id','name','can_see_private'),
           'Person' => array('id','user_id','full_name','email','user_id')
-        ),
-        'cache' => array(
-          'name' => 'project_'.$this->controller->params['projectId'],
-          'config' => 'auth',
         )
       ));
       
@@ -244,9 +278,7 @@
         $this->cakeError('prefixNotFound');
       }
       
-      $this->write('Project',$project['Project']);
-      
-      return true;
+      return $project['Project'];
     }
     
     
@@ -265,13 +297,11 @@
         ),
         'fields' => array('id','first_name','last_name','full_name','email','company_owner','user_id'),
         'contain' => array(
-          'PersonAccess',
+          'PersonAccess' => array(
+            'Grant'
+          ),
           'User' => array('id','username','email','email_format','email_send','last_activity'),
           'Company' => array('id','name','can_see_private')
-        ),
-        'cache' => array(
-          'name' => 'person_'.$this->user('id').'_'.$this->read('Account.id'),
-          'config' => 'auth',
         )
       ));
       
@@ -280,26 +310,40 @@
         $this->cakeError('personNotFound');
       }
       
-      $write = $person['Person'];
+      $record = $person['Person'];
       foreach($person as $key => $val)
       {
-        if($key != 'Person') { $write[$key] = $val; }
+        if($key != 'Person') { $record[$key] = $val; }
       }
       
-      $this->write('Person',$write);
+      return $record;
+    }
     
-      //Update activity time
-      //@todo When caching is recoded then clear the person cache here
-      if(
-        empty($person['User']['last_activity']) ||
-        ((time() - strtotime($person['User']['last_activity'])) / 60) > 5
-      )
-      {
-        $this->controller->User->id = $person['User']['id'];
-        $this->controller->User->saveField('last_activity',date('Y-m-d H:i:s'));
-      }
+    
+    
+    /**
+     * Load prefix
+     * 
+     * @access private
+     * @return boolean
+     */
+    public function __loadPrefix()
+    {
+      $this->prefixId = $this->read(Inflector::classify($this->prefix).'.id');
       
-      return true;
+      //Aco ID
+      $acoId = $this->Acl->Aco->field('id',array(
+        'model' => $this->prefix,
+        'foreign_key' => $this->prefixId
+      ));
+      
+      $record = array(
+        'name'    => $this->prefix,
+        'id'      => $this->prefixId,
+        'aco_id'  => $acoId
+      );
+      
+      return $record;
     }
     
     
@@ -309,40 +353,30 @@
      * @access private
      * @return boolean
      */
-    private function __loadPersonAccess($model,$query = array())
+    private function __loadPersonAccess($key,$query = array())
     {
       $person = $this->read('Person');
-      $cacheKey = 'person_'.$person['id'].'_'.strtolower($model);
+      $model = Inflector::singularize($key);
     
-      $records = $this->controller->{$model}->findCached($cacheKey, 'auth');
-   
-      if(empty($records))
-      {
-        $personAccessIds = Set::extract($person,'/PersonAccess[model='.$model.']/id');
+      $personAccessIds = Set::extract($person,'/PersonAccess[model='.$model.']/id');
 
-        $acos = $this->controller->Acl->Aco->Permission->find('all',array(
-          'conditions' => array(
-            'Aco.model'       => $model,
-            'Aro.model'       => 'PersonAccess',
-            'Aro.foreign_key' => $personAccessIds
-          )
-        ));
-        $acos = Set::extract($acos,'{n}.Aco.foreign_key');
-        
+      $acos = $this->controller->Acl->Aco->Permission->find('all',array(
+        'conditions' => array(
+          'Aco.model'       => $model,
+          'Aro.model'       => 'PersonAccess',
+          'Aro.foreign_key' => $personAccessIds
+        )
+      ));
+      $acos = Set::extract($acos,'{n}.Aco.foreign_key');
       
-        $records = $this->controller->{$model}->find('all',array_merge(array(
-          'conditions' => array(
-            $model.'.id' => $acos
-          ),
-          'contain' => false
-        ),$query));
-        
-        Cache::write($cacheKey,$records,'auth');
-      }
+      $records = $this->controller->{$model}->find('all',array_merge(array(
+        'conditions' => array(
+          $model.'.id' => $acos
+        ),
+        'contain' => false
+      ),$query));
       
-      $this->write(Inflector::pluralize($model),$records);
-      
-      return true;
+      return $records;
     }
     
     
@@ -358,79 +392,94 @@
       $prefix = strtolower($name);
       $recordId = $this->read($name.'.id');
     
-      $cacheKey = 'prefix_'.$prefix.'_'.$this->read('Account.id');
-      $permissions = Cache::read($cacheKey,'auth');
-   
-      if(empty($permissions))
-      {      
-        //Load model permissions
-        $node = $this->Acl->Aco->node('controllers');
-        $controllerNodeId = $node[0]['Aco']['id'];
-        
-        $acos = $this->controller->Acl->Aco->children($controllerNodeId,false,array('Aco.id','Aco.alias','Aco.parent_id'));
+      //Load model permissions
+      $node = $this->Acl->Aco->node('controllers');
+      $controllerNodeId = $node[0]['Aco']['id'];
+      
+      $acos = $this->controller->Acl->Aco->children($controllerNodeId,false,array('Aco.id','Aco.alias','Aco.parent_id'));
 
-        //Controllers indexed
-        $controllers = Set::extract($acos,'/Aco[parent_id='.$controllerNodeId.']');
-        $controllers = Set::combine($controllers,'{n}.Aco.id','{n}.Aco');
+      //Controllers indexed
+      $controllers = Set::extract($acos,'/Aco[parent_id='.$controllerNodeId.']');
+      $controllers = Set::combine($controllers,'{n}.Aco.id','{n}.Aco');
+      
+      //Record id
+      $accessModelId = $this->read($name.'.id');
+      
+      //Check we have access before adding permission tree
+      $permissions = array();
+      $records = $this->read(Inflector::pluralize($name));
+      
+      if(Set::extract($records,'/'.Inflector::camelize($name).'[id='.$accessModelId.']'))
+      {
+        //Person access
+        $personAccess = Set::extract($this->read('Person'),'/PersonAccess[model='.$name.'][model_id='.$accessModelId.']');
+        $personAccess = $personAccess[0]['PersonAccess'];
         
-        //Record id
-        $accessModelId = $this->read($name.'.id');
+        //Grant Aro
+        $this->controller->Person->PersonAccess->Grant->id = $personAccess['Grant']['id'];
+        $grantAro = $this->Acl->Aro->node($this->controller->Person->PersonAccess->Grant);
+        $grantAro = $grantAro[0]['Aro']['id'];
         
-        //Check we have access before adding permission tree
-        $permissions = array();
-        $records = $this->read(Inflector::pluralize($name));
+        //Grant Permissions
+        $grantActions = $this->controller->Acl->Aco->Permission->find('all', array(
+            'conditions' => array(
+                'Permission.aro_id' => $grantAro
+            ),
+            'recursive' => '-1',
+        ));
+        $grantActions = Set::combine($grantActions,'{n}.Permission.aco_id','{n}.Permission');
         
-        if(Set::extract($records,'/'.Inflector::camelize($name).'[id='.$accessModelId.']'))
+        
+        //Person Aro
+        $this->controller->Person->PersonAccess->id = $personAccess['id'];
+        $personAro = $this->Acl->Aro->node($this->controller->Person->PersonAccess);
+        $personAro = $personAro[0]['Aro']['id'];
+        
+        //Person Permissions
+        $personActions = $this->controller->Acl->Aco->Permission->find('all', array(
+            'conditions' => array(
+                'Permission.aro_id' => $personAro
+            ),
+            'recursive' => '-1',
+        ));
+        $personActions = Set::combine($personActions,'{n}.Permission.aco_id','{n}.Permission');
+
+   
+        //Build a list of controller permissions
+        foreach($acos as $aco)
         {
-          //Person access ACO
-          $personAccess = Set::extract($this->read('Person'),'/PersonAccess[model='.$name.'][model_id='.$accessModelId.']');
-          $this->controller->Person->PersonAccess->id = $personAccess[0]['PersonAccess']['id'];
-          $aro = $this->Acl->Aro->node($this->controller->Person->PersonAccess);
-          $aro = $aro[0]['Aro']['id'];
+          if($aco['Aco']['parent_id'] == $controllerNodeId) { continue; }
           
-          //What this person has been removed access from
-          $personActions = $this->controller->Acl->Aco->Permission->find('all', array(
-              'conditions' => array(
-                  'Permission.aro_id' => $aro
-              ),
-              'recursive' => '-1',
-          ));
-          $personActions = Set::combine($personActions,'{n}.Permission.aco_id','{n}.Permission');
-     
-          //Build a list of controller permissions
-          foreach($acos as $aco)
-          {
-            if($aco['Aco']['parent_id'] == $controllerNodeId) { continue; }
-            
-            $permission = array(
-              'controller' => $controllers[$aco['Aco']['parent_id']]['alias'],
-              'action' => $aco['Aco']['alias'],
-              'aco_id' => $aco['Aco']['id'],
-              'create' => 1,
-              'read' => 1,
-              'update' => 1,
-              'delete' => 1,
-            );
-          
-            if(isset($personActions[$aco['Aco']['id']]))
-            {
-              $permission['create'] = $personActions[$aco['Aco']['id']]['_create'];
-              $permission['read'] = $personActions[$aco['Aco']['id']]['_read'];
-              $permission['update'] = $personActions[$aco['Aco']['id']]['_update'];
-              $permission['delete'] = $personActions[$aco['Aco']['id']]['_delete'];
-            }
-            
-            $permissions[] = $permission;
-          }
-        }
+          $permission = array(
+            'controller' => $controllers[$aco['Aco']['parent_id']]['alias'],
+            'action' => $aco['Aco']['alias'],
+            'aco_id' => $aco['Aco']['id'],
+            'create' => 0,
+            'read' => 0,
+            'update' => 0,
+            'delete' => 0,
+          );
         
-        Cache::write($cacheKey,$permissions,'auth');
+          if(isset($personActions[$aco['Aco']['id']]))
+          {
+            $permission['create'] = $personActions[$aco['Aco']['id']]['_create'];
+            $permission['read'] = $personActions[$aco['Aco']['id']]['_read'];
+            $permission['update'] = $personActions[$aco['Aco']['id']]['_update'];
+            $permission['delete'] = $personActions[$aco['Aco']['id']]['_delete'];
+          }
+          elseif(isset($grantActions[$aco['Aco']['id']]))
+          {
+            $permission['create'] = $grantActions[$aco['Aco']['id']]['_create'];
+            $permission['read'] = $grantActions[$aco['Aco']['id']]['_read'];
+            $permission['update'] = $grantActions[$aco['Aco']['id']]['_update'];
+            $permission['delete'] = $grantActions[$aco['Aco']['id']]['_delete'];
+          }
+          
+          $permissions[] = $permission;
+        }
       }
       
-      
-      $this->write('Permissions.'.$name,$permissions);
-      
-      return true;
+      return $permissions;
     }
     
     
@@ -443,33 +492,26 @@
     private function __loadPrefixCompanies()
     {
       $prefix = $this->read('Prefix');    
-      $cacheKey = 'companies_'.implode('_',$prefix);
-      $companies = Cache::read($cacheKey,'auth');
 
-      if(empty($companies))
-      {
-        //Load companies
-        $records = $this->Acl->Aco->Permission->find('all', array(
-          'conditions' => array(
-            'Aro.model' => 'Company',
-            'Permission.aco_id' => $prefix['aco_id'],
-            'Permission._read' => true
-          ),
-          'fields' => array('Aro.foreign_key')
-        ));
-        $records = Set::extract($records,'{n}.Aro.foreign_key');
-        
-        $companies = $this->controller->User->Company->find('all',array(
-          'conditions' => array('Company.id'=>$records),
-          'fields' => array('id','name','can_see_private','account_owner'),
-          'order' => 'Company.created DESC',
-          'contain' => false
-        ));
-        
-        Cache::write($cacheKey,$companies,'auth');
-      }
+      //Load companies
+      $records = $this->Acl->Aco->Permission->find('all', array(
+        'conditions' => array(
+          'Aro.model' => 'Company',
+          'Permission.aco_id' => $prefix['aco_id'],
+          'Permission._read' => true
+        ),
+        'fields' => array('Aro.foreign_key')
+      ));
+      $records = Set::extract($records,'{n}.Aro.foreign_key');
       
-      $this->write('Companies',$companies);
+      $companies = $this->controller->User->Company->find('all',array(
+        'conditions' => array('Company.id'=>$records),
+        'fields' => array('id','name','can_see_private','account_owner'),
+        'order' => 'Company.created DESC',
+        'contain' => false
+      ));
+      
+      return $companies;
     }
     
     
@@ -482,36 +524,32 @@
     private function __loadPrefixPeople()
     {
       $prefix = $this->read('Prefix');    
-      $cacheKey = 'people_'.implode('_',$prefix);
-      $people = Cache::read($cacheKey,'auth');
-
-      if(empty($people))
-      {
-        //Load people
-        $people = $this->controller->Person->PersonAccess->find('all',array(
-          'conditions' => array(
-            'model' => Inflector::camelize($prefix['name']),
-            'model_id' => $prefix['id']
-          ),
-          'contain' => array(
-            'Person' => array(
-              'fields' => array('id','full_name','first_name','last_name','email','title','company_owner','user_id','status'),
-              'User' => array('id','last_activity'),
-              'Company' => array('id','name')
-            )
+    
+      //Load people
+      $people = $this->controller->Person->PersonAccess->find('all',array(
+        'conditions' => array(
+          'model' => Inflector::camelize($prefix['name']),
+          'model_id' => $prefix['id']
+        ),
+        'contain' => array(
+          'Person' => array(
+            'fields' => array('id','full_name','first_name','last_name','email','title','company_owner','user_id','status'),
+            'User' => array('id','last_activity'),
+            'Company' => array('id','name')
           )
-        ));
+        )
+      ));
+      
+      foreach($people as $key => $person)
+      {
+        //@todo Catch error if PersonAccess does not match with User record. This can happen when record manually deleted
+        if(!isset($person['Person']['User'])) { continue; }
         
-        foreach($people as $key => $person)
-        {
-          $people[$key]['Company'] = $person['Person']['Company'];
-          $people[$key]['User'] = $person['Person']['User'];
-        }
-        
-        Cache::write($cacheKey,$people,'auth');
+        $people[$key]['Company'] = $person['Person']['Company'];
+        $people[$key]['User'] = $person['Person']['User'];
       }
       
-      $this->write('People',$people);
+      return $people;
     }   
     
     
@@ -627,6 +665,26 @@
       if(!$path) { return $this->access; }
       
       return $this->Session->read('AuthAccount.'.$path);
+    }
+    
+    
+    /**
+     * Update user activity
+     */
+    public function updateUserActivity()
+    {
+      $user = $this->read('Person.User');
+
+      if(
+        empty($user['last_activity']) ||
+        ((time() - strtotime($user['last_activity'])) / 60) > 5
+      )
+      {
+        //Update      
+        $this->controller->User->id = $user['id'];
+        $this->controller->User->saveField('last_activity',date('Y-m-d H:i:s'),array('callbacks'=>false));
+        $this->write('Person.User.last_activity',date('Y-m-d H:i:s'));
+      }
     }
     
     

@@ -18,6 +18,7 @@
       'jquery/jquery-oc-dialog',
       'jquery/superfish',
       'jquery/supersubs',
+      'modernizr',
       'account'
     ));
     echo $scripts_for_layout;

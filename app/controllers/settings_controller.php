@@ -126,7 +126,7 @@
     
     
     /**
-     * Index
+     * Account Index
      *
      * @access public
      * @return void

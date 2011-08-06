@@ -3,7 +3,6 @@
 
 <p><?php echo $html->link('Update Aco Alises',array('action'=>'actions_update')); ?></p>
 
-
 <table cellpadding="0" cellspacing="0">
 <?php
     $tableHeaders = array(

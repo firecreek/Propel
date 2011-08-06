@@ -73,7 +73,13 @@
       //Auth state to model behavior
       foreach($this->uses as $model)
       {
-        if($this->{$model}->Behaviors->attached('Auth'))
+        if(strpos($model,'.') !== false)
+        {
+          $plugin = null;
+          $model  = substr($model,strpos($model,'.')+1);
+        }
+      
+        if(isset($this->{$model}->Behaviors) && $this->{$model}->Behaviors->attached('Auth'))
         {
           $this->{$model}->setAuthState($this->Session->read('AuthAccount'));
         }

@@ -50,7 +50,14 @@
         'className' => 'Person',
         'foreignKey' => 'person_id',
         'dependant' => true
-      )
+      ),
+      'Grant' => array(
+        'className' => 'Grant',
+        'foreignKey' => 'grant_id',
+        'conditions' => '',
+        'fields' => '',
+        'order' => ''
+      ),
     );
     
     
@@ -62,7 +69,18 @@
      */
     public function parentNode()
     {
-      return false;
+      if (!$this->id && empty($this->data)) {
+          return null;
+      }
+      $data = $this->data;
+      if (empty($this->data)) {
+          $data = $this->read();
+      }
+      if (!isset($data[$this->alias]['grant_id']) || !$data[$this->alias]['grant_id']) {
+          return null;
+      } else {
+          return array('Grant' => array('id' => $data[$this->alias]['grant_id']));
+      }
     }
     
 

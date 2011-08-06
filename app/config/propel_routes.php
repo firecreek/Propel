@@ -26,6 +26,7 @@
   Router::connect('/admin/:controller/:action/*',
     array('controller'=>'dashboard', 'action'=>'index', 'prefix'=>'admin', 'admin'=>true)
   );
+  Router::connect('/admin',array('controller'=>'dashboard', 'action'=>'index', 'prefix'=>'admin', 'admin'=>true));
   
   //Comments
   Router::connect('/:accountSlug/:projectId/:associatedController/comments/edit/*',

@@ -159,7 +159,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box.small p.intro { font-size:14px; color:#666; }
 
 
-.box .banner { border-bottom:none; position:relative; background-color:#EDF3FE;  min-height:48px; }
+.box .banner { border-bottom:none; position:relative; background-color:#EDF3FE; min-height:48px; }
 .box .banner h2 { font-size:14px; margin:0; padding:15px 0 0 20px; }
 .box .banner h2 span { font-size:12px; color:#999; font-weight:normal; margin-left:10px; }
 
@@ -205,9 +205,12 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box .banner .record .wrapper { border-top:1px solid #CCC; border-right:2px solid #CCC; border-bottom:2px solid #CCC; border-left:1px solid #CCC; background-color:white; padding:10px; }
 
 .box .content { padding:20px; }
+
 .box .content h2 { margin:0; font-size:22px; font-weight:normal; padding:10px 0 10px 0; }
+
 .box .content h3 { font-size:14px; margin:0 0 15px 0; padding:0 0 0 0; }
 .box .content h3.tight { margin:0 0 2px 0; }
+
 .box .content p { margin:0 0 1em 0; }
 .box .content p a.active { color:black; text-decoration:none; font-weight:bold; }
 
@@ -325,7 +328,6 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .section.plain .banner span { font-weight:normal; margin-left:5px; }
 .section.plain .content { padding:0; margin:0 0 5px 0; }
 
-
 .section.list { margin-bottom:10px; padding:0 0 10px 0; border-bottom:1px solid #E0E0E0; position:relative; }
 .section.list .content { padding:0; margin:0; }
 .section.list .content p { font-size:11px; color:#888; }
@@ -344,6 +346,8 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .section.list.comments-with .comments .icon span { background-position:-15px 0; }
 .section.list.comments-unread .comments .icon span { background-position:-30px 0; }
 
+.section.late { border-bottom:0; margin-bottom:10px; }
+.section.late h3 { color:#C00; font-size:12px; border-bottom:1px solid #C00; }
 
 .section.avatar { min-height:70px; }
 .section.avatar .avatar { float:left; }

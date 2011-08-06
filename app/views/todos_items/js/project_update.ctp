@@ -41,7 +41,7 @@
     if($completed == 'true')
     {
       //Into recently completed
-      $listHtml = $listable->item('Todo',$record['TodoItem']['id'],$record['TodoItem']['description'],array(
+      $listHtml = $listable->item('TodosItem',$record['TodoItem']['id'],$record['TodoItem']['description'],array(
         'edit' => false,
         'checked' => true,
         'prefix' => date('M j',strtotime($record['TodoItem']['completed_date'])),
@@ -52,7 +52,7 @@
     else
     {
       //Back into main list
-      $listHtml = $listable->item('Todo',$record['TodoItem']['id'],$record['TodoItem']['description'],array(
+      $listHtml = $listable->item('TodosItem',$record['TodoItem']['id'],$record['TodoItem']['description'],array(
         'position'  => true,
         'extra'     => $extra,
         'editUrl'   => $html->url(array('controller'=>'todos_items','action'=>'edit',$record['TodoItem']['id'])),

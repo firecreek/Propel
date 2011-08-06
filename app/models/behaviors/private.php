@@ -32,7 +32,7 @@
       }
       
       //Only do if Person is in contain
-      if(isset($query['contain']['Person']) || in_array('Person',$query['contain']))
+      if(isset($query['contain']['Person']) || (isset($query['contain']) && is_array($query['contain']) && in_array('Person',$query['contain'])))
       {      
         $query['conditions'] = array(
           'AND' => array(

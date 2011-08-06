@@ -125,21 +125,27 @@
       $options = array_merge($_options,$options);
       
       //
-      $aliasAco = Inflector::pluralize($alias);
+      $controller = Inflector::pluralize($alias);
       
-      //Depending on Person permissions
-      //@todo Enable this when working fine
-      /*if(!$this->Auth->check('Project.'.$aliasAco,'update'))
+      //Can edit
+      if(!$this->Auth->check(array('controller'=>$controller,'action'=>'edit')))
       {
         $options['checkbox'] = false;
         $options['edit'] = false;
         $options['position'] = false;
       }
       
-      if(!$this->Auth->check('Project.'.$aliasAco,'delete'))
+      //Can delete
+      if(!$this->Auth->check(array('controller'=>$controller,'action'=>'delete')))
       {
         $options['delete'] = false;
-      }*/
+      }
+      
+      //Can comment
+      if(!$this->Auth->check(array('controller'=>'Comments','action'=>'index')))
+      {
+        $options['comments'] = false;
+      }
 
       //Style
       if(!is_array($options['class'])) { $options['class'] = array($options['class']); }

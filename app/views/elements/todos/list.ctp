@@ -67,7 +67,7 @@
               
               $extra = implode(' ',$extras);
             
-              echo $listable->item('Todo',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
+              echo $listable->item('TodosItem',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
                 'position'  => true,
                 'extra'     => $extra,
                 'commentCount'  => $item['TodoItem']['comment_count'],
@@ -97,7 +97,7 @@
           <?php if(!empty($record['TodoItemRecent'])): ?>
           <?php foreach($record['TodoItemRecent'] as $item): ?>
             <?php
-              echo $listable->item('Todo',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
+              echo $listable->item('TodosItem',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
                 'edit' => false,
                 'checked' => true,
                 'prefix' => date('M j',strtotime($item['TodoItem']['completed_date'])),

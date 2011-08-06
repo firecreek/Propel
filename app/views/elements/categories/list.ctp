@@ -18,7 +18,7 @@
   
 ?>
 
-<div class="listable category-list" id="Categories<?php echo $typeHuman; ?>">
+<div class="listable inline-right edit-visible" id="Categories<?php echo $typeHuman; ?>">
 
   <div class="items">
     <?php

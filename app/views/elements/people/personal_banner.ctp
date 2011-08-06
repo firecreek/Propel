@@ -5,7 +5,7 @@
     
   <div class="card person">
     <div class="banner">
-      <h2>Your Opencamp ID</h2>
+      <h2><?php __('Your Opencamp ID'); ?></h2>
     </div>
     <div class="content">
       <div class="avatar">
@@ -15,8 +15,8 @@
         <h3><?php echo $this->Auth->read('Person.full_name'); ?></h3>
         <p class="email"><?php echo $this->Auth->read('Person.email'); ?></p>
         <p class="username">
-        Username: <?php echo $this->Session->read('Auth.User.username'); ?><br />
-        Password: ••••••
+        <?php __('Username'); ?>: <?php echo $this->Session->read('Auth.User.username'); ?><br />
+        <?php __('Password'); ?>: ••••••
         </p>
       </div>
     </div>

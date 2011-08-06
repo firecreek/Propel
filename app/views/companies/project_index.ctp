@@ -1,5 +1,6 @@
 <?php
 
+  $javascript->link('listable.js', false);
   $javascript->link('projects/companies_permissions.js', false);
   
   $html->css('projects/companies_permissions', null, array('inline'=>false));
@@ -31,62 +32,58 @@
               $myCompany = true;
             }
           ?>
-        
-          <table class="std">
-            <thead>
-              <tr>
-                <th>
-                  <?php echo $company['Company']['name']; ?>
-                  <?php if($myCompany) { echo '('.__('Your company',true).')'; } ?>
-                </th>
-                <th class="links">
-                  <?php if(!$myCompany): ?>
-                    <?php echo $html->link(__('Remove company from this project',true),array('action'=>'delete',$company['Company']['id']),array('class'=>'unimportant','confirm'=>__('Are you sure you want to remove this company and every person from this project?',true))); ?>
-                  <?php endif; ?>
-                </th>
-              </tr>
-            </thead>
-            <?php if(isset($company['People']) && !empty($company['People'])): ?>
-            <tbody>
-              <?php foreach($company['People'] as $person): ?>
+          
+        <div class="section">
+          <div class="banner">
+            <h3><?php echo $company['Company']['name']; ?> <?php if($myCompany) { echo '('.__('Your company',true).')'; } ?></h3>
+          </div>
+          <div class="content">
+          
+
+            <div class="listable inline-right">
+
+              <div class="items">
                 <?php
-                  $pid = $person['id'];
+                  //
+                  foreach($company['People'] as $person)
+                  {                 
+                    $name = $person['full_name'];
+                  
+                    $disabled = false;
+                    if($person['company_owner'])
+                    {
+                      $disabled = true;
+                      $name .= ' ('.__('Account owner',true).')';
+                    }
+                    
+                    $checked = false;
+                    if($person['_access']) { $checked = true; }
+                    
+                    echo $listable->item('Category',$person['id'],$name,array(
+                      'position'  => false,
+                      'checkbox'  => false,
+                      'edit'      => true,
+                      'comments'  => false,
+                      'delete'    => false,
+                      'editUrl'   => $html->url(array('controller'=>'people','action'=>'edit',$person['id']))
+                    ));
+                  }
                 ?>
-                <tr rel-person-id="<?php echo $pid; ?>">
-                  <td class="name">
-                    <?php
-                      $label = $person['full_name'];
-                    
-                      $disabled = false;
-                      if($person['company_owner'])
-                      {
-                        $disabled = true;
-                        $label .= ' ('.__('Account owner',true).')';
-                      }
-                      
-                      $checked = false;
-                      if($person['_access']) { $checked = true; }
-                    
-                      echo $form->input('Person.'.$pid,array('type'=>'checkbox','checked'=>$checked,'label'=>$label,'disabled'=>$disabled));
-                    ?>
-                  </td>
-                   <td class="loading"><div style="display:none;"></div></td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-            <?php endif; ?>
-            <tfoot>
-              <td class="important" colspan="3">
-                <?php
-                  echo $html->link(__('Add a new person',true),array(
-                    'controller'=>'people',
-                    'action'=>'add',
-                    $company['Company']['id']
-                  ));
-                ?> to <?php echo $company['Company']['name']; ?>
-              </td>
-            </tfoot>
-          </table>
+              </div>
+              
+              <div class="add-record-container">
+                <div class="add-record-link">
+                  <?php
+                    echo $html->link(__('Add a new person',true),array('controller'=>'people','action'=>'add',$company['Company']['id']),array('class'=>'important'));
+                  ?>
+                </div>
+              </div>
+
+            </div>
+            
+          </div>
+        </div>
+        
         
         <?php endforeach; ?>
         
@@ -97,6 +94,14 @@
         
       </div>
     </div>
+    
+    <?php
+      //Make it listable
+      echo $javascript->codeBlock("
+        $('.listable').listable({
+        });
+      ");
+    ?>
     
   </div>
   
@@ -116,9 +121,6 @@
       <div class="content">
         <p><?php __('People from other companies with access to this project can always post messages, leave comments, and upload files.'); ?></p>
         
-        <p>‘<strong><?php __('Plus To-dos'); ?></strong>’ <?php __('means the person can also add to-do items.'); ?></p>
-
-        <p>‘<strong><?php __('Plus Milestones'); ?></strong>’ <?php __('means they can add both to-dos and milestones.'); ?></p>
       </div>
     </div>
   

@@ -64,6 +64,8 @@
       
       if(!empty($this->data))
       {
+        $this->data['User']['role_id'] = 2;
+      
         $this->User->saveAll($this->data, array('validate' => 'only'));
         
         if($this->User->validates())
@@ -81,6 +83,7 @@
           if($saved)
           {
             //Update some fields that saveAll didn't save
+            $this->User->Account->saveField('person_id',$this->Person->id);
             $this->User->Company->saveField('account_id',$this->User->Account->id);
             $this->User->Person->saveField('company_id',$this->User->Company->id);
             $this->User->Person->saveField('user_id',$this->User->id);
@@ -91,7 +94,7 @@
             $this->Category->createDefaults($this->User->Account->id);
             
             //Add person to account
-            $this->AclManager->allow($this->User->Person,$this->User->Account);
+            $this->AclManager->allow($this->User->Person,$this->User->Account,array('alias'=>'owner'));
             
             //Add company to account
             $this->AclManager->allow($this->User->Company,$this->User->Account);
@@ -174,6 +177,7 @@
         {
           //New user
           $this->data['User']['email'] = $record['Person']['email'];
+          $this->data['User']['role_id'] = 2;
           $this->User->set($this->data);
           
           if($this->User->validates())
@@ -277,7 +281,7 @@
         else
         {
           $accountSlug = $this->Session->read('Auth.Account.slug');
-        
+          
           //Check account to log into
           if(isset($account) && $this->Account->hasAccess($account['Account']['id'],$this->Session->read('Auth')))
           {

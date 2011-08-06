@@ -14,7 +14,7 @@
   $extra = implode(' ',$extras);
   
 
-  $listHtml = $listable->item('Todo',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
+  $listHtml = $listable->item('TodosItem',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
     'position'  => true,
     'extra'     => $extra,
     'editUrl'   => $html->url(array('controller'=>'todos_items','action'=>'edit',$item['TodoItem']['id'])),

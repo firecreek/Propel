@@ -72,7 +72,7 @@
           
           //Give this person permission for this account
           $this->Account->id = $this->Authorization->read('Account.id');
-          $this->AclManager->allow($this->Person, $this->Account);
+          $this->AclManager->allow($this->Person, $this->Account, array('alias'=>'shared'));
           
           //
           $data = $this->data;
@@ -150,7 +150,7 @@
               else
               {
                 //Add default access to this project
-                $this->AclManager->allow($this->Person,$this->Project);
+                $this->AclManager->allow($this->Person,$this->Project,array('alias'=>'shared'));
                 
                 //Company access
                 $this->User->Company->id = $this->Person->field('company_id');
@@ -340,8 +340,8 @@
           $this->Project->id = $this->Authorization->read('Project.id');
           
           //Add permissions
-          $this->AclManager->allow($this->Person, $this->Account);
-          $this->AclManager->allow($this->Person, $this->Project);
+          $this->AclManager->allow($this->Person, $this->Account,array('alias'=>'shared'));
+          $this->AclManager->allow($this->Person, $this->Project,array('alias'=>'shared'));
           
           //
           $data = $this->data;

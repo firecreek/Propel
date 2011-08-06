@@ -251,12 +251,22 @@
      * @access public
      * @return void
      */
-    public function aro(&$model,$create = false)
+    public function aro(&$model,$create = false,$data)
     {
+      //Grant
+      $grant = $this->PersonAccess->Grant->find('first',array(
+        'conditions' => array(
+          'Grant.model' => $model->alias,
+          'Grant.alias' => $data['alias']
+        ),
+        'contain' => false
+      ));
+    
       $data = array(
         'person_id' => $this->id,
         'model' => $model->alias,
-        'model_id' => $model->id
+        'model_id' => $model->id,
+        'grant_id' => $grant['Grant']['id']
       );
       
       $record = $this->PersonAccess->find('first',array(

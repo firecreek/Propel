@@ -54,6 +54,7 @@
       }
       else
       {
+        die('Auth::check(), Deprecated method');
       }
       
       $isAllowed = Set::extract($permissions,'/'.Inflector::camelize($model).'[controller='.Inflector::camelize($controller).'][action='.$action.'][read=1]');
