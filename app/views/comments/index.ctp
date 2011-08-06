@@ -23,7 +23,11 @@
             echo $this->element('comments/list',array('comments'=>$record['Comment']));
           ?>
           <?php
-            echo $this->element('comments/add');
+            //Add comment if has permission
+            if($this->Auth->check(array('controller'=>'comments','action'=>'add'),array('prefix'=>false)))
+            {
+              echo $this->element('comments/add');
+            }
           ?>
         </div>
       </div>

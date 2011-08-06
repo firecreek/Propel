@@ -15,7 +15,10 @@
     if($record['Person']['id'] == $this->Auth->read('Person.id'))
     {
       $class = 'highlight';
-      if($created > strtotime('-'.Configure::read('Comments.edit_expiry').' minutes'))
+      if(
+        $this->Auth->check(array('controller'=>'comments','action'=>'edit'),array('prefix'=>false)) &&
+        $created > strtotime('-'.Configure::read('Comments.edit_expiry').' minutes')
+      )
       {
         $canEdit = true;
         $minutesAgo = floor((time() - $created)/60);
@@ -39,7 +42,9 @@
         <?php endif; ?>
       </h4>
       <ul class="right">
-        <li class="delete"><?php echo $html->link(__('Delete',true),array('action'=>'delete',$id,$record['id'])); ?></li>
+        <?php if($this->Auth->check(array('controller'=>'comments','action'=>'delete'),array('prefix'=>false))): ?>
+          <li class="delete"><?php echo $html->link(__('Delete',true),array('action'=>'delete',$id,$record['id'])); ?></li>
+        <?php endif; ?>
       </ul>
     </div>
     <div class="content restore-html">

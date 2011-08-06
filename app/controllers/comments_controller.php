@@ -56,9 +56,9 @@
       $this->loadModel($this->modelAlias);
       
       //ACL options for checking
-      $this->AclFilter->authController  = Inflector::pluralize(Inflector::classify($this->params['associatedController']));
-      $this->AclFilter->authAction      = 'project_'.$this->action;
-      $this->AclFilter->authModel       = $this->modelAlias;
+      //$this->AclFilter->authController  = Inflector::pluralize(Inflector::classify($this->params['associatedController']));
+      //$this->AclFilter->authAction      = 'project_'.$this->action;
+      //$this->AclFilter->authModel       = $this->modelAlias;
       
       //
       $this->Comment->associatedAlias = $this->modelAlias;

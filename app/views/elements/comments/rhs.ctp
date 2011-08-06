@@ -22,7 +22,7 @@
       }
     ?>
     
-    <?php if(!$subscribed): ?>
+    <?php if(!$subscribed && $this->Auth->check(array('controller'=>'comments','action'=>'subscribe'),array('prefix'=>false))): ?>
     
       <p class="highlight pad5"><strong><?php echo $html->link(__('Subscribe to this message',true),array('action'=>'subscribe',$id),array('class'=>'normal')); ?></strong> <?php __('to receive an email when new comments are posted.'); ?></p>
 
@@ -55,7 +55,12 @@
                 <?php
                   if($person['id'] == $this->Auth->read('Person.id'))
                   {
-                    echo __('You',true).' ('.$html->link(__('Unsubscribe',true),array('action'=>'unsubscribe',$id)).')';
+                    echo __('You',true);
+                    
+                    if($this->Auth->check(array('controller'=>'comments','action'=>'unsubscribe'),array('prefix'=>false)))
+                    {
+                      echo ' ('.$html->link(__('Unsubscribe',true),array('action'=>'unsubscribe',$id)).')';
+                    }
                   }
                   else
                   {

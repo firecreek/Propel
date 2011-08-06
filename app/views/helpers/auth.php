@@ -37,27 +37,32 @@
      * @access public
      * @return boolean
      */
-    public function check($model,$controller = null,$action = null)
+    public function check($model,$options = array())
     {
-      $isAllowed = false;
-      $permissions = $this->Session->read('AuthAccount.Permissions');
+      if(!is_array($model))
+      {
+        die('Auth::check(), Deprecated use of method');
+      }
       
-      if(is_array($model))
-      {
-        $url = $this->Router->parse($this->url($model));
-        
-        $controller = $url['controller'];
-        $model = $url['prefix'];
-        $action = $url['action'];
-        
-        if(isset($url['prefix'])) { $action = $url['prefix'].'_'.$action; }
-      }
-      else
-      {
-        die('Auth::check(), Deprecated method');
-      }
+      //
+      $_options = array(
+        'prefix' => true
+      );
+      $options = array_merge($_options,$options);
+    
+      //
+      $permissions = $this->Session->read('AuthAccount.Permissions');
+    
+      //
+      $url = $this->Router->parse($this->url($model));
+      $controller = $url['controller'];
+      $model = $url['prefix'];
+      $action = $url['action'];
+      
+      if(isset($url['prefix']) && $options['prefix']) { $action = $url['prefix'].'_'.$action; }
       
       $isAllowed = Set::extract($permissions,'/'.Inflector::camelize($model).'[controller='.Inflector::camelize($controller).'][action='.$action.'][read=1]');
+      
       if(!empty($isAllowed)) { $isAllowed = true; }
       
       return $isAllowed;
