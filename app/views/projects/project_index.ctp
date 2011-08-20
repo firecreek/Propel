@@ -72,12 +72,20 @@
         <?php endif; ?>
         
         
-        <div class="section">
-          <div class="content">
-            <?php echo $this->element('logs/display',array('logs'=>$logs)); ?>
+        <?php if(!empty($logs)): ?>
+          <div class="section">
+            <div class="content">
+              <?php echo $this->element('logs/display',array('logs'=>$logs)); ?>
+            </div>
           </div>
-        </div>
-        
+        <?php else: ?>
+          <p><?php __('There has been no activity on this project yet.'); ?></p>
+          <ul>
+            <li><?php echo $html->link(__('Post the first message',true),array('controller'=>'posts','action'=>'add')); ?></li>
+            <li><?php echo $html->link(__('Create the first to-do list',true),array('controller'=>'todos','action'=>'add')); ?></li>
+            <li><?php echo $html->link(__('Add the first milestone',true),array('controller'=>'milestones','action'=>'add')); ?></li>
+          </ul>
+        <?php endif; ?>
         
       
       </div>
