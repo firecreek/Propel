@@ -170,18 +170,6 @@
      */
     public function project_index()
     {
-      //Check if this project has started
-      $project = $this->Authorization->read('Project');
-      
-      if(
-        !$project['todo_count'] &&
-        !$project['milestone_count'] &&
-        !$project['post_count']
-      )
-      {
-        return $this->render('project_index_new');
-      }
-    
       //Project
       $project = $this->Project->find('first',array(
         'conditions' => array(
@@ -193,6 +181,17 @@
           'name'   => 'project'
         ),
       ));
+      
+      //Check if this project has started
+      if(
+        !$project['Project']['todo_count'] &&
+        !$project['Project']['milestone_count'] &&
+        !$project['Project']['post_count'] &&
+        (!$project['Project']['announcement_show'] || empty($project['Project']['announcement_show']))
+      )
+      {
+        return $this->render('project_index_new');
+      }
     
       //Overdue
       $this->loadModel('Milestone');

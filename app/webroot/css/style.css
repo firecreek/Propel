@@ -211,7 +211,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box .content h3 { font-size:14px; margin:0 0 15px 0; padding:0 0 0 0; }
 .box .content h3.tight { margin:0 0 2px 0; }
 
-.box .content p { margin:0 0 1em 0; }
+.box .content p { /*margin:0 0 1em 0;*/ }
 .box .content p a.active { color:black; text-decoration:none; font-weight:bold; }
 
 
@@ -358,12 +358,12 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 
 
 /**
- * Intro box
+ * Note box
  */
-div.intro { -webkit-box-shadow:#BBB 0px 0px 5px; -moz-box-shadow:#BBB 0px 0px 5px; border-radius:12px; margin:0 0 40px 0; }
-div.intro .wrapper { padding:10px 20px; }
-div.intro h4 { margin-bottom:10px; }
-
+div.note { -webkit-box-shadow:#BBB 0px 0px 5px; -moz-box-shadow:#BBB 0px 0px 5px; border-radius:12px; margin:0 0 40px 0; }
+div.note .wrapper { padding:20px; }
+div.note h4 { margin-bottom:10px; }
+div.note p { margin:0; }
  
 
 /**

@@ -1,8 +1,3 @@
-<?php
-
-  $html->css('projects/projects_index', null, array('inline'=>false));
-  
-?>
 <div class="cols">
   <div class="col left">
   
@@ -17,12 +12,14 @@
       </div>
       <div class="content">
       
+      
         <?php if($project['Project']['announcement_show'] && !empty($project['Project']['announcement'])): ?>
-          <p class="announcement">
-            <?php
-              echo $project['Project']['announcement'];
-            ?>
-          </p>
+          <div class="note announcement">
+            <div class="wrapper">
+              <h4><?php __('Announcement'); ?></h4>
+              <p><?php echo $project['Project']['announcement']; ?></p>
+            </div>
+          </div>
         <?php endif; ?>
       
       
