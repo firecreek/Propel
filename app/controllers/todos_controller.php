@@ -36,17 +36,6 @@
      */
     public $uses = array('Todo','Company');
     
-    /**
-     * Action map
-     *
-     * @access public
-     * @var array
-     */
-    public $actionMap = array(
-      'update_positions' => '_update',
-      'move_project'     => '_update',
-    );
-    
     
     /**
      * Before Render
@@ -272,6 +261,8 @@
           'config' => 'system',
         )
       ));
+      
+      $this->set(compact('filter'));
       
       //
       if(isset($this->Todo->responsibleName))

@@ -36,14 +36,8 @@ var Todos = {
     $('#TodoFilter div.submit').hide();
     $('#TodoFilter select').bind('change',function(e){
       var form = $(this).closest('form');
-      
       $(form).submit();
-    
       $(form).find('select').attr('disabled',true);
-      
-      setTimeout(function(){
-        $(form).find('select').removeAttr('disabled');
-      },10000);
     });
 
 

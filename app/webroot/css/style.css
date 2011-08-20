@@ -181,6 +181,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box .banner ul.right { position:absolute; top:16px; right:20px; }
 .box .banner ul.right li { display:inline; margin-left:15px; }
 .box .banner ul.right li a { font-size:11px; }
+.box .banner ul.right li span { font-size:11px; color:#888888; } /** Acts as a disabled link */
 
 .box .banner form { padding:5px 0 15px 0; margin:0 0 0 20px; }
 .box .banner form div.input.text input { font-size:14px; font-weight:normal; }

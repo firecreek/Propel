@@ -340,8 +340,8 @@
           $this->Project->id = $this->Authorization->read('Project.id');
           
           //Add permissions
-          $this->AclManager->allow($this->Person, $this->Account,array('alias'=>'shared'));
-          $this->AclManager->allow($this->Person, $this->Project,array('alias'=>'shared'));
+          $this->AclManager->allow($this->Person, $this->Account, array('alias'=>'shared'));
+          $this->AclManager->allow($this->Person, $this->Project, array('alias'=>'shared'));
           
           //
           $data = $this->data;

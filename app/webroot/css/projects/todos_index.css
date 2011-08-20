@@ -79,7 +79,7 @@
 .item-add .submit .saving { background-color:#EFEFEF; }
 
 .items .inline { margin-left:45px; }
-.items .inline .box { padding:0; border:none; }
+.items .inline .box { padding:0 0 5px 0; border:none; box-shadow:none; }
 .items .inline .box .content { padding:0; }
 .inline .item-add { margin-left:0; }
 .inline .item-add .description label { display:none; }

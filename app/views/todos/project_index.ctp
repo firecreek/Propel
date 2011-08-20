@@ -31,14 +31,25 @@
             
             <ul class="right important">
               <li><?php
+              
+                //Reorder link
                 $notActive = __('Reorder lists',true);
                 $active = __('Done reordering lists',true);
-                echo $html->link($notActive,array('action'=>'reorder'),array(
-                  'id'              => 'reorderLists',
-                  'rel-not-active'  => $notActive,
-                  'rel-active'      => $active,
-                  'rel-update-url'  => $html->url(array('action'=>'update_positions'))
-                ));
+                
+                if(empty($filter) && !empty($todos))
+                {
+                  echo $html->link($notActive,array('action'=>'reorder'),array(
+                    'id'              => 'reorderLists',
+                    'rel-not-active'  => $notActive,
+                    'rel-active'      => $active,
+                    'rel-update-url'  => $html->url(array('action'=>'update_positions'))
+                  ));
+                }
+                else
+                {
+                  echo '<span>'.$notActive.'</span>';
+                }
+                
               ?></li>
             </ul>
           </div>
