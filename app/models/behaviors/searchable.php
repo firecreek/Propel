@@ -95,7 +95,10 @@
     {
       if(isset($model->data[$model->alias]['id']))
       {
-        $this->SearchIndex->delete($model->data[$model->alias]['id']);
+        $this->SearchIndex->deleteAll(array(
+          'SearchIndex.model' => $model->alias,
+          'SearchIndex.model_id' => $model->data[$model->alias]['id']
+        ));
       }
     }
     
