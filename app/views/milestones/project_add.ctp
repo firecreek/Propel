@@ -1,5 +1,5 @@
 <?php
-  $html->css('projects/milestones', null, array('inline'=>false));
+  $html->css('milestones', null, array('inline'=>false));
 ?>
 
 <div id="MilestoneAdd">

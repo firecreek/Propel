@@ -1,9 +1,7 @@
 <?php
-
   $javascript->link('accounts/milestones.js', false);
-  $html->css('accounts/milestones', null, array('inline'=>false));
-  
 ?>
+
 <div class="box">
   <div class="banner">
     <h2><?php

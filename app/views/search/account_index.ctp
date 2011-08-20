@@ -1,6 +1,6 @@
 <?php
 
-  $html->css('pages/search', null, array('inline'=>false));
+  $html->css('search', null, array('inline'=>false));
   
 ?>
 

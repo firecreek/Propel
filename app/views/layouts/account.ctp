@@ -26,9 +26,10 @@
   <style type="text/css" media="screen"><!--
     <?php echo $this->element('style'); ?>
   --></style>
-</head>
-
-<body>
+</head><?php
+  //Body class
+  $bodyClass = $this->name.' '.$this->action;
+?><body class="<?php echo $bodyClass; ?>">
 
     <?php
       echo $this->element('headers/'.$prefix);

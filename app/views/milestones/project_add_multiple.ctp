@@ -1,8 +1,7 @@
 <?php
-
-  $html->css('projects/milestones', null, array('inline'=>false));
-
+  $html->css('milestones', null, array('inline'=>false));
 ?>
+
 <div class="box">
   <div class="banner">
     <h2><?php __('Add mulitple milestones'); ?></h2>

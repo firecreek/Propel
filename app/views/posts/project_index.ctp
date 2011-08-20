@@ -1,6 +1,6 @@
 <?php
 
-  $html->css('projects/posts', null, array('inline'=>false));
+  $html->css('posts', null, array('inline'=>false));
   
   //Named params
   $named = array();

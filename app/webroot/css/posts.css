@@ -4,13 +4,13 @@
  */
 .box .post-list h3 { margin-bottom:0; }
 
-div.intro .section .banner h3 a { font-size:14px; }
-div.intro .section .avatar { float:left; width:45px; }
-div.intro .section p { margin:0; }
-div.intro .section p.detail { font-size:12px; }
-div.intro .section p.comments { font-size:11px; color:#666; }
+div.note .section .banner h3 a { font-size:14px; }
+div.note .section .avatar { float:left; width:45px; }
+div.note .section p { margin:0; }
+div.note .section p.detail { font-size:12px; }
+div.note .section p.comments { font-size:11px; color:#666; }
 
-div.intro .section:last-child { border-bottom:0; margin-bottom:10px; padding-bottom:0; }
+div.note .section:last-child { border-bottom:0; margin-bottom:10px; padding-bottom:0; }
 
 
 /**

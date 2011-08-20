@@ -1,8 +1,7 @@
 <?php
-
   $javascript->link('accounts/projects_add.js', false);
-  $html->css('pages/projects_add', null, array('inline'=>false));
   
+  $html->css('projects', null, array('inline'=>false));
 ?>
 
 

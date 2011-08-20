@@ -1,7 +1,5 @@
 <?php
-
-  $html->css('pages/settings', null, array('inline'=>false));
-
+  $html->css('settings', null, array('inline'=>false));
 ?>
 
 <div class="cols">
