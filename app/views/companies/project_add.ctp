@@ -1,7 +1,6 @@
 <?php
 
   $javascript->link('projects/companies_add.js', false);
-  $html->css('projects/companies_add', null, array('inline'=>false));
   
 ?>
 
