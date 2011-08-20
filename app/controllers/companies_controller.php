@@ -363,6 +363,7 @@
             $this->AclManager->allow($this->Company, $this->Project);
             
             //Add people to this project
+            //@todo Move this
             if($this->data['Permission']['add_people'])
             {
               $people = $this->Company->Person->find('all',array(
@@ -436,6 +437,8 @@
      * This function does not delete companies, it will only remove the
      * company and people from permissions
      * 
+     * @todo When deleting PersonAccess also delete their permissions automatically
+     * @todo Do not allow deleting of your own company or the company who is the owner
      * @param int $companyId Company pk
      * @access public
      * @return void
@@ -448,6 +451,7 @@
       $this->AclManager->delete($this->Company,$this->Project);
 
       //Remove all people associated with this company from this project
+      //@todo This should be automatic when deleting PersonAccess
       $people = $this->Company->Person->PersonAccess->find('all',array(
         'conditions' => array(
           'PersonAccess.model' => 'Project',

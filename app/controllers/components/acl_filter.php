@@ -118,6 +118,8 @@
         $prefix      = $this->Authorization->read('Prefix');
         $permissions = $this->Authorization->read('Permissions');
         
+        //debug($this->authController.' / '.$this->authAction);
+        
         //Controller permissions
         $isAllowed = $this->Authorization->check($prefix['name'],$this->authController,$this->authAction);
 
@@ -198,6 +200,11 @@
               //Record not matching the prefix record id, e.g. project_id=7 but record shows project_id=1
               $this->cakeError('recordWrongPrefix');
             }
+            elseif($this->mustBeOwner && $modelRecord['Person']['id'] != $this->Authorization->read('Person.id'))
+            {
+              //Must be owner of this record
+              $this->cakeError('permissionDenied');
+            }
             elseif(isset($modelRecord[$modelAlias]['private']) && $modelRecord[$modelAlias]['private'] == true)
             {
               //No permission
@@ -205,10 +212,6 @@
               {
                 $this->cakeError('recordIsPrivate');
               }
-            }
-            elseif($this->mustBeOwner && $modelRecord['Person']['id'] != $this->Authorization->read('Person.id'))
-            {
-              $this->cakeError('permissionDenied');
             }
             
           }

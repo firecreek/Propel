@@ -164,6 +164,9 @@
       
       return $this->Acl->check($aro, $aco);
     }
+    
+    
+    
 
     /**
      * List all controllers (including plugin controllers)
