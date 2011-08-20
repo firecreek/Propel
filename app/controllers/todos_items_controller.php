@@ -81,6 +81,17 @@
     
     
     /**
+     * Todo item index
+     *
+     * @access public
+     * @return void
+     */
+    public function project_index()
+    {
+    }
+    
+    
+    /**
      * Add todo item
      *
      * @param int $id Todo pk
