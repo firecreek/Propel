@@ -279,7 +279,7 @@
       {
         $people = $this->Company->Person->find('all',array(
           'conditions' => array('Person.company_id'=>$company['Company']['id']),
-          'fields' => array('id','first_name','last_name','full_name','status','email','company_owner'),
+          'fields' => array('id','user_id','title','first_name','last_name','full_name','status','email','company_owner'),
           'contain' => array(
             'PersonAccess'
           ),
