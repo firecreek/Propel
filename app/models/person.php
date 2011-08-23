@@ -35,6 +35,7 @@
           'prefix',   /** Permissions */
         ),
       ),
+      'Auth'
     );
     
     /**
@@ -192,6 +193,26 @@
       parent::__construct($id, $table, $ds);
       
       $this->virtualFields['full_name'] = sprintf('CONCAT(%s.first_name, " ", %s.last_name)', $this->alias, $this->alias);
+    }
+    
+    
+    /**
+     * Before save
+     *
+     * @access public
+     * @return boolean
+     */
+    public function beforeSave($created = false)
+    {
+      if($created)
+      {
+        $this->data[$this->alias]['status'] = 'invited';
+        $this->data[$this->alias]['invitation_date']  = date('Y-m-d H:i:s');
+        $this->data[$this->alias]['invitation_person_id'] = $this->authRead('Person.id');
+        $this->data[$this->alias]['invitation_code'] = md5(time());
+      }
+      
+      return true;
     }
     
     

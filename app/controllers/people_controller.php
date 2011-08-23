@@ -57,12 +57,8 @@
       //Save
       if(!empty($this->data))
       {
-        $this->data['Person']['status'] = 'invited';
         $this->data['Person']['company_id'] = $companyId;
         $this->data['Person']['account_id'] = $this->Authorization->read('Account.id');
-        $this->data['Person']['invitation_date']  = date('Y-m-d H:i:s');
-        $this->data['Person']['invitation_person_id'] = $this->Authorization->read('Person.id');
-        $this->data['Person']['invitation_code'] = md5(time());
         
         $this->Person->set($this->data);
         
