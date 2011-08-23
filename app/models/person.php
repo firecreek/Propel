@@ -202,14 +202,18 @@
      * @access public
      * @return boolean
      */
-    public function beforeSave($created = false)
+    public function beforeSave($q)
     {
-      if($created)
+      if(isset($this->data[$this->alias]['status']) && $this->data[$this->alias]['status'] == 'invited')
       {
-        $this->data[$this->alias]['status'] = 'invited';
         $this->data[$this->alias]['invitation_date']  = date('Y-m-d H:i:s');
         $this->data[$this->alias]['invitation_person_id'] = $this->authRead('Person.id');
         $this->data[$this->alias]['invitation_code'] = md5(time());
+      }
+      
+      if(!isset($this->data[$this->alias]['account_id']) || empty($this->data[$this->alias]['account_id']))
+      {
+        $this->data[$this->alias]['account_id'] = $this->authRead('Account.id');
       }
       
       return true;

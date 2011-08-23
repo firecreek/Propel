@@ -9,6 +9,6 @@
     <?php
       echo $this->element('companies/list');
     ?>
-    
+
   </div>
 </div>

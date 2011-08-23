@@ -52,7 +52,7 @@
     
     
     /**
-     * Add
+     * Add company
      *
      * @access public
      * @return void
@@ -61,13 +61,11 @@
     {
       if(!empty($this->data))
       {
-        $this->data['Company']['account_id'] = $this->Authorization->read('Account.id');
-        $this->data['Company']['person_id'] = $this->Authorization->read('Person.id');
-      
         $this->Company->set($this->data);
         
         if($this->Company->validates())
         {
+          $this->Company->create();
           if($this->Company->save($this->data))
           {
             //Grant permission for company
@@ -92,7 +90,7 @@
     
     
     /**
-     * Edit
+     * Edit company
      *
      * @param int $companyId Company pk
      * @access public
@@ -183,11 +181,59 @@
     {
       $this->loadModel('Person');
     
-      $grantMap = array(
-        1 => 'shared msg-file',
-        2 => 'shared msg-file-todo',
-        3 => 'shared'
-      );
+      //Get list of all people in this companies
+      $projectId = $this->Authorization->read('Project.id');
+      $companies = $this->Authorization->read('Companies');
+      
+      foreach($companies as $key => $company)
+      {
+        $people = $this->Company->Person->find('all',array(
+          'conditions' => array('Person.company_id'=>$company['Company']['id']),
+          'fields' => array('id','user_id','title','first_name','last_name','full_name','status','email','company_owner'),
+          'contain' => array(
+            'PersonAccess'
+          ),
+          'order' => 'Person.first_name ASC'
+        ));
+        
+        foreach($people as $personKey => $person)
+        {
+          $access = false;
+          if(Set::extract($person,'/PersonAccess[model=Project][model_id='.$projectId.']'))
+          {
+            $access = true;
+          }
+          
+          $people[$personKey]['Person']['_access'] = $access;
+        }
+        
+        $companies[$key]['People'] = Set::extract($people,'{n}.Person');
+      }
+      
+      $this->set('records',$companies);
+    }
+    
+    
+    /**
+     * Project permissions
+     *
+     * @access public
+     * @return void
+     */
+    public function project_permissions()
+    {
+      $this->loadModel('Person');
+      $this->loadModel('Grant');
+    
+      //Grants
+      $grants = $this->Grant->find('all',array(
+        'conditions' => array(
+          'Grant.model' => 'Project'
+        ),
+        'fields' => array('id','name','alias'),
+        'order' => 'position ASC',
+        'contain' => false
+      ));
       
       //Form post
       if(!empty($this->data))
@@ -224,14 +270,13 @@
           }
         }
         
-    
         //Grants
-        /*if(isset($this->data['Grant']) && !empty($this->data['Grant']))
+        if(isset($this->data['Grant']) && !empty($this->data['Grant']))
         {
           foreach($this->data['Grant'] as $personId => $grantKey)
           {
             if(
-              $personId != $this->Authorization->read('Person.id') &&
+              /*$personId != $this->Authorization->read('Person.id') &&*/
               !in_array($personId,$deleted) &&
               (
                 !isset($this->data['GrantOriginal'][$personId]) ||
@@ -239,15 +284,17 @@
               )
             )
             {
-              $set = $grantMap[$grantKey];
-              $this->Person->id = $personId;
-          
-              //Add back in with new set
-              $this->AclManager->allow($this->Person, 'projects', $this->Authorization->read('Project.id'), array('set'=>$set,'delete'=>true));
-              $granted[] = $personId;
+              $this->Person->PersonAccess->updateAll(
+                array('PersonAccess.grant_id'=>$grantKey),
+                array(
+                  'PersonAccess.person_id' => $personId,
+                  'PersonAccess.model' => 'Project',
+                  'PersonAccess.model_id' => $this->Authorization->read('Project.id')
+                )
+              );
             }
           }
-        }*/
+        }
         
         //Ajax response
         if($this->RequestHandler->isAjax())
@@ -270,37 +317,40 @@
       }
     
     
+      //Person Grant
+      $this->Company->Person->bindModel(array(
+        'hasOne' => array(
+          'PersonAccessCurrent' => array(
+            'className' => 'PersonAccess',
+            'foreignKey' => false,
+            'conditions' => array(
+              'PersonAccessCurrent.model'=>'Project',
+              'PersonAccessCurrent.model_id'=>$this->Authorization->read('Project.id')
+            )
+          )
+        )
+      ));
+    
       //Get list of all people in this companies
       $projectId = $this->Authorization->read('Project.id');
-      $companies = $this->Authorization->read('Companies');
+      $records = $this->Authorization->read('Companies');
       
       
-      foreach($companies as $key => $company)
+      foreach($records as $key => $company)
       {
         $people = $this->Company->Person->find('all',array(
           'conditions' => array('Person.company_id'=>$company['Company']['id']),
           'fields' => array('id','user_id','title','first_name','last_name','full_name','status','email','company_owner'),
           'contain' => array(
-            'PersonAccess'
+            'PersonAccessCurrent' => array('id','grant_id')
           ),
           'order' => 'Person.first_name ASC'
         ));
         
-        foreach($people as $personKey => $person)
-        {
-          $access = false;
-          if(Set::extract($person,'/PersonAccess[model=Project][model_id='.$projectId.']'))
-          {
-            $access = true;
-          }
-          
-          $people[$personKey]['Person']['_access'] = $access;
-        }
-        
-        $companies[$key]['People'] = Set::extract($people,'{n}.Person');
+        $records[$key]['People'] = $people;
       }
       
-      $this->set('records',$companies);
+      $this->set(compact('records','grants'));
     }
     
     

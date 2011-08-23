@@ -27,6 +27,7 @@ h3.sub { font-size:12px; border-bottom:1px solid black; margin:15px 0 5px; paddi
 
 hr {  }
 
+p { margin:0 0 1em 0; }
 p.important, h3.important, h4.important { color:#C00; }
 
 p.note { color:#666; font-size:12px; }
@@ -274,7 +275,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .section .banner p { margin:0; padding:0; }
 
 .section .banner ul.right { position:absolute; top:4px; right:10px; }
-.section .banner ul.right li {}
+.section .banner ul.right li { font-size:11px; color:#333; font-family: arial; }
 .section .banner ul.right li a { font-size:11px; font-family:arial; }
 
 .section .content { padding:0; }

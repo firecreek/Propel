@@ -36,6 +36,7 @@
      */
     public $actsAs = array(
       'Acl' => array('type' => 'requester'),
+      'Auth',
       'Cached' => array(
         'prefix' => array(
           'companies_',
@@ -61,7 +62,7 @@
       ),
       'name' => array(
         'notempty' => array(
-          'rule' => array('notempty'),
+          'rule' => array('notempty')
         ),
         'unique' => array(
           'rule' => 'uniqueName',
@@ -134,6 +135,28 @@
     
     
     /**
+     * Before Save
+     *
+     * @access public
+     * @return boolean
+     */
+    public function beforeSave($q,$created = false)
+    {
+      if(!isset($this->data[$this->alias]['account_id']) || empty($this->data[$this->alias]['account_id']))
+      {
+        $this->data[$this->alias]['account_id'] = $this->authRead('Account.id');
+      }
+      
+      if(!isset($this->data[$this->alias]['person_id']) || empty($this->data[$this->alias]['person_id']))
+      {
+        $this->data[$this->alias]['person_id']  = $this->authRead('Person.id');
+      }
+      
+      return true;
+    }
+    
+    
+    /**
      * Parent Node
      *
      * @access public
@@ -155,11 +178,15 @@
     {
       if(!isset($this->data[$this->alias]['account_id']) && $this->id)
       {
-        $this->data[$this->alias]['account_id'] = $this->field('account_id',array('id'=>$this->id));
+        $accountId = $this->field('account_id',array('id'=>$this->id));
+      }
+      elseif(!isset($this->data[$this->alias]['account_id']) && !$this->id)
+      {
+        $accountId = $this->authRead('Account.id');
       }
       else
       {
-        return true;
+        $accountId = $this->data[$this->alias]['account_id'];
       }
     
       $conditions = array();
@@ -170,11 +197,21 @@
     
       $check = $this->find('count',array(
         'conditions' => array_merge(array(
-          'account_id'  => $this->data[$this->alias]['account_id'],
+          'account_id'  => $accountId,
           'name'        => $this->data[$this->alias]['name'],
         ),$conditions),
         'recursive' => -1
       ));
+      
+      /*debug(array(
+        'conditions' => array_merge(array(
+          'account_id'  => $accountId,
+          'name'        => $this->data[$this->alias]['name'],
+        ),$conditions),
+        'recursive' => -1
+      ));
+      debug($check);
+      exit;*/
       
       return $check > 0 ? false : true;
     }

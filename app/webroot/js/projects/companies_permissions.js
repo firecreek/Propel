@@ -12,7 +12,8 @@ var CompanyPermissions = {
     
     //Permission add/delete
     $('#CompanyPermissions input:checkbox').bind('change',function(){
-      var personId = $(this).closest('tr').attr('rel-person-id');;
+      alert('ok');
+      var personId = $(this).closest('tr').attr('rel-person-id');
       var post = {};
       
       if($(this).is(':checked'))
@@ -42,6 +43,22 @@ var CompanyPermissions = {
       
       self.submit(personId,post);
     });
+    
+    //Grant changes
+    $('#CompanyPermissions input:radio').bind('change',function(){
+      var personId = $(this).attr('rel-person');
+      var grantId = $('#CompanyPermissions input[rel-group='+$(this).attr('rel-group')+']:radio:checked').val();
+      
+      var post = {
+        data: {
+          Grant: {}
+        }
+      };
+      post['data']['Grant'][personId] = grantId;
+      post['data']['Action'] = 'grant';
+      
+      self.submit(personId,post);
+    })
     
     
   },

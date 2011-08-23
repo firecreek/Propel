@@ -58,7 +58,7 @@
       if(!empty($this->data))
       {
         $this->data['Person']['company_id'] = $companyId;
-        $this->data['Person']['account_id'] = $this->Authorization->read('Account.id');
+        $this->data['Person']['status'] = 'invited';
         
         $this->Person->set($this->data);
         
@@ -70,17 +70,16 @@
           $this->Account->id = $this->Authorization->read('Account.id');
           $this->AclManager->allow($this->Person, $this->Account, array('alias'=>'shared'));
           
-          //
-          $data = $this->data;
-          $data['PersonInvitee'] = $this->Authorization->read('Person');
+          //Email
+          $this->data['PersonInvitee'] = $this->Authorization->read('Person');
           
           $this->Message->send('invite',array(
             'subject' => __('You\'re invited to join our project management system',true),
             'to' => $this->data['Person']['email']
-          ),$data);
+          ),$this->data);
           
           //Message and redirect
-          $this->Session->setFlash(__('Person added to company',true),'default',array('class'=>'success'));
+          $this->Session->setFlash(__('Person has been invited to this account',true),'default',array('class'=>'success'));
           $this->redirect(array('controller'=>'companies','action'=>'index'));
         }
         else
@@ -257,12 +256,19 @@
         'contain' => false
       ));
       
+      //Redirect back if invalid status
+      if($record['Person']['status'] != 'invited')
+      {
+        $this->Session->setFlash(__('This person has already responded to the invitation',true),'default',array('class'=>'error'));
+        $this->redirect($this->referer());
+      }
+      
+      //
       if(!empty($this->data))
       {
         $this->data['Person']['id'] = $personId;
         $this->data['Person']['email'] = $this->data['Person']['email'];
-        $this->data['Person']['invitation_date']  = date('Y-m-d H:i:s');
-        $this->data['Person']['invitation_person_id'] = $this->Authorization->read('Person.id'); 
+        $this->data['Person']['status'] = 'invited';
         
         $this->Person->set($this->data);
         

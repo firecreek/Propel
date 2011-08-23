@@ -1,3 +1,6 @@
+<?php
+  $personId = $this->params['form']['personId'];
+?>
 
 <?php if($this->data['Action'] == 'grant'): ?>
 
@@ -5,13 +8,13 @@
 
 <?php elseif($this->data['Action'] == 'add'): ?>
 
-  $('tr[rel-person-id=<?php echo $this->params['form']['personId']; ?>] .permission-options').show();
-  $('tr[rel-person-id=<?php echo $this->params['form']['personId']; ?>] input[value=3]:radio').attr('checked',true);
+  $('tr[rel-person-id=<?php echo $personId; ?>] .permission-options').show();
+  $('tr[rel-person-id=<?php echo $personId; ?>] input[value=3]:radio').attr('checked',true);
 
 <?php elseif($this->data['Action'] == 'remove'): ?>
 
-  $('tr[rel-person-id=<?php echo $this->params['form']['personId']; ?>] .permission-options').hide();
+  $('tr[rel-person-id=<?php echo $personId; ?>] .permission-options').hide();
 
 <?php endif; ?>
 
-$('tr[rel-person-id=<?php echo $this->params['form']['personId']; ?>]').effect('highlight',null,3000);
+$('tr[rel-person-id=<?php echo $personId; ?>]').effect('highlight',null,3000);

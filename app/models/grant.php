@@ -54,6 +54,7 @@
         'Acl' => array(
             'type' => 'requester',
         ),
+        'Containable'
     );
 
     /**
