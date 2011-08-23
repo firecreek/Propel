@@ -5,7 +5,6 @@
   <title><?php echo $title_for_layout; ?></title>
   <?php
     echo $html->css(array(
-      'reset',
       'style',
       'account',
       'listable'

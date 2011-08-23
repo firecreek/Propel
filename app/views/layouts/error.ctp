@@ -5,9 +5,7 @@
   <title><?php echo $title_for_layout; ?> - <?php __('Propel'); ?></title>
   <?php
     echo $html->css(array(
-      'reset',
-      'type',
-      'elements',
+      'style',
       'front',
     ));
     echo $scripts_for_layout;
