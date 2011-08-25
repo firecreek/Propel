@@ -10,3 +10,23 @@ h2 { font-size:14px; margin-bottom:10px; }
 #main { margin: 0px auto; width:900px; padding: 20px 0px 0px 0px; }
 
 .box .banner { border-bottom:1px solid #d4d5d0; background-color:#f0f1e9; }
+
+
+
+/**
+ * Invitation
+ */
+.invitation div.input input { width:40%; }
+
+.invitation h2 { font-weight:bold; margin-bottom:5px; border:1px solid red; }
+.invitation p.intro { font-size:14px; color:#666; }
+
+.invitation .cols {}
+.invitation .cols .col {}
+.invitation .cols .col.left { width:320px; }
+.invitation .cols .col.right { width:270px; min-width:0; border-left:1px dotted #CCC; padding-left:15px; }
+
+.invitation .cols .col.left input { width:90%; }
+
+.invitation .cols .col.right h3 { font-size:13px; margin:5px 0 5px 0; }
+.invitation .cols .col.right p { font-size:11px; color:#666; }

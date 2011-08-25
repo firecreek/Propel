@@ -1,6 +1,3 @@
-<?php
-  $html->css('pages/forgotten', null, array('inline'=>false));
-?>
 
 <div class="box small">
   

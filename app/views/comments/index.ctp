@@ -4,7 +4,7 @@
   $javascript->link('jquery/jquery-countdown.js', false);
   $javascript->link('jquery/jquery-rte.js', false);
   
-  $html->css('pages/comments', null, array('inline'=>false));
+  $html->css('comments', null, array('inline'=>false));
   $html->css('rte', null, array('inline'=>false));
   
 ?>
