@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2011-08-06 11:08:11 : 1312631831*/
+/* App schema generated on: 2011-08-25 07:08:29 : 1314256049*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -15,7 +15,7 @@ class AppSchema extends CakeSchema {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'slug' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'scheme_id' => array('type' => 'integer', 'null' => false, 'default' => '1'),
+		'scheme_id' => array('type' => 'integer', 'null' => false, 'default' => '5'),
 		'diskspace_used' => array('type' => 'float', 'null' => false, 'default' => '0.00', 'length' => '10,2'),
 		'project_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'person_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
@@ -148,6 +148,7 @@ class AppSchema extends CakeSchema {
 		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'position' => array('type' => 'integer', 'null' => false, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),

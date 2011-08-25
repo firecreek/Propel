@@ -166,6 +166,60 @@ class SchemesStyleData {
 			'key' => 'linkTextColour',
 			'value' => '#0033cc'
 		),
+		array(
+			'id' => '45',
+			'scheme_id' => '5',
+			'key' => 'linkTextColour',
+			'value' => '#0033cc'
+		),
+		array(
+			'id' => '44',
+			'scheme_id' => '5',
+			'key' => 'tabTextColourActive',
+			'value' => '#000000'
+		),
+		array(
+			'id' => '43',
+			'scheme_id' => '5',
+			'key' => 'tabTextColourHover',
+			'value' => '#ffffff'
+		),
+		array(
+			'id' => '42',
+			'scheme_id' => '5',
+			'key' => 'tabTextColour',
+			'value' => '#ffffff'
+		),
+		array(
+			'id' => '41',
+			'scheme_id' => '5',
+			'key' => 'tabBackgroundHover',
+			'value' => '#222a30'
+		),
+		array(
+			'id' => '40',
+			'scheme_id' => '5',
+			'key' => 'tabBackground',
+			'value' => '#34414a'
+		),
+		array(
+			'id' => '39',
+			'scheme_id' => '5',
+			'key' => 'clientTextColour',
+			'value' => '#d4d4d4'
+		),
+		array(
+			'id' => '38',
+			'scheme_id' => '5',
+			'key' => 'projectTextColour',
+			'value' => '#ffffff'
+		),
+		array(
+			'id' => '37',
+			'scheme_id' => '5',
+			'key' => 'backgroundColor',
+			'value' => '#34414a'
+		),
 	);
 
 }

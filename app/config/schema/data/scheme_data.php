@@ -1,7 +1,7 @@
 <?php
 class SchemeData {
 
-	public $table = 'schemes';
+	public $table = 'Schemes';
 
 	public $records = array(
 		array(
@@ -24,6 +24,13 @@ class SchemeData {
 			'position' => '3',
 			'account_id' => '',
 			'created' => '2010-12-20 20:32:22'
+		),
+		array(
+			'id' => '5',
+			'name' => 'Interstate',
+			'position' => '4',
+			'account_id' => '',
+			'created' => '2011-08-25 06:45:59'
 		),
 	);
 
