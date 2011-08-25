@@ -31,13 +31,11 @@
 ?><body class="<?php echo $bodyClass; ?>">
 
 
-
-
   <div id="launchbar">
     <nav id="account">
       <?php
         $menu = array(
-          'accounts' => array('name'=>$this->Auth->read('Account.name').' '.__('Dashboard',true),'url'=>array('account'=>true,'controller'=>'accounts','action'=>'index')),
+          'accounts' => array('name'=>__('Dashboard',true),'url'=>array('account'=>true,'controller'=>'accounts','action'=>'index')),
           'projects' => array('name'=>__('Projects',true),'url'=>array('account'=>true,'controller'=>'projects','action'=>'index')),
           'todos' => array('name'=>__('To-Dos',true),'url'=>array('account'=>true,'controller'=>'todos','action'=>'index')),
           'milestones' => array('name'=>__('Milestones',true),'url'=>array('account'=>true,'controller'=>'milestones','action'=>'index')),

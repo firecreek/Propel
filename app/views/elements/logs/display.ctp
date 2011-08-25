@@ -36,7 +36,7 @@
             <h4><span><?php
               if($today)
               {
-                echo __('Today',true);
+                echo __('Today',true).' <div>('.date('l, j F Y').')</div>';
               }
               else
               {

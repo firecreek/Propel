@@ -1,4 +1,16 @@
 
+/**
+ * Project list
+ */
+.box ul.project-list { }
+.box ul.project-list li { margin:0 0 20px 0; }
+.box ul.project-list h3 { font-size:14px; margin:0; }
+.box ul.project-list p.company { color:#999; }
+	
+
+/**
+ *
+ */
 #PermissionProject { margin:20px 0 0 0; }
 #PermissionProject .options { margin-left:10px; }
 
