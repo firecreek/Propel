@@ -34,6 +34,9 @@
           'project'
         ),
       ),
+      'Loggable' => array(
+        'titleField' => 'name'
+      )
     );
     
     /**

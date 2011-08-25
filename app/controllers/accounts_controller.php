@@ -47,6 +47,7 @@
     {    
       //
       $projects = $this->Authorization->read('Projects');
+      $accounts = $this->Authorization->read('Accounts');
       
       //Active projects
       if(!empty($projects))
@@ -78,7 +79,10 @@
       //Logs
       $this->paginate['Log'] = array(
         'conditions' => array(
-          'Log.project_id' => Set::extract($projects,'{n}.Project.id')
+          'OR' => array(
+            'Log.project_id' => Set::extract($projects,'{n}.Project.id'),
+            'Log.account_id' => Set::extract($accounts,'{n}.Account.id'),
+          )
         ),
         'order' => 'Log.created DESC',
         'limit' => 100,

@@ -74,7 +74,7 @@
         }
         
         //Project name
-        if($showProject && isset($log['Account']) && isset($log['Project']))
+        if($showProject && isset($log['Account']['id']) && isset($log['Project']['id']))
         {
           $options['description'] .= ' <span class="project">['.$this->Html->link($log['Project']['name'],array('accountSlug'=>$log['Account']['slug'],'projectId'=>$log['Project']['id'],'controller'=>'projects','action'=>'index')).']</span>';
         }

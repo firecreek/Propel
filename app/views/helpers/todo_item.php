@@ -47,7 +47,13 @@
       //Add the list name + link
       if(!empty($data['Log']['extra1']))
       {
-        $listLink = $this->Html->link($data['Log']['extra1'],array('controller'=>'todos','action'=>'view',$data['Log']['extra2']),array('class'=>'unimportant'));
+        $listLink = $this->Html->link($data['Log']['extra1'],array(
+          'accountSlug'   => $data['Account']['slug'],
+          'projectId'     => $data['Project']['id'],
+          'controller'    => 'todos',
+          'action'        => 'view',
+          $data['Log']['extra2']
+        ),array('class'=>'unimportant'));
       
         if(isset($options['description']))
         {

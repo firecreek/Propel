@@ -756,6 +756,7 @@ table.logs.dated .today span div { display:inline; font-weight:normal; }
  * Badges
  */
 .badge { color:white; display:block; font-size:10px; padding:2px 4px; white-space:nowrap; width:60px; text-align:right; padding-right:15px; background:url(/img/arrow.png) transparent no-repeat center right; }
+.badge.project { background-color:#C82600; }
 .badge.todo { background-color:#C87800; }
 .badge.milestone { background-color:#5F6E43; }
 .badge.comment { background-color:#6492AC; }

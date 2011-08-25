@@ -5,13 +5,10 @@
 #launchbar { width:100%; background-color:#000000; color:#fff; height:24px; }
 
 #launchbar li { float:left; font-size:11px; font-family:'Lucida Grande', Verdana; margin:0 10px 0 0; padding:0; color:#DDD; }
+#launchbar li.active a { color:white; font-weight:bold; }
 #launchbar span, #launchbar a { padding:4px 10px 4px 0; margin:0; border-right:1px solid #222; display:inline-block; }
 #launchbar a { text-decoration:none; color:#DDD; }
-
-nav#account ul { margin:0 0 0 30px; padding:0 0 0 0; }
-nav#account li {  }
-nav#account a {  }
-nav#account a:hover { background-color:transparent; color:white; }
+#launchbar a:hover { background-color:transparent; color:white; }
 
 #launchbar ul ul { display:none; z-index:19; position:absolute; background-color:black; margin:0 0 0 -10px; padding:0; }
 #launchbar ul ul li { float:none; margin:0; min-width:220px; }
@@ -25,11 +22,8 @@ nav#account a:hover { background-color:transparent; color:white; }
 #launchbar li.project>a { padding-right:25px; background:url(/img/icons/arrow-grey-launchbar.png) transparent no-repeat top right; }
 #launchbar li.project>a:hover { background-position:bottom right; }
 
+nav#account ul { margin:0 0 0 30px; padding:0 0 0 0; }
 nav#user { position:absolute; right:30px; top:0; }
-nav#user ul {  }
-nav#user li {  }
-nav#user li a {  }
-nav#user li span {  }
 
 
 /**
@@ -37,8 +31,9 @@ nav#user li span {  }
  */
 header { height:80px; background:url(/img/bg-header.png) #195D00 repeat-x; color:#fff; position:relative; }
 header h1 { margin:0 0 0 30px; padding:10px 0 0 0; font-size:24px; font-weight:normal; font-family:arial; }
-header h1 span { font-size:16px; font-weight:normal; margin-left:5px; }
+header h1 span { font-size:14px; font-weight:normal; margin-left:12px; }
 
+body.account header h1 { font-size:38px; }
 
 /**
  * Footer

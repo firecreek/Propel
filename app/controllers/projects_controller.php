@@ -252,7 +252,9 @@
         'order' => 'Log.created DESC',
         'limit' => 100,
         'contain' => array(
-          'Person' => array('id','company_id','first_name','last_name')
+          'Person' => array('id','company_id','first_name','last_name'),
+          'Project' => array('id','name'),
+          'Account' => array('id','name','slug')
         )
       );
       $logs = $this->paginate('Log');
