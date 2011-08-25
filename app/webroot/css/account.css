@@ -35,7 +35,7 @@ nav#user li span {  }
 /**
  * Header
  */
-header { height:80px; background-color:#195D00; color:#fff; position:relative; }
+header { height:80px; background:url(/img/bg-header.png) #195D00 repeat-x; color:#fff; position:relative; }
 header h1 { margin:0 0 0 30px; padding:10px 0 0 0; font-size:24px; font-weight:normal; font-family:arial; }
 header h1 span { font-size:16px; font-weight:normal; margin-left:5px; }
 
@@ -72,8 +72,8 @@ nav.tabs li:last-child a { margin-right:0; }
 nav.tabs li.active a {
 	color:#000;
 	font-weight:bold;
-	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#E5E5E5));
-	background:-moz-linear-gradient(top,  #FDFDFD,  #E5E5E5);
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#efefef));
+	background:-moz-linear-gradient(top,  #FDFDFD,  #efefef);
 }
 
 

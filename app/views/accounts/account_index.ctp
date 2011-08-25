@@ -16,18 +16,7 @@
           }
         ?></h2>
       </div>
-      <div class="content">
-        
-        <?php if($activeProjectCount == 1): ?>
-          <?php
-            $project = $auth->read('Projects.0');
-          ?>
-          <p class="large"><strong>
-            <?php __('Your project'); ?>:
-            <?php echo $html->link($project['Project']['name'],array('controller'=>'projects','action'=>'index','projectId'=>$project['Project']['id'],)); ?>
-          </strong></p>
-        <?php endif; ?>
-        
+      <div class="content">        
         
         <?php if(!$activeProjectCount): ?>
           <p>
@@ -41,16 +30,13 @@
         <div class="section">
           <div class="content">
             <?php
-              foreach($logs as $log)
-              {
-                echo $this->element('logs/display',array(
-                  'logs'        => $log['Log'],
-                  'pagination'  => false,
-                  'dateHeader'  => false,
-                  'dateColumn'  => true,
-                  'header'      => $html->link($log['Project']['name'].' — <span>'.$log['Company']['name'].'</span>',array('projectId'=>$log['Project']['id'],'controller'=>'projects','action'=>'index'),array('class'=>'unimportant','escape'=>false))
-                ));
-              }
+              echo $this->element('logs/display',array(
+                'logs'        => $logs,
+                'pagination'  => false,
+                'dateHeader'  => true,
+                'dateColumn'  => false,
+                'showProject' => true
+              ));
             ?>
           </div>
         </div>

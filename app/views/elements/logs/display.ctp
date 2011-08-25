@@ -1,7 +1,8 @@
 <?php
-  if(!isset($pagination)) { $pagination = true; }
-  if(!isset($dateHeader)) { $dateHeader = true; }
-  if(!isset($dateColumn)) { $dateColumn = false; }
+  if(!isset($pagination))   { $pagination = true; }
+  if(!isset($dateHeader))   { $dateHeader = true; }
+  if(!isset($dateColumn))   { $dateColumn = false; }
+  if(!isset($showProject))  { $showProject = false; }
 
   $lastDate = null;
 ?>
@@ -70,6 +71,12 @@
         else
         {
           $options = $_options;
+        }
+        
+        //Project name
+        if($showProject && isset($log['Account']) && isset($log['Project']))
+        {
+          $options['description'] .= ' <span class="project">['.$this->Html->link($log['Project']['name'],array('accountSlug'=>$log['Account']['slug'],'projectId'=>$log['Project']['id'],'controller'=>'projects','action'=>'index')).']</span>';
         }
         
         //If no name

@@ -75,27 +75,20 @@
         return $this->render('account_index_new');
       }
       
-      //Logs      
-      $logs = array();
-      
-      foreach($projects as $project)
-      {
-        $logRecords = $this->Log->find('all',array(
-          'conditions' => array(
-            'Log.project_id' => $project['Project']['id'],
-            'Log.created >'  => date('Y-m-d',strtotime('-30 days'))
-          ),
-          'order' => 'Log.created DESC',
-          'limit' => 25,
-          'contain' => array(
-            'Person' => array('first_name','last_name')
-          )
-        ));
-      
-        $logs[] = array_merge(array(
-          'Log' => $logRecords
-        ),$project);
-      }
+      //Logs
+      $this->paginate['Log'] = array(
+        'conditions' => array(
+          'Log.project_id' => Set::extract($projects,'{n}.Project.id')
+        ),
+        'order' => 'Log.created DESC',
+        'limit' => 100,
+        'contain' => array(
+          'Person' => array('id','company_id','first_name','last_name'),
+          'Project' => array('id','name'),
+          'Account' => array('id','name','slug'),
+        )
+      );
+      $logs = $this->paginate('Log');      
       
       $this->set(compact('activeProjectCount','logs'));
     }
