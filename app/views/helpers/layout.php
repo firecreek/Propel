@@ -98,8 +98,12 @@
       }
         
       $output = '';
+      $count = 0;
+      
       foreach($links as $key => $link)
       {
+        $count++;
+      
         //Check if person has access to this controller
         if($options['permissions'] && !$this->Auth->check($link['url']))
         {
@@ -113,6 +117,11 @@
         
         $classes = array();
         $tagOptions = array();
+        
+        if($count == 1)
+        {
+          $classes[] = 'first';
+        }
         
         if($key == $options['active'])
         {
