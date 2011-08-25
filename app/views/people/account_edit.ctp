@@ -86,7 +86,7 @@
   
     <?php if(!$personal): ?>
       
-      <div class="area">
+      <div class="box">
         <div class="banner">
           <h3><?php __('Delete this person?'); ?></h3>
         </div>
@@ -100,7 +100,7 @@
       
       
       <?php if(!empty($projects)): ?>
-        <div class="area">
+        <div class="box">
           <div class="banner">
             <h3><?php echo $record['Person']['first_name'].' '.__('can access...', true); ?></h3>
           </div>

@@ -64,7 +64,7 @@
   
   <div class="col right">
     
-    <div class="area">
+    <div class="box">
       <div class="banner">
         <h3><?php __('Welcome email'); ?></h3>
       </div>

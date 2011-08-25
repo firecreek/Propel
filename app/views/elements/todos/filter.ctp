@@ -1,5 +1,8 @@
 
-<div class="area plain" id="TodoFilter">
+<div class="box" id="TodoFilter">
+  <div class="banner">
+    <h3><?php __('Filter'); ?></h3>
+  </div>
   <div class="content">
     <?php
       $responsibleOptions = $layout->permissionList($auth->read('People'));

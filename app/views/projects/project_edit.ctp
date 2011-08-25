@@ -65,7 +65,7 @@
   </div>
   <div class="col right">
   
-    <div class="area">
+    <div class="box">
       <div class="banner"><h3><?php __('Delete this project?'); ?></h3></div>
       <div class="content">
         <p><?php

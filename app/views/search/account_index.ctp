@@ -30,7 +30,7 @@
   </div>
   <div class="col right">
   
-    <div class="area">
+    <div class="box">
       <div class="banner">
         <h3><?php __('Your recent searches across all projects'); ?></h3>
         

@@ -1,6 +1,6 @@
 
 <?php if(!empty($todosActive)): ?>
-  <div class="area plain">
+  <div class="box">
     <div class="banner"><h3><?php __('Current to-do lists'); ?></h3></div>
     <div class="content">
       <ul>

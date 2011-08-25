@@ -50,14 +50,7 @@
   </div>
   <div class="col right">
   
-    <div class="area">
-      <div class="banner">
-        <h3><?php __('Questions? Need help?'); ?></h3>
-      </div>
-      <div class="content">
-        <p>Tough luck, nothing yet!</p>
-      </div>
-    </div>
+    <!-- empty -->
   
   </div>
 </div>

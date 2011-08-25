@@ -37,15 +37,7 @@
   </div>
   <div class="col right">
   
-    <div class="area">
-      <div class="banner"><h3><?php __('Tip'); ?></h3></div>
-      <div class="content">
-        <p><?php
-          $companyLink = $html->link(__('All People',true),array('controller'=>'companies','action'=>'index'));
-          __(sprintf('To add or edit the people in your company, go to the \'%s\' page.',$companyLink));
-        ?></p>
-      </div>
-    </div>
+    <!-- empty -->
   
   </div>
 </div>

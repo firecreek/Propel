@@ -52,7 +52,7 @@
   </div>
   <div class="col right">
   
-    <div class="area">
+    <div class="box">
       <div class="banner">
         <h3><?php echo sprintf(__('Your recent searches in %s',true),$this->Auth->read('Project.name')); ?></h3>
         

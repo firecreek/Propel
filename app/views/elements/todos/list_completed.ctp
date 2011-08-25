@@ -1,6 +1,6 @@
 
 <?php if(!empty($todosCompleted)): ?>
-  <div class="area plain">
+  <div class="box">
     <div class="banner"><h3><?php __('Completed to-do lists'); ?></h3></div>
     <div class="content">
       <ul>

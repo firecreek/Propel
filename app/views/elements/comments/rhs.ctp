@@ -1,6 +1,6 @@
 
 
-<div class="area">
+<div class="box">
   <div class="banner">
     <h3><?php __('Comment Notification'); ?></h3>
   </div>
@@ -80,7 +80,7 @@
 
 
 <?php if(!empty($record['Comment'])): ?>
-  <div class="area">
+  <div class="box">
     <div class="banner">
       <h3><?php __('Who\'s talking about this milestone?'); ?></h3>
     </div>

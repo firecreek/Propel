@@ -131,7 +131,7 @@
   <div class="col right">
   
   
-    <div class="area">
+    <div class="box">
       <div class="banner"><h3><?php __('Giving / Removing Access'); ?></h3></div>
       <div class="content">
         <p><?php __('Check the box in front of someone\'s name to give them access to this project. Uncheck to remove access. People without access won\'t see the project.'); ?></p>
@@ -139,14 +139,12 @@
     </div>
   
   
-    <div class="area">
+    <div class="box">
       <div class="banner"><h3><?php __('Additional Permissions'); ?></h3></div>
       <div class="content">
         <p><?php __('People from other companies with access to this project can always post messages, leave comments, and upload files.'); ?></p>
-        
-        <p>‘<strong><?php __('Plus To-dos'); ?></strong>’ <?php __('means the person can also add to-do items.'); ?></p>
-
-        <p>‘<strong><?php __('Plus Milestones'); ?></strong>’ <?php __('means they can add both to-dos and milestones.'); ?></p>
+        <p>"<strong><?php __('Plus To-dos'); ?></strong>" <?php __('means the person can also add to-do items.'); ?></p>
+        <p>"<strong><?php __('Plus Milestones'); ?></strong>" <?php __('means they can add both to-dos and milestones.'); ?></p>
       </div>
     </div>
   

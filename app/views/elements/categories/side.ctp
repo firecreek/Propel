@@ -4,7 +4,7 @@
   if(!isset($name)) { $name = null; }
 
 ?>
-<div class="area category-filter">
+<div class="box category-filter">
   <div class="banner">
     <h3><?php __('Categories'); ?></h3>
     <ul class="right">

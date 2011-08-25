@@ -67,7 +67,7 @@
     
     <?php $projects = $auth->read('Projects'); ?>
     <?php if(!empty($projects)): ?>
-    <div class="area">
+    <div class="box">
       <div class="banner">
         <h3><?php __('Your projects'); ?></h3>
       </div>
