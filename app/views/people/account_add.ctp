@@ -1,6 +1,8 @@
 <?php
-  $this->set('activeMenu','companies');
+  //Active menu
+  $this->set('active',Inflector::camelize($this->params['prefix']).'.companies');
 ?>
+
 <div class="cols">
 
   <div class="col left">

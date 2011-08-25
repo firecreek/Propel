@@ -10,7 +10,7 @@
     <?php      
       echo $form->create('Company',array('url'=>$this->here,'class'=>'block'));
       
-      echo $form->input('name',array('label'=>__('Enter a new company name',true),'div'=>'input text strong'));
+      echo $form->input('name',array('label'=>__('Enter a new company name',true),'div'=>'input text strong half-width'));
       
       echo $form->submit(__('Create company',true),array('after'=>__('or',true).' '.$html->link(__('Cancel',true),array('controller'=>'companies','action'=>'index') ) ));
       

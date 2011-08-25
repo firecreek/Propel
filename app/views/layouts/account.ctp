@@ -35,16 +35,16 @@
     <nav id="account">
       <?php
         $menu = array(
-          'accounts' => array('name'=>__('Dashboard',true),'url'=>array('account'=>true,'controller'=>'accounts','action'=>'index')),
-          'projects' => array('name'=>__('Projects',true),'url'=>array('account'=>true,'controller'=>'projects','action'=>'index')),
-          'todos' => array('name'=>__('To-Dos',true),'url'=>array('account'=>true,'controller'=>'todos','action'=>'index')),
-          'milestones' => array('name'=>__('Milestones',true),'url'=>array('account'=>true,'controller'=>'milestones','action'=>'index')),
-          'companies' => array('name'=>__('People',true),'url'=>array('account'=>true,'controller'=>'companies','action'=>'index')),
-          'search' => array('name'=>__('Search',true),'url'=>array('account'=>true,'controller'=>'search','action'=>'index')),
+          'Account.accounts' => array('name'=>__('Dashboard',true),'url'=>array('account'=>true,'controller'=>'accounts','action'=>'index')),
+          'Account.projects' => array('name'=>__('Projects',true),'url'=>array('account'=>true,'controller'=>'projects','action'=>'index')),
+          'Account.todos' => array('name'=>__('To-Dos',true),'url'=>array('account'=>true,'controller'=>'todos','action'=>'index')),
+          'Account.milestones' => array('name'=>__('Milestones',true),'url'=>array('account'=>true,'controller'=>'milestones','action'=>'index')),
+          'Account.companies' => array('name'=>__('People',true),'url'=>array('account'=>true,'controller'=>'companies','action'=>'index')),
+          'Account.search' => array('name'=>__('Search',true),'url'=>array('account'=>true,'controller'=>'search','action'=>'index')),
           /*'templates' => array('name'=>__('Templates',true),'url'=>array('controller'=>'templates','action'=>'index')),*/
-          'settings' => array('name'=>__('Settings',true),'url'=>array('account'=>true,'controller'=>'settings','action'=>'index')),
+          'Account.settings' => array('name'=>__('Settings',true),'url'=>array('account'=>true,'controller'=>'settings','action'=>'index')),
         );
-        echo $layout->menu($menu,array('permissions'=>'Account'));
+        echo $this->Layout->menu($menu,array('permissions'=>'Account'));
       ?>
     </nav>
     <nav id="user">
@@ -86,22 +86,22 @@
       <nav class="main top tabs">
         <?php
           $menu = array(
-            'projects'    => array('name'=>__('Overview',true),'url'=>array('project'=>true,'controller'=>'projects','action'=>'index')),
-            'posts'       => array('name'=>__('Messages',true),'url'=>array('project'=>true,'controller'=>'posts','action'=>'index')),
-            'todos'       => array('name'=>__('To-Dos',true),'url'=>array('project'=>true,'controller'=>'todos','action'=>'index')),
-            'milestones'  => array('name'=>__('Milestones',true),'url'=>array('project'=>true,'controller'=>'milestones','action'=>'index')),
+            'Project.projects'    => array('name'=>__('Overview',true),'url'=>array('project'=>true,'controller'=>'projects','action'=>'index')),
+            'Project.posts'       => array('name'=>__('Messages',true),'url'=>array('project'=>true,'controller'=>'posts','action'=>'index')),
+            'Project.todos'       => array('name'=>__('To-Dos',true),'url'=>array('project'=>true,'controller'=>'todos','action'=>'index')),
+            'Project.milestones'  => array('name'=>__('Milestones',true),'url'=>array('project'=>true,'controller'=>'milestones','action'=>'index')),
           );
-          echo $layout->menu($menu,array('permissions'=>'Project'));
+          echo $this->Layout->menu($menu,array('permissions'=>'Project'));
         ?>
       </nav>
       <nav class="extra top tabs">
         <?php
           $menu = array(
-            'search'      => array('name'=>__('Search',true),'url'=>array('project'=>true,'controller'=>'search','action'=>'index')),
-            'companies'   => array('name'=>__('People & Permissions',true),'url'=>array('project'=>true,'controller'=>'companies','action'=>'index')),
-            'settings'    => array('name'=>__('Project Settings',true),'url'=>array('project'=>true,'controller'=>'projects','action'=>'edit')),
+            'Project.search'      => array('name'=>__('Search',true),'url'=>array('project'=>true,'controller'=>'search','action'=>'index')),
+            'Project.companies'   => array('name'=>__('People & Permissions',true),'url'=>array('project'=>true,'controller'=>'companies','action'=>'index')),
+            'Project.settings'    => array('name'=>__('Project Settings',true),'url'=>array('project'=>true,'controller'=>'projects','action'=>'edit')),
           );
-          echo $layout->menu($menu,array('permissions'=>'Project'));
+          echo $this->Layout->menu($menu,array('permissions'=>'Project'));
         ?>
       </nav>
     <?php endif; ?>

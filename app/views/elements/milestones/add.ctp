@@ -28,7 +28,7 @@
           <div class="col detail">
           
             <?php
-              echo $form->input('title',array('label'=>__('Enter a title',true),'after'=>'<small>'.__('(e.g. Design review 3)',true).'</small>'));
+              echo $form->input('title',array('div'=>'input text half-width','label'=>__('Enter a title',true),'after'=>'<small>'.__('(e.g. Design review 3)',true).'</small>'));
               echo $form->input('responsible',array('options'=>$responsibleOptions,'empty'=>true,'label'=>__('Who\'s responsible?',true)));
               echo $form->input('email',array('label'=>__('Email 48 hours before it\'s due',true)));
             ?>

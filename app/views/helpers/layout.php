@@ -20,6 +20,16 @@
      */
     public $helpers = array('Html', 'Auth','Image');
     
+    /**
+     * Constructor
+     *
+     * @param array $options options
+     * @access public
+     */
+    public function __construct($options = array()) {
+        $this->View =& ClassRegistry::getObject('view');
+        return parent::__construct($options);
+    }
     
     /**
      * Button
@@ -65,13 +75,26 @@
     public function menu($links,$options = array(),$menuOptions = array())
     {
       $_options = array(
-        'permissions' => false
+        'permissions' => false,
+        'active'      => null
       );
       $options = array_merge($_options, $options);
-        
-      if(!isset($options['active']))
+      
+      //Active menu
+      if(!$options['active'])
       {
-        $options['active'] = $this->params['controller'];
+        if(isset($this->View->viewVars['active']))
+        {
+          $options['active'] = $this->View->viewVars['active'];
+        }
+        else
+        {
+          $options['active'] = $this->params['controller'];
+          if(isset($this->params['prefix']) && !empty($this->params['prefix']))
+          {
+            $options['active'] = Inflector::camelize($this->params['prefix']).'.'.$options['active'];
+          }
+        }
       }
         
       $output = '';

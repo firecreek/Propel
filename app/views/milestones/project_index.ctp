@@ -2,6 +2,8 @@
 
   $javascript->link('listable.js', false);
   $javascript->link('projects/milestones.js', false);
+
+  $html->css('milestones', null, array('inline'=>false));
   
   echo $javascript->codeBlock("
     Milestones.refreshUrl = '".$html->url(array('action'=>'index'))."';

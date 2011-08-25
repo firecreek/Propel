@@ -160,7 +160,7 @@
       
       //Delete permission for company
       $this->Company->id = $companyId;
-      $this->AclManager->delete($this->Company, 'accounts', $this->Authorization->read('Account.id'), null, array('all' => true));
+      $this->AclManager->delete($this->Company, $this->Authorization->read('Account.id'));
       
       //Delete company
       $this->Company->delete($companyId);
