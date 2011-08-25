@@ -446,8 +446,8 @@ p.pagination span a {}
 .cols {}
 .cols .col {}
  
-.cols .col.left { width:70%; float:left; }
-.cols .col.right { width:28%; float:right; }
+.cols .col.left { width:75%; float:left; }
+.cols .col.right { width:23%; float:right; }
  
  
  

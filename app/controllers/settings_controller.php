@@ -174,6 +174,17 @@
     
     
     /**
+     * Account Logo
+     *
+     * @access public
+     * @return void
+     */
+    public function account_logo()
+    {
+    }
+    
+    
+    /**
      * Logo
      *
      * @todo More checks on incoming files, use assets component
@@ -181,7 +192,7 @@
      * @access public
      * @return void
      */
-    public function account_logo($type)
+    public function account_logo_edit($type)
     {
       //Delete
       if(isset($this->params['url']['delete']))

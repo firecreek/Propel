@@ -3,11 +3,11 @@
   
     <div class="box">
       <div class="banner">
-        <h2><?php __('Project overview & activity'); ?></h2>
+        <h2><?php echo $this->Auth->read('Project.name'); ?> <?php __('Overview & Activity'); ?></h2>
         <ul class="right important">
-          <li><?php echo $html->link(__('New message',true),array('controller'=>'posts','action'=>'add')); ?></li>
-          <li><?php echo $html->link(__('New to-do list',true),array('controller'=>'accounts','action'=>'add')); ?></li>
-          <li><?php echo $html->link(__('New milestone',true),array('controller'=>'milestones','action'=>'add')); ?></li>
+          <li><?php echo $this->Html->link(__('New message',true),array('controller'=>'posts','action'=>'add')); ?></li>
+          <li><?php echo $this->Html->link(__('New to-do list',true),array('controller'=>'accounts','action'=>'add')); ?></li>
+          <li><?php echo $this->Html->link(__('New milestone',true),array('controller'=>'milestones','action'=>'add')); ?></li>
         </ul>
       </div>
       <div class="content">
@@ -17,7 +17,7 @@
           <div class="note announcement">
             <div class="wrapper">
               <h4><?php __('Announcement'); ?></h4>
-              <p><?php echo $project['Project']['announcement']; ?></p>
+              <p><?php echo nl2br($project['Project']['announcement']); ?></p>
             </div>
           </div>
         <?php endif; ?>
@@ -51,7 +51,7 @@
                     ?>
                     <li>
                       <strong><?php echo $total; ?> days late</strong>:
-                      <?php echo $html->link($record['Milestone']['title'],array('projectId'=>$record['Milestone']['project_id'],'controller'=>'milestones')); ?>
+                      <?php echo $this->Html->link($record['Milestone']['title'],array('projectId'=>$record['Milestone']['project_id'],'controller'=>'milestones')); ?>
                       <?php if(isset($record['Responsible'])): ?>
                         (<?php echo $record['Responsible']['name']; ?> is responsible)
                       <?php endif; ?>
@@ -81,9 +81,9 @@
         <?php else: ?>
           <p><?php __('There has been no activity on this project yet.'); ?></p>
           <ul>
-            <li><?php echo $html->link(__('Post the first message',true),array('controller'=>'posts','action'=>'add')); ?></li>
-            <li><?php echo $html->link(__('Create the first to-do list',true),array('controller'=>'todos','action'=>'add')); ?></li>
-            <li><?php echo $html->link(__('Add the first milestone',true),array('controller'=>'milestones','action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('Post the first message',true),array('controller'=>'posts','action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('Create the first to-do list',true),array('controller'=>'todos','action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('Add the first milestone',true),array('controller'=>'milestones','action'=>'add')); ?></li>
           </ul>
         <?php endif; ?>
         

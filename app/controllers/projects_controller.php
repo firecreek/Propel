@@ -43,6 +43,17 @@
      * @access public
      * @return void
      */
+    public function account_index()
+    {
+    }
+    
+    
+    /**
+     * Add
+     *
+     * @access public
+     * @return void
+     */
     public function account_add()
     {
       if(!empty($this->data))

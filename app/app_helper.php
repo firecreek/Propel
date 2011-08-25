@@ -51,6 +51,7 @@
         if(
           isset($this->params['projectId']) &&
           !isset($url['projectId']) &&
+          !isset($url['account']) &&
           (!isset($url['project']) || (isset($url['project']) && $url['project'] !== false)))
         {
           $url['projectId'] = $this->params['projectId'];
@@ -65,6 +66,15 @@
       )
       {
         $url['associatedController'] = $this->params['associatedController'];
+      }
+      
+      if(is_array($url) && isset($url['account']))
+      {
+        unset($url['account']);
+      }
+      if(is_array($url) && isset($url['project']))
+      {
+        unset($url['project']);
       }
       
       return parent::url($url, $full); 
