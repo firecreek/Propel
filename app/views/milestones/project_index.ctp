@@ -1,7 +1,7 @@
 <?php
 
   $javascript->link('listable.js', false);
-  $javascript->link('projects/milestones.js', false);
+  $javascript->link('milestones.js', false);
 
   $html->css('milestones', null, array('inline'=>false));
   

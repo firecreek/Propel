@@ -1,6 +1,5 @@
 <?php
-  $javascript->link('accounts/projects_add.js', false);
-  
+  $javascript->link('projects_add.js', false);
   $html->css('projects', null, array('inline'=>false));
 ?>
 

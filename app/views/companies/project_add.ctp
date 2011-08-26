@@ -1,7 +1,5 @@
 <?php
-
-  $javascript->link('projects/companies_add.js', false);
-  
+  $javascript->link('companies_add.js', false);
 ?>
 
 <div class="box" id="CompanyAdd">

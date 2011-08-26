@@ -1,12 +1,11 @@
 <?php
   $javascript->link('listable.js', false);
-  $javascript->link('accounts/comments.js', false);
+  $javascript->link('comments.js', false);
   $javascript->link('jquery/jquery-countdown.js', false);
   $javascript->link('jquery/jquery-rte.js', false);
   
   $html->css('comments', null, array('inline'=>false));
   $html->css('rte', null, array('inline'=>false));
-  
 ?>
 <div class="cols">
 

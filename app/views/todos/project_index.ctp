@@ -1,7 +1,7 @@
 <?php
   $javascript->link('listable.js', false);
-  $javascript->link('projects/todos.js', false);
-  
+  $javascript->link('todos_list.js', false);
+  $javascript->link('todos_add.js', false);
   $html->css('todos', null, array('inline'=>false));
 ?>
 

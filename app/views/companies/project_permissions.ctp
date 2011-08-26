@@ -1,11 +1,9 @@
 <?php
-
-  $javascript->link('projects/companies_permissions.js', false);
+  $javascript->link('companies_permissions.js', false);
   $html->css('companies', null, array('inline'=>false));
   
   //Grant options
   $grantOptions = Set::combine($grants,'{n}.Grant.id','{n}.Grant.name');
-  
 ?>
 
 <div class="cols">

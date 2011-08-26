@@ -1,5 +1,5 @@
 <?php
-  $javascript->link('accounts/milestones.js', false);
+  $javascript->link('milestones.js', false);
 ?>
 
 <div class="box">

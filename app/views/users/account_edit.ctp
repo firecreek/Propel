@@ -1,9 +1,6 @@
 <?php
-  
-  $javascript->link('accounts/user_edit.js', false);
-  
-  $html->css('accounts/person_edit', null, array('inline'=>false));
-
+  $javascript->link('user_edit.js', false);
+  $html->css('people', null, array('inline'=>false));
 ?>
 <div class="cols">
 
