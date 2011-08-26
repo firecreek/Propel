@@ -30,7 +30,6 @@
   $bodyClass = $this->name.' '.$this->action.' '.$this->params['prefix'];
 ?><body class="<?php echo $bodyClass; ?>">
 
-
   <div id="launchbar">
     <nav id="account">
       <?php
@@ -108,16 +107,6 @@
         }
       ?>
     </h1>
-
-
-    <?php
-      if(!isset($activeMenu))
-      {
-        $activeMenu = Inflector::underscore($this->name);
-      }
-    ?>
-
-
     
     <?php if($this->params['prefix'] == 'project'): ?>
       <nav class="main top tabs">
@@ -142,21 +131,17 @@
         ?>
       </nav>
     <?php endif; ?>
-    
-
   </header>
 
 
-
-
-    <div id="main">
-      <?php echo $session->flash(); ?>
-      <?php echo $content_for_layout; ?>
-    </div>
-    
-    <footer>
-      <p><?php __('Managed with'); ?> <?php echo $html->link('Propel','http://www.propelhq.com?ref=accfoot'); ?>.</p>
-    </footer>
+  <div id="main">
+    <?php echo $session->flash(); ?>
+    <?php echo $content_for_layout; ?>
+  </div>
+  
+  <footer>
+    <p><?php __('Managed with'); ?> <?php echo $html->link('Propel','http://www.propelhq.com?ref=accfoot'); ?>.</p>
+  </footer>
 
 
 </body>

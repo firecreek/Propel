@@ -146,11 +146,14 @@
         )
       ));
       
+      //Milestone list
+      $milestoneOptions = $this->Todo->Milestone->findProjectList($this->Authorization->read('Project.id'));
+      
       //Todo active/completed lists
       $todosActive = $this->Todo->findActive($this->Authorization->read('Project.id'));
       $todosCompleted = $this->Todo->findCompleted($this->Authorization->read('Project.id'));
       
-      $this->set(compact('todos','todosCompleted','todosActive'));
+      $this->set(compact('todos','todosCompleted','todosActive','milestoneOptions'));
     }
     
     

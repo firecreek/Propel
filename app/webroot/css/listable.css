@@ -25,7 +25,7 @@
 .listable .group .header .after { font-style:italic; font-size:11px; }
 .listable .group.ui-state-edit .item-content { display:none; }
 
-.listable p.list-description { margin:0 0 0 18px; font-size:12px; font-style:italic; }
+.listable p.list-description { margin:0; font-size:11px; font-style:italic; }
 
 
 
