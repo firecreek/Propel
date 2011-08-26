@@ -452,11 +452,10 @@
         $todoId = str_replace('Todo','',$key);
         $position = $data;
         
-        $this->Todo->TodoItem->updateAll(
-          array('Todo.position' => $position),
-          array('Todo.id'=>$todoId)
-        );
+        $this->Todo->id = $todoId;
+        $check = $this->Todo->saveField('position',$position);
         
+        debug($check);
       }
     }
   

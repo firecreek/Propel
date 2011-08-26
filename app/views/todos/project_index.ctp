@@ -23,32 +23,7 @@
         <div class="box">
           <div class="banner">
             <h2><?php __('To-do lists'); ?></h2>
-            
             <?php echo $this->element('todos/banner_filters'); ?>
-            
-            <ul class="right important">
-              <li><?php
-              
-                //Reorder link
-                $notActive = __('Reorder lists',true);
-                $active = __('Done reordering lists',true);
-                
-                if(empty($filter) && !empty($todos))
-                {
-                  echo $html->link($notActive,array('action'=>'reorder'),array(
-                    'id'              => 'reorderLists',
-                    'rel-not-active'  => $notActive,
-                    'rel-active'      => $active,
-                    'rel-update-url'  => $html->url(array('action'=>'update_positions'))
-                  ));
-                }
-                else
-                {
-                  echo '<span>'.$notActive.'</span>';
-                }
-                
-              ?></li>
-            </ul>
           </div>
           <div class="content">
             <?php if(!empty($todos)): ?>
@@ -117,7 +92,6 @@
       
       
       <?php
-        echo $this->element('todos/filter');
         echo $this->element('todos/list_active');
         echo $this->element('todos/list_completed');
       ?>  

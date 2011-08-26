@@ -14,16 +14,7 @@
 <div class="box">
   <div class="banner">
     <h2><?php __(sprintf('%s to-do items across all projects',$responsibleName.'\'s')); ?></h2>
-    <?php
-      $responsibleOptions = $layout->permissionList($auth->read('People'));
-      
-      echo $form->create('Todo',array('url'=>$this->here,'type'=>'get','class'=>'single right'));
-      echo $form->input('responsible',array('label'=>__('Show items for',true).':','options'=>$responsibleOptions));
-      echo $form->input('due',array('label'=>__('due',true).':','options'=>$dueOptions));
-      echo $form->submit(__('Search',true));
-      echo $form->end();
-    ?>
-
+    <?php echo $this->element('todos/banner_filters'); ?>
   </div>
   <div class="content">
   

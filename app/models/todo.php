@@ -231,7 +231,7 @@
         ),
         'private' => true,
         'fields' => array('id','name'),
-        'order' => 'Todo.name ASC',
+        'order' => 'Todo.position ASC',
         'contain' => array('Person'=>array('id')),
         'items' => false,
         'cache' => array(

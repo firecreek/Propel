@@ -9,12 +9,12 @@
   }
   
   echo $listable->item('TodosItem',$id,$record['TodoItem']['description'],array(
-    'delete'    => false,
-    'edit'      => false,
-    'comments'  => false,
+    'checkbox' => array(
+      'enabled' => true,
+      'url'     => $html->url(array('controller'=>'todos_items','action'=>'update',$id)),
+      'checked' => $record['TodoItem']['completed'] ? true : false
+    ),
     'class'     => $class,
-    'checked'   => $record['TodoItem']['completed'] ? true : false,
-    'prefix'    => $prefix,
-    'updateUrl' => $html->url(array('controller'=>'todos_items','action'=>'update',$id))
+    'prefix'    => $prefix
   ));
 ?>

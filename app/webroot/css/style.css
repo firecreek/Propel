@@ -228,16 +228,13 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .right .box {}
 .right .box .banner { min-height:30px; }
 .right .box h3 { color:#333; font-size:13px; padding:6px 0 0 10px; }
-.right .box .banner ul.right { position:absolute; top:5px; right:20px; }
+.right .box .banner ul.right { position:absolute; top:4px; right:10px; }
+.right .box .content { padding:10px; }
 
+.right .box ul.reorder {}
+.right .box ul.reorder li { padding:5px 0 5px 25px; background:url(/img/icons/position.png) transparent no-repeat 6px 6px; cursor:move; background-color:#EFEFEF; margin-bottom:2px; }
 
-/**
- * Area
- * DEPRECATED
- * @todo Remove
- */
-.area { border:10px solid red; }
-.area:after { content:"Remove AREA"; }
+.right .box ul.reorder li a, .right .box ul.reorder li a:hover { color:#666; background-color:transparent; text-decoration:none; }
 
 
 

@@ -51,70 +51,6 @@ var Todos = {
       update: function(event,ui){
       }
     });
-    
-    $('#reorderLists').bind('click',function(e){
-    
-      if(!self.reorderLists)
-      {
-        //Show
-        
-        //Check a group isn't being edited
-        if($('.group.ui-state-edit').length == 1)
-        {
-          alert('There are todo groups in edit mode, please save your changes first');
-          return false;
-        }
-        
-        //
-        self.reorderLists = true;
-        $('#TodoFilter').hide();
-        
-        $(this).addClass('active');
-        $(this).html($(this).attr('rel-active'));
-      
-        $('.listable').addClass('reorder-todos');
-        
-        //Sortable
-        $('.listable').sortable({ disabled: false });
-      }
-      else
-      {
-        //Save        
-        var params = {};
-        var count = 0;
-
-        $('.listable .header .item').each(function(){
-          count++;
-          params['Todo'+$(this).attr('rel-record-id')] = count;
-        });
-        
-        $.ajax({
-          type: 'POST',
-          url: $(this).attr('rel-update-url')+'.js',
-          dataType: 'script',
-          data: params,
-          cache: false,
-          success: function(response)
-          {
-          }
-        });
-      
-        //Hide
-        self.reorderLists = false;
-        
-        $('#TodoFilter').show();
-        
-        $(this).removeClass('active');
-        $(this).html($(this).attr('rel-not-active'));
-      
-        $('.listable').removeClass('reorder-todos');
-        
-        //Sortable
-        $('.listable').sortable({ disabled: true });
-      }
-      
-      return false;
-    });
   
   
     //Add item link
@@ -147,6 +83,67 @@ var Todos = {
     //Notify
     $('.item-add .fields select[name*=responsible]').live('change',function(e){
       self._notifyCheck(this);
+    });
+    
+    
+    //Reorder lists
+    $('#reorderLists').bind('click',function(e){
+    
+      if(!self.reorderLists)
+      {
+        //Show
+        
+        //Check a group isn't being edited
+        if($('.group.ui-state-edit').length == 1)
+        {
+          alert('There are todo groups in edit mode, please save your changes first');
+          return false;
+        }
+        
+        //
+        self.reorderLists = true;
+        
+        $(this).addClass('active');
+        $(this).html($(this).attr('rel-active'));
+        
+        //Sortable
+        $('#TodoActiveList').sortable({ disabled:false }).addClass('reorder');
+      }
+      else
+      {
+        //Save        
+        var params = {};
+        var count = 0;
+
+        $('#TodoActiveList li').each(function(){
+          count++;
+          params['Todo'+$(this).attr('data-todo-id')] = count;
+        });
+        
+        $.ajax({
+          type: 'POST',
+          url: $(this).attr('rel-update-url')+'.js',
+          dataType: 'script',
+          data: params,
+          cache: false,
+          success: function(response)
+          {
+            window.location.reload()
+          }
+        });
+        return false;
+      
+        //Hide
+        self.reorderLists = false;
+        
+        $(this).removeClass('active');
+        $(this).html($(this).attr('rel-not-active'));
+        
+        //Sortable
+        $('#TodoActiveList').sortable({ disabled: true }).removeClass('reorder');
+      }
+      
+      return false;
     });
     
   },
