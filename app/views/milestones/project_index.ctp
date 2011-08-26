@@ -23,22 +23,8 @@
           <h2><?php __('Milestones'); ?> <span>(<?php echo __('Today is ',true).date('j F'); ?>)</span></h2>
         </div>
         <div class="content">
-        
-          <!--
-          <div class="dialog default">
-            <div class="close-button"><span>close</span></div>
-            <div class="wrapper">
-              <h3>Hello!</h3>
-              <p>asdiofj sdiofj sodijfoidsjfoi sdifoisdofiodsi foishdfiuhsdu fihsuhdfsdfsdf sduf sdf</p>
-              <p>asdiofj sdiofj sodijfoidsjfoi sdifoisdofiodsi foishdfiuhsdu fihsuhdfsdfsdf sduf sdf</p>
-              <p>asdiofj sdiofj sodijfoidsjfoi sdifoisdofiodsi foishdfiuhsdu fihsuhdfsdfsdf sduf sdf</p>
-              <p>asdiofj sdiofj sodijfoidsjfoi sdifoisdofiodsi foishdfiuhsdu fihsuhdfsdfsdf sduf sdf</p>
-            </div>
-          </div>
-          -->
           
           <?php echo $form->create('Milestone',array('url'=>$this->here,'id'=>'MilestoneIndex')); ?>
-          
           
           <?php
             //Overdue

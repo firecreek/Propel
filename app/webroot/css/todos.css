@@ -6,7 +6,7 @@
 .completed-list ul { margin-bottom:20px; }
 .completed-list li { margin-left:10px; }
 
-
+/*
 .reorder-todos {}
 
 .reorder-todos .group { margin:0; }
@@ -18,7 +18,7 @@
 .reorder-todos .item-content { display:none; }
 .reorder-todos .list-description { display:none; }
 .reorder-todos .after { display:none; }
-
+*/
 
 
 .recent { margin:5px 0 0 0; }
@@ -71,4 +71,4 @@
  * Todos add
  */
 #TodoAdd fieldset.optional { margin-left:10px; }
-#TodoAdd fieldset.optional label { font-size:13px; }
+#TodoAdd fieldset.optional label { font-size:13px;

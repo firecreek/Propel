@@ -98,7 +98,7 @@
 .listable .item.position .label { left:40px; }
 
 .listable .group.large .item {}
-.listable .group.large .item .label { font-weight:bold; font-size:14px; }
+.listable .group.large .item .label { font-size:14px; }
 
 .listable .group.slim .item { margin:2px 5px; min-height:20px; }
 .listable .group.slim .item .check div.input input { top:0; left:20px; }

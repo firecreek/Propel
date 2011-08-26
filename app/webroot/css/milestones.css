@@ -7,6 +7,26 @@
 
 
 /**
+ * Edit inline
+ */
+.listable .inline .box { background-color:#EFEFEF; padding:5px; }
+
+.item-add label { display:block; font-size:11px; float:none; margin:0 0 3px 0; }
+.item-add textarea { height:4em; width:60%; }
+.item-add hr { margin:5px 0; clear:both; }
+
+.item-add .input.title label { display:none; }
+.item-add .input.title small { display:none; }
+
+.item-add {  }
+.item-add div.fields { clear:both; }
+.item-add div.first { display:inline-block; margin-right:20px; }
+.item-add div.second { display:inline-block; }
+
+.item-add .submit .saving { background-color:#EFEFEF; }
+
+
+/**
  * Add
  */
 #MilestoneAdd {}

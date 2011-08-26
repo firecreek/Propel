@@ -1,5 +1,5 @@
 
-<div class="box" id="MilestoneEdit<?php echo $id; ?>">
+<div class="box item-add" id="MilestoneEdit<?php echo $id; ?>">
   <div class="banner">
     <h2><?php __('Edit milestone'); ?></h2>
   </div>
@@ -12,11 +12,19 @@
     <?php
       echo $form->create('Milestone',array('url'=>$this->here,'class'=>'block'));
       
-      echo $form->input('deadline',array('label'=>__('When is it due?',true)));
-      echo $form->input('title',array('label'=>__('Enter a title',true),'after'=>'<small>'.__('(e.g. Design review 3)',true).'</small>'));
-      echo $form->input('responsible',array('options'=>$responsibleOptions,'empty'=>true,'label'=>__('Who\'s responsible?',true)));
+      echo $form->input('title',array('div'=>'input text title full-width','label'=>__('Enter a title',true),'after'=>'<small>'.__('(e.g. Design review 3)',true).'</small>'));
+    ?>
+    
+    
+    <div class="fields">
+      <?php
+        echo $form->input('responsible',array('div'=>'input first select','options'=>$responsibleOptions,'empty'=>true,'label'=>__('Who\'s responsible?',true)));
+        echo $form->input('deadline',array('div'=>'input second date','label'=>__('When is it due?',true)));
+      ?>
+    </div>
+    
+    <?php
       echo $form->input('email',array('label'=>__('Email 48 hours before it\'s due',true)));
-      
       echo $form->hidden('ident',array('value'=>$this->params['form']['objId']));
     ?>
     

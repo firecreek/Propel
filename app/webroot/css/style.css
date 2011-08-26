@@ -268,9 +268,9 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .section .foot li span { font-size:11px; color:#666; }
 
 .section.outlined { border:1px solid #CCC; padding:2px; }
-.section.outlined .content { padding:0 10px; margin-bottom:10px; }
+.section.outlined>.content { padding:0 10px; margin-bottom:10px; }
 
-.section.indented .content { padding:0 10px; margin-bottom:10px; }
+.section.indented>.content { padding:0 10px; margin-bottom:10px; }
 
 .section.important {}
 .section.important .banner { background-color:#C00; }
