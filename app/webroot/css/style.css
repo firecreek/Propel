@@ -162,10 +162,10 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box.small p.intro { font-size:14px; color:#666; }
 
 .box .banner { border-bottom:none; position:relative; background-color:#c7d4dc; min-height:48px; }
-.box .banner h2 { font-size:14px; margin:0; padding:15px 0 0 20px; }
+.box .banner h2 { font-size:18px; margin:0; padding:10px 0 0 20px; }
 .box .banner h2 span { font-size:12px; color:#999; font-weight:normal; margin-left:10px; }
 
-.box .banner h2 a { font-weight:normal; font-size:14px; }
+.box .banner h2 a { font-weight:normal; font-size:18px; }
 .box .banner h2 a.sub { font-weight:normal; margin-left:20px; font-size:13px; }
 
 .box .banner .button { position:absolute; right:20px; top:10px; }
@@ -180,7 +180,7 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box .banner ul.left li a { font-size:12px; padding:0 1px; }
 .box .banner ul.left li a:hover { text-decoration:none; }
 
-.box .banner ul.right { position:absolute; top:16px; right:20px; }
+.box .banner ul.right { position:absolute; top:14px; right:20px; }
 .box .banner ul.right li { display:inline; margin-left:15px; }
 .box .banner ul.right li a { font-size:11px; }
 .box .banner ul.right li span { font-size:11px; color:#888888; } /** Acts as a disabled link */

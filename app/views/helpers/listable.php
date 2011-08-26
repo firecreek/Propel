@@ -114,6 +114,7 @@
           'checked'     => false,
           'url'         => null
         ),
+        'url'                 => false,
         'extra'               => false,
         'extraPrepend'        => null,
         'private'             => false,
@@ -183,7 +184,6 @@
       }
       
       //Extra
-      //@todo Clean this up and standardise
       $extra = '';
       if(!empty($options['extra']))
       {
@@ -192,7 +192,6 @@
       }
       
       //Name prefix
-      //@todo remove the strong tags
       if($options['prefix'] !== false && !empty($options['prefix']))
       {
         $name = '<strong>'.$options['prefix'].':</strong> '.$name;
@@ -204,8 +203,15 @@
         $name = $name.$options['append'];
       }
       
-      if($options['controls']['edit'] !== false)
+      //Link
+      if($options['url'])
       {
+        //Link provided
+        $name = $this->Html->link($name,$options['url']);
+      }
+      elseif($options['controls']['edit'] !== false)
+      {
+        //Edit link
         $name = $this->Html->link($name,$options['controls']['edit']['url'],array('class'=>'edit-link'));
       }
       

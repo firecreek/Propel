@@ -18,7 +18,8 @@
                 'url' => $this->Html->url(array('controller'=>'todos','action'=>'edit',$record['Todo']['id'])),
                 'hide' => true
               )
-            )
+            ),
+            'url' => $this->Html->url(array('controller'=>'todos','action'=>'view',$record['Todo']['id'])),
           );
           
           if(!empty($record['Todo']['description']))

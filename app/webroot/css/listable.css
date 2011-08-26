@@ -19,7 +19,7 @@
 
 .listable .group .header .item { margin:0; border-top:none; }
 .listable .group .header .item .label { font-weight:bold; font-size:16px; color:#000000; }
-.listable .group .header .item .label a { color:#000000; }
+.listable .group .header .item .label a { color:#000000; text-decoration:none; }
 .listable .group .header .item .label a:hover { background-color:transparent; color:#000000; text-decoration:underline; }
 
 .listable .group .header .after { font-style:italic; font-size:11px; }
@@ -45,7 +45,7 @@
  */
 .listable .item { min-height:15px; margin:0px; padding:2px 0; position:relative; }
 
-.listable .item .loading { background:url(/img/icons/loader-small-horizontal.gif) white no-repeat center center; width:16px; height:17px; position:absolute; top:6px; left:0; z-index:10; }
+.listable .item .loading { background:url(/img/icons/circle_ball.gif) white no-repeat center center; width:16px; height:17px; position:absolute; top:4px; left:-5px; z-index:10; }
 
 .listable .item .check { position:relative; }
 .listable .item .check div.input { position:absolute; z-index:10; }
