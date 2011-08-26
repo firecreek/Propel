@@ -1,4 +1,8 @@
+<?php
 
+  $this->set('active','Project.settings');
+
+?>
 <div class="cols">
   <div class="col left">
   

@@ -66,3 +66,10 @@
     <!-- Empty space -->
   </div>
 </div>
+
+
+<?php
+  echo $this->Javascript->codeBlock("
+    $('#TodoName').focus();
+  ");
+?>
