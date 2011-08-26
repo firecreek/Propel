@@ -126,7 +126,8 @@ function __scriptCall(url, options)
 {
   if(options.loading)
   {
-    $(options.element).find('.loading').show();
+    //$(options.element).find('.loading').show();
+    $(options.element).addClass('ui-state-loading');
   }
   
   if(!options.data)

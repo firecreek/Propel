@@ -13,29 +13,18 @@
         <?php
           
           $headerOptions = array(
-            'checkbox'      => false,
-            'comments'      => false,
-            'position'      => true,
-            'positionHide'  => true,
-            'url'           => $html->url(array('controller'=>'todos','action'=>'view',$record['Todo']['id'])),
-            'editUrl'       => $html->url(array('controller'=>'todos','action'=>'edit',$record['Todo']['id'])),
-            'deleteUrl'     => $html->url(array('controller'=>'todos','action'=>'delete',$record['Todo']['id'])),
+            'controls' => array(
+              'position' => array(
+                'url' => $this->Html->url(array('controller'=>'todos','action'=>'edit',$record['Todo']['id'])),
+                'hide' => true
+              )
+            )
           );
-        
-          if(isset($headerLink) && $headerLink == false)
-          {
-            $headerOptions['position'] = false;
-            $headerOptions['positionHide'] = false;
-            $headerOptions['edit'] = false;
-            $headerOptions['delete'] = false;
-            $headerOptions['url'] = false;
-          }
           
           if(!empty($record['Todo']['description']))
           {
             $headerOptions['after'] = nl2br($record['Todo']['description']);
           }
-          
           
           if($record['Todo']['private'])
           {
@@ -68,14 +57,23 @@
               $extra = implode(' ',$extras);
             
               echo $listable->item('TodosItem',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
-                'position'  => true,
-                'extra'     => $extra,
-                'commentCount'  => $item['TodoItem']['comment_count'],
-                'commentUnread' => $item['TodoItem']['comment_unread'],
-                'commentController' => 'todos_items',
-                'editUrl'   => $html->url(array('controller'=>'todos_items','action'=>'edit',$item['TodoItem']['id'])),
-                'updateUrl'   => $html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id'])),
-                'deleteUrl'   => $html->url(array('controller'=>'todos_items','action'=>'delete',$item['TodoItem']['id'])),
+                'controls' => array(
+                  'edit'      => array('url'=>$this->Html->url(array('controller'=>'todos_items','action'=>'edit',$item['TodoItem']['id']))),
+                  'position'  => array('url'=>$this->Html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id']))),
+                  'delete'    => array('url'=>$this->Html->url(array('controller'=>'todos_items','action'=>'delete',$item['TodoItem']['id']))),
+                ),
+                'comments' => array(
+                  'enabled'     => true,
+                  'count'       => $item['TodoItem']['comment_count'],
+                  'unread'      => $item['TodoItem']['comment_unread'],
+                  'controller'  => 'todos_items'
+                ),
+                'checkbox' => array(
+                  'enabled' => true,
+                  'checked' => false,
+                  'url'     => $this->Html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id']))
+                ),
+                'extra'     => $extra
               ));
             ?>
           <?php endforeach; ?>
@@ -83,7 +81,7 @@
         
         <div class="add-item-container">
           <div class="add-item-link" style="display:none;">
-            <?php echo $html->link(__('Add an item',true),array('controller'=>'todos_items','action'=>'add',$record['Todo']['id']),array('rel'=>$ident,'class'=>'important')); ?>
+            <?php echo $this->Html->link(__('Add an item',true),array('controller'=>'todos_items','action'=>'add',$record['Todo']['id']),array('rel'=>$ident,'class'=>'important')); ?>
           </div>
           <?php
             echo $this->element('todos_items/add',array(
@@ -98,11 +96,17 @@
           <?php foreach($record['TodoItemRecent'] as $item): ?>
             <?php
               echo $listable->item('TodosItem',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
-                'edit' => false,
-                'checked' => true,
-                'prefix' => date('M j',strtotime($item['TodoItem']['completed_date'])),
-                'updateUrl'   => $html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id'])),
-                'deleteUrl'   => $html->url(array('controller'=>'todos_items','action'=>'delete',$item['TodoItem']['id'])),
+                'controls' => array(
+                  'delete' => array(
+                    'url' => $this->Html->url(array('controller'=>'todos_items','action'=>'delete',$item['TodoItem']['id']))
+                  )
+                ),
+                'checkbox' => array(
+                  'enabled' => true,
+                  'checked' => true,
+                  'url'     => $this->Html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id']))
+                ),
+                'prefix' => date('M j',strtotime($item['TodoItem']['completed_date']))
               ));
             ?>
           <?php endforeach; ?>
@@ -124,7 +128,7 @@
           <div class="count" style="display:<?php echo $countDisplay; ?>">
             <p><?php
               $text = sprintf(__('View all %s completed items',true),'<span>'.$record['TodoItemCountCompleted'].'</span>');
-              echo $html->link($text,array('action'=>'view',$record['Todo']['id']),array('escape'=>false));
+              echo $this->Html->link($text,array('action'=>'view',$record['Todo']['id']),array('escape'=>false));
             ?></p>
           </div>
         <?php endif; ?>

@@ -34,9 +34,26 @@
   <div id="launchbar">
     <nav id="account">
       <?php
+      
+        $projects = $auth->read('Projects');
+        $projectsMenu = array();
+        
+        foreach($projects as $projectRecord)
+        {
+          $projectsMenu[] = array(
+            'name' => $projectRecord['Project']['name'].' ['.$projectRecord['Company']['name'].']',
+            'url' => $this->Html->url(array(
+              'accountSlug' => $projectRecord['Account']['slug'],
+              'projectId'   => $projectRecord['Project']['id'],
+              'controller'  => 'projects',
+              'action'      => 'index'
+            ))
+          );
+        }
+      
         $menu = array(
           'Account.accounts' => array('name'=>__('Dashboard',true),'url'=>array('account'=>true,'controller'=>'accounts','action'=>'index')),
-          'Account.projects' => array('name'=>__('Projects',true),'url'=>array('account'=>true,'controller'=>'projects','action'=>'index')),
+          'Account.projects' => array('name'=>__('Projects',true),'url'=>array('account'=>true,'controller'=>'projects','action'=>'index'),'children'=>$projectsMenu),
           'Account.todos' => array('name'=>__('To-Dos',true),'url'=>array('account'=>true,'controller'=>'todos','action'=>'index')),
           'Account.milestones' => array('name'=>__('Milestones',true),'url'=>array('account'=>true,'controller'=>'milestones','action'=>'index')),
           'Account.companies' => array('name'=>__('People',true),'url'=>array('account'=>true,'controller'=>'companies','action'=>'index')),
@@ -44,7 +61,7 @@
           /*'templates' => array('name'=>__('Templates',true),'url'=>array('controller'=>'templates','action'=>'index')),*/
           'Account.settings' => array('name'=>__('Settings',true),'url'=>array('account'=>true,'controller'=>'settings','action'=>'index')),
         );
-        echo $this->Layout->menu($menu,array('permissions'=>'Account'));
+        echo $this->Layout->menu($menu,array('permissions'=>'Account'),array('class'=>'sf-menu'));
       ?>
     </nav>
     <nav id="user">

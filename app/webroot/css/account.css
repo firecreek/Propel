@@ -10,7 +10,7 @@
 #launchbar a { text-decoration:none; color:#DDD; }
 #launchbar a:hover { background-color:transparent; color:white; }
 
-#launchbar ul ul { display:none; z-index:19; position:absolute; background-color:black; margin:0 0 0 -10px; padding:0; }
+#launchbar ul ul { display:none; z-index:19; position:absolute; background-color:black; margin:0 0 0 0px; padding:0; }
 #launchbar ul ul li { float:none; margin:0; min-width:220px; }
 #launchbar ul ul li a { display:block; padding:0; border:none; padding:5px 5px 5px 10px; color:#999; }
 #launchbar ul ul li a:hover { background-color:#222; color:white; }
@@ -21,9 +21,9 @@
 
 #launchbar .propel { float:left; padding:4px 10px 0 30px; }
 
-nav#account ul { margin:0 0 0 30px; padding:0 0 0 0; }
-nav#account li.first a { background:url(/img/sprites.png) transparent no-repeat 0 -26px; padding-left:22px; }
-nav#account li.first a:hover, nav#account li.active a { background-position:0 4px; }
+nav#account>ul { margin:0 0 0 30px; padding:0 0 0 0; }
+nav#account>ul>li.first a { background:url(/img/sprites.png) transparent no-repeat -984px -16px; padding-left:22px; }
+nav#account>ul>li.first a:hover, nav#account>ul>li.active a { background-position:-984px 4px; }
 
 nav#user { position:absolute; right:30px; top:0; }
 
@@ -36,6 +36,7 @@ header h1 { margin:0 0 0 30px; padding:10px 0 0 0; font-size:24px; font-weight:n
 header h1 span { font-size:14px; font-weight:normal; margin-left:12px; }
 
 body.account>header h1 { font-size:38px; }
+
 
 /**
  * Footer
@@ -72,11 +73,6 @@ nav.tabs li.active a {
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#efefef));
 	background:-moz-linear-gradient(top,  #FDFDFD,  #efefef);
 }
-
-
-nav.secondary { background-color:#c0c0c0; width:100%; position:absolute; bottom:-24px; }
-nav.secondary ul { margin-left:30px; }
-nav.secondary li a { background:none !important; color:black !important; }
 
 
 

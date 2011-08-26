@@ -2,31 +2,60 @@
 /**
  * Listable
  */
-.listable {}
- 
-.listable .group { border-bottom:1px solid #E0E0E0; }
+.listable { position:relative; }
+.listable .items { position:relative; margin-left:-12px; }
 
+
+
+/**
+ * Group
+ */
+.listable .group { margin:0 0 25px 0; }
 .listable .group .banner { background-color:white !important; min-height:0; margin:0 0 5px 0; padding:0; }
 .listable .group .banner h4 { font-size:11px; margin:10px 0 0 0; padding:0; }
 .listable .group .banner span { font-weight:normal; }
 .listable .group .banner span.responsibility { color:#666; } 
 .listable .group .content { padding-left:0; }
- 
-.listable .items { margin-right:30px; }
- 
 
-.listable .item { min-height:15px; margin:2px 0px; position:relative; left:-45px; }
-.listable .item.ui-sortable-helper { left:5px !important; }
+.listable .group .header .item { margin:0; border-top:none; }
+.listable .group .header .item .label { font-weight:bold; font-size:16px; color:#000000; }
+.listable .group .header .item .label a { color:#000000; }
+.listable .group .header .item .label a:hover { background-color:transparent; color:#000000; text-decoration:underline; }
+
+.listable .group .header .after { font-style:italic; font-size:11px; }
+.listable .group.ui-state-edit .item-content { display:none; }
+
+.listable p.list-description { margin:0 0 0 18px; font-size:12px; font-style:italic; }
 
 
 
-.listable .item .check { left:55px; position:relative; }
+/** 
+ * Positions
+ */
+.listable .item .check { margin-left:15px; }
+.listable .item .label { margin-left:35px; }
+
+.listable .group .header .item .label { margin-left:0px; }
+.listable .group .header .after { margin-left:0px; }
+
+
+
+/**
+ * Item
+ */
+.listable .item { min-height:15px; margin:0px; padding:2px 0; position:relative; }
+
+.listable .item .loading { background:url(/img/icons/loader-small-horizontal.gif) white no-repeat center center; width:16px; height:17px; position:absolute; top:6px; left:0; z-index:10; }
+
+.listable .item .check { position:relative; }
 .listable .item .check div.input { position:absolute; z-index:10; }
 .listable .item .check div.input input { position:relative; top:2px; }
 
-.listable .item .label { font-size:12px; left:75px; margin-right:50px; position:relative; color:#333; z-index:10; display:inline; }
+.listable .item .label { font-size:12px; position:relative; color:#333; z-index:10; display:inline-block; }
 .listable .item .label span {  }
 .listable .item .label .name { display:inline; }
+.listable .item .label .name a.edit-link { color:#333; text-decoration:none; }
+.listable .item .label .name a.edit-link:hover { background-color:white; color:#666; }
 
 .listable .item .extra { background-color:#EFEFEF; display:inline; border-radius:10px; margin-left:5px; padding:2px 8px; font-size:10px; color:#333; }
 .listable .item .extra.hover { background-color:#C9C9C9; cursor:pointer; }
@@ -38,11 +67,10 @@
 
 
 /**
- * Comments, after name
+ * Comments
  */
 .listable .item .comment { display:inline-block; }
-
-.listable .item .comment span.count { margin:0 0 0 3px; display:none; }
+.listable .item .comment span.count { margin:0; display:none; }
 .listable .item .comment span.count a { color:#777; font-size:10px; text-decoration:none; }
  
 .listable .item .comment span.icon { display:inline-block; width:14px; height:13px; background:url(/img/icons/comments-13.png) transparent top left; text-indent:-9000px; margin-left:5px; position:relative; top:2px; }
@@ -54,46 +82,16 @@
 
 .listable .item.l-comments-unread .comment span.icon { background-position:-30px 0; }
 
-.listable .item .loading { background:url(/img/icons/loader-small-horizontal.gif) white no-repeat center center; width:50px; height:27px; position:absolute; top:-5px; left:0; z-index:10; border-bottom-left-radius: 15px 15px; border-top-left-radius: 15px 15px; }
 
 
 /**
- * 
+ * Maintain buttons
  */
-.listable .item .maintain { display:none; }
-.listable .item.l-comments-without .comment { display:none; }
+.listable .item .delete { position:absolute; right:0; top:7px; width:16px; height:16px; display:inline-block; text-indent:-9000px; }
+.listable .item .delete a { display:block; width:100%; height:100%; background:url(/img/sprites.png) transparent -40px 0; }
+.listable .item .delete a:hover { background-color:transparent; background-position:-40px -20px; }
 
-.listable .item.ui-state-edit .after { display:none; }
-
-.listable .item.ui-state-active .maintain { display:block; }
-.listable .item.ui-state-active .comment { display:inline-block; }
-
-.listable .item.ui-state-loading .maintain { display:none;  }
-.listable .item.ui-state-loading .comment { display:none; }
-
-
-/**
- * Listables with groups
- */
-.listable .group.ui-state-edit {  }
-.listable .group.ui-state-edit .header .overview { display:none; }
-.listable .group.ui-state-edit .item-content { display:none; }
-.listable .group.ui-state-edit .after { display:none; }
-
-
-/**
- * Maintain record
- */
-.listable .item .maintain { position:absolute; left:0; top:-5px; background-color:white; padding:3px 0 3px 3px; border-bottom-left-radius: 15px 15px; border-top-left-radius: 15px 15px; width:100%; z-index:5; }
-
-.listable .item .maintain .delete { margin:5px 0 0 6px; width:10px; height:11px; display:inline-block; text-indent:-9000px; background:url(/img/icons/delete-10.png) transparent top left; }
-.listable .item .maintain .delete a { display:block; width:100%; height:100%; }
-.listable .item .maintain .delete a:hover { background-color:transparent; }
-
-.listable .item .maintain .edit { margin:0 0 0 6px; }
-.listable .item .maintain .edit a { font-size:10px; position:relative; top:-2px; }
-
-.listable .item .maintain .position { width:13px; height:16px; display:inline-block; background:url(/img/icons/position.png) transparent top left; margin:0 0 0 4px; top:4px; position:relative; cursor:move; }
+.listable .item .position { position:absolute; left:0; top:5px; width:8px; height:16px; background:url(/img/sprites.png) transparent -24px 2px; cursor:move; }
 
 .listable .item.position {}
 .listable .item.position .check input { left:20px; }
@@ -113,10 +111,54 @@
 .banner .listable .item .label { font-size:18px; }
 
 
+
 /**
  * Inline box
  */
-.listable .inline { position:relative; left:45px; }
+.listable .inline { position:relative; }
+.listable .inline .box { padding:0 0 5px 0; margin:0 0 10px 0; border:none; box-shadow:none; }
+.listable .inline .box .content { padding:0; }
+
+
+
+/**
+ * States
+ */
+.listable .item .delete { display:none; }
+.listable .item .loading { display:none; }
+.listable .item .position { display:none; }
+.listable .item.l-comments-without .comment { display:none; }
+
+.listable .item.ui-state-edit .after { display:none; }
+
+.listable .item.ui-state-active {  }
+.listable .item.ui-state-active .delete { display:block; }
+.listable .item.ui-state-active .position { display:block; }
+.listable .item.ui-state-active .comment { display:inline-block; }
+
+.listable .item.ui-state-loading .loading { display:block !important; }
+.listable .item.ui-state-loading .delete { display:none;  }
+.listable .item.ui-state-loading .comment { display:none; }
+.listable .item.ui-state-loading .position { display:none; }
+
+.listable .item.ui-state-edit .view { display:none; }
+.listable .item.ui-state-edit .inline { display:block; }
+.listable .item.ui-state-edit .loading { display:none; }
+.listable .item.ui-state-edit .delete { display:none; }
+.listable .item.ui-state-edit .position { display:none; }
+
+
+
+/**
+ * Listables with groups
+ */
+.listable .group.ui-state-edit {  }
+.listable .group.ui-state-edit .header .overview { display:none; }
+.listable .group.ui-state-edit .item-content { display:none; }
+.listable .group.ui-state-edit .after { display:none; }
+
+
+
 
 
 /**

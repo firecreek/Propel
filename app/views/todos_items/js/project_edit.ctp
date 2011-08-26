@@ -12,15 +12,23 @@
     $extras[] = date('j M Y',strtotime($item['TodoItem']['deadline']));
   }
   $extra = implode(' ',$extras);
-  
 
   $listHtml = $listable->item('TodosItem',$item['TodoItem']['id'],$item['TodoItem']['description'],array(
-    'position'  => true,
-    'extra'     => $extra,
-    'editUrl'   => $html->url(array('controller'=>'todos_items','action'=>'edit',$item['TodoItem']['id'])),
-    'updateUrl' => $html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id'])),
-    'deleteUrl' => $html->url(array('controller'=>'todos_items','action'=>'delete',$item['TodoItem']['id'])),
-    'highlight' => true
+    'controls' => array(
+      'edit'      => array('url'=>$this->Html->url(array('controller'=>'todos_items','action'=>'edit',$item['TodoItem']['id']))),
+      'position'  => array('url'=>$this->Html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id']))),
+      'delete'    => array('url'=>$this->Html->url(array('controller'=>'todos_items','action'=>'delete',$item['TodoItem']['id']))),
+    ),
+    'comments' => array(
+      'enabled'     => true,
+      'controller'  => 'todos_items'
+    ),
+    'checkbox' => array(
+      'enabled' => true,
+      'checked' => false,
+      'url'     => $this->Html->url(array('controller'=>'todos_items','action'=>'update',$item['TodoItem']['id']))
+    ),
+    'extra'     => $extra
   ));
   
   $listHtml = $javascript->escapeString($listHtml);

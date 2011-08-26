@@ -105,7 +105,7 @@
         $count++;
       
         //Check if person has access to this controller
-        if($options['permissions'] && !$this->Auth->check($link['url']))
+        if($options['permissions'] && is_array($link['url']) && !$this->Auth->check($link['url']))
         {
           continue;
         }
@@ -115,25 +115,19 @@
       
         $tagLink = $this->Html->link($link['name'], $link['url'], $link['options']);
         
+        //Classes
         $classes = array();
         $tagOptions = array();
-        
-        if($count == 1)
-        {
-          $classes[] = 'first';
-        }
-        
-        if($key == $options['active'])
-        {
-          $classes[] = 'active';
-        }
-        
-        if(isset($link['class']))
-        {
-          $classes[] = $link['class'];
-        }
-        
+        if($count == 1) { $classes[] = 'first'; }
+        if($key == $options['active']) { $classes[] = 'active'; }
+        if(isset($link['class'])) { $classes[] = $link['class']; }
         $tagOptions['class'] = implode(' ',$classes);
+        
+        //Children
+        if(isset($link['children']) && !empty($link['children']))
+        {
+          $tagLink .= $this->menu($link['children'],$options);
+        }
         
         $output .= $this->Html->tag('li', $tagLink, $tagOptions);
       }

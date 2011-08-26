@@ -49,12 +49,18 @@
         .bind('click.listable', this._delete);
         
       //Edit
-      this.editElems = this.listElements.find('.edit')
+      this.editElems = this.listElements.find('.edit-link')
         .bind('click.listable', function() { return self._edit(self,this); });
       
       //Private
       this.privateElems = this.listElements.find('.extra.private')
         .bind('mouseenter.listable mouseleave.listable', this._privatePop);
+        
+      //Fix label widths
+      this.element.find('.item').each(function(){
+        var width = ($(this).width() - $(this).find('.label').offset().left);
+        $(this).find('.label').width(width);
+      });
     },
     
     
@@ -161,21 +167,14 @@
         url = url.substr(0,url.indexOf('?'));
       }
 
-      $(loading).show();
       $(item).addClass('ui-state-loading');
       
       //@todo Move this to __scriptCall
       $(inline).load(url,data,function(response,status,xhr){
         //Element visibilities
-        $(loading).hide();
-        $(overview).hide();
-        $(inline).show();
         $(element).removeClass('ui-state-active');
         $(item).removeClass('ui-state-loading');
-        
-        //$(item).addClass('ui-state-edit');
-        
-        if(header) { $(group).addClass('ui-state-edit'); }
+        $(item).addClass('ui-state-edit');
         
         //Trigger
         self._trigger("edit", element, {
@@ -188,15 +187,13 @@
         
         //Cancel link
         $(inline).find('.submit:first a').bind('click',function(e){
-          //$(item).removeClass('ui-state-edit');
-          //$(group).removeClass('ui-state-edit');
-          if(header) { $(group).removeClass('ui-state-edit'); }
+          $(item).removeClass('ui-state-edit');
           
           $(item).removeClass('ui-state-active');
           
           e.preventDefault();
-          $(inline).html('').hide();
-          $(overview).show();
+          $(inline).html('');
+          //$(overview).show();
         });
         
       });

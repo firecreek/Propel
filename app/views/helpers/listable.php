@@ -41,23 +41,22 @@
                                 rel-delete-url="%s">
                                   <div class="overview">%s</div>
                                   <div class="detail">%s</div>
-                                  %s
                               </div>
                             ',
       'label'             => '
                               <div class="label">
-                                <div class="name">%s</div>
-                                %s
-                                %s
+                                <div class="view">
+                                  <div class="name">%s</div>
+                                  %s
+                                  %s
+                                </div>
+                                <div class="inline"></div>
                               </div>
                             ',
       'checkbox'          => '<div class="check">%s</div>',
       'extra'             => '<div class="extra %s">%s</div>',
-      'inline'            => '<div class="inline"></div>',
       'comments'          => '<div class="comment"><span class="icon">%s</span><span class="count">%s</span></div>',
-      'maintain'          => '<div class="maintain">%s</div>',
       'delete'            => '<span class="delete">%s</span>',
-      'edit'              => '<span class="edit important">%s</span>',
       'position'          => '<span class="position"%s></span>',
       'after'             => '<div class="after">%s</div>',
       'loading'           => '<span class="loading" style="display:none;"></span>',
@@ -99,30 +98,32 @@
     public function item($alias,$id,$name,$options = array())
     {
       $_options = array(
-        'url'                 => false,
+        'controls' => array(
+          'edit'      => false,
+          'delete'    => false,
+          'position'  => false
+        ),
+        'comments' => array(
+          'enabled'     => false,
+          'count'       => 0,
+          'unread'      => 0,
+          'controller'  => null
+        ),
+        'checkbox' => array(
+          'enabled'     => false,
+          'checked'     => false,
+          'url'         => null
+        ),
         'extra'               => false,
         'extraPrepend'        => null,
-        'checkbox'            => true,
-        'delete'              => true,
-        'edit'                => true,
-        'editUrl'             => false,
-        'updateUrl'           => false,
-        'deleteUrl'           => false,
-        'comments'            => true,
-        'commentCount'        => 0,
-        'commentUnread'       => 0,
-        'commentController'   => $this->params['controller'],
-        'position'            => false,
-        'positionHide'        => false,
         'private'             => false,
         'class'               => array(),
-        'checked'             => false,
         'prefix'              => false,
         'append'              => false,
         'after'               => null,
         'ident'               => $alias.$id
       );
-      $options = array_merge($_options,$options);
+      $options = Set::merge($_options,$options);
       
       //
       $controller = Inflector::pluralize($alias);
@@ -140,46 +141,37 @@
       {
         $options['delete'] = false;
       }
-      
-      //Can comment
-      /*if(!$this->Auth->check(array('controller'=>'Comments','action'=>'index')))
-      {
-        $options['comments'] = false;
-      }*/
 
       //Style
       if(!is_array($options['class'])) { $options['class'] = array($options['class']); }
+      if($options['checkbox'])              { $options['class'][] = 'l-checkbox'; }
+      if($options['controls']['delete'])    { $options['class'][] = 'l-delete'; }
+      if($options['controls']['edit'])      { $options['class'][] = 'l-edit'; }
+      if($options['controls']['position'])  { $options['class'][] = 'l-position'; }
+      if($options['comments']['enabled'])   { $options['class'][] = 'l-comments'; }
       
-      if($options['checkbox'])  { $options['class'][] = 'l-checkbox'; }
-      if($options['delete'])    { $options['class'][] = 'l-delete'; }
-      if($options['edit'])      { $options['class'][] = 'l-edit'; }
-      if($options['position'])  { $options['class'][] = 'l-position'; }
-      if($options['comments'])  { $options['class'][] = 'l-comments'; }
-      
-      if($options['commentCount'] > 0)  { $options['class'][] = 'l-comments-with'; }
+      if($options['comments']['count'] > 0)  { $options['class'][] = 'l-comments-with'; }
       else { $options['class'][] = 'l-comments-without'; }
       
-      if($options['commentUnread'] > 0)  { $options['class'][] = 'l-comments-unread'; }
+      if($options['comments']['unread'] > 0)  { $options['class'][] = 'l-comments-unread'; }
       
       //Item
       $item = '';
       
       //Checkbox
-      if($options['checkbox'])
+      if($options['checkbox']['enabled'])
       {
-        $key = $alias.'.'.$id;
-      
-        $item .= sprintf($this->tags['checkbox'],$this->Form->input($key,array('type'=>'checkbox','label'=>false,'checked'=>$options['checked'])));
+        $item .= sprintf($this->tags['checkbox'],$this->Form->input($alias.'.'.$id,array('type'=>'checkbox','label'=>false,'checked'=>$options['checkbox']['checked'])));
       }
       
       //Comments button
       $comments = '';
-      if($options['comments'])
+      if($options['comments']['enabled'])
       {
-        $commentUrl = array('associatedController'=>$options['commentController'],'controller'=>'comments','action'=>'index',$id);
+        $commentUrl = array('associatedController'=>$options['comments']['controller'],'controller'=>'comments','action'=>'index',$id);
       
         $commentLink = $this->Html->link(__('Comments',true),$commentUrl,array('title'=>__('Comments',true)));
-        $commentCount = $this->Html->link($options['commentCount'],$commentUrl,array('title'=>__('Comments',true)));
+        $commentCount = $this->Html->link($options['comments']['count'],$commentUrl,array('title'=>__('Comments',true)));
         $comments = sprintf($this->tags['comments'],$commentLink,$commentCount);
       }
       
@@ -212,15 +204,13 @@
         $name = $name.$options['append'];
       }
       
+      if($options['controls']['edit'] !== false)
+      {
+        $name = $this->Html->link($name,$options['controls']['edit']['url'],array('class'=>'edit-link'));
+      }
+      
       //Name
-      if(!empty($options['url']))
-      {
-        $item .= sprintf($this->tags['label'],$this->Html->link($name,$options['url']),$extra,$comments);
-      }
-      else
-      {
-        $item .= sprintf($this->tags['label'],$name,$extra,$comments);
-      }
+      $item .= sprintf($this->tags['label'],$name,$extra,$comments);
       
       //Loading
       $item .= sprintf($this->tags['loading']);
@@ -228,32 +218,27 @@
       //Maintain
       $maintain = '';
       
-      if($options['delete'])
+      if($options['controls']['delete'] !== false)
       {
-        if(!isset($options['deleteUrl'])) { $options['deleteUrl'] = array('action'=>'delete',$id); }
-        $maintain .= sprintf($this->tags['delete'],$this->Html->link(__('Delete',true),$options['deleteUrl'],array('title'=>__('Delete',true))));
+        $maintain .= sprintf($this->tags['delete'],$this->Html->link(__('Delete',true),$options['controls']['delete']['url'],array('title'=>__('Delete',true))));
       }
       
-      if($options['edit'])
-      {
-        $maintain .= sprintf($this->tags['edit'],$this->Html->link(__('Edit',true),$options['editUrl']));
-      }
-      
-      if($options['position'])
+      if($options['controls']['position'] !== false)
       {
         $positionAttrs = '';
-        if($options['positionHide']) { $positionAttrs = ' style="display:none;"'; }
+        if(isset($options['controls']['position']['hide']) && $options['controls']['position']['hide'])
+        {
+          $options['class'][] = 'l-position-hide';
+          $positionAttrs = ' style="display:none;"';
+        }
         $maintain .= sprintf($this->tags['position'],$positionAttrs);
       }
       
       //Maintain left control
       if(!empty($maintain))
       {
-        $item .= sprintf($this->tags['maintain'],$maintain);
+        $item = $maintain.$item;
       }
-      
-      //Inline
-      $inline = sprintf($this->tags['inline']);
       
       //After
       if(!empty($options['after']))
@@ -262,7 +247,11 @@
       }
       
       //Build output
-      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$options['editUrl'],$options['updateUrl'],$options['deleteUrl'],$item,$inline,$options['after']);
+      $editUrl      = isset($options['controls']['edit']['url']) ? $options['controls']['edit']['url'] : null;
+      $deleteUrl    = isset($options['controls']['delete']['url']) ? $options['controls']['delete']['url'] : null;
+      $updateUrl    = isset($options['checkbox']['url']) ? $options['checkbox']['url'] : null;
+      
+      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$editUrl,$updateUrl,$deleteUrl,$item,$options['after']);
       
       //
       $this->lastIdent = $options['ident'];

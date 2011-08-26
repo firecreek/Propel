@@ -37,31 +37,34 @@
   <?php
     //From normal list
     $extra = array();
+    
+    $settings = array(
+      'controls' => array(
+        'edit'      => array('url'=>$this->Html->url(array('controller'=>'todos_items','action'=>'edit',$record['TodoItem']['id']))),
+        'position'  => array('url'=>$this->Html->url(array('controller'=>'todos_items','action'=>'update',$record['TodoItem']['id']))),
+        'delete'    => array('url'=>$this->Html->url(array('controller'=>'todos_items','action'=>'delete',$record['TodoItem']['id']))),
+      ),
+      'comments' => array(
+        'enabled'     => true,
+        'controller'  => 'todos_items'
+      ),
+      'checkbox' => array(
+        'enabled' => true,
+        'checked' => false,
+        'url'     => $this->Html->url(array('controller'=>'todos_items','action'=>'update',$record['TodoItem']['id']))
+      ),
+      'extra'     => $extra
+    );
 
     if($completed == 'true')
     {
-      //Into recently completed
-      $listHtml = $listable->item('TodosItem',$record['TodoItem']['id'],$record['TodoItem']['description'],array(
-        'edit' => false,
-        'checked' => true,
-        'prefix' => date('M j',strtotime($record['TodoItem']['completed_date'])),
-        'updateUrl'   => $html->url(array('controller'=>'todos_items','action'=>'update',$record['TodoItem']['id'])),
-        'deleteUrl' => $html->url(array('controller'=>'todos_items','action'=>'delete',$record['TodoItem']['id'])),
-      ));
-    }
-    else
-    {
-      //Back into main list
-      $listHtml = $listable->item('TodosItem',$record['TodoItem']['id'],$record['TodoItem']['description'],array(
-        'position'  => true,
-        'extra'     => $extra,
-        'editUrl'   => $html->url(array('controller'=>'todos_items','action'=>'edit',$record['TodoItem']['id'])),
-        'updateUrl' => $html->url(array('controller'=>'todos_items','action'=>'update',$record['TodoItem']['id'])),
-        'deleteUrl' => $html->url(array('controller'=>'todos_items','action'=>'delete',$record['TodoItem']['id'])),
-        'highlight' => true
-      ));
+      $settings['controls']['edit'] = false;
+      $settings['controls']['position'] = false;
+      $settings['checkbox']['checked'] = true;
+      $settings['prefix'] = date('M j',strtotime($record['TodoItem']['completed_date']));
     }
     
+    $listHtml = $listable->item('TodosItem',$record['TodoItem']['id'],$record['TodoItem']['description'],$settings);
     $listHtml = $javascript->escapeString($listHtml);
 
   ?>
