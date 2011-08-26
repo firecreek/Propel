@@ -37,20 +37,40 @@
       
         $projects = $auth->read('Projects');
         $projectsMenu = array();
+        $projectAddText = __('Create new project',true);
         
-        foreach($projects as $projectRecord)
+        if(!empty($projects))
         {
-          $projectsMenu[] = array(
-            'name' => $projectRecord['Project']['name'].' ['.$projectRecord['Company']['name'].']',
-            'url' => $this->Html->url(array(
-              'accountSlug' => $projectRecord['Account']['slug'],
-              'projectId'   => $projectRecord['Project']['id'],
-              'controller'  => 'projects',
-              'action'      => 'index'
-            ))
-          );
+          foreach($projects as $projectRecord)
+          {
+            $projectsMenu[] = array(
+              'name' => $projectRecord['Project']['name'].' ['.$projectRecord['Company']['name'].']',
+              'url' => $this->Html->url(array(
+                'accountSlug' => $projectRecord['Account']['slug'],
+                'projectId'   => $projectRecord['Project']['id'],
+                'controller'  => 'projects',
+                'action'      => 'index'
+              ))
+            );
+          }
         }
-      
+        else
+        {
+          $projectAddText = __('Create your first project',true);
+        }
+        
+        //New project
+        $projectsMenu[] = array(
+          'name' => $projectAddText,
+          'url' => $this->Html->url(array(
+            'accountSlug' => $projectRecord['Account']['slug'],
+            'project'     => false,
+            'controller'  => 'projects',
+            'action'      => 'add'
+          ))
+        );
+        
+        //Account menu
         $menu = array(
           'Account.accounts' => array('name'=>__('Dashboard',true),'url'=>array('account'=>true,'controller'=>'accounts','action'=>'index')),
           'Account.projects' => array('name'=>__('Projects',true),'url'=>array('account'=>true,'controller'=>'projects','action'=>'index'),'children'=>$projectsMenu),
