@@ -45,7 +45,10 @@
   <div class="col right">
   
     <?php
-      echo $this->element('todos/filter');
+      if($auth->check(array('action'=>'add')))
+      {
+        echo $layout->button(__('New to-do list',true),array('controller'=>'todos','action'=>'add'),'large add');
+      }
       echo $this->element('todos/list_active');
       echo $this->element('todos/list_completed');
     ?>

@@ -25,12 +25,7 @@
       //All
       if(isset($all) && $all)
       {
-        echo $listable->item('Category',false,__('All',true).' '.$name,array(
-          'position'  => false,
-          'checkbox'  => false,
-          'comments'  => false,
-          'edit'      => false,
-          'delete'    => false,
+        echo $this->Listable->item('Category',false,__('All',true).' '.$name,array(
           'class'     => (!$active) ? 'active' : null,
           'url'       => array_merge($filter,array('category'=>false))
         ));
@@ -45,7 +40,7 @@
         //Filter
         if($filter)
         {
-          $listOptions = array('url'=>array_merge($filter,array('category'=>$catId)));
+          $listOptions = array('url'=> $this->Html->url(array_merge($filter,array('category'=>$catId))));
         }
         
         //Selected
@@ -54,12 +49,15 @@
           $listOptions['class'] = 'active';
         }
       
-        echo $listable->item('Category',$catId,$catName,array_merge(array(
-          'position'  => false,
-          'checkbox'  => false,
-          'comments'  => false,
-          'editUrl'   => $html->url(array('controller'=>'categories','action'=>'edit',$catId)),
-          'deleteUrl' => $html->url(array('controller'=>'categories','action'=>'delete',$catId)),
+        echo $this->Listable->item('Category',$catId,$catName,array_merge(array(
+          'controls' => array(
+            'edit' => array(
+              'url' => $html->url(array('controller'=>'categories','action'=>'edit',$catId))
+            ),
+            'delete' => array(
+              'url' => $html->url(array('controller'=>'categories','action'=>'delete',$catId))
+            )
+          )
         ),$listOptions));
       }
     ?>

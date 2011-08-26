@@ -29,11 +29,14 @@
     }
   
     $listHtml = $listable->item('Category',$record['Category']['id'],$record['Category']['name'],array_merge(array(
-      'position'  => false,
-      'checkbox'  => false,
-      'comments'  => false,
-      'editUrl'   => $html->url(array('controller'=>'categories','action'=>'edit',$record['Category']['id'])),
-      'deleteUrl' => $html->url(array('controller'=>'categories','action'=>'delete',$record['Category']['id'])),
+      'controls' => array(
+        'edit' => array(
+          'url' => $html->url(array('controller'=>'categories','action'=>'edit',$record['Category']['id']))
+        ),
+        'delete' => array(
+          'url' => $html->url(array('controller'=>'categories','action'=>'delete',$record['Category']['id']))
+        )
+      )
     ),$listOptions));
     $listHtml = $javascript->escapeString($listHtml);
 

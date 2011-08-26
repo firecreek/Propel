@@ -133,11 +133,11 @@
       
       //Most active records
       $activeRecords = array();
-      if(count($records) > 2 or 1 == 1)
+      if(count($records) > 2)
       {
         $activeRecords = $this->Post->find('all',array(
           'conditions' => array_merge(array(
-            /*'Post.comment_count >=' => 2*/
+            'Post.comment_count >=' => 2
           ),$conditions),
           'contain' => array(
             'Person',

@@ -28,7 +28,6 @@
 <?php
   //Make it listable
   echo $javascript->codeBlock("
-    $('.category-filter .listable').listable({
-    });
+    $('.category-filter .listable').listable({ disabled:true });
   ");
 ?>

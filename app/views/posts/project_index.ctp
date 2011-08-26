@@ -49,7 +49,7 @@
                   </div>
                   <div class="content">
                     <div class="avatar"><?php echo $layout->avatar($record['Person']['user_id'],'small'); ?></div>
-                    <p class="detail  ">
+                    <p class="detail">
                       <?php
                         echo $html->link(__('Latest comment',true).' '.$time->timeAgoInWords($record['CommentLast']['created'],array('end'=>false)),$url);
                       ?>
@@ -97,8 +97,8 @@
               <div class="section plain avatar <?php echo $class; ?>">
                 <div class="avatar"><?php echo $layout->avatar($record['Person']['user_id']); ?></div>
                 <div class="banner">
-                  <p><strong><?php echo $record['Person']['full_name']; ?></strong> <?php __('posted this message'); ?> <?php echo $time->timeAgoInWords($record['Post']['created'],array('end'=>false)); ?>.</p>
                   <h3><?php echo $html->link($record['Post']['title'],$url); ?></h3>
+                  <p><strong><?php echo $record['Person']['full_name']; ?></strong> <?php __('posted this message'); ?> <?php echo $time->timeAgoInWords($record['Post']['created'],array('end'=>false)); ?>.</p>
                 </div>
                 <div class="content restore-html">
                   <?php
@@ -115,12 +115,9 @@
                 <div class="foot">
                   <ul>
                     <li><?php
-                      echo $html->link(__('Go to message',true),$url);
-                    ?></li>
-                    <li><?php
                       if($record['Post']['comment_count'] == 0)
                       {
-                        echo $html->link(__('Add a comment',true),array_merge($url,array('#comment-add')));
+                        echo $html->link(__('Go to message',true),array_merge($url,array('#comment-add')));
                       }
                       else
                       {

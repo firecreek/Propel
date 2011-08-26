@@ -2,7 +2,7 @@
 .category-add {
   background-color:#EFEFEF;
   padding: 5px;
-  margin: 5px 0 0 15px;
+  margin:5px 0 0 15px;
 }
 .category-add hr { margin:5px 0; }
 .category-add div.input.text { margin-bottom:0; }
@@ -18,30 +18,32 @@
  */
 .category-filter {}
 .category-filter .listable { margin:0; }
-.category-filter .listable .items { margin-right:0; }
-.category-filter .listable .item { left:0; margin:0 0 5px 0; padding:0 0 5px 0; border-bottom:1px solid transparent; }
-.category-filter .listable .item .label { left:0; }
+.category-filter .listable .items { margin-left:0; }
+.category-filter .listable .item { left:0; margin:0 0 4px 0; padding:0 0 4px 0; border-bottom:1px solid transparent; }
+.category-filter .listable .item .label { margin-left:0; }
 .category-filter .listable .item .label a { padding:3px; }
+.category-filter .listable .item .delete { top:2px; display:none; }
+
 .category-filter .listable .item.active .label {  }
 .category-filter .listable .item.active .label a { background-color:black; color:white; text-decoration:none; }
-.category-filter .listable .item .maintain { display:none; position:absolute; background-color:transparent; width:100%; border-radius:0; right:0; }
-.category-filter .listable .item .maintain .delete { position:absolute; right:0; }
-.category-filter .listable .item .maintain .edit { position:absolute; right:20px; top:5px; }
 
-.category-filter .listable .item .loading { background-color:transparent; left:245px; top:2px; width:16px; height:11px; border-bottom-left-radius:0; border-top-left-radius:0; }
+.category-filter .listable .item .loading { position:absolute; left:290px; top:2px; width:16px; height:16px; }
 
 .category-filter .add-record-link { background-color:transparent; margin-left:0; padding-left:0; }
 
 .category-filter .listable .inline { left:0; }
 
 .category-filter .add-record-container { display:none; }
-.category-filter .category-add { margin-left:0;  }
+.category-filter .category-add { margin:0;  }
 .category-filter .category-add div.input.text input { width:95%; }
+
 
 /** Edit mode */
 .category-filter.ui-state-edit .listable .item { border-bottom:1px solid #CCC; }
-.category-filter.ui-state-edit .listable .item .maintain { display:inline-block; }
+.category-filter.ui-state-edit .listable .item .delete { display:block; }
+
 .category-filter.ui-state-edit .listable .item.active .label {  }
-.category-filter.ui-state-edit .listable .item.active .label a { background-color:transparent; color:blue; text-decoration:underline; }
+.category-filter.ui-state-edit .listable .item.active .label a { background-color:transparent; color:inherit; text-decoration:inherit; }
 .category-filter.ui-state-edit .add-record-container { display:block; }
 
+.category-filter .listable .item.ui-state-edit .label { width:100%; }

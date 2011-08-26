@@ -4,7 +4,8 @@
   $.widget("oc.listable",{
     
     options: { 
-      sortable:false, 
+      sortable:false,
+      disabled:false,
       edit: {
         ajaxSubmit: {
           stickyLoad:false
@@ -32,7 +33,6 @@
         }
       });
       
-      
       //Items
       this.listElements = this.element.find('.item');
     
@@ -50,7 +50,7 @@
         
       //Edit
       this.editElems = this.listElements.find('.edit-link')
-        .bind('click.listable', function() { return self._edit(self,this); });
+        .live('click.listable', function() { return self._edit(self,this); });
       
       //Private
       this.privateElems = this.listElements.find('.extra.private')
@@ -60,6 +60,39 @@
       this.element.find('.item').each(function(){
         var width = ($(this).width() - $(this).find('.label').offset().left);
         $(this).find('.label').width(width);
+      });
+      
+      if(!this.options.disabled)
+      {
+        this.enable();
+      }
+    },
+    
+    
+    enable: function()
+    {
+      this.options.disabled = false;
+      
+      //Replace edit and view links
+      this.listElements.each(function(){
+        if($(this).attr('rel-view-url') && $(this).attr('rel-edit-url'))
+        {
+          $(this).find('.name a').attr('href',$(this).attr('rel-edit-url')).addClass('edit-link');
+        }
+      });
+    },
+    
+    
+    disable: function()
+    {
+      this.options.disabled = true;
+      
+      //Replace edit and view links
+      this.listElements.each(function(){
+        if($(this).attr('rel-view-url') && $(this).attr('rel-edit-url'))
+        {
+          $(this).find('.name a').attr('href',$(this).attr('rel-view-url')).removeClass('edit-link');
+        }
       });
     },
     

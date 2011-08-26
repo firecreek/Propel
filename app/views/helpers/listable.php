@@ -38,7 +38,9 @@
                                 rel-record-id="%s"
                                 rel-edit-url="%s"
                                 rel-update-url="%s"
-                                rel-delete-url="%s">
+                                rel-delete-url="%s"
+                                rel-view-url="%s"
+                              >
                                   <div class="overview">%s</div>
                                   <div class="detail">%s</div>
                               </div>
@@ -253,11 +255,12 @@
       }
       
       //Build output
-      $editUrl      = isset($options['controls']['edit']['url']) ? $options['controls']['edit']['url'] : null;
-      $deleteUrl    = isset($options['controls']['delete']['url']) ? $options['controls']['delete']['url'] : null;
-      $updateUrl    = isset($options['checkbox']['url']) ? $options['checkbox']['url'] : null;
+      $editUrl    = isset($options['controls']['edit']['url']) ? $options['controls']['edit']['url'] : null;
+      $deleteUrl  = isset($options['controls']['delete']['url']) ? $options['controls']['delete']['url'] : null;
+      $updateUrl  = isset($options['checkbox']['url']) ? $options['checkbox']['url'] : null;
+      $viewUrl    = isset($options['url']) ? $options['url'] : null;
       
-      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$editUrl,$updateUrl,$deleteUrl,$item,$options['after']);
+      $output = sprintf($this->tags['item'],$options['ident'],implode(' ',$options['class']),$id,$editUrl,$updateUrl,$deleteUrl,$viewUrl,$item,$options['after']);
       
       //
       $this->lastIdent = $options['ident'];

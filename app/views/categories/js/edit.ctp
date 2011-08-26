@@ -1,11 +1,17 @@
 <?php
 
+  $url = $this->Html->url(array('action'=>'index','category'=>$record['Category']['id']));
+  
   $listHtml = $listable->item('Category',$record['Category']['id'],$record['Category']['name'],array(
-    'position'  => false,
-    'checkbox'  => false,
-    'comments'  => false,
-    'editUrl'   => $html->url(array('controller'=>'categories','action'=>'edit',$record['Category']['id'])),
-    'deleteUrl' => $html->url(array('controller'=>'categories','action'=>'delete',$record['Category']['id'])),
+    'controls' => array(
+      'edit' => array(
+        'url' => $html->url(array('controller'=>'categories','action'=>'edit',$record['Category']['id']))
+      ),
+      'delete' => array(
+        'url' => $html->url(array('controller'=>'categories','action'=>'delete',$record['Category']['id']))
+      )
+    ),
+    'url' => $url
   ));
   $listHtml = $javascript->escapeString($listHtml);
 

@@ -81,12 +81,16 @@ var Categories = {
           //On
           $(self).addClass('ui-state-edit');
           $(editLink).text($(editLink).attr('rel-edit-text'));
+          
+          $('.category-filter .listable').data('listable').enable();
         }
         else
         {
           //Off
           $(self).removeClass('ui-state-edit');
           $(editLink).text(editDefaultText);
+          
+          $('.category-filter .listable').data('listable').disable();
         }
         
         return false;        
