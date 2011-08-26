@@ -7,8 +7,6 @@
   {
     $personal = true;
   }
-  
-  $html->css('accounts/person_edit', null, array('inline'=>false));
 
 ?>
 <div class="cols" id="PersonEdit">
@@ -17,16 +15,19 @@
 
     <div class="box">
       <div class="banner">
-        <?php
-          if($personal)
-          {
-            echo $this->element('people/personal_banner');
-          }
-          else
-          {
-            echo '<h2>'.__('Edit',true).' '.$record['Person']['full_name'].'</h2>';
-          }
-        ?>
+        <?php if(!$personal): ?>
+        
+          <h2><?php __('Edit'); ?> <?php echo $record['Person']['full_name']; ?></h2>
+        
+        <?php else: ?>
+        
+          <div class="personal-banner">
+            <h2><?php echo $html->link(__('Edit your personal information',true),array('project'=>false,'controller'=>'users','action'=>'edit'),array('class'=>'strong')); ?></h2>
+            <p><?php __('Change your name, photo, email address, username or password.'); ?></p>  
+          </div>
+          
+        <?php endif; ?>
+      
       </div>
       <div class="content">
       

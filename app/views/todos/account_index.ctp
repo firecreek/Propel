@@ -1,8 +1,7 @@
 <?php
 
   $javascript->link('listable.js', false);
-  
-  $html->css('accounts/todos', null, array('inline'=>false));
+  $html->css('todos', null, array('inline'=>false));
   
   if(!isset($responsibleName))
   {
@@ -16,7 +15,7 @@
     <h2><?php __(sprintf('%s to-do items across all projects',$responsibleName.'\'s')); ?></h2>
     <?php echo $this->element('todos/banner_filters'); ?>
   </div>
-  <div class="content">
+  <div class="content account-list">
   
     <?php if(!empty($projects)): ?>
     
