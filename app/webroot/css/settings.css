@@ -2,7 +2,7 @@
 div.logos { margin:0; }
 
 div.logos div.row { margin:0 0 40px 0; }
-div.logos div.image { background-color:#E5E5E5; border:1px solid #E5E5E5; height:130px; margin-bottom:5px; overflow:hidden; text-align:center;  width:33%; }
+div.logos div.image { background-color:#F0F0F0; border:1px solid #F0F0F0; height:130px; margin-bottom:5px; overflow:hidden; text-align:center;  width:33%; }
 div.logos div.image img { margin-top:10px; }
 div.logos div.image span { color:#666; font-size:11px; padding-top:55px; display:block; }
 div.logos p { font-size:12px; }

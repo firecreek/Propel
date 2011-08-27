@@ -11,9 +11,11 @@
         
         <?php if($this->Auth->check(array('controller'=>'projects','action'=>'add'))): ?>
           
-          <div class="start-bar">
-            <h2><?php echo $html->link(__('Create your first project',true),array('controller'=>'projects','action'=>'add')); ?></h2>
-            <p><?php __('It takes just a few seconds and you\'ll be up and running'); ?></p>
+          <div class="note highlight start">
+            <div class="wrapper">
+              <h2><?php echo $html->link(__('Create your first project',true),array('controller'=>'projects','action'=>'add')); ?></h2>
+              <p><?php __('It takes just a few seconds and you\'ll be up and running'); ?></p>
+            </div>
           </div>
           
           

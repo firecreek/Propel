@@ -9,7 +9,7 @@
 /**
  * Edit inline
  */
-.listable .inline .box { background-color:#EFEFEF; padding:5px; }
+.listable .inline .box { background-color:#F0F0F0; padding:5px; }
 
 .item-add label { display:block; font-size:11px; float:none; margin:0 0 3px 0; }
 .item-add textarea { height:4em; width:60%; }
@@ -23,7 +23,7 @@
 .item-add div.first { display:inline-block; margin-right:20px; }
 .item-add div.second { display:inline-block; }
 
-.item-add .submit .saving { background-color:#EFEFEF; }
+.item-add .submit .saving { background-color:#F0F0F0; }
 
 
 /**
@@ -33,7 +33,7 @@
 #MilestoneAdd form .cols { height:225px; }
 #MilestoneAdd form .col {  }
 
-#MilestoneAdd form .calendar { border-right:1px solid #CCC; width:250px; float:left; }
+#MilestoneAdd form .calendar { border-right:1px solid #CCCCCC; width:250px; float:left; }
 #MilestoneAdd form .calendar label { margin:0 0 10px 0; }
 
 #MilestoneAdd form .detail { margin-left:280px; }

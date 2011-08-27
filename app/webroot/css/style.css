@@ -7,6 +7,22 @@
 
 
 /**
+ * Colours
+ *
+ * #0033CC		Link
+ *
+ * #666666		Text light
+ * #333333		Text dark
+ *
+ * #CCCCCC		Line spacer
+ * #F0F0F0		Field grey background
+ *
+ *
+ *
+ */
+
+
+/**
  * Reset
  * ----------------------------------------------------
  */
@@ -346,13 +362,11 @@ div.note .wrapper { padding:20px; }
 div.note h4 { margin-bottom:10px; }
 div.note p { margin:0; }
 
+div.note.highlight { background-color:#FFC; }
 
-/**
- * Start bar
- */
-.start-bar { text-align:center; background-color:#FFC; border-top:1px solid #CCC; border-bottom:1px solid #CCC; padding:10px; margin-bottom:25px; }
-.box .content .start-bar h2 { font-size:22px; margin:0 0 0 0; padding:0; font-weight:bold; }
-.box .content .start-bar p { font-size:12px; margin:0; }
+div.note.start { text-align:center; }
+div.note.start h2 { font-size:22px; margin:0 0 0 0; padding:0; font-weight:bold; }
+div.note.start p { font-size:12px; margin:0; }
 
 
 

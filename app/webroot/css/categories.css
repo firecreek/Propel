@@ -7,9 +7,9 @@
 .category-add hr { margin:5px 0; }
 .category-add div.input.text { margin-bottom:0; }
 .category-add div.input.text input { width:40%; }
-.category-add .submit .saving { background-color:#EFEFEF; }
+.category-add .submit .saving { background-color:#F0F0F0; }
 
-.add-record-link { background-color:#EFEFEF; padding:2px 5px; margin:5px 0 0 15px; }
+.add-record-link { background-color:#F0F0F0; padding:2px 5px; margin:5px 0 0 15px; }
 .add-record-link a { font-size:11px; }
 
 

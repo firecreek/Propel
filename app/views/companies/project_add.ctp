@@ -25,7 +25,7 @@
 
       <?php
         //Create
-        echo $form->input('name',array('label'=>false,'div'=>'input text strong'));
+        echo $form->input('name',array('label'=>false,'div'=>'input text strong half-width'));
       ?>
     </div>
       

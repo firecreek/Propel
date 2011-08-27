@@ -62,10 +62,10 @@
 .count p a { color:#999; }
 .count p a:hover { color:#FFFFFF; }
 
-.add-item-link { background-color:#EFEFEF; padding:2px 5px; margin:5px 0 0 0; }
+.add-item-link { background-color:#F0F0F0; padding:2px 5px; margin:5px 0 0 0; }
 .add-item-link a { font-size:11px; }
 
-.item-add { background-color:#EFEFEF; padding:5px; margin:5px 0 0 25px; }
+.item-add { background-color:#F0F0F0; padding:5px; margin:5px 0 0 25px; }
 .item-add label { display:block; font-size:11px; float:none; margin:0 0 3px 0; }
 .item-add textarea { height:4em; width:60%; }
 .item-add hr { margin:5px 0; clear:both; }
@@ -75,7 +75,7 @@
 .item-add .options div.first { display:inline-block; margin-right:20px; }
 .item-add .options div.second { display:inline-block; }
 
-.item-add .submit .saving { background-color:#EFEFEF; }
+.item-add .submit .saving { background-color:#F0F0F0; }
 
 .inline .item-add { margin-left:0; }
 .inline .item-add .description label { display:none; }
@@ -84,10 +84,10 @@
 /**
  * Header inline edit
  */
-.listable .header .inline .box { background-color:#EFEFEF; border:none; padding:10px; }
+.listable .header .inline .box { background-color:#F0F0F0; border:none; padding:10px; }
 .listable .header .inline .box .content { padding:0; }
 .listable .header .inline .box hr { margin:5px 0; clear:both; }
-.listable .header .inline .submit .saving { background-color:#EFEFEF; }
+.listable .header .inline .submit .saving { background-color:#F0F0F0; }
 
 
 /**

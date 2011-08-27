@@ -33,7 +33,7 @@
   <div id="launchbar">
     <nav id="account">
       <?php
-      
+        //Account menu
         $projects = $auth->read('Projects');
         $projectsMenu = array();
         $projectAddText = __('Create new project',true);
@@ -62,7 +62,7 @@
         $projectsMenu[] = array(
           'name' => $projectAddText,
           'url' => $this->Html->url(array(
-            'accountSlug' => $projectRecord['Account']['slug'],
+            'accountSlug' => $this->Auth->read('Account.slug'),
             'project'     => false,
             'controller'  => 'projects',
             'action'      => 'add'
