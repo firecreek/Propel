@@ -233,6 +233,8 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .box .content p { /*margin:0 0 1em 0;*/ }
 .box .content p a.active { color:black; text-decoration:none; font-weight:bold; }
 
+.box .content.centre { text-align:center; }
+
 .inline .box { border:2px solid #999; padding:10px; z-index:50; -webkit-box-shadow:none; }
 .inline .banner { display:none; }
 .inline .box h2 { display:none; }
@@ -246,6 +248,10 @@ ul.bullet li { list-style-type:disc; margin-left:40px; }
 .right .box h3 { color:#333; font-size:13px; padding:6px 0 0 10px; }
 .right .box .banner ul.right { position:absolute; top:4px; right:10px; }
 .right .box .content { padding:10px; }
+
+.right .box ul { margin:0 0 10px 0; }
+.right .box li { margin:0 0 10px 0; }
+.right .box p.note { font-size:11px; }
 
 .right .box ul.reorder {}
 .right .box ul.reorder li { padding:5px 0 5px 25px; background:url(/img/icons/position.png) transparent no-repeat 6px 6px; cursor:move; background-color:#EFEFEF; margin-bottom:2px; }

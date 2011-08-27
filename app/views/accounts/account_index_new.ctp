@@ -47,25 +47,35 @@
   
     <div class="box">
       <div class="banner">
+        <h3><?php __('Welcome to your new Propel account'); ?></h3>
+      </div>
+      <div class="content centre">
+        <?php echo $this->Html->image('propel-250.png'); ?>
+      </div>
+    </div>
+    
+    
+    <div class="box">
+      <div class="banner">
         <h3><?php __('Configure your account'); ?></h3>
       </div>
       <div class="content">
 
         <ul>
           <li>
-            <?php echo $html->link(__('Edit your profile',true),array('controller'=>'users','action'=>'edit')); ?><br />
+            <strong><?php echo $html->link(__('Edit your profile',true),array('controller'=>'users','action'=>'edit')); ?></strong><br />
             <?php __('Update your name, contact details and your timezone'); ?>
           </li>
           <li>
-            <?php echo $html->link(__('Upload your logo',true),array('controller'=>'settings','action'=>'index')); ?><br />
+            <strong><?php echo $html->link(__('Upload your logo',true),array('controller'=>'settings','action'=>'index')); ?></strong><br />
             <?php __('Add your company logo that will appear in your account'); ?>
           </li>
           <li>
-            <?php echo $html->link(__('Change colors',true),array('controller'=>'settings','action'=>'appearance')); ?><br />
+            <strong><?php echo $html->link(__('Change colors',true),array('controller'=>'settings','action'=>'appearance')); ?></strong><br />
             <?php __('Customise the colours of your dashboard'); ?>
           </li>
           <li>
-            <?php echo $html->link(__('Invite other people',true),array('controller'=>'companies','action'=>'index')); ?><br />
+            <strong><?php echo $html->link(__('Invite other people',true),array('controller'=>'companies','action'=>'index')); ?></strong><br />
             <?php __('Add users and companies to your account to share projects'); ?>
           </li>
         </ul>
