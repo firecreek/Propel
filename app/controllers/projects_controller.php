@@ -58,21 +58,12 @@
     {
       if(!empty($this->data))
       {
-        $this->data['Project']['account_id']  = $this->Authorization->read('Account.id');
-        $this->data['Project']['person_id']   = $this->Authorization->read('Person.id');
-        $this->data['Project']['company_id']  = $this->Authorization->read('Company.id');
-        $this->data['People'] = array('id' => $this->Authorization->read('Person.id'));
-      
         $this->Project->set($this->data);
         
         if($this->Project->validates())
         {
           if($this->Project->saveAll($this->data))
           {
-            //Create default categories for project
-            $this->loadModel('Category');
-            $this->Category->createDefaults($this->Authorization->read('Account.id'),$this->Project->id);
-            
             //Give this person permission for this project
             $this->User->Person->id = $this->Authorization->read('Person.id');
             $this->AclManager->allow($this->User->Person,$this->Project,array('alias'=>'owner'));
@@ -144,7 +135,13 @@
         }
         else
         {
+          //Failed form details
           $this->Session->setFlash(__('Please check the form and try again',true), 'default', array('class'=>'error'));
+          
+          if(isset($this->params['url']['back']))
+          {
+            $this->redirect($this->params['url']['back']);
+          }
         }
         
       }

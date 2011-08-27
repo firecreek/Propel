@@ -496,6 +496,11 @@ form.larger label { font-size:14px; }
 form .input.text.half-width input { width:50%; }
 form .input.text.full-width input { width:95%; }
 form .input.textarea.full-width textarea { width:95%; }
+form .input.textarea.tall-2 textarea { height:2em; }
+form .input.textarea.tall-5 textarea { height:10em; }
+form .input.textarea.tall-10 textarea { height:10em; }
+form .input.textarea.tall-15 textarea { height:15em; }
+form .input.textarea.tall-20 textarea { height:20em; }
 
 form .input input.dummy { color:#888; }
 

@@ -28,6 +28,7 @@
      */
     public $actsAs = array(
       'Acl' => array('type' => 'controlled'),
+      'Auth',
       'Containable',
       'Cached' => array(
         'prefix' => array(
@@ -132,6 +133,57 @@
         'dependent' => false
       )
     );
+    
+    
+    
+    /**
+     * Before Save
+     *
+     * @access public
+     * @return string
+     */
+    public function beforeSave($q)
+    {
+      if(!isset($this->data[$this->alias]['account_id']))
+      {
+        $this->data[$this->alias]['account_id'] = $this->authRead('Account.id');
+      }
+      
+      if(!isset($this->data[$this->alias]['person_id']))
+      {
+        $this->data[$this->alias]['person_id'] = $this->authRead('Person.id');
+      }
+      
+      if(!isset($this->data[$this->alias]['company_id']))
+      {
+        $this->data[$this->alias]['company_id'] = $this->authRead('Company.id');
+      }
+      
+      if(!isset($this->data['People']))
+      {
+        $this->data['People'] = array('id' => $this->authRead('Person.id'));
+      }
+    
+      return true;
+    }
+    
+    
+    
+    /**
+     * After Save
+     *
+     * @access public
+     * @return string
+     */
+    public function afterSave($created)
+    {
+      //Created record
+      if($created)
+      {
+        //Default categories
+        $this->Category->createDefaults($this->authRead('Account.id'),$this->id);
+      }
+    }
     
     
     
